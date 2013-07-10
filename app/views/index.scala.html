@@ -1,0 +1,157 @@
+@(message: String)
+
+@main("The Embodied Making Tool") {
+        
+    <div class="container" style="width:100%; margin-top:20px; position:sticky;">
+    	<div class="masthead" >
+        
+        <div class="navbar">
+          <div class="navbar-inner">
+            <div class="container">
+              <ul class="nav" style="width:80%;">
+                <li class="active tooltabs"><a href="#" class="tooltablinks">My Projects</a></li>
+                <li class="tooltabs"><a href="#" class="tooltablinks">My Account</a></li>
+                <li class="tooltabs"><a href="#" class="tooltablinks">Settings</a></li>
+                <li class="tooltabs"><a href="#" class="tooltablinks">Examples</a></li>
+                <li class="tooltabs"><a href="#" class="tooltablinks">Help</a></li>
+              </ul>
+            </div>
+          </div>
+        </div><!-- /.navbar -->
+      	</div><!-- /.masthead -->
+</div> <!-- end container -->  
+
+<div class="container" id="projectcontainer">
+<h2>Contact Venture</h2>
+	<div class="row">
+		<div class="span5 well">
+			<h2>Stories</h2>
+			<div class="row">
+			<div class="span1">
+				<div class="storyid">
+					<p> S0003 </p>
+				</div>
+			</div>
+			<div class="span3">
+				<div class="">
+					<textarea rows="3" cols="50"></textarea> 
+				</div>
+			</div>
+			<div class="span1">
+				<div class="row">
+					<input type="button" value="Add"></input>
+				</div>
+				<div class="row">
+					<input type="button" value="Search"></input>
+				</div>
+				<div class="row">
+					<input type="button" value="Save changes"></input>
+				</div>
+			</div>
+			</div> <!-- forms row ends -->
+			<hr>
+			<div class="row">
+				<div class="span1 storyid">
+					<p>S0001</p>
+				</div>
+				<div class="span3">
+					<p>People want to keep in touch with close acquaintances and have up-to-date information about their contact information.</p>
+				</div>
+				<div class="span1">
+					<input type="button" value="Edit"></input> 
+					<input type="button" value="Add to Force"></input>
+				</div>
+			</div>
+			<div class="row">
+				<div class="span1 storyid">
+					<p>S0002</p>
+				</div>
+				<div class="span3" style="background-color:#C46CB9;color:#FFFFFF;">
+					<p>I tried to reach my daughter for ages, not knowing her mobile number has changed!</p>
+				</div>
+				<div class="span1">
+					<input type="button" value="Edit"></input> 
+					<input type="button" value="Add to Force"></input>
+				</div>
+			</div>
+		</div><!-- Stories end -->
+		<div class="span7 well">
+			<h2>Forces</h2>
+			<div class="row">
+			<div class="span1">
+				<div class="storyid">
+					<p> F0003 </p>
+				</div>
+			</div>
+			<div class="span1">
+				<div class="">
+					<textarea rows="5" style="width:50px;">S0001 S0002</textarea> 
+				</div>
+			</div>
+			<div class="span4">
+				<div class="">
+					<textarea rows="5" cols="50" style="width:350px;"></textarea> 
+				</div>
+			</div>
+			<div class="span1">
+				<div class="row">
+					<input type="button" value="Add"></input>
+				</div>
+				<div class="row">
+					<input type="button" value="Search"></input>
+				</div>
+				<div class="row">
+					<input type="button" value="Save changes"></input>
+				</div>
+			</div>
+			</div><!-- form row ends -->
+			<hr>
+			<div class="row">
+				<div class="span1 storyid">
+					<p>F0001</p>
+				</div>
+				<div class="span1 storyid">
+					S0001 
+				</div>
+				<div class="span3">
+					<p> Desire to be kept up-to-date with close acquaintances.</p>
+				</div>
+				<div class="span1">
+					<input type="button" value="Edit"></input> 
+					<input type="button" value="+ve effect on interaction"></input>
+					<input type="button" value="-ve effect on interaction"></input>
+					<input type="button" value="neutral effect on interaction"></input>
+				</div>
+			</div>
+			<div class="row">
+				<div class="span1 storyid">
+					<p>F0002</p>
+				</div>
+				<div class="span1 storyid">
+					S0001 S0002
+				</div>
+				<div class="span3">
+					<p>Desire to keep in touch with some people more than others.</p>
+				</div>
+				<div class="span1">
+					<input type="button" value="Edit"></input> 
+					<input type="button" value="+ve effect on interaction"></input>
+					<input type="button" value="-ve effect on interaction"></input>
+					<input type="button" value="neutral effect on interaction"></input>
+				</div>
+			</div>
+			
+			</div><!-- Forces end -->
+		</div>
+		<div class="span1 well sidebar">
+			<div class="row">
+				<p class="collapsedhead">Force Interactions</p>
+			</div>
+			<div class="row">
+				<p class="collapsedhead">Solution Components</p>
+			</div>
+		</div>
+	</div>
+</div>
+  
+}

@@ -1,0 +1,337 @@
+/*-------------------------------------------General------------------------------------------*/
+
+body{
+	font-family: 'Droid Sans',sans-serif;
+}
+
+h3{
+	font-size: 70px;
+	color: rgb(190,190,190);
+	text-shadow: 0px 4px 0px rgba(0, 0, 0, 0.1);
+	padding:20px;
+}
+
+h4 {
+    font-size: 50px;
+    color: #F47421;
+    padding:4%;
+    padding-top:8%;
+    padding-bottom:0%;
+}
+
+a {
+	font-size: 17px;
+}
+
+hr {
+	background-color:#AAAAAA;
+}
+
+b {
+	color:#F47421;
+	font-size:40px;
+}
+
+h6{
+	font-style:bold;
+	font-size:14px;
+}	
+
+h5{
+	color: #F47421;
+	font-size:18px;
+}
+
+h7 {
+	color: #F47421;
+	font-size:30px;
+	line-height:40px;
+	padding-top:25px;
+	padding-bottom:25px;
+}
+/*------------------------------------------Home-----------------------------------------------*/
+
+.allcontainer {
+	width:100%;
+}
+
+/*------------------------------------------Services-----------------------------------------------*/
+
+#servicescont{
+	width:100%;
+	background-image:url('/coena.com/assets/images/services_blur.jpg');
+	/*background-size: auto;
+	background-repeat:no-repeat;*/
+}
+
+.servicesintro{
+	width:25%;
+}
+
+.servicesblocks {
+	width:100%;
+}
+
+.headingsymbolrow{
+	text-align:center;
+	padding-top:5%;	
+	padding-bottom:2%;
+	width:92%;
+}
+
+.headingsymbol{
+	background-color:rgba(255,255,255,0.7);
+}
+
+.servicesdescrow {
+	padding-bottom:3%;
+	padding-top:2%;
+}
+
+.servicesdesc{
+	background-color:rgba(0,0,0,0.7);
+	color:rgb(235,235,235);
+}
+
+.servicesmaindesc{
+	background-color: rgba(0, 0, 0, 0.7);
+	color:rgb(235,235,235);
+	font-family: 'Droid Sans',sans-serif;
+	font-size:25px;
+	text-align:right;
+	padding:1%;
+	line-height: 40px;
+}
+
+
+.servicesdescp{
+	padding-top:1%;
+	padding-left:3%;
+	padding-right:3%;
+	padding-bottom:1%;
+	text-align:center;
+	font-size:16px;
+	font-family: 'Droid Sans',sans-serif;
+}
+
+/*------------------------------------------Work-----------------------------------------------*/
+
+.workmaindesc{
+	background-color: rgba(0, 0, 0, 0.4);
+	color:rgb(235,235,235);
+	font-family: 'Droid Sans',sans-serif;
+	font-size:25px;
+	text-align:right;
+	padding:1%;
+	line-height: 40px;
+}
+
+.workgrid{
+	padding-top:3%;
+}
+
+#workcont{
+	width:100%;
+	background-image:url('/coena.com/assets/images/work_blur.jpg');
+	/*background-size: auto;
+	background-repeat:no-repeat;*/
+}
+
+.workgridrow{
+	padding-bottom:2%;
+	width:96%;
+}
+
+.projbox{
+	padding:4%;
+	background-color:#FFFFFF;
+}
+
+.projbox:hover{
+	box-shadow: 5px 1px 10px 1px inset;
+}
+
+.projcont{
+	border-bottom:5px solid #474241;
+}
+
+.logodiv{
+	width:100%;
+	text-align:right;
+	height:20%;
+
+}
+.workimg{
+	height:25px;
+	text-align:right;
+	padding-bottom:1%;
+	margin-right:2%;
+}
+
+.prjcaption{
+	color:#3399FF; 
+	font-weight:bold;
+	padding-bottom:1%;
+	height:25px;
+	padding-left:1%;
+}
+
+/*----------------------------------------------------Method----------------------------------*/
+
+#methodcont {
+	width:100%;
+	background-image:url('/coena.com/assets/images/method_blur.jpg');
+	height:680px;
+	/*background-size: auto;
+	background-repeat:no-repeat;*/
+}
+
+.methodrow{
+	padding-top:11%;
+	padding-bottom:15%;
+}
+
+.emdesc {
+	padding-top:1%;
+	padding-left:3%;
+	padding-right:3%;
+	padding-bottom:1%;
+	text-align:left;
+	font-size:20px;
+	font-family: 'Droid Sans',sans-serif;
+	color:rgb(235,235,235);
+	line-height: 30px;
+}
+
+.emlink{
+	color:#ffffff;
+	background-image: linear-gradient(to bottom,#FADDD4,#E85B00);
+	padding:3%;
+	margin-top:2%;
+	font-size:25px;
+}
+
+.agilecaption{
+	background-color: rgba(0, 0, 0, 0.4);
+	color:rgb(235,235,235);
+	font-family: 'Droid Sans',sans-serif;
+	font-size:40px;
+	text-align:right;
+	padding:2%;
+	line-height: 60px;
+	font-weight: bold;
+}
+
+/*---------------------------------------------Contact---------------------------------------------*/
+
+#contactcont{
+	width:100%;
+	height:680px;
+	/*background-size: auto;
+	background-repeat:no-repeat;*/
+}
+
+.contform {
+	background-color:#AAAAAA;
+}
+
+.formfield{
+	width: 80%;
+margin-left: 10%;
+
+}
+
+.formfield2{
+	width:100px;
+	font-size:24px;
+	margin-top:4px;
+	margin-bottom:4px;
+	border: none;
+}
+
+
+.contactinfo{
+	line-height: 40px;
+	font-size:16px;	
+	margin-left:10px;
+	width:auto;
+}
+
+.contactinforow{
+	margin-bottom: 4px;
+}
+
+.contactinforow:hover{
+	background-image: linear-gradient(to bottom,#FADDD4,#E85B00);
+}
+
+/*-----------------------------------------------Work client-------------------------------------------*/
+#workclientcont{
+	width:100%;
+}
+
+.workclientlogo{
+	border-bottom:7px solid #AAAAAA;
+	margin-top:3%;
+	padding:3%;
+
+}
+.workclientimg{
+	margin-top:3%;
+	-moz-box-shadow:0px 0px 10px 2px rgba(119, 119, 119, 0.6);
+	-webkit-box-shadow:0px 0px 10px 2px rgba(119, 119, 119, 0.6);
+	box-shadow:0px 0px 10px 2px rgba(119, 119, 119, 0.6);
+	width:100%;
+}
+
+.workclientimgdiv{
+	width:99%;
+}
+
+#relatedprjrow{
+	padding:2%;
+	margin-top:2%;
+	color:#FFFFFF;
+	background-color:#AAAAAA;
+}
+
+.prjpageheading{
+	font-size:30px;
+	padding-left:3%;
+}
+
+.relatedprojimg{
+	max-height:50px;
+}
+
+.relatedprojimgdiv{
+	padding:1%;
+	background-color:#FFFFFF;
+	max-width:150px;
+}
+
+.otherprjimg{
+	max-height:40px;
+}
+
+.otherprjrow{
+	padding-top:3%;
+	padding:2%;
+	margin-left:3%;
+	background-image: linear-gradient(to right, #AAAAAA, #EEEEEE);
+	text-align:right;
+	margin:2px;
+	border-left:2px solid #AAAAAA;
+}
+
+.otherprjcol{
+	position: -webkit-sticky;
+  	position: -moz-sticky;
+  	position: -ms-sticky;
+  	position: -o-sticky;
+  	position: fixed;
+  	top: 70px;
+  	right: 2px;
+  	max-width:150px;
+}
+
