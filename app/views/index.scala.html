@@ -1,4 +1,4 @@
-@(message: String)
+@(message: String,stories:List[Story],forces:List[Force],forceInteractions:List[ForceInteraction],solutionComponents:List[SolutionComponent])
 
 @main("The Embodied Making Tool") {
         
@@ -50,32 +50,22 @@ Project<h2>Contact Venture</h2>
 			</div>
 			</div> <!-- forms row ends -->
 			<hr>
+			@for(story <- stories){
 			<div class="row">
 				<div class="span1 storyid">
-					<p>S0001</p>
+					<p>@story.story_id</p>
 				</div>
 				<div class="span3">
-					<p>People want to keep in touch with close acquaintances and have up-to-date information about their contact information.</p>
+					<p>@story.description</p>
 				</div>
 				<div class="span1">
 					<input type="button" value="Edit"></input> 
 					<input type="button" value="Add to Force"></input>
 				</div>
 			</div>
-			<div class="row">
-				<div class="span1 storyid">
-					<p>S0002</p>
-				</div>
-				<div class="span3" style="background-color:#C46CB9;color:#FFFFFF;">
-					<p>I tried to reach my daughter for ages, not knowing her mobile number has changed!</p>
-				</div>
-				<div class="span1">
-					<input type="button" value="Edit"></input> 
-					<input type="button" value="Add to Force"></input>
-				</div>
-			</div>
+			}
 		</div><!-- Stories end -->
-		<div class="span7 well">
+		<div class="span8 well">
 			<h2>Forces</h2>
 			<div class="row">
 			<div class="span1">
@@ -106,15 +96,16 @@ Project<h2>Contact Venture</h2>
 			</div>
 			</div><!-- form row ends -->
 			<hr>
+			@for(force <- forces){
 			<div class="row">
 				<div class="span1 storyid">
-					<p>F0001</p>
+					<p>@force.force_id</p>
 				</div>
 				<div class="span1 storyid">
 					S0001 
 				</div>
 				<div class="span3">
-					<p> Desire to be kept up-to-date with close acquaintances.</p>
+					<p> @force.description</p>
 				</div>
 				<div class="span1">
 					<input type="button" value="Edit"></input> 
@@ -123,34 +114,94 @@ Project<h2>Contact Venture</h2>
 					<input type="button" value="neutral effect on interaction"></input>
 				</div>
 			</div>
-			<div class="row">
-				<div class="span1 storyid">
-					<p>F0002</p>
-				</div>
-				<div class="span1 storyid">
-					S0001 S0002
-				</div>
-				<div class="span3">
-					<p>Desire to keep in touch with some people more than others.</p>
-				</div>
-				<div class="span1">
-					<input type="button" value="Edit"></input> 
-					<input type="button" value="+ve effect on interaction"></input>
-					<input type="button" value="-ve effect on interaction"></input>
-					<input type="button" value="neutral effect on interaction"></input>
-				</div>
-			</div>
-			
+			}
 			</div><!-- Forces end -->
 		</div>
-		<div class="span1 well sidebar">
-			<div class="row">
-				<p class="collapsedhead">Force Interactions</p>
-			</div>
-			<div class="row">
-				<p class="collapsedhead">Solution Components</p>
-			</div>
+		<div class="row">
+		<div class="span8 well">
+				<h2>Force Interactions</h2>
+	
+				<div class="row fiheader" > <!-- header begins -->
+					<div class="span1">
+						Force 
+					</div>
+					<div class="span2">
+						Reinforcing forces/wills
+					</div>
+					<div class="span2">
+						Conflicting forces/wills
+					</div>
+					<div class="span2">
+						Neutral forces/wills
+					</div>					
+				</div><!-- header ends -->
+				<hr>
+				<!-- force interactions listing begins -->
+					@for(fi <- forceInteractions){
+					<div class="row">
+					<div class="span1 ">
+						@fi.primary_force
+					</div>
+					<div class="span2">
+						@fi.reinforcing.map(x => x+" ")
+					</div>
+					<div class="span2">
+						@fi.conflicting.map(x => x+" ")
+					</div>
+					<div class="span2">
+						@fi.neutral.map(x => x+" ")
+					</div>
+					</div>
+					<hr>
+					}
+				<!-- force interactions listing ends -->
 		</div>
+		</div> <!-- Force interaction row ends -->
+		<div class="row">
+		<div class="span9 well sidebar">
+		<h2>Solution Components</h2>
+			<div class="row fiheader" > <!-- header begins -->
+					<div class="span1">
+						Id 
+					</div>
+					<div class="span4">
+						Description
+					</div>
+					<div class="span1">
+						Favoured
+					</div>
+					<div class="span1">
+						Affected
+					</div>	
+					<div class="span1">
+						Unresolved
+					</div>				
+				</div><!-- header ends -->
+				<hr>
+				<!-- solution component listing begins -->
+					@for(sc <- solutionComponents){
+					<div class="row">
+					<div class="span1 ">
+						@sc.sol_id
+					</div>
+					<div class="span4">
+						@sc.description
+					</div>
+					<div class="span1">
+						@sc.favored.map(x => x+" ")
+					</div>
+					<div class="span1">
+						@sc.affected.map(x => x+" ")
+					</div>
+					<div class="span1">
+						@sc.unresolved.map(x => x+" ")
+					</div>
+					</div>
+					<hr>
+					}
+				<!-- solution component listing ends -->
+		</div>
+		</div> <!-- Solution component row ends
 	</div>
 </div>
   

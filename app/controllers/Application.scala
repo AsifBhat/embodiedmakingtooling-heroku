@@ -2,11 +2,13 @@ package controllers
 
 import play.api._
 import play.api.mvc._
+import models._
+
 
 object Application extends Controller {
   
   def index = Action {
-    Ok(views.html.index("The Embodied Making Tool"))
+    Ok(views.html.index("The Embodied Making Tool",Story.all(),Force.all(),ForceInteraction.all(),SolutionComponent.all()))
   }
   
 }
