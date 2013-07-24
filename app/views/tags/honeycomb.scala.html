@@ -1,0 +1,63 @@
+
+<div id="outer" style="width: 512px; height: 512px;overflow:auto;">
+<div id="container" style="border: 1px solid silver; width: 512px; height: 512px; margin:20px" ondragover="allowDrop(event)" ondrop="drop(event,hexagon,stage,layer)" ></div>
+</div>
+
+<script>
+
+
+// hexagon dimensions
+var radius = 32;
+var height = (radius * Math.sqrt(3));
+var side = radius * 3 / 2;
+
+// grid size
+var gridWidth = 80;
+var gridHeight = 80;
+
+// set up stage and layer
+var stage = new Kinetic.Stage({
+    container: 'container',
+    x: 0,
+    y: 0,
+    width: 2000,
+    height: 2000,
+    //draggable: true
+});
+var layer = new Kinetic.Layer();
+
+// Declaring hexagon array 
+var hexagon = new Array(gridWidth*gridHeight);// store columns
+ 
+  var hexa;
+// position polygons
+for (var i = 0; i < gridWidth; i++) {
+    for (var j = 0; j < gridHeight; j++) {
+        mX = radius + (i * side)+(i*3);
+        mY = radius + (height * (2 * j + (i % 2)) / 2)+(4*j);
+
+        hexa = new Kinetic.RegularPolygon({
+            x: mX,
+            y: mY,
+            sides: 6,
+            radius: radius,
+            stroke: 'black',
+            fill: 'white',
+            strokeWidth: 1,
+            rotationDeg: 90
+            
+        });
+       // layer.add(hexagon[i][j]);
+       layer.add(hexa);
+       hexagon[(i*gridHeight)+j] =hexa;
+       
+    }
+}
+
+stage.add(layer);
+
+hex_grid=hexagon;
+
+
+
+</script>

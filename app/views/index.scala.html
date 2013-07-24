@@ -1,5 +1,7 @@
 @(message: String,stories:List[Story],forces:List[Force],forceInteractions:List[ForceInteraction],solutionComponents:List[SolutionComponent])
 
+@import tags._
+
 @main("The Embodied Making Tool") {
         
     <div class="container" style="width:100%; margin-top:20px; position:sticky;">
@@ -24,7 +26,7 @@
 <div class="container" id="projectcontainer">
 Project<h2>Contact Venture</h2>
 	<div class="row">
-		<div class="span5 well">
+		<div class="span4 well">
 			<h2>Stories</h2>
 			<div class="row">
 			<div class="span1">
@@ -32,7 +34,7 @@ Project<h2>Contact Venture</h2>
 					<p> S0003 </p>
 				</div>
 			</div>
-			<div class="span3">
+			<div class="span2">
 				<div class="">
 					<textarea rows="3" cols="50"></textarea> 
 				</div>
@@ -55,21 +57,24 @@ Project<h2>Contact Venture</h2>
 				<div class="span1 storyid">
 					<p>@story.story_id</p>
 				</div>
-				<div class="span3">
+				<div class="span2">
 					<p>@story.description</p>
 				</div>
 				<div class="span1">
 					<input type="button" value="Edit"></input> 
-					<input type="button" value="Add to Force"></input>
+					<input type="button" value="Drag"></input>
 				</div>
 			</div>
 			}
 		</div><!-- Stories end -->
-		<div class="span8 well">
+		<div class="span4">
+		@views.html.tags.honeycomb.render()
+		</div>
+		<div class="span4 well offset2" style="height:500px;overflow:auto;">
 			<h2>Forces</h2>
 			<div class="row">
 			<div class="span1">
-				<div class="storyid">
+				<div class="storyid" style="margin: 0px 0px 0px 10px; padding: 0px;width:30px;">
 					<p> F0003 </p>
 				</div>
 			</div>
@@ -78,9 +83,9 @@ Project<h2>Contact Venture</h2>
 					<textarea rows="5" style="width:50px;">S0001 S0002</textarea> 
 				</div>
 			</div>
-			<div class="span4">
+			<div class="span1">
 				<div class="">
-					<textarea rows="5" cols="50" style="width:350px;"></textarea> 
+					<textarea rows="5" style="width:50px;" ></textarea> 
 				</div>
 			</div>
 			<div class="span1">
@@ -91,7 +96,7 @@ Project<h2>Contact Venture</h2>
 					<input type="button" value="Search"></input>
 				</div>
 				<div class="row">
-					<input type="button" value="Save changes"></input>
+					<input type="button" value="Save"></input>
 				</div>
 			</div>
 			</div><!-- form row ends -->
@@ -104,14 +109,12 @@ Project<h2>Contact Venture</h2>
 				<div class="span1 storyid">
 					S0001 
 				</div>
-				<div class="span3">
+				<div class="span1">
 					<p> @force.description</p>
 				</div>
 				<div class="span1">
 					<input type="button" value="Edit"></input> 
-					<input type="button" value="+ve effect on interaction"></input>
-					<input type="button" value="-ve effect on interaction"></input>
-					<input type="button" value="neutral effect on interaction"></input>
+					<div style="width:20px;height:15px;" draggable="true" id="@force.force_id" ondragstart=drag(event)>Drag</div>
 				</div>
 			</div>
 			}
