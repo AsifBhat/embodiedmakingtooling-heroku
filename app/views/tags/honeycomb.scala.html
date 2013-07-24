@@ -1,5 +1,5 @@
 
-<div id="outer" style="width: 512px; height: 512px;overflow:auto;">
+<div id="honeycomb" style="width: 512px; height: 512px;overflow:auto;">
 <div id="container" style="border: 1px solid silver; width: 512px; height: 512px; margin:20px" ondragover="allowDrop(event)" ondrop="drop(event,hexagon,stage,layer)" ></div>
 </div>
 
@@ -22,6 +22,7 @@ var stage = new Kinetic.Stage({
     y: 0,
     width: 2000,
     height: 2000,
+    id: 'abc'
     //draggable: true
 });
 var layer = new Kinetic.Layer();
@@ -44,7 +45,8 @@ for (var i = 0; i < gridWidth; i++) {
             stroke: 'black',
             fill: 'white',
             strokeWidth: 1,
-            rotationDeg: 90
+            rotationDeg: 90,
+            id:'he'
             
         });
        // layer.add(hexagon[i][j]);
