@@ -1,6 +1,6 @@
 
 <div id="honeycomb" style="width: 512px; height: 512px;overflow:auto;">
-<div id="container" style="border: 1px solid silver; width: 512px; height: 512px; margin:20px" ondragover="allowDrop(event)" ondrop="drop(event,hexagon,stage,layer)" ></div>
+<div id="container" style="border: 1px solid silver; width: 512px; height: 512px; margin:20px" ondragover="allowDrop(event)" ondrop="drop(event,hexagon,stage,layer,gridHeight)" ></div>
 </div>
 
 <script>
@@ -46,9 +46,11 @@ for (var i = 0; i < gridWidth; i++) {
             fill: 'white',
             strokeWidth: 1,
             rotationDeg: 90,
-            id:'he'
+            id:i+'-'+j
             
         });
+
+
        // layer.add(hexagon[i][j]);
        layer.add(hexa);
        hexagon[(i*gridHeight)+j] =hexa;
@@ -57,9 +59,5 @@ for (var i = 0; i < gridWidth; i++) {
 }
 
 stage.add(layer);
-
-hex_grid=hexagon;
-
-
 
 </script>
