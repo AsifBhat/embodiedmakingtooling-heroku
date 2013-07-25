@@ -26,9 +26,9 @@
 <div class="container" id="projectcontainer">
 Project<h2>Contact Venture</h2>
 	<div class="row">
-		<div class="span4 well">
+		<div class="span4 well" style="height:300px;overflow:auto;">
 			<h2>Stories</h2>
-			<div class="row">
+			<!--<div class="row">
 			<div class="span1">
 				<div class="storyid">
 					<p> S0003 </p>
@@ -47,11 +47,12 @@ Project<h2>Contact Venture</h2>
 					<input type="button" value="Search"></input>
 				</div>
 				<div class="row">
-					<input type="button" value="Save changes"></input>
+					<input type="button" value="Save"></input>
 				</div>
 			</div>
-			</div> <!-- forms row ends -->
-			<hr>
+			</div> 
+			<hr> -->
+			<!-- forms row ends -->
 			@for(story <- stories){
 			<div class="row">
 				<div class="span1 storyid">
@@ -62,16 +63,17 @@ Project<h2>Contact Venture</h2>
 				</div>
 				<div class="span1">
 					<input type="button" value="Edit"></input> 
-					<input type="button" value="Drag"></input>
+					<div style="width:20px;height:15px;" draggable="true" id="@story.story_id" ondragstart=drag(event)>Drag</div>
 				</div>
 			</div>
 			}
 		</div><!-- Stories end -->
-		<div class="span4">
+		<div class="span4" >
 		@views.html.tags.honeycomb.render()
 		</div>
-		<div class="span4 well offset2" style="height:500px;overflow:auto;">
+		<div class="span4 well offset2" style="height:300px;overflow:auto;">
 			<h2>Forces</h2>
+			<!--
 			<div class="row">
 			<div class="span1">
 				<div class="storyid" style="margin: 0px 0px 0px 10px; padding: 0px;width:30px;">
@@ -99,8 +101,9 @@ Project<h2>Contact Venture</h2>
 					<input type="button" value="Save"></input>
 				</div>
 			</div>
-			</div><!-- form row ends -->
-			<hr>
+			</div> 
+			<hr> -->
+			<!-- form row ends -->
 			@for(force <- forces){
 			<div class="row">
 				<div class="span1 storyid">
@@ -120,6 +123,52 @@ Project<h2>Contact Venture</h2>
 			}
 			</div><!-- Forces end -->
 		</div>
+		<div class="row">
+		<div class="span9 well" style="height:300px;overflow:auto;">
+		<h2>Solution Components</h2>
+			<div class="row fiheader" > <!-- header begins -->
+					<div class="span1">
+						Id 
+					</div>
+					<div class="span4">
+						Description
+					</div>
+					<div class="span1">
+						Favoured
+					</div>
+					<div class="span1">
+						Affected
+					</div>	
+					<div class="span1">
+						Unresolved
+					</div>				
+				</div><!-- header ends -->
+				<hr>
+				<!-- solution component listing begins -->
+					@for(sc <- solutionComponents){
+					<div class="row">
+					<div class="span1 ">
+						@sc.sol_id
+						<div style="width:20px;height:15px;" draggable="true" id="@sc.sol_id" ondragstart=drag(event)>Drag</div>
+					</div>
+					<div class="span4">
+						@sc.description
+					</div>
+					<div class="span1">
+						@sc.favored.map(x => x+" ")
+					</div>
+					<div class="span1">
+						@sc.affected.map(x => x+" ")
+					</div>
+					<div class="span1">
+						@sc.unresolved.map(x => x+" ")
+					</div>
+					</div>
+					<hr>
+					}
+				<!-- solution component listing ends -->
+		</div>
+		</div> <!-- Solution component row ends -->
 		<div class="row">
 		<div class="span8 well">
 				<h2>Force Interactions</h2>
@@ -160,51 +209,7 @@ Project<h2>Contact Venture</h2>
 				<!-- force interactions listing ends -->
 		</div>
 		</div> <!-- Force interaction row ends -->
-		<div class="row">
-		<div class="span9 well sidebar">
-		<h2>Solution Components</h2>
-			<div class="row fiheader" > <!-- header begins -->
-					<div class="span1">
-						Id 
-					</div>
-					<div class="span4">
-						Description
-					</div>
-					<div class="span1">
-						Favoured
-					</div>
-					<div class="span1">
-						Affected
-					</div>	
-					<div class="span1">
-						Unresolved
-					</div>				
-				</div><!-- header ends -->
-				<hr>
-				<!-- solution component listing begins -->
-					@for(sc <- solutionComponents){
-					<div class="row">
-					<div class="span1 ">
-						@sc.sol_id
-					</div>
-					<div class="span4">
-						@sc.description
-					</div>
-					<div class="span1">
-						@sc.favored.map(x => x+" ")
-					</div>
-					<div class="span1">
-						@sc.affected.map(x => x+" ")
-					</div>
-					<div class="span1">
-						@sc.unresolved.map(x => x+" ")
-					</div>
-					</div>
-					<hr>
-					}
-				<!-- solution component listing ends -->
-		</div>
-		</div> <!-- Solution component row ends
+		
 	</div>
 </div>
   
