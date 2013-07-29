@@ -3,8 +3,6 @@
 # ~~~~
 
 # Home page
-GET     /emtool.com                           controllers.Application.index
-GET 	/emtool.com/						  controllers.Application.index
 
 GET 	/worksheet							  controllers.Application.worksheet
 GET 	/worksheet/							  controllers.Application.worksheet
