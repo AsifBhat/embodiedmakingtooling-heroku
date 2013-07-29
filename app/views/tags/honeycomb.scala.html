@@ -59,7 +59,9 @@
           width: cellWidth,
           text: cellText,
           fontSize: 12,
-          font: 'verdana',
+          fontFamily: 'verdana',
+          fontStyle: 'normal',
+          stroke: '#ffffff',          
           strokeWidth: 1
         });
         return textObject;
@@ -74,6 +76,7 @@
           name: 'Cell',
           fill: color,
           rotationDeg: 90,
+          stroke: '#DADADA',
           strokeWidth: 2
         });
         return hexCell;
@@ -114,7 +117,8 @@
                 name: 'Grid',
                 fill: 'white',
                 rotationDeg: 90,
-                strokeWidth: 2
+                stroke: '#C2C2C2',
+                strokeWidth: 1
               });
               
               try{
