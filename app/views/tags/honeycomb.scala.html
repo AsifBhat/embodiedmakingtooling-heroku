@@ -1,0 +1,235 @@
+    <div class="span8" id="workArea">
+      <div class="worksheet">
+        <div id="container"></div>
+      </div>
+    </div>
+    
+    
+    <!--script src="js/kinetic-v4.5.4.min.js"></script>
+    <script src="js/jquery.js"></script>
+    <script src="js/bootstrap.min.js"></script-->
+
+    <script defer="defer">
+      /** Global variable for cell*/
+      var movingCell = null;
+      var movingText = null;
+      var movingLayer = null;
+      var movingGroup = null;
+      dragGroup = null;
+      createMovingLayer();
+      var cellYCordinate = 0;
+      var cellYCordinate = 0;
+
+      //Global pallets layer which should come on top of pallets panel
+      var palletes_layer = null;
+
+      //Global for cell-text which should come on the top of each cell
+      var pallete_text = null;
+
+      // create stage for the pallet. This will just be on the background of the pallet.
+      var pallete_stage = null;
+
+      function createPalleteStage(){
+        var p_stage = new Kinetic.Stage({
+          container: 'forces_pallete',
+          width: 80,
+          height: 15
+        });
+
+        return p_stage;
+      }
+
+      //Moving group: contains the set of text object and the hexa-cell benith it.
+      function createMovingGroup(){ 
+          var group = new Kinetic.Group({
+            draggable: true
+          });
+          return group;
+      };
+
+      function createMovingLayer(){
+        movingLayer =  new Kinetic.Layer({
+          draggable: false
+        });
+      };
+
+      // Create the text layer that should come on top of the hexagonal cell
+      function createTextLayer(cellWidth, cellText){
+        var textObject = new Kinetic.Text({
+          width: cellWidth,
+          text: cellText,
+          fontSize: 12,
+          font: 'verdana',
+          strokeWidth: 1
+        });
+        return textObject;
+      }
+
+      //Method to create a hexagonal cell
+      function createHexCell(color){
+        /* Code to create the pallete */
+        var hexCell = new Kinetic.RegularPolygon({
+          sides:6,
+          radius: 40,
+          name: 'Cell',
+          fill: color,
+          rotationDeg: 90,
+          strokeWidth: 2
+        });
+        return hexCell;
+      }
+
+      //pallete_text =createTextLayer();
+
+      /** This is the code to create Hexagonal grid */
+      var stage = new Kinetic.Stage({
+        container: 'container',
+        width: 800,
+        height: 900,
+        strokeWidth: 2
+      });
+
+      //layer containing the shapes
+      var shapesLayer = new Kinetic.Layer();
+      createHexGrid();
+
+      //Method to create the hexagon grid.
+      function createHexGrid(){
+        for(var n = 0; n < 100; n++) {
+          // anonymous function to induce scope
+          (function() {
+            var row = n;
+            var xCord = 0;
+            var yCord = 0;
+            for (var col = 0; col < 100; col++) {
+              xCord = (col*80*1.5)+ ((row%2) * 60) ;
+              yCord = (row*70*(.5)) ;
+
+              /** Intitilizer for the hexagons */
+              var hexa = new Kinetic.RegularPolygon({
+                sides:6,
+                radius: 40,
+                x: xCord,
+                y: yCord,
+                name: 'Grid',
+                fill: 'white',
+                rotationDeg: 90,
+                strokeWidth: 2
+              });
+              
+              try{
+                hexa.on('mouseup', function() {
+                    cellXCordinate = this.getX();
+                    cellYCordinate = this.getY();
+                    if(movingCell != null && movingText != null){
+                      movingCell.setX(cellXCordinate);
+                      movingCell.setY(cellYCordinate);
+                      
+                      movingText.setX(cellXCordinate-20);
+                      movingText.setY(cellYCordinate-10);
+                      movingGroup = createMovingGroup();
+                      movingGroup.add(movingCell);
+                      movingGroup.add(movingText);
+                      movingLayer.add(movingGroup);
+                      stage.add(movingLayer);
+                      movingCell = null;
+                      movingText = null;
+                      //movingLayer = null;
+/*                      movingGroup.on('dragend', function(){
+                        console.log('event-> dragend: moved group');
+                        var tempObj = shapesLayer.getIntersection(movingGroup.getAbsolutePosition());
+                        tempObj.fire('mouseover', null, true);
+                      });*/
+                        /*dragGroup = movingGroup;
+                        movingGroup.remove();*/
+                        /*movingGroup.setX(cellXCordinate);
+                        movingGroup.setY(cellYCordinate);*/
+                    
+
+                    }
+                  });
+
+                 /* hexa.on('dragend', function(){
+                     if(dragGroup != null){
+                      movingGroup = dragGroup;
+                      movingGroup.setX(cellXCordinate);
+                      movingGroup.setY(cellYCordinate);
+                      movingLayer.add(movingGroup);
+                      //dragGroup = null;
+                    }
+                  });*/
+
+                  hexa.on('mouseover', function(){
+                    cellYCordinate = this.getY();
+                    cellXCordinate = this.getX();
+                  });
+
+                  hexa.on('mousedown', function(){
+                    cellYCordinate = this.getY();
+                    cellXCordinate = this.getX();
+                  });
+
+              }
+              catch(e){
+                console.log('error in event handling..');
+                console.log(e);
+              }
+
+              //group.add(hexa);
+              shapesLayer.add(hexa); 
+            };
+          })();
+        }
+      };
+
+      //add the shapes layer to the stage
+      stage.add(shapesLayer);       
+      stage.on('mouseover', function() {
+        document.body.style.cursor = 'crosshair';
+      });
+    
+      stage.on('mouseout', function() {
+        document.body.style.cursor = 'default';
+      });
+
+/*    $('#forces_pallete').ready(
+      function(){
+        pallete_stage = createPalleteStage();
+        
+        pallete_text = createTextLayer();
+        pallete_text.setDraggable(false);
+        
+        palletes_layer = new Kinetic.Layer();
+        palletes_layer.add(pallete_text);
+        
+        pallete_stage.add(palletes_layer);
+
+        // Event handler for dragstart/mouse down on the Pallets stage.
+        pallete_stage.on('mousedown', function(){
+          createContentGroup();
+        });
+      }
+    );*/
+
+    function createContentGroup(){
+      document.body.style.cursor = 'crosshair';//alert('here!');
+      console.log('Creating hexa cell');
+      movingCell = createHexCell();
+      movingText = createTextLayer(movingCell.getWidth() * 2, cellText);
+    }
+
+    function createContentObj(event, cellText, color){
+      event.preventDefault();
+      console.log('A drag event was triggerred..');
+      movingCell = createHexCell(color);
+      movingText = createTextLayer(movingCell.getRadius() * 2 , cellText);
+    }
+    /* 
+      Steps:
+        1. MouseDown/DragStart on the pallet item
+        2. The hexagon cell and the text to come on top of it gets created
+        3. MouseDown/dragend on the hexagonal grid
+        4. Take the hexagon cell coordinates on which the cursor is and place the moving hexa-cell on this position
+        5. Add the hex cell and the text to the stage containing hexagonal grid
+    */
+    </script>

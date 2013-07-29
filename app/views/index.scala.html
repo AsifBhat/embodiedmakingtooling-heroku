@@ -1,0 +1,216 @@
+@(message: String,stories:List[Story],forces:List[Force],forceInteractions:List[ForceInteraction],solutionComponents:List[SolutionComponent])
+
+@import tags._
+
+@main("The Embodied Making Tool") {
+        
+    <div class="container" style="width:100%; margin-top:20px; position:sticky;">
+    	<div class="masthead" >
+        
+        <div class="navbar">
+          <div class="navbar-inner">
+            <div class="container">
+              <ul class="nav" style="width:80%;">
+                <li class="active tooltabs"><a href="#" class="tooltablinks">My Projects</a></li>
+                <li class="tooltabs"><a href="#" class="tooltablinks">My Account</a></li>
+                <li class="tooltabs"><a href="#" class="tooltablinks">Settings</a></li>
+                <li class="tooltabs"><a href="#" class="tooltablinks">Examples</a></li>
+                <li class="tooltabs"><a href="#" class="tooltablinks">Help</a></li>
+              </ul>
+            </div>
+          </div>
+        </div><!-- /.navbar -->
+      	</div><!-- /.masthead -->
+</div> <!-- end container -->  
+
+<div class="container" id="projectcontainer">
+Project<h2>Contact Venture</h2>
+	<div class="row">
+		<div class="span4 well" style="height:300px;overflow:auto;">
+			<h2>Stories</h2>
+			<!--<div class="row">
+			<div class="span1">
+				<div class="storyid">
+					<p> S0003 </p>
+				</div>
+			</div>
+			<div class="span2">
+				<div class="">
+					<textarea rows="3" cols="50"></textarea> 
+				</div>
+			</div>
+			<div class="span1">
+				<div class="row">
+					<input type="button" value="Add"></input>
+				</div>
+				<div class="row">
+					<input type="button" value="Search"></input>
+				</div>
+				<div class="row">
+					<input type="button" value="Save"></input>
+				</div>
+			</div>
+			</div> 
+			<hr> -->
+			<!-- forms row ends -->
+			@for(story <- stories){
+			<div class="row">
+				<div class="span1 storyid">
+					<p>@story.story_id</p>
+				</div>
+				<div class="span2">
+					<p>@story.description</p>
+				</div>
+				<div class="span1">
+					<input type="button" value="Edit"></input> 
+					<div style="width:20px;height:15px;" draggable="true" id="@story.story_id" ondragstart=drag(event)>Drag</div>
+				</div>
+			</div>
+			}
+		</div><!-- Stories end -->
+		<div class="span4" >
+		@views.html.tags.honeycomb.render()
+		</div>
+		<div class="span4 well offset2" style="height:300px;overflow:auto;">
+			<h2>Forces</h2>
+			<!--
+			<div class="row">
+			<div class="span1">
+				<div class="storyid" style="margin: 0px 0px 0px 10px; padding: 0px;width:30px;">
+					<p> F0003 </p>
+				</div>
+			</div>
+			<div class="span1">
+				<div class="">
+					<textarea rows="5" style="width:50px;">S0001 S0002</textarea> 
+				</div>
+			</div>
+			<div class="span1">
+				<div class="">
+					<textarea rows="5" style="width:50px;" ></textarea> 
+				</div>
+			</div>
+			<div class="span1">
+				<div class="row">
+					<input type="button" value="Add"></input>
+				</div>
+				<div class="row">
+					<input type="button" value="Search"></input>
+				</div>
+				<div class="row">
+					<input type="button" value="Save"></input>
+				</div>
+			</div>
+			</div> 
+			<hr> -->
+			<!-- form row ends -->
+			@for(force <- forces){
+			<div class="row">
+				<div class="span1 storyid">
+					<p>@force.force_id</p>
+				</div>
+				<div class="span1 storyid">
+					S0001 
+				</div>
+				<div class="span1">
+					 @force.description
+				</div>
+				<div class="span1">
+					<input type="button" value="Edit"></input> 
+					<div style="width:20px;height:15px;" draggable="true" id="@force.force_id" ondragstart=drag(event)>Drag</div>
+				</div>
+			</div>
+			}
+			</div><!-- Forces end -->
+		</div>
+		<div class="row">
+		<div class="span9 well" style="height:300px;overflow:auto;">
+		<h2>Solution Components</h2>
+			<div class="row fiheader" > <!-- header begins -->
+					<div class="span1">
+						Id 
+					</div>
+					<div class="span4">
+						Description
+					</div>
+					<div class="span1">
+						Favoured
+					</div>
+					<div class="span1">
+						Affected
+					</div>	
+					<div class="span1">
+						Unresolved
+					</div>				
+				</div><!-- header ends -->
+				<hr>
+				<!-- solution component listing begins -->
+					@for(sc <- solutionComponents){
+					<div class="row">
+					<div class="span1 ">
+						@sc.sol_id
+						<div style="width:20px;height:15px;" draggable="true" id="@sc.sol_id" ondragstart=drag(event)>Drag</div>
+					</div>
+					<div class="span4">
+						@sc.description
+					</div>
+					<div class="span1">
+						@sc.favored.map(x => x+" ")
+					</div>
+					<div class="span1">
+						@sc.affected.map(x => x+" ")
+					</div>
+					<div class="span1">
+						@sc.unresolved.map(x => x+" ")
+					</div>
+					</div>
+					<hr>
+					}
+				<!-- solution component listing ends -->
+		</div>
+		</div> <!-- Solution component row ends -->
+		<div class="row">
+		<div class="span8 well">
+				<h2>Force Interactions</h2>
+	
+				<div class="row fiheader" > <!-- header begins -->
+					<div class="span1">
+						Force 
+					</div>
+					<div class="span2">
+						Reinforcing forces/wills
+					</div>
+					<div class="span2">
+						Conflicting forces/wills
+					</div>
+					<div class="span2">
+						Neutral forces/wills
+					</div>					
+				</div><!-- header ends -->
+				<hr>
+				<!-- force interactions listing begins -->
+					@for(fi <- forceInteractions){
+					<div class="row">
+					<div class="span1 ">
+						@fi.primary_force
+					</div>
+					<div class="span2">
+						@fi.reinforcing.map(x => x+" ")
+					</div>
+					<div class="span2">
+						@fi.conflicting.map(x => x+" ")
+					</div>
+					<div class="span2">
+						@fi.neutral.map(x => x+" ")
+					</div>
+					</div>
+					<hr>
+					}
+				<!-- force interactions listing ends -->
+		</div>
+		</div> <!-- Force interaction row ends -->
+		
+	</div>
+</div>
+  
+}
