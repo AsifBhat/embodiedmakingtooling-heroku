@@ -1,6 +1,6 @@
     <div class="span8" id="workArea">
       <div class="worksheet">
-        <div id="container"></div>
+        <div id="honeycombcontainer"></div>
       </div>
     </div>
     
@@ -29,7 +29,13 @@
       // create stage for the pallet. This will just be on the background of the pallet.
       var pallete_stage = null;
 
-      function createPalleteStage(){
+      // Initialized to false.  On mouseover on a hex a 1 second delay is triggered.  After the
+      // delay, the mouseOverHex is checked if it were already true.  If so, the mouse has stayed 
+      // on the hex for a second.  The tooltip can be shown and the vble set to false.  Else
+      // set it to true and exit.  The mouse over event is triggered almost continuously.
+      var mouseOverHex = false;
+
+      /*function createPalleteStage(){
         var p_stage = new Kinetic.Stage({
           container: 'forces_pallete',
           width: 80,
@@ -37,7 +43,7 @@
         });
 
         return p_stage;
-      }
+      }*/
 
       //Moving group: contains the set of text object and the hexa-cell benith it.
       function createMovingGroup(){ 
@@ -61,9 +67,14 @@
           fontSize: 12,
           fontFamily: 'verdana',
           fontStyle: 'normal',
-          stroke: '#ffffff',          
+          stroke: '#000000',          
           strokeWidth: 1
         });
+
+        /*textObject.on('mouseover',function(){
+          console.log("mouse on text");
+          $("#desctooltip").tooltip('show');
+        });*/
         return textObject;
       }
 
@@ -77,16 +88,56 @@
           fill: color,
           rotationDeg: 90,
           stroke: '#DADADA',
-          strokeWidth: 2
+          strokeWidth: 2,
+          opacity:0.2
         });
-        return hexCell;
+        
+        hexCell.on('mouseover', function(){
+                    var xc = this.getX();
+                    var yc = this.getY()-40;
+                    console.log("Mouse over hex"+this.getX());
+                    var h = $("#honeycombcontainer");
+                    var canvas_ = $((h.children().first()));
+                    $(canvas_.append('<div id="desctooltip" style="z-index:100;background-color:#000000;width:1px;height:1px;position:absolute;margin-top:'+yc+'px;margin-left:'+xc+'px;" data-placement="top" data-toggle="tooltip" type="button" data-original-title="Tooltip on top" ></div>'));
+                    $("#desctooltip").tooltip('show');
+                  });
+
+                    /*if(mouseOverHex){
+                      //setTimeout(mouseStayCheck,1000);
+                      $("#desctooltip").tooltip('show');
+                    } else {
+                      mouseOverHex = true;
+                    }  */                  
+                    
+
+                  function mouseStayCheck(){
+                    console.log("Delay over");
+                    if(mouseOverHex) {                      
+                      console.log("Mouse over hex long enough");
+                      console.log("Div:"+$("#desctooltip"));
+                      $("#desctooltip").tooltip('show');
+                      mouseOverHex = false;
+                    } else {
+                      mouseOverHex = true;
+                    }
+                  }
+
+                  hexCell.on('mouseout',function(){
+                    var topCanvas = $("#honeycombcontainer").children().first().children().first().next();
+                    var topCanvastag = $(topCanvas).get(0).tagName;
+                    console.log(topCanvastag);                    
+                     mouseOverHex = false;
+                     $("#desctooltip").tooltip('hide');
+                     $("#desctooltip").remove();
+                  });
+                  return hexCell;
       }
 
       //pallete_text =createTextLayer();
 
       /** This is the code to create Hexagonal grid */
       var stage = new Kinetic.Stage({
-        container: 'container',
+        container: 'honeycombcontainer',
         width: 800,
         height: 900,
         strokeWidth: 2
@@ -132,8 +183,9 @@
                       movingText.setX(cellXCordinate-20);
                       movingText.setY(cellYCordinate-10);
                       movingGroup = createMovingGroup();
-                      movingGroup.add(movingCell);
+                      
                       movingGroup.add(movingText);
+                      movingGroup.add(movingCell);
                       movingLayer.add(movingGroup);
                       stage.add(movingLayer);
                       movingCell = null;
@@ -162,16 +214,17 @@
                       //dragGroup = null;
                     }
                   });*/
-
-                  hexa.on('mouseover', function(){
-                    cellYCordinate = this.getY();
-                    cellXCordinate = this.getX();
-                  });
+					
+				  /* Adding tool-tip */		
+				  
+                  
 
                   hexa.on('mousedown', function(){
                     cellYCordinate = this.getY();
                     cellXCordinate = this.getX();
                   });
+
+                  
 
               }
               catch(e){
@@ -215,18 +268,19 @@
       }
     );*/
 
-    function createContentGroup(){
+    /*function createContentGroup(){
       document.body.style.cursor = 'crosshair';//alert('here!');
       console.log('Creating hexa cell');
       movingCell = createHexCell();
       movingText = createTextLayer(movingCell.getWidth() * 2, cellText);
-    }
+    }*/
 
     function createContentObj(event, cellText, color){
       event.preventDefault();
       console.log('A drag event was triggerred..');
+      movingText = createTextLayer(40 * 2 , cellText);
       movingCell = createHexCell(color);
-      movingText = createTextLayer(movingCell.getRadius() * 2 , cellText);
+      
     }
     /* 
       Steps:
