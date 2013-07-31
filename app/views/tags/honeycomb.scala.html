@@ -3,11 +3,6 @@
         <div id="honeycombcontainer"></div>
       </div>
     </div>
-    
-    
-    <!--script src="js/kinetic-v4.5.4.min.js"></script>
-    <script src="js/jquery.js"></script>
-    <script src="js/bootstrap.min.js"></script-->
 
     <script defer="defer">
       /** Global variable for cell*/
@@ -35,16 +30,6 @@
       // set it to true and exit.  The mouse over event is triggered almost continuously.
       var mouseOverHex = false;
 
-      /*function createPalleteStage(){
-        var p_stage = new Kinetic.Stage({
-          container: 'forces_pallete',
-          width: 80,
-          height: 15
-        });
-
-        return p_stage;
-      }*/
-
       //Moving group: contains the set of text object and the hexa-cell benith it.
       function createMovingGroup(){ 
           var group = new Kinetic.Group({
@@ -71,10 +56,6 @@
           strokeWidth: 1
         });
 
-        /*textObject.on('mouseover',function(){
-          console.log("mouse on text");
-          $("#desctooltip").tooltip('show');
-        });*/
         return textObject;
       }
 
@@ -101,14 +82,6 @@
                     $(canvas_.append('<div id="desctooltip" style="z-index:100;background-color:#000000;width:1px;height:1px;position:absolute;margin-top:'+yc+'px;margin-left:'+xc+'px;" data-placement="top" data-toggle="tooltip" type="button" data-original-title="Tooltip on top" ></div>'));
                     $("#desctooltip").tooltip('show');
                   });
-
-                    /*if(mouseOverHex){
-                      //setTimeout(mouseStayCheck,1000);
-                      $("#desctooltip").tooltip('show');
-                    } else {
-                      mouseOverHex = true;
-                    }  */                  
-                    
 
                   function mouseStayCheck(){
                     console.log("Delay over");
@@ -190,42 +163,13 @@
                       stage.add(movingLayer);
                       movingCell = null;
                       movingText = null;
-                      //movingLayer = null;
-/*                      movingGroup.on('dragend', function(){
-                        console.log('event-> dragend: moved group');
-                        var tempObj = shapesLayer.getIntersection(movingGroup.getAbsolutePosition());
-                        tempObj.fire('mouseover', null, true);
-                      });*/
-                        /*dragGroup = movingGroup;
-                        movingGroup.remove();*/
-                        /*movingGroup.setX(cellXCordinate);
-                        movingGroup.setY(cellYCordinate);*/
-                    
-
                     }
                   });
-
-                 /* hexa.on('dragend', function(){
-                     if(dragGroup != null){
-                      movingGroup = dragGroup;
-                      movingGroup.setX(cellXCordinate);
-                      movingGroup.setY(cellYCordinate);
-                      movingLayer.add(movingGroup);
-                      //dragGroup = null;
-                    }
-                  });*/
-					
-				  /* Adding tool-tip */		
-				  
-                  
 
                   hexa.on('mousedown', function(){
                     cellYCordinate = this.getY();
                     cellXCordinate = this.getX();
                   });
-
-                  
-
               }
               catch(e){
                 console.log('error in event handling..');
@@ -249,32 +193,6 @@
         document.body.style.cursor = 'default';
       });
 
-/*    $('#forces_pallete').ready(
-      function(){
-        pallete_stage = createPalleteStage();
-        
-        pallete_text = createTextLayer();
-        pallete_text.setDraggable(false);
-        
-        palletes_layer = new Kinetic.Layer();
-        palletes_layer.add(pallete_text);
-        
-        pallete_stage.add(palletes_layer);
-
-        // Event handler for dragstart/mouse down on the Pallets stage.
-        pallete_stage.on('mousedown', function(){
-          createContentGroup();
-        });
-      }
-    );*/
-
-    /*function createContentGroup(){
-      document.body.style.cursor = 'crosshair';//alert('here!');
-      console.log('Creating hexa cell');
-      movingCell = createHexCell();
-      movingText = createTextLayer(movingCell.getWidth() * 2, cellText);
-    }*/
-
     function createContentObj(event, cellText, color){
       event.preventDefault();
       console.log('A drag event was triggerred..');
@@ -282,12 +200,4 @@
       movingCell = createHexCell(color);
       
     }
-    /* 
-      Steps:
-        1. MouseDown/DragStart on the pallet item
-        2. The hexagon cell and the text to come on top of it gets created
-        3. MouseDown/dragend on the hexagonal grid
-        4. Take the hexagon cell coordinates on which the cursor is and place the moving hexa-cell on this position
-        5. Add the hex cell and the text to the stage containing hexagonal grid
-    */
     </script>
