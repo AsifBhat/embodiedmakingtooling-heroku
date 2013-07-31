@@ -1,4 +1,4 @@
-    <div class="span8" id="workArea">
+    <div class="span7" id="workArea">
       <div class="worksheet">
         <div id="honeycombcontainer"></div>
       </div>
@@ -60,7 +60,7 @@
       }
 
       //Method to create a hexagonal cell
-      function createHexCell(color){
+      function createHexCell(color, cellText){
         /* Code to create the pallete */
         var hexCell = new Kinetic.RegularPolygon({
           sides:6,
@@ -70,19 +70,21 @@
           rotationDeg: 90,
           stroke: '#DADADA',
           strokeWidth: 2,
-          opacity:0.2
+          opacity:0.2,
+          name: cellText
         });
         
         hexCell.on('mouseover', function(){
             var xc = this.getX();
             var yc = this.getY()-40;
-            console.log("Mouse over hex"+this.getX());
+            console.log("Mouse over hex"+this.getX() + " name: " + this.getName());
             var h = $("#honeycombcontainer");
             var canvas_ = $((h.children().first()));
-            $(canvas_.append('<div id="desctooltip" style="z-index:100;background-color:#000000;width:1px;height:1px;position:absolute;margin-top:'+yc+'px;margin-left:'+xc+'px;" data-placement="top" data-toggle="tooltip" type="button" data-original-title="Tooltip on top" ></div>'));
+            $(canvas_.append('<div id="desctooltip" style="z-index:100;background-color:#000000;width:1px;height:1px;position:absolute;margin-top:'+yc+'px;margin-left:'+xc+'px;" data-placement="top" data-toggle="tooltip" type="button" data-original-title="'+ fetchComponentDetails(this.getName()) +'" ></div>'));
             $("#desctooltip").tooltip('show');
           });
 
+        /* Still dont know what this is for..*/
         function mouseStayCheck(){
           console.log("Delay over");
           if(mouseOverHex) {                      
@@ -191,7 +193,21 @@
       event.preventDefault();
       console.log('A drag event was triggerred..');
       movingText = createTextLayer(40 * 2 , cellText);
-      movingCell = createHexCell(color);
-      
+      movingCell = createHexCell(color, cellText);
+      //fetchComponentDetails(cellText)
     }
+
+    /* 
+      Finds and fetches the content from the given ID. 
+      Please note that this function is written under the assumption that every Component-ID is unique.
+      In case the component ID is not unique, then the approach has to be changed.
+    */
+    function fetchComponentDetails(contentID){
+      var descText =  $("#"+ contentID).parent().siblings().find($('.desc > p')).text();
+      return descText;
+    }
+
+    /* 
+      This is javascript map object. This shall be used to store the component information for a given id.      
+    */
     </script>
