@@ -74,39 +74,38 @@
         });
         
         hexCell.on('mouseover', function(){
-                    var xc = this.getX();
-                    var yc = this.getY()-40;
-                    console.log("Mouse over hex"+this.getX());
-                    var h = $("#honeycombcontainer");
-                    var canvas_ = $((h.children().first()));
-                    $(canvas_.append('<div id="desctooltip" style="z-index:100;background-color:#000000;width:1px;height:1px;position:absolute;margin-top:'+yc+'px;margin-left:'+xc+'px;" data-placement="top" data-toggle="tooltip" type="button" data-original-title="Tooltip on top" ></div>'));
-                    $("#desctooltip").tooltip('show');
-                  });
+            var xc = this.getX();
+            var yc = this.getY()-40;
+            console.log("Mouse over hex"+this.getX());
+            var h = $("#honeycombcontainer");
+            var canvas_ = $((h.children().first()));
+            $(canvas_.append('<div id="desctooltip" style="z-index:100;background-color:#000000;width:1px;height:1px;position:absolute;margin-top:'+yc+'px;margin-left:'+xc+'px;" data-placement="top" data-toggle="tooltip" type="button" data-original-title="Tooltip on top" ></div>'));
+            $("#desctooltip").tooltip('show');
+          });
 
-                  function mouseStayCheck(){
-                    console.log("Delay over");
-                    if(mouseOverHex) {                      
-                      console.log("Mouse over hex long enough");
-                      console.log("Div:"+$("#desctooltip"));
-                      $("#desctooltip").tooltip('show');
-                      mouseOverHex = false;
-                    } else {
-                      mouseOverHex = true;
-                    }
-                  }
+        function mouseStayCheck(){
+          console.log("Delay over");
+          if(mouseOverHex) {                      
+            console.log("Mouse over hex long enough");
+            console.log("Div:"+$("#desctooltip"));
+            $("#desctooltip").tooltip('show');
+            mouseOverHex = false;
+          } else {
+            mouseOverHex = true;
+          }
+        }
 
-                  hexCell.on('mouseout',function(){
-                    var topCanvas = $("#honeycombcontainer").children().first().children().first().next();
-                    var topCanvastag = $(topCanvas).get(0).tagName;
-                    console.log(topCanvastag);                    
-                     mouseOverHex = false;
-                     $("#desctooltip").tooltip('hide');
-                     $("#desctooltip").remove();
-                  });
-                  return hexCell;
+        hexCell.on('mouseout',function(){
+          var topCanvas = $("#honeycombcontainer").children().first().children().first().next();
+          var topCanvastag = $(topCanvas).get(0).tagName;
+          console.log(topCanvastag);                    
+           mouseOverHex = false;
+           $("#desctooltip").tooltip('hide');
+           $("#desctooltip").remove();
+        });
+        return hexCell;
       }
 
-      //pallete_text =createTextLayer();
 
       /** This is the code to create Hexagonal grid */
       var stage = new Kinetic.Stage({
@@ -147,29 +146,24 @@
               
               try{
                 hexa.on('mouseup', function() {
-                    cellXCordinate = this.getX();
-                    cellYCordinate = this.getY();
-                    if(movingCell != null && movingText != null){
-                      movingCell.setX(cellXCordinate);
-                      movingCell.setY(cellYCordinate);
-                      
-                      movingText.setX(cellXCordinate-20);
-                      movingText.setY(cellYCordinate-10);
-                      movingGroup = createMovingGroup();
-                      
-                      movingGroup.add(movingText);
-                      movingGroup.add(movingCell);
-                      movingLayer.add(movingGroup);
-                      stage.add(movingLayer);
-                      movingCell = null;
-                      movingText = null;
-                    }
-                  });
-
-                  hexa.on('mousedown', function(){
-                    cellYCordinate = this.getY();
-                    cellXCordinate = this.getX();
-                  });
+                  cellXCordinate = this.getX();
+                  cellYCordinate = this.getY();
+                  if(movingCell != null && movingText != null){
+                    movingCell.setX(cellXCordinate);
+                    movingCell.setY(cellYCordinate);
+                    
+                    movingText.setX(cellXCordinate-20);
+                    movingText.setY(cellYCordinate-10);
+                    movingGroup = createMovingGroup();
+                    
+                    movingGroup.add(movingText);
+                    movingGroup.add(movingCell);
+                    movingLayer.add(movingGroup);
+                    stage.add(movingLayer);
+                    movingCell = null;
+                    movingText = null;
+                  }
+                });
               }
               catch(e){
                 console.log('error in event handling..');
