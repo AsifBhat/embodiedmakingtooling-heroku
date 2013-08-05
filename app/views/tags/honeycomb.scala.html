@@ -123,13 +123,13 @@
 
       //Method to create the hexagon grid.
       function createHexGrid(){
-        for(var n = 0; n < 100; n++) {
+        for(var n = 0.04; n < 100; n++) {
           // anonymous function to induce scope
           (function() {
             var row = n;
             var xCord = 0;
             var yCord = 0;
-            for (var col = 0; col < 100; col++) {
+            for (var col = -0.17; col < 100; col++) {
               xCord = (col*80*1.5)+ ((row%2) * 60) ;
               yCord = (row*70*(.5)) ;
 
