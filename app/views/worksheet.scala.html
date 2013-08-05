@@ -1,4 +1,4 @@
-@(message: String,stories:List[Story],forces:List[Force],forceInteractions:List[ForceInteraction],solutionComponents:List[SolutionComponent])
+@(message: String,contentElements:List[ContentElement], clusters:List[Cluster])
 
 @import tags._
 
@@ -30,129 +30,75 @@
 
 	@views.html.tags.honeycomb.render()
 	<div class="span5">
-		<div class="span4 well" style="height:300px;overflow:auto;">
+		<div class="span5 well" style="height:300px;overflow:auto;">
 			<h2>Stories</h2>
 			<!-- forms row ends -->
-			@for(story <- stories){
+			@for(story <- (contentElements.filter(ce => ce.contentType=="S"))){
 			<div class="row">
 				<div class="span1 storyid">
-					<p>@story.story_id</p>
+					<p>@story.id</p>
 				</div>
 				<div class="span3 desc">
 					<p>@story.description</p>
 				</div>
 				<div class="span1">
-					<input type="button" value="Edit"></input> 
-					<div style="width:20px;height:15px;" draggable="true" id="@story.story_id" onmousedown="createContentObj(event, '@story.story_id', '#FFA31A')" >Drag</div>
+					
+					<div style="width:20px;height:15px;" draggable="true" id="@story.id" onmousedown="createContentObj(event, '@story.id', '#FFA31A')" >Drag</div>
 				</div>
 			</div>
 		}
 		</div><!-- Stories end -->
-		<div class="span4 well" style="height:300px;overflow:auto;">
+		<div class="span5 well" style="height:300px;overflow:auto;">
 			<h2>Forces</h2>
 			<!-- form row ends -->
-			@for(force <- forces){
-				<div class="row">
+			@for(force <- (contentElements.filter(ce => ce.contentType=="F"))){
+				<div class="row" >
 					<div class="span1 storyid">
-						<p>@force.force_id</p>
+						<p>@force.id</p>
 					</div>
-					<div class="span1 storyid">
-						S0001 
-					</div>
+					
 					<div class="span3 desc">
 						 <p>@force.description</p>
 					</div>
 					<div class="span1">
-						<input type="button" value="Edit"></input> 
-						<div style="width:20px;height:15px;" draggable="true" id="@force.force_id" onmousedown="createContentObj(event, '@force.force_id', '#A3D119')" >Drag</div>
+						
+						<div style="width:20px;height:15px;" draggable="true" id="@force.id" onmousedown="createContentObj(event, '@force.id', '#A3D119')" >Drag</div>
 					</div>
-				</div>
+				</div>				
 			}
 		</div><!-- Forces end -->
 		<!-- Solution Component begins -->
-		<div class="span4 well" style="height:300px; overflow-y:auto;">
+		<div class="span5 well" style="height:300px; overflow-y:auto;">
 		<h2>Solution Components</h2>
 			<div class="row fiheader" > <!-- header begins -->
 				<div class="span1">
 					Id 
 				</div>
-				<div class="span2">
+				<div class="span3">
 					Description
 				</div>
-				<div class="span1">
-					Favoured
-				</div>
-				<div class="span1">
-					Affected
-				</div>	
-				<div class="span1">
-					Unresolved
-				</div>				
+					
 			</div><!-- header ends -->
 			<hr>
 			<!-- solution component listing begins -->
-			@for(sc <- solutionComponents){
+			@for(sc <- (contentElements.filter(ce => ce.contentType=="C"))){
 				<div class="row">
-					<div class="span1 ">
-						@sc.sol_id
-						<div style="width:20px; height:15px;" draggable="true" id="@sc.sol_id" onmousedown="createContentObj(event, '@sc.sol_id', '#3399FF')">Drag</div>
+					<div class="span1 storyid">
+						@sc.id
 					</div>
 					<div class="span3 desc">
 						<p>@sc.description</p>
 					</div>
 					<div class="span1">
-						@sc.favored.map(x => x + " ")
-					</div>
-					<div class="span1">
-						@sc.affected.map(x => x + " ")
-					</div>
-					<div class="span1">
-						@sc.unresolved.map(x => x + " ")
-					</div>
+						<div style="width:20px; height:15px;" draggable="true" id="@sc.id" onmousedown="createContentObj(event, '@sc.id', '#3399FF')">Drag</div>
+					</div>	
 				</div>
-				<hr>
+				
 			}
-				<!-- solution component listing ends -->
-			</div>
-			<div class="span4 well">
-					<h2>Force Interactions</h2>
+				
+			</div> <!-- solution component listing ends -->
+			
 		
-					<div class="row fiheader" > <!-- header begins -->
-						<div class="span1">
-							Force 
-						</div>
-						<div class="span2">
-							Reinforcing forces/wills
-						</div>
-						<div class="span2">
-							Conflicting forces/wills
-						</div>
-						<div class="span2">
-							Neutral forces/wills
-						</div>					
-					</div><!-- header ends -->
-					<hr>
-						<!-- force interactions listing begins -->
-						@for(fi <- forceInteractions){
-						<div class="row">
-							<div class="span1 ">
-								@fi.primary_force
-							</div>
-							<div class="span2">
-								@fi.reinforcing.map(x => x + " ")
-							</div>
-							<div class="span2">
-								@fi.conflicting.map(x => x + " ")
-							</div>
-							<div class="span2">
-								@fi.neutral.map(x => x + " ")
-							</div>
-						</div>
-						<hr>
-						}
-					<!-- force interactions listing ends -->
-			</div>
-		</div> <!-- Force interaction row ends -->
 	</div>
 </div>
 }

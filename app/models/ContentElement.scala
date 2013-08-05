@@ -1,8 +1,8 @@
 package models
 
 case class ContentElement  (id: String,
-                   deContentElementription: String,
-                   type: String,
+                   description: String,
+                   contentType: String,
                    relatedElements: List[String]) // This could be a list of related content elements - those that share a cluster with this element.  Or a list of clusters which contain this element.
                    
 object ContentElement {

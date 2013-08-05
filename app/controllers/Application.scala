@@ -9,7 +9,7 @@ import views._
 object Application extends Controller {
   
   def worksheet = Action {
-    Ok(views.html.worksheet("The Embodied Making Tool",Story.all(),Force.all(),ForceInteraction.all(),SolutionComponent.all()))
+    Ok(views.html.worksheet("The Embodied Making Tool",ContentElement.all(),Cluster.all()))
   }
   
 }
