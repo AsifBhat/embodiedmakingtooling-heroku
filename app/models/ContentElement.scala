@@ -1,5 +1,8 @@
 package models
 
+import play.api.libs.json._
+import play.api.libs.functional.syntax._
+
 case class ContentElement  (id: String,
                    description: String,
                    contentType: String,
@@ -36,6 +39,7 @@ object ContentElement {
 			new ContentElement("C0006","Play \"who's got the animal\" before and after meetings.","C",List()),
 			new ContentElement("C0007","Create an animal themed cafe for small groups to meet.","C",List())
 		)
-  }
-
+	}
+	implicit val reader = Json.reads[ContentElement]
+	implicit val writer = Json.writes[ContentElement] 
 } 

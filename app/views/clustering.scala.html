@@ -1,0 +1,74 @@
+
+@import tags._
+
+@main("The Embodied Making Tool") {
+<script>
+    function ListCtrl($scope, $http) {
+        $scope.contentElements =  null;
+        $http({
+        url: '@routes.Application.allContentElements()',
+        method: "GET",
+        data: {"foo":"bar"}
+        }).success(function(data, status, headers, config) {
+            console.log ("successful ajax acall");
+            $scope.contentElements = data;
+            $scope.stories = jQuery.grep($scope.contentElements, function (a) { return a.contentType == 'S'; });
+            $scope.forces = jQuery.grep($scope.contentElements, function (a) { return a.contentType == 'F'; });
+            $scope.components = jQuery.grep($scope.contentElements, function (a) { return a.contentType == 'C'; });
+        }).error(function(data, status, headers, config) {
+            console.log("error in ajax call")
+            $scope.status = status;
+        }) 
+    }             
+
+</script>
+<div class="container" id="projectcontainer" style="margin-top: 60px;" ng-app>
+	<div class="span6">
+		<div class="span6 well" style="height:300px;overflow:auto;" ng-controller="ListCtrl">
+			<h2>Stories</h2>
+            <div class="row" ng-repeat="element in stories">
+                <div class="span1 storyid">
+                    <input type="checkbox" ></input>
+                </div>
+                <div class="span1 storyid">
+                    <p>{{element.id}}</p>
+                </div>
+                <div class="span4 desc">
+                    <p>{{element.description}}</p>
+                </div>
+            </div>  
+        </div> 
+
+        <div class="span6 well" style="height:300px;overflow:auto;" ng-controller="ListCtrl">
+            <h2>Forces</h2>
+            <div class="row" ng-repeat="element in forces">
+                <div class="span1 storyid">
+                    <input type="checkbox" ></input>
+                </div>
+                <div class="span1 storyid">
+                    <p>{{element.id}}</p>
+                </div>
+                <div class="span4 desc">
+                    <p>{{element.description}}</p>
+                </div>
+            </div> 
+        </div>  
+
+        <div class="span6 well" style="height:300px;overflow:auto;" ng-controller="ListCtrl">
+            <h2>Solution Components</h2>
+            <div class="row" ng-repeat="element in components">
+                <div class="span1 storyid">
+                    <input type="checkbox" ></input>
+                </div>
+                <div class="span1 storyid">
+                    <p>{{element.id}}</p>
+                </div>
+                <div class="span4 desc">
+                    <p>{{element.description}}</p>
+                </div>
+            </div>   
+        </div>    
+        
+    </div>
+</div>
+}    
