@@ -9,5 +9,6 @@ GET 	/worksheet/							  controllers.Application.worksheet
 GET		/clustering							  controllers.Application.clustering
 GET		/clustering/						  controllers.Application.clustering	
 GET		/allcontentelements					  controllers.Application.allContentElements	
+GET		/allclusters						  controllers.Application.allClusters
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)

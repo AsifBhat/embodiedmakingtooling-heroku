@@ -5,70 +5,178 @@
 <script>
     function ListCtrl($scope, $http) {
         $scope.contentElements =  null;
+        $scope.selectedElements = [];
+
+        // AJAX call
         $http({
         url: '@routes.Application.allContentElements()',
         method: "GET",
         data: {"foo":"bar"}
         }).success(function(data, status, headers, config) {
-            console.log ("successful ajax acall");
+            console.log ("Getting content elements: successful ajax acall");
             $scope.contentElements = data;
             $scope.stories = jQuery.grep($scope.contentElements, function (a) { return a.contentType == 'S'; });
             $scope.forces = jQuery.grep($scope.contentElements, function (a) { return a.contentType == 'F'; });
             $scope.components = jQuery.grep($scope.contentElements, function (a) { return a.contentType == 'C'; });
         }).error(function(data, status, headers, config) {
-            console.log("error in ajax call")
+            console.log("Error in ajax call")
             $scope.status = status;
         }) 
+
+       
+        /*  The two methods below are used to add /remove the content elements that are being
+            added or removed, to the selectedElements data structure. */
+        var updateSelected = function(action, id) {
+          if (action == 'add' )//& $scope.selected.indexOf(id) == -1)
+            $scope.selectedElements.push(id);
+          if (action == 'remove')// && $scope.selected.indexOf(id) != -1)
+            $scope.selectedElements.splice($scope.selectedElements.indexOf(id), 1);
+        };
+
+        $scope.updateSelection = function($event, id) {
+          var checkbox = $event.target;
+          var action = (checkbox.checked ? 'add' : 'remove');
+          console.log("selected: "+id);
+          updateSelected(action, id);
+        };
+
+        /*  The following methods operate on clusters.  Each cluster is a set of content elements
+            The content elements are reverse-linked to the list of clusters they belong to.  Therefore,
+            any operation on a cluster, should be followed by updates to the affected content elements.
+        */
+        $scope.clusters = [];
+        $scope.nextId = 4;
+
+        $http({
+        url: '@routes.Application.allClusters()',
+        method: "GET",
+        data: {"foo":"bar"}
+        }).success(function(data, status, headers, config) {
+            console.log ("Getting clusters: successful ajax acall");
+            $scope.clusters = data;
+        }).error(function(data, status, headers, config) {
+            console.log("Error in ajax call")
+            $scope.status = status;
+        })
+
+        $scope.createNewCluster = function() {
+            var idToUse = "G"+$scope.nextId;
+            var newCluster = { "id": idToUse,
+                               "contentElements" : $scope.selectedElements
+                            };
+            $scope.clusters.push(newCluster);        
+            $scope.nextId = $scope.nextId+1;
+
+        }
+
+        $scope.clearSelected = function() {
+            $scope.selectedElements = [];
+            $('.selected').prop('checked', false);
+        }
+
+        $scope.deleteCluster = function($event, id) {
+
+        }
+
+        $scope.addToCluster = function($event, id) {
+
+        }
+
+        $scope.removeFromCluster = function($event, id) {
+
+        }
+
+        $scope.addToClusters = function($event, id) {
+
+        }
+
+        $scope.removeFromClusters = function($event, id) {
+
+        }
+
     }             
 
 </script>
 <div class="container" id="projectcontainer" style="margin-top: 60px;" ng-app>
-	<div class="span6">
-		<div class="span6 well" style="height:300px;overflow:auto;" ng-controller="ListCtrl">
-			<h2>Stories</h2>
-            <div class="row" ng-repeat="element in stories">
-                <div class="span1 storyid">
-                    <input type="checkbox" ></input>
-                </div>
-                <div class="span1 storyid">
-                    <p>{{element.id}}</p>
-                </div>
-                <div class="span4 desc">
-                    <p>{{element.description}}</p>
-                </div>
-            </div>  
-        </div> 
-
-        <div class="span6 well" style="height:300px;overflow:auto;" ng-controller="ListCtrl">
-            <h2>Forces</h2>
-            <div class="row" ng-repeat="element in forces">
-                <div class="span1 storyid">
-                    <input type="checkbox" ></input>
-                </div>
-                <div class="span1 storyid">
-                    <p>{{element.id}}</p>
-                </div>
-                <div class="span4 desc">
-                    <p>{{element.description}}</p>
-                </div>
+    <div class="row" ng-controller="ListCtrl">
+    	<div class="span6">
+    		<div class="span6 well" style="height:300px;overflow:auto;" >
+    			<h2>Stories</h2>
+                <div class="row" ng-repeat="element in stories">
+                    <div class="span1 storyid">
+                        <input type="checkbox" class="selected"
+                          ng-checked="isSelected(element.id)"
+                          ng-click="updateSelection($event, element.id)">
+                    </div>
+                    <div class="span1 storyid" title={{element.relatedClusters}}>
+                        <p>{{element.id}}</p>
+                    </div>
+                    <div class="span4 desc">
+                        <p>{{element.description}}</p>
+                    </div>
+                </div>  
             </div> 
-        </div>  
 
-        <div class="span6 well" style="height:300px;overflow:auto;" ng-controller="ListCtrl">
-            <h2>Solution Components</h2>
-            <div class="row" ng-repeat="element in components">
-                <div class="span1 storyid">
-                    <input type="checkbox" ></input>
+            <div class="span6 well" style="height:300px;overflow:auto;" >
+                <h2>Forces</h2>
+                <div class="row" ng-repeat="element in forces">
+                    <div class="span1 storyid">
+                        <input type="checkbox" class="selected"
+                          ng-checked="isSelected(element.id)"
+                          ng-click="updateSelection($event, element.id)">
+                    </div>
+                    <div class="span1 storyid" title={{element.relatedClusters}}>
+                        <p>{{element.id}}</p>
+                    </div>
+                    <div class="span4 desc">
+                        <p>{{element.description}}</p>
+                    </div>
+                </div> 
+            </div>  
+
+            <div class="span6 well" style="height:300px;overflow:auto;" >
+                <h2>Solution Components</h2>
+                <div class="row" ng-repeat="element in components">
+                    <div class="span1 storyid">
+                        <input type="checkbox" class="selected"
+                          ng-checked="isSelected(element.id)"
+                          ng-click="updateSelection($event, element.id)">
+                    </div>
+                    <div class="span1 storyid" title={{element.relatedClusters}}>
+                        <p>{{element.id}}</p>
+                    </div>
+                    <div class="span4 desc">
+                        <p>{{element.description}}</p>
+                    </div>
+                </div>   
+            </div>    
+
+        </div>
+        <div class="span6 well offset1" id="clusterArea" >  
+            <div class="row" >
+                <div class="span1 well" id="ce_adder">
+                    <ol>
+                        <li ng-repeat="item in selectedElements">
+                        {{item}}
+                        </li>
+                    </ol>        
                 </div>
-                <div class="span1 storyid">
-                    <p>{{element.id}}</p>
+                <div class="span2">
+                    <button ng-click="createNewCluster()">Create Cluster</button>
+                    <button ng-click="clearSelected()">Clear</button>
                 </div>
-                <div class="span4 desc">
-                    <p>{{element.description}}</p>
+            </div>
+            <div class="row">
+                <div class="span6 ">   
+                    <ol>
+                        <li ng-repeat="item in clusters" >
+                        {{item.id}} - {{item.contentElements}}
+                        </li>
+                    </ol> 
                 </div>
-            </div>   
-        </div>    
-        
+            </div>
+        </div>  
     </div>
 </div>
 }    
+

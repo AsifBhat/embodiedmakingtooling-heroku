@@ -9,6 +9,8 @@ import play.api.libs.json._
 
 object Application extends Controller {
   
+  private var jsonClusters = Json.toJson(Cluster.all)  
+  
   def worksheet = Action {
     Ok(views.html.worksheet("The Embodied Making Tool",ContentElement.all(),Cluster.all()))
   }
@@ -21,4 +23,15 @@ object Application extends Controller {
     val jsonce = Json.toJson(ContentElement.all)
     Ok(jsonce)
   }
+  
+  def allClusters = Action {
+     Ok(jsonClusters)
+  }
+  
+ /* def saveClusters = Action { implicit request =>
+   	val newClusters = (Json.parse(request.body.asText.get).as[Cluster])
+   	//jsonClusters.
+   	Ok(jsonClusters)
+  }*/
+  
 }
