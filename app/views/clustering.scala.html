@@ -45,7 +45,7 @@
             any operation on a cluster, should be followed by updates to the affected content elements.
         */
         $scope.clusters = [];
-        $scope.nextId = 4;
+        $scope.nextId = 5;
 
         $http({
         url: '@routes.Application.allClusters()',
@@ -66,7 +66,15 @@
                             };
             $scope.clusters.push(newCluster);        
             $scope.nextId = $scope.nextId+1;
-
+            $.each($scope.forces, function(i, val){
+                if((jQuery.grep($scope.selectedElements, function (a) { 
+                    console.log("comparing:"+a+" and "+val.id);
+                    return a == val.id; })).length>0){
+                    val.relatedClusters.push(newCluster.id);
+                } else {
+                    console.log("Element "+val.id+" is not in the new cluster");
+                }
+            });
         }
 
         $scope.clearSelected = function() {
