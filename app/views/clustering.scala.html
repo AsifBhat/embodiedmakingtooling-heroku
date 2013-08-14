@@ -27,9 +27,9 @@
         /*  The two methods below are used to add /remove the content elements that are being
             added or removed, to the selectedElements data structure. */
         var updateSelected = function(action, id) {
-          if (action == 'add' )//& $scope.selected.indexOf(id) == -1)
+          if (action == 'add' )
             $scope.selectedElements.push(id);
-          if (action == 'remove')// && $scope.selected.indexOf(id) != -1)
+          if (action == 'remove')
             $scope.selectedElements.splice($scope.selectedElements.indexOf(id), 1);
         };
 
@@ -61,19 +61,18 @@
 
         $scope.createNewCluster = function() {
             var idToUse = "G"+$scope.nextId;
+            var selected = $scope.selectedElements;
             var newCluster = { "id": idToUse,
-                               "contentElements" : $scope.selectedElements
+                               "contentElements" : selected
                             };
             $scope.clusters.push(newCluster);        
             $scope.nextId = $scope.nextId+1;
+            $scope.clearSelected();
             $.each($scope.forces, function(i, val){
-                if((jQuery.grep($scope.selectedElements, function (a) { 
-                    console.log("comparing:"+a+" and "+val.id);
+                if((jQuery.grep(newCluster.contentElements, function (a) { 
                     return a == val.id; })).length>0){
                     val.relatedClusters.push(newCluster.id);
-                } else {
-                    console.log("Element "+val.id+" is not in the new cluster");
-                }
+                } 
             });
         }
 
@@ -81,27 +80,6 @@
             $scope.selectedElements = [];
             $('.selected').prop('checked', false);
         }
-
-        $scope.deleteCluster = function($event, id) {
-
-        }
-
-        $scope.addToCluster = function($event, id) {
-
-        }
-
-        $scope.removeFromCluster = function($event, id) {
-
-        }
-
-        $scope.addToClusters = function($event, id) {
-
-        }
-
-        $scope.removeFromClusters = function($event, id) {
-
-        }
-
     }             
 
 </script>
