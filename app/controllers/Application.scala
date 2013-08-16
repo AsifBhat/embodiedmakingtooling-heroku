@@ -15,6 +15,10 @@ object Application extends Controller {
     Ok(views.html.worksheet("The Embodied Making Tool",ContentElement.all(),Cluster.all()))
   }
   
+  def svgworksheet = Action {
+    Ok(views.html.svgworksheet("The Embodied Making Tool"))
+  }
+  
   def clustering = Action {
     Ok(views.html.clustering.render())    
   }
