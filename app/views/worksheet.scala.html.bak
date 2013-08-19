@@ -1,0 +1,104 @@
+@(message: String,contentElements:List[ContentElement], clusters:List[Cluster])
+
+@import tags._
+
+@main("The Embodied Making Tool") {
+        
+  <!--  <div class="container" style="width:100%; margin-top:20px; position:sticky;">
+    	<div class="masthead" style="margin-top: 15px;">
+        
+        <div class="navbar">
+          <div class="navbar-inner">
+            <div class="container">
+              <ul class="nav" style="width:80%;">
+                <li class="active tooltabs"><a href="#" class="tooltablinks">My Projects</a></li>
+                <li class="tooltabs"><a href="#" class="tooltablinks">My Account</a></li>
+                <li class="tooltabs"><a href="#" class="tooltablinks">Settings</a></li>
+                <li class="tooltabs"><a href="#" class="tooltablinks">Examples</a></li>
+                <li class="tooltabs"><a href="#" class="tooltablinks">Help</a></li>
+              </ul>
+            </div>
+          </div>
+        </div><!-- /.navbar -->
+      	</div><!-- /.masthead -->
+</div> <!-- end container -->  
+-->
+
+<div class="container" id="projectcontainer">
+
+<div style="margin-top:25px;"><h3>Worksheet</h3></div>
+
+	@views.html.tags.honeycomb.render()
+	<div class="span5">
+		<div class="span5 well" style="height:300px;overflow:auto;">
+			<h2>Stories</h2>
+			<!-- forms row ends -->
+			@for(story <- (contentElements.filter(ce => ce.contentType=="S"))){
+			<div class="row">
+				<div class="span1 storyid">
+					<p>@story.id</p>
+				</div>
+				<div class="span3 desc">
+					<p>@story.description</p>
+				</div>
+				<div class="span1">
+					
+					<div style="width:20px;height:15px;" draggable="true" id="@story.id" onmousedown="createContentObj(event, '@story.id', '#FFA31A')" >Drag</div>
+				</div>
+			</div>
+		}
+		</div><!-- Stories end -->
+		<div class="span5 well" style="height:300px;overflow:auto;">
+			<h2>Forces</h2>
+			<!-- form row ends -->
+			@for(force <- (contentElements.filter(ce => ce.contentType=="F"))){
+				<div class="row" >
+					<div class="span1 storyid">
+						<p>@force.id</p>
+					</div>
+					
+					<div class="span3 desc">
+						 <p>@force.description</p>
+					</div>
+					<div class="span1">
+						
+						<div style="width:20px;height:15px;" draggable="true" id="@force.id" onmousedown="createContentObj(event, '@force.id', '#A3D119')" >Drag</div>
+					</div>
+				</div>				
+			}
+		</div><!-- Forces end -->
+		<!-- Solution Component begins -->
+		<div class="span5 well" style="height:300px; overflow-y:auto;">
+		<h2>Solution Components</h2>
+			<div class="row fiheader" > <!-- header begins -->
+				<div class="span1">
+					Id 
+				</div>
+				<div class="span3">
+					Description
+				</div>
+					
+			</div><!-- header ends -->
+			<hr>
+			<!-- solution component listing begins -->
+			@for(sc <- (contentElements.filter(ce => ce.contentType=="C"))){
+				<div class="row">
+					<div class="span1 storyid">
+						@sc.id
+					</div>
+					<div class="span3 desc">
+						<p>@sc.description</p>
+					</div>
+					<div class="span1">
+						<div style="width:20px; height:15px;" draggable="true" id="@sc.id" onmousedown="createContentObj(event, '@sc.id', '#3399FF')">Drag</div>
+					</div>	
+				</div>
+				
+			}
+				
+			</div> <!-- solution component listing ends -->
+			
+		
+	</div>
+</div>
+}
