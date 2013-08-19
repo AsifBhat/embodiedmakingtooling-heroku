@@ -4,24 +4,46 @@
 @main("The Embodied Making Tool") {
 <script>
     function ListCtrl($scope, $http) {
-        $scope.contentElements =  null;
         $scope.selectedElements = [];
 
-        // AJAX call
+        // AJAX call for stories 
         $http({
-        url: '@routes.Application.allContentElements()',
+        url: '@routes.Application.allStories()',
         method: "GET",
         data: {"foo":"bar"}
         }).success(function(data, status, headers, config) {
             console.log ("Getting content elements: successful ajax acall");
-            $scope.contentElements = data;
-            $scope.stories = jQuery.grep($scope.contentElements, function (a) { return a.contentType == 'S'; });
-            $scope.forces = jQuery.grep($scope.contentElements, function (a) { return a.contentType == 'F'; });
-            $scope.components = jQuery.grep($scope.contentElements, function (a) { return a.contentType == 'C'; });
+            $scope.stories = data;            
         }).error(function(data, status, headers, config) {
             console.log("Error in ajax call")
             $scope.status = status;
         }) 
+
+        // AJAX call for forces 
+        $http({
+        url: '@routes.Application.allForces()',
+        method: "GET",
+        data: {"foo":"bar"}
+        }).success(function(data, status, headers, config) {
+            console.log ("Getting content elements: successful ajax acall");
+            $scope.forces = data;            
+        }).error(function(data, status, headers, config) {
+            console.log("Error in ajax call")
+            $scope.status = status;
+        }) 
+
+        // AJAX call for stories 
+        $http({
+        url: '@routes.Application.allSolutionComponents()',
+        method: "GET",
+        data: {"foo":"bar"}
+        }).success(function(data, status, headers, config) {
+            console.log ("Getting content elements: successful ajax acall");
+            $scope.soltionComponents = data;            
+        }).error(function(data, status, headers, config) {
+            console.log("Error in ajax call")
+            $scope.status = status;
+        })
 
        
         /*  The two methods below are used to add /remove the content elements that are being

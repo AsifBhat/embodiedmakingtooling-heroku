@@ -10,10 +10,10 @@ import play.api.libs.json._
 object Application extends Controller {
   
   private var jsonClusters = Json.toJson(Cluster.all)  
-  
+ /* 
   def worksheet = Action {
-    Ok(views.html.worksheet("The Embodied Making Tool",ContentElement.all(),Cluster.all()))
-  }
+    Ok(views.html.worksheet("The Embodied Making Tool",Story.all(),Force.all(),SolutionComponent.all(),Cluster.all()))
+  }*/
   
   def svgworksheet = Action {
     Ok(views.html.svgworksheet("The Embodied Making Tool"))
@@ -23,10 +23,20 @@ object Application extends Controller {
     Ok(views.html.clustering.render())    
   }
   
-  def allContentElements = Action {
-    val jsonce = Json.toJson(ContentElement.all)
-    Ok(jsonce)
+  def allStories = Action {
+    val jsonStories = Json.toJson(Story.all())
+    Ok(jsonStories)
   }
+
+  def allForces = Action {
+    val jsonForces = Json.toJson(Force.all())
+    Ok(jsonForces)
+  }
+
+  def allSolutionComponents = Action {
+    val jsonComponents = Json.toJson(SolutionComponent.all())
+    Ok(jsonComponents)
+  }    
   
   def allClusters = Action {
      Ok(jsonClusters)
