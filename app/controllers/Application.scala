@@ -6,6 +6,10 @@ import models._
 import views._
 import play.api.libs.functional.syntax._
 import play.api.libs.json._
+import models.contents.Story
+import models.contents.SolutionComponent
+import models.contents.Force
+import models.contents.Cluster
 
 object Application extends Controller {
   
