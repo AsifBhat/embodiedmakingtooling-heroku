@@ -25,4 +25,17 @@ class ElementsSuite extends FunSuite {
     assert(story3!=story2)
     assert(story3 != story4)
   }
+  
+  test("Empty Content Elements") {
+    intercept[IllegalArgumentException] {
+      new Story("S01","")
+    }
+    intercept[IllegalArgumentException] {
+      new Force("F01","")
+    }
+    intercept[IllegalArgumentException] {
+      new SolutionComponent("C01","")
+    }
+  }
+  
 }
