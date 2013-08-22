@@ -6,7 +6,9 @@ import play.api.libs.functional.syntax._
 
 
 case class Cluster  (id: String,
-                   contentElements:List[String])
+                   contentElements:List[String]){
+  require(contentElements.length>0, "Cannot create empty cluster")
+}
                    
                   
 object Cluster {

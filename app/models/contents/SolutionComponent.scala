@@ -3,7 +3,9 @@ package models.contents
 import play.api.libs.json._
 import play.api.libs.functional.syntax._
 
-case class SolutionComponent (id:String,description:String) extends ContentElement
+case class SolutionComponent (id:String,description:String) extends ContentElement {
+  require(description.length()>0, "The description must not be empty")
+}
   
 object SolutionComponent{
   type SC = SolutionComponent
