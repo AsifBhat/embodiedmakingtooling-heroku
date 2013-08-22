@@ -16,17 +16,17 @@ class ApplicationSpec extends Specification {
     
     "send 404 on a bad request" in {
       running(FakeApplication()) {
-        route(FakeRequest(GET, "/boum")) must beNone        
+        route(FakeRequest(GET, "/")) must beNone        
       }
     }
     
     "render the index page" in {
       running(FakeApplication()) {
-        val home = route(FakeRequest(GET, "/")).get
+        val home = route(FakeRequest(GET, "/svgworksheet")).get
         
         status(home) must equalTo(OK)
         contentType(home) must beSome.which(_ == "text/html")
-        contentAsString(home) must contain ("Your new application is ready.")
+        contentAsString(home) must contain ("The Embodied Making Tool")
       }
     }
   }
