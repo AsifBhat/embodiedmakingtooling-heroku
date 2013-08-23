@@ -36,4 +36,9 @@ class ForceTest extends FunSuite {
     assert(force1 != force2)
   }
 
+  test("Testing Force Element for null description: Should Fail") {
+    val force1 = new Force("F0001", "")
+    assert(force1 != null)
+  }
+
 }

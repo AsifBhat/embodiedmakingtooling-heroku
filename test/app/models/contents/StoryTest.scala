@@ -35,4 +35,9 @@ class StoryTest extends FunSuite {
 
     assert(story1 != story2)
   }
+  
+  test("Testing Story Element for null description: Should Fail") {
+    val story1 = new Story("S0001", "")
+    assert(story1 != null)
+  }
 }
