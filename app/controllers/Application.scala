@@ -13,7 +13,7 @@ import models.contents.Cluster
 
 object Application extends Controller {
   
-  private var jsonClusters = Json.toJson(Cluster.all)  
+  //private var jsonClusters = Json.toJson(Cluster.all)  
  /* 
   def worksheet = Action {
     Ok(views.html.worksheet("The Embodied Making Tool",Story.all(),Force.all(),SolutionComponent.all(),Cluster.all()))
@@ -43,7 +43,7 @@ object Application extends Controller {
   }    
   
   def allClusters = Action {
-     Ok(jsonClusters)
+     Ok("jsonClusters")
   }
   
  /* def saveClusters = Action { implicit request =>
