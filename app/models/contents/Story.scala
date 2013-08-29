@@ -5,6 +5,8 @@ import play.api.libs.functional.syntax._
 
 case class Story (id:String,description:String) extends ContentElement {
   require(description.length()>0, "The description must not be empty")
+  
+  def getId:String = id
 }
                    
 object Story {
@@ -19,7 +21,14 @@ object Story {
   }
 
 	implicit val reader = Json.reads[Story]
-	implicit val writer = Json.writes[Story] 
+	implicit val writer = Json.writes[Story]
+	
+	def getElementById(id:String):Story = getElementById(id,all())
+	
+	def getElementById(id:String , stories:List[Story]): Story={
+	  if(stories.head.id==id) stories.head
+	  else (getElementById(id,stories.tail))
+	}
 
 }                   
                    

@@ -5,6 +5,9 @@ import play.api.libs.functional.syntax._
 
 case class Force (id:String,description:String) extends ContentElement {
   require(description.length()>0, "The description must not be empty")
+  
+  def getId:String = id
+  
 }
                    
 object Force {

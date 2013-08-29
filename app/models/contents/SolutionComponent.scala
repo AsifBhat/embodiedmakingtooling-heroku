@@ -5,6 +5,8 @@ import play.api.libs.functional.syntax._
 
 case class SolutionComponent (id:String,description:String) extends ContentElement {
   require(description.length()>0, "The description must not be empty")
+  
+  def getId:String = id
 }
   
 object SolutionComponent{
@@ -20,6 +22,13 @@ object SolutionComponent{
     	new SC("C0007","Create an animal themed cafe for small groups to meet.")
     )
   }
+  
+  def getElementById(id:String):SolutionComponent = getElementById(id,all())
+	
+	def getElementById(id:String , solutions:List[SolutionComponent]): SolutionComponent={
+	  if(solutions.head.id==id) solutions.head
+	  else (getElementById(id,solutions.tail))
+	}
 
   implicit val reader = Json.reads[SC]
   implicit val writer = Json.writes[SC] 

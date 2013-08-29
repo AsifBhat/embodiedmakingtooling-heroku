@@ -18,8 +18,13 @@ case class Cluster  (id: String,
     val destnodes = relations map(r=>r._2)
     val edges = relations map(r => DiEdge(r._1,r._2))
     val nodes = (srcnodes:::destnodes).distinct   
-    val g = Graph.from(nodes, edges)
+    Graph.from(nodes, edges)
   } 
+  
+  override def toString() = {
+    val clusterString = (clusterGraph.edges.toList) map (e => "\n"+e.nodes.toList(0).value.getId+" --> "+e.nodes.toList(1).value.getId) 
+    clusterString.toString
+  }
  
 }
                    

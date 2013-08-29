@@ -5,7 +5,7 @@ import play.api.libs.functional.syntax._
 
 trait ContentElement  {
 	
-    
+    def getId:String
 } 
                    
 
