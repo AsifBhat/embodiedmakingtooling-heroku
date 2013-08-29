@@ -9,16 +9,22 @@ import org.scalatest.junit.JUnitRunner
 class ClusterSuite extends FunSuite {
   
   test("Test graph creation"){
-	  val c = new Cluster("G0001",List("F0005->F0006","F0006->F0007","F0007->F0003","F0003->F0004","F0004->F0008","F0008->F0009"))
-	  val isPresent1 = c.contains("F0005")
-	  val isPresent2 = c.contains("F0001")
-	  assert(c != null)
-	  assert(isPresent1 === true)
-	  assert(isPresent2 === false)
+	  val c = new Cluster("G0001",List((Force.getElementById("F0005"),Force.getElementById("F0006")),
+			(Force.getElementById("F0006"),Force.getElementById("F0007")),
+			(Force.getElementById("F0007"),Force.getElementById("F0003")),
+			(Force.getElementById("F0003"),Force.getElementById("F0004")),
+			(Force.getElementById("F0004"),Force.getElementById("F0008")),
+			(Force.getElementById("F0008"),Force.getElementById("F0009"))))		 
+	  assert(c != null)	 
   }
   
   test("Printing a cluster"){
-    val c = new Cluster("G0001",List("F0005->F0006","F0006->F0007","F0007->F0003","F0003->F0004","F0004->F0008","F0008->F0009"))
+     val c = new Cluster("G0001",List((Force.getElementById("F0005"),Force.getElementById("F0006")),
+			(Force.getElementById("F0006"),Force.getElementById("F0007")),
+			(Force.getElementById("F0007"),Force.getElementById("F0003")),
+			(Force.getElementById("F0003"),Force.getElementById("F0004")),
+			(Force.getElementById("F0004"),Force.getElementById("F0008")),
+			(Force.getElementById("F0008"),Force.getElementById("F0009"))))	
     println(c)
   }
   
@@ -27,6 +33,5 @@ class ClusterSuite extends FunSuite {
       new Cluster("G01",List())
     }
   }
-  
   
 }

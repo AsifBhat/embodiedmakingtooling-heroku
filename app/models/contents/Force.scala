@@ -29,4 +29,11 @@ object Force {
 
 	implicit val reader = Json.reads[Force]
 	implicit val writer = Json.writes[Force] 
+	
+	def getElementById(id:String):Force = getElementById(id,all())
+	
+	def getElementById(id:String , forces:List[Force]): Force={
+	  if(forces.head.id==id) forces.head
+	  else (getElementById(id,forces.tail))
+	}
 } 
