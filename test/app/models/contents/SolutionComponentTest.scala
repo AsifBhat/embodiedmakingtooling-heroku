@@ -36,9 +36,10 @@ class SolutionComponentTest  extends FunSuite {
     assert(solutionComponent1 != solutionComponent2)
   }
   
-  test("Testing Solution Component Element for null description: Should Fail") {
-    val solutionComponent1 = new SolutionComponent("SC001", "")
-    assert(solutionComponent1 != null)
+  test("Testing Solution Component Element for null description: Should Pass") {
+    intercept[IllegalArgumentException]{
+    	val solutionComponent1 = new SolutionComponent("SC001", "")
+    }    
   }
 
 }
