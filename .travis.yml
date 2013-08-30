@@ -1,3 +1,10 @@
 language: scala
 scala:
-   - 2.10.0
+   - 2.10.1
+
+notifications:
+  email:
+    - aruna@coena.com
+    - piu@coena.com
+    - andre@perfectarch.com
+
