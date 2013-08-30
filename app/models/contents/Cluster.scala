@@ -21,6 +21,19 @@ case class Cluster  (id: String,
     Graph.from(nodes, edges)
   } 
   
+  def contains (element:ContentElement) = {
+    if(clusterGraph.find(element) == None) false else true
+  }
+  
+  def getNeighbours (element:ContentElement) = {
+    if(clusterGraph.find(element) == None) throw new Error("Element not in cluster")
+    else {
+      val edges = clusterGraph.get(element).edges
+      val destnodelists = edges.map(e => e.nodes.filter(n => n.value!=element))
+      destnodelists.map(dnl => dnl.head) 
+    }
+  }
+  
   override def toString() = {
     val clusterString = (clusterGraph.edges.toList) map (e => "\n"+e.nodes.toList(0).value.getId+" --> "+e.nodes.toList(1).value.getId) 
     clusterString.toString
