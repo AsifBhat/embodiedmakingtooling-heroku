@@ -1,10 +1,8 @@
 package models.contents
 
 
-import play.api.libs.json._
-import play.api.libs.functional.syntax._
 import scalax.collection.Graph // or scalax.collection.mutable.Graph
-import scalax.collection.GraphPredef._, scalax.collection.GraphEdge._
+import scalax.collection.GraphEdge._
 
 
 case class Cluster  (id: String,
@@ -21,12 +19,12 @@ case class Cluster  (id: String,
     Graph.from(nodes, edges)
   } 
   
-  def contains (element:ContentElement) = {
-    if(clusterGraph.find(element) == None) false else true
+  def contains (element:ContentElement) = { // TODO [AK] It is good practice to list return types
+    if (clusterGraph.find(element) != None) false else true // TODO [AK] Do not use return true / false, since this can be simplified
   }
   
   def getNeighbours (element:ContentElement) = {
-    if(clusterGraph.find(element) == None) throw new Error("Element not in cluster")
+    if(clusterGraph.find(element) == None) throw new Error("Element not in cluster") // TODO [AK] Throwed exceptions are a pain to handle, let's return an empty set
     else {
       val edges = clusterGraph.get(element).edges
       val destnodelists = edges.map(e => e.nodes.filter(n => n.value!=element))
@@ -35,7 +33,7 @@ case class Cluster  (id: String,
   }
   
   override def toString() = {
-    val clusterString = (clusterGraph.edges.toList) map (e => "\n"+e.nodes.toList(0).value.getId+" --> "+e.nodes.toList(1).value.getId) 
+    val clusterString = (clusterGraph.edges.toList) map (e => "\n"+e.nodes.toList(0).value.getId+" --> "+e.nodes.toList(1).value.getId)
     clusterString.toString
   }
  

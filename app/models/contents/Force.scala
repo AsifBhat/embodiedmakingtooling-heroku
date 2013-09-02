@@ -1,12 +1,11 @@
 package models.contents
 
 import play.api.libs.json._
-import play.api.libs.functional.syntax._
 
 case class Force (id:String,description:String) extends ContentElement {
   require(description.length()>0, "The description must not be empty")
   
-  def getId:String = id
+  def getId:String = id           // TODO [AK] Let's not use a getter for id if it is not needed, id can be used directly
   
 }
                    
