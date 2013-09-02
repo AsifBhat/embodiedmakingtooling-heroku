@@ -1,15 +1,10 @@
 package controllers
 
-import play.api._
 import play.api.mvc._
-import models._
-import views._
-import play.api.libs.functional.syntax._
 import play.api.libs.json._
 import models.contents.Story
 import models.contents.SolutionComponent
 import models.contents.Force
-import models.contents.Cluster
 
 object Application extends Controller {
   
@@ -23,6 +18,10 @@ object Application extends Controller {
     Ok(views.html.svgworksheet("The Embodied Making Tool"))
   }
   
+  def createJS = Action {
+    Ok(views.html.createjs())
+  }
+
   def clustering = Action {
     Ok(views.html.clustering.render())    
   }
