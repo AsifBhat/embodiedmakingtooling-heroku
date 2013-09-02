@@ -20,7 +20,7 @@ case class Cluster  (id: String,
   } 
   
   def contains (element:ContentElement) = { // TODO [AK] It is good practice to list return types
-    if (clusterGraph.find(element) != None) false else true // TODO [AK] Do not use return true / false, since this can be simplified
+    if (clusterGraph.find(element) == None) false else true // TODO [AK] Do not use return true / false, since this can be simplified
   }
   
   def getNeighbours (element:ContentElement) = {
