@@ -19,12 +19,12 @@ case class Cluster  (id: String,
     Graph.from(nodes, edges)
   } 
   
-  def contains (element:ContentElement) = { // TODO [AK] It is good practice to list return types
-    if (clusterGraph.find(element) == None) false else true // TODO [AK] Do not use return true / false, since this can be simplified
+  def contains (element:ContentElement) : Boolean = { // TODO [AK] It is good practice to list return types
+    clusterGraph.find(element) != None // TODO [AK] Do not use return true / false, since this can be simplified
   }
   
   def getNeighbours (element:ContentElement) = {
-    if(clusterGraph.find(element) == None) throw new Error("Element not in cluster") // TODO [AK] Throwed exceptions are a pain to handle, let's return an empty set
+    if(clusterGraph.find(element) == None) Set() // TODO [AK] Throwed exceptions are a pain to handle, let's return an empty set
     else {
       val edges = clusterGraph.get(element).edges
       val destnodelists = edges.map(e => e.nodes.filter(n => n.value!=element))

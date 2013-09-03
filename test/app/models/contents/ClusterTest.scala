@@ -40,9 +40,10 @@ class ClusterSuite extends FunSuite {
 	  assert(c.getNeighbours(Force.getElementById("F0003")) === Set(Force.getElementById("F0007"),Force.getElementById("F0004")))
 	}	
 	
-	test("Neighbours of a non-existent node"){
-	  intercept[Error] {
-		  val neighbours = c.getNeighbours(Force.getElementById("F0001"))
-    }
-}  
+	test("Neighbours of a non-existent node"){  
+		val neighbours = c.getNeighbours(Force.getElementById("F0001"))
+		assert(neighbours==Set())
+	}
+
+
 }
