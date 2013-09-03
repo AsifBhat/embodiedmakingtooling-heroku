@@ -3,7 +3,7 @@ package models.contents
 import play.api.libs.json._
 import play.api.libs.functional.syntax._  
 
-case class Story(val id:String, val description:String) extends ContentElement (id,description)
+case class Story( _id : String,  description:String) extends ContentElement (_id,description)
                    
 object Story {
   

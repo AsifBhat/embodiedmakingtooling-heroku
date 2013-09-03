@@ -3,7 +3,7 @@ package models.contents
 import play.api.libs.json._
 import play.api.libs.functional.syntax._
 
-case class SolutionComponent (id:String,description:String) extends ContentElement (id,description)
+case class SolutionComponent (_id:String,description:String) extends ContentElement (_id,description)
   
 object SolutionComponent{
   type SC = SolutionComponent

@@ -2,7 +2,7 @@ package models.contents
 
 import play.api.libs.json._
 
-case class Force (id:String,description:String) extends ContentElement (id,description)
+case class Force (_id:String,description:String) extends ContentElement (_id,description)
                    
 object Force {
   

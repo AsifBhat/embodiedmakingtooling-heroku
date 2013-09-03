@@ -33,7 +33,7 @@ case class Cluster  (id: String,
   }
   
   override def toString() = {
-    val clusterString = (clusterGraph.edges.toList) map (e => "\n"+e.nodes.toList(0).value.getId+" --> "+e.nodes.toList(1).value.getId)
+    val clusterString = (clusterGraph.edges.toList) map (e => "\n"+e.nodes.toList(0).value.id+" --> "+e.nodes.toList(1).value.id)
     clusterString.toString
   }
  
