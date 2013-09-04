@@ -12,7 +12,7 @@ var elem = document.getElementById("hexagonal-grid");
 // Creating a grid
 var grid = hex.grid(elem);
 
-// Element to show the previously hovered tile
+/*// Element to show the previously hovered tile
 var prev = document.createElement("div");
 prev.style.textAlign = "center";
 prev.style.lineHeight = grid.tileHeight + "px";
@@ -21,18 +21,79 @@ prev.style.border = "4px outset yellow";
 prev.style.width = (grid.tileWidth - 7) + "px";
 prev.style.height = (grid.tileHeight - 7) + "px";
 prev.style.display = "none";
-grid.root.appendChild(prev);
+grid.root.appendChild(prev);*/
 
 // Element to show the currently hovered tile
 var curr = document.createElement("div");
 curr.style.textAlign = "center";
 curr.style.lineHeight = grid.tileHeight + "px";
 curr.style.position = "absolute";
-curr.style.border = "4px outset green";
-curr.style.width = (grid.tileWidth - 7) + "px";
-curr.style.height = (grid.tileHeight - 7) + "px";
+curr.style.width = (grid.tileWidth ) + "px";
+curr.style.height = (grid.tileHeight) + "px";
 curr.style.display = "none";
+curr.style.background="url(@routes.Assets.at("images/hex-curr-trans.png")) no-repeat ";
 grid.root.appendChild(curr);
+
+// Create six adjacent divs
+var adj1 = document.createElement("div");
+adj1.style.textAlign = "center";
+adj1.style.lineHeight = grid.tileHeight + "px";
+adj1.style.position = "absolute";
+adj1.style.width = (grid.tileWidth ) + "px";
+adj1.style.height = (grid.tileHeight) + "px";
+adj1.style.display = "none";
+adj1.style.background="url(@routes.Assets.at("images/hex-adj-trans.png")) no-repeat ";
+grid.root.appendChild(adj1);
+
+var adj2 = document.createElement("div");
+adj2.style.textAlign = "center";
+adj2.style.lineHeight = grid.tileHeight + "px";
+adj2.style.position = "absolute";
+adj2.style.width = (grid.tileWidth ) + "px";
+adj2.style.height = (grid.tileHeight) + "px";
+adj2.style.display = "none";
+adj2.style.background="url(@routes.Assets.at("images/hex-adj-trans.png")) no-repeat ";
+grid.root.appendChild(adj2);
+
+var adj3 = document.createElement("div");
+adj3.style.textAlign = "center";
+adj3.style.lineHeight = grid.tileHeight + "px";
+adj3.style.position = "absolute";
+adj3.style.width = (grid.tileWidth ) + "px";
+adj3.style.height = (grid.tileHeight) + "px";
+adj3.style.display = "none";
+adj3.style.background="url(@routes.Assets.at("images/hex-adj-trans.png")) no-repeat ";
+grid.root.appendChild(adj3);
+
+var adj4 = document.createElement("div");
+adj4.style.textAlign = "center";
+adj4.style.lineHeight = grid.tileHeight + "px";
+adj4.style.position = "absolute";
+adj4.style.width = (grid.tileWidth ) + "px";
+adj4.style.height = (grid.tileHeight) + "px";
+adj4.style.display = "none";
+adj4.style.background="url(@routes.Assets.at("images/hex-adj-trans.png")) no-repeat ";
+grid.root.appendChild(adj4);
+
+var adj5 = document.createElement("div");
+adj5.style.textAlign = "center";
+adj5.style.lineHeight = grid.tileHeight + "px";
+adj5.style.position = "absolute";
+adj5.style.width = (grid.tileWidth ) + "px";
+adj5.style.height = (grid.tileHeight) + "px";
+adj5.style.display = "none";
+adj5.style.background="url(@routes.Assets.at("images/hex-adj-trans.png")) no-repeat ";
+grid.root.appendChild(adj5);
+
+var adj6 = document.createElement("div");
+adj6.style.textAlign = "center";
+adj6.style.lineHeight = grid.tileHeight + "px";
+adj6.style.position = "absolute";
+adj6.style.width = (grid.tileWidth ) + "px";
+adj6.style.height = (grid.tileHeight) + "px";
+adj6.style.display = "none";
+adj6.style.background="url(@routes.Assets.at("images/hex-adj-trans.png")) no-repeat ";
+grid.root.appendChild(adj6);
 
 // Extra element to mark the origin
 var marker = document.createElement("div");
@@ -52,13 +113,44 @@ grid.addEvent("tileover", function(e, x, y) {
 	curr.style.left = inv.x + "px";
 	curr.style.top = inv.y + "px";
 	curr.innerHTML = [x, y] + '';
+
+	// Position six adjacent divs
+	var adjinv = grid.screenpos(x, y+1);
+	adj1.style.left = adjinv.x + "px";
+	adj1.style.top = adjinv.y + "px";
+	adj1.innerHTML = [x, y+1] + '';
+
+	var adjinv = grid.screenpos(x+1, y);
+	adj2.style.left = adjinv.x + "px";
+	adj2.style.top = adjinv.y + "px";
+	adj2.innerHTML = [x+1, y] + '';
+
+	var adjinv = grid.screenpos(x-1, y);
+	adj3.style.left = adjinv.x + "px";
+	adj3.style.top = adjinv.y + "px";
+	adj3.innerHTML = [x-1, y] + '';
+
+	var adjinv = grid.screenpos(x, y-1);
+	adj4.style.left = adjinv.x + "px";
+	adj4.style.top = adjinv.y + "px";
+	adj4.innerHTML = [x, y-1] + '';
+
+	var adjinv = grid.screenpos(x+1, y-1);
+	adj5.style.left = adjinv.x + "px";
+	adj5.style.top = adjinv.y + "px";
+	adj5.innerHTML = [x+1, y-1] + '';
+
+	var adjinv = grid.screenpos(x-1, y+1);
+	adj6.style.left = adjinv.x + "px";
+	adj6.style.top = adjinv.y + "px";
+	adj6.innerHTML = [x-1, y+1] + '';
 });
 grid.addEvent("tileout", function(e, x, y) {
 	hex.log([x, y], e.type);
 	var inv = grid.screenpos(x, y);
-	prev.style.left = inv.x + "px";
+	/*prev.style.left = inv.x + "px";
 	prev.style.top = inv.y + "px";
-	prev.innerHTML = [x, y] + '';
+	prev.innerHTML = [x, y] + '';*/
 });
 
 // Setting mouse button related tile events
@@ -81,12 +173,23 @@ grid.addEvent("tiletap", function(e, x, y) {
 grid.addEvent("gridover", function(e, x, y) {
 	hex.log([x, y], e.type);
 	curr.style.display = "";
-	prev.style.display = "";
+	adj1.style.display = "";
+	adj2.style.display = "";
+	adj3.style.display = "";
+	adj4.style.display = "";
+	adj5.style.display = "";
+	adj6.style.display = "";
 });
 grid.addEvent("gridout", function(e, x, y) {
 	hex.log([x, y], e.type);
 	curr.style.display = "none";
-	prev.style.display = "none";
+	adj1.style.display = "none";
+	adj2.style.display = "none";
+	adj3.style.display = "none";
+	adj4.style.display = "none";
+	adj5.style.display = "none";
+	adj6.style.display = "none";
+
 });
 
 function report(event) {
