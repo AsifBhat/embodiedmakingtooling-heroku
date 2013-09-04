@@ -14,6 +14,10 @@ object Application extends Controller {
     Ok(views.html.worksheet("The Embodied Making Tool",Story.all(),Force.all(),SolutionComponent.all(),Cluster.all()))
   }*/
   
+  def index = Action {
+    Ok(views.html.index())
+  }  
+
   def svgworksheet = Action {
     Ok(views.html.svgworksheet("The Embodied Making Tool"))
   }
