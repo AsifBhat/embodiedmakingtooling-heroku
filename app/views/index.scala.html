@@ -12,17 +12,6 @@ var elem = document.getElementById("hexagonal-grid");
 // Creating a grid
 var grid = hex.grid(elem);
 
-/*// Element to show the previously hovered tile
-var prev = document.createElement("div");
-prev.style.textAlign = "center";
-prev.style.lineHeight = grid.tileHeight + "px";
-prev.style.position = "absolute";
-prev.style.border = "4px outset yellow";
-prev.style.width = (grid.tileWidth - 7) + "px";
-prev.style.height = (grid.tileHeight - 7) + "px";
-prev.style.display = "none";
-grid.root.appendChild(prev);*/
-
 // Element to show the currently hovered tile
 var curr = document.createElement("div");
 curr.style.textAlign = "center";
@@ -156,11 +145,9 @@ grid.addEvent("tileout", function(e, x, y) {
 // Setting mouse button related tile events
 grid.addEvent("tiledown", function(e, x, y) {
 	hex.log([x, y], e.type);
-	curr.style.borderStyle = "inset";
 });
 grid.addEvent("tileup", function(e, x, y) {
 	hex.log([x, y], e.type);
-	curr.style.borderStyle = "outset";
 });
 grid.addEvent("tileclick", function(e, x, y) {
 	hex.log([x, y], e.type);
