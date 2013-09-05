@@ -12,13 +12,13 @@ class SolutionComponentWSFunctionalTest extends Specification {
   "run in a server: Checking for HTTP Response status" in {
     running(TestServer(3333)) {
 
-      await(WS.url("http://localhost:9000/SolutionComponents").get, 5000).status must equalTo(OK)
+      await(WS.url("http://localhost:3333/SolutionComponents").get, 5000).status must equalTo(OK)
 
     }
   }
   "run in a server: Testing for content-type" in {
     running(TestServer(3333)) {
-      await(WS.url("http://localhost:9000/SolutionComponents").get, 5000).header("content-type").toString must contain("application/json")
+      await(WS.url("http://localhost:3333/SolutionComponents").get, 5000).header("content-type").toString must contain("application/json")
     }
   }
 }

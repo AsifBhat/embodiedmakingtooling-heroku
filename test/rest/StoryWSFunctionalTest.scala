@@ -12,7 +12,7 @@ class StoryWSFunctionalTest extends Specification {
   "run in a server: Testing for Existence of WS" in {
     running(TestServer(3333)) {
 
-      await(WS.url("http://localhost:9000/Stories").get, 5000).status must equalTo(OK)
+      await(WS.url("http://localhost:3333/Stories").get, 5000).status must equalTo(OK)
 
     }
   }
@@ -20,7 +20,7 @@ class StoryWSFunctionalTest extends Specification {
   "run in a server: Testing for content type" in {
     running(TestServer(3333)) {
 
-      await(WS.url("http://localhost:9000/Stories").get, 5000).header("content-type").toString must contain("application/json")
+      await(WS.url("http://localhost:3333/Stories").get, 5000).header("content-type").toString must contain("application/json")
 
     }
   }  
