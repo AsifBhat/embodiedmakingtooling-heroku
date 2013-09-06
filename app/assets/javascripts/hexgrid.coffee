@@ -33,17 +33,24 @@ jQuery ($) ->
   # Setting mouse movement related tile events
   grid.addEvent("tileclick", (e, x, y) ->
     placeHex(x,y,curr)
+    $("#tahead-container").css("display","")
+
   )
 
   # Setting mouse movement related grid events
   grid.addEvent("gridover", (e, x, y) ->
     hex.log([x, y], e.type)
     curr.css("display", "")
-    $("#tahead-container").css("display","")
   )
 
   grid.addEvent("gridout", (e, x, y) ->
     hex.log([x, y], e.type)
     curr.css("display", "none")
-    $("#tahead-container").css("display","none")
+   
+  )
+
+  $(document).keyup((e) =>
+    if e.keyCode == 27
+        $("#pannel").slideToggle()
+        $("#tahead-container").css("display","none")
   )
