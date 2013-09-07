@@ -25,3 +25,9 @@ jQuery ($) ->
   grid.addEvent("tileover", (e, x, y) ->
     placeHex(hoveredElement,x,y)
   )
+
+  grid.addEvent("tiletap", (e, x, y) ->
+    newElement = createHex(grid, 'new')
+    placeHex(newElement,x,y)
+    root.append(newElement)
+  )
