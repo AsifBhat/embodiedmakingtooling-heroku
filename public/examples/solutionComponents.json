@@ -1,0 +1,31 @@
+
+[
+    {
+        "id": "C0001",
+        "description": "Refactored version of code.google.com/hadoop-gpl-compression for hadoop 0.20",
+        "tokens": [
+            "C0001"
+        ]
+    },
+    {
+        "id": "C0002",
+        "description": "Minimal templating with {{mustaches}} in JavaScript",
+        "tokens": [
+            "C0002"
+        ]
+    },
+    {
+        "id": "C0003",
+        "description": "Twitter's out-of-date, forked thrift",
+        "tokens": [
+            "C0003"
+        ]
+    },
+    {
+        "id": "C0004",
+        "description": "A slightly more standard sbt project plugin library ",
+        "tokens": [
+            "C0004"
+        ]
+    }
+]

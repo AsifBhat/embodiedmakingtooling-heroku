@@ -15,12 +15,11 @@ jQuery ($) ->
     inv = grid.screenpos(x, y)
     hexcell.css("left", inv.x + "px")
     hexcell.css("top", inv.y + "px")
-    $("#tahead-container").css("position","absolute")
-    $("#tahead-container").css("left", inv.x + "px")
-    $("#tahead-container").css("top", inv.y + "px")
+    $("#content-search").css("position","absolute")
+    $("#content-search").css("left", inv.x + "px")
+    $("#content-search").css("top", inv.y + "px")
 
   elem = $('#hexagonal-grid')[0]
-  tahead = $('#tahead-container')[0]
 
   # Creating a grid
   grid = hex.grid(elem, {})
@@ -33,8 +32,7 @@ jQuery ($) ->
   # Setting mouse movement related tile events
   grid.addEvent("tileclick", (e, x, y) ->
     placeHex(x,y,curr)
-    $("#tahead-container").css("display","")
-
+    $("#content-search").css("display","")
   )
 
   # Setting mouse movement related grid events
@@ -52,5 +50,5 @@ jQuery ($) ->
   $(document).keyup((e) =>
     if e.keyCode == 27
         $("#pannel").slideToggle()
-        $("#tahead-container").css("display","none")
+        $("#content-search").css("display","none")
   )

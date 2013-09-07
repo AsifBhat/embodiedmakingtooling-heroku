@@ -1,3 +1,7 @@
+/**
+ * hex 0.1.0
+ */
+
 (function( window, document, undefined ) {
 
 /**
