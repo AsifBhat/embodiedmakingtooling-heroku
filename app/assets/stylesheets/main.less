@@ -1,4 +1,6 @@
 @img-base-url: "../images/";
+@hex-sprite-width: -48px;
+@hex-sprite-height: -42px;
 
 html, body {
   padding: 0;
@@ -9,12 +11,13 @@ html, body {
 #hexagonal-grid {
   width: 100%;
   height: 100%;
-  background: #ccc;
-  background-image: url("@{img-base-url}hex.png");
+  background: #eee;
+  background-position: 0px 0px;
 }
 
 #content-search {
   position: absolute;
+  z-index: 1000;
 }
 
 .hex {
@@ -23,9 +26,12 @@ html, body {
 }
 
 .hex.current {
-  background: url('/assets/images/hex-curr-trans.png') no-repeat;
+  background-image: url('/assets/images/sprite.png');
+  background-position: (0 * @hex-sprite-width) (0 * @hex-sprite-height);
+  z-index: 1;
 }
 
-.hex.new{
-  background: url('/assets/images/hex-adj-trans.png') no-repeat;
+.hex.new {
+  background-image: url('/assets/images/sprite.png');
+  background-position: (4 * @hex-sprite-width) (1 * @hex-sprite-height);
 }

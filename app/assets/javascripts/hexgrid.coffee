@@ -50,12 +50,10 @@ jQuery ($) ->
       "left": (inv.x + grid.origin.x) + "px",
       "top": (inv.y + grid.origin.y) + "px"
     }).find("input")
+        # Remove existing events
+        .off('typeahead:selected')
         # Handle selecting content element
         .on('typeahead:selected', (obj, datum) ->
-
-          # Remove selected events, they're for one time use only
-          $(this).off('typeahead:selected')
-
           # Update the new element
           newElement.text(datum.id)
 
