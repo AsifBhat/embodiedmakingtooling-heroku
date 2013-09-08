@@ -53,9 +53,12 @@ jQuery ($) ->
         # Remove existing events
         .off('typeahead:selected')
         # Handle selecting content element
-        .on('typeahead:selected', (obj, datum) ->
+        .on('typeahead:selected', (obj, datum, dataset) ->
+
           # Update the new element
           newElement.text(datum.id)
+          newElement.removeClass('new')
+          newElement.addClass(dataset)
 
           # Hide the content search
           contentSearch.css('display', 'none')
