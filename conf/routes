@@ -3,12 +3,12 @@
 # ~~~~
 
 # Home page
-GET			/							controllers.Application.index
+GET        /                                controllers.Application.index
+
+# REST Services
+GET        /api/stories                     controllers.Services.stories
+GET        /api/forces                      controllers.Services.forces
+GET        /api/solutionComponents          controllers.Services.solutionComponents
 
 # Map static resources from the /public folder to the /assets URL path
-GET        /assets/*file                 controllers.Assets.at(path="/public", file)
-
-#REST Web-Services
-GET        /Stories                   controllers.Application.stories
-GET        /Forces                    controllers.Application.forces
-GET        /SolutionComponents        controllers.Application.solutionComponents
+GET        /assets/*file                    controllers.Assets.at(path="/public", file)

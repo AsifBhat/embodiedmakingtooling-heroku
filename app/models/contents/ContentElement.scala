@@ -1,13 +1,7 @@
 package models.contents
 
-import play.api.libs.json._
-import play.api.libs.functional.syntax._
+trait ContentElement {
+  def id: String
 
-abstract class ContentElement (_id:String ,description:String)  {
-  require(description.length()>0, "The description must not be empty")
-  
-  def id = _id
+  def description: String
 }
-                   
-
-	
