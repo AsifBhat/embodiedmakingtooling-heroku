@@ -12,7 +12,6 @@ object Services extends Controller {
     Ok(Json.toJson(Story.all()))
   }
 
-
   def forces = Action {
     implicit val reader = Json.reads[Force]
     implicit val writer = Json.writes[Force]

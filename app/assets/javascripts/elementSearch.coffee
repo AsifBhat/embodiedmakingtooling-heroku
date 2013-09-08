@@ -29,4 +29,3 @@ jQuery ($) ->
     $.extend(true, { name: 'forces', prefetch: {url: 'api/forces'} }, datasetDefaults),
     $.extend(true, { name: 'solution components', prefetch: {url: 'api/solutionComponents'} }, datasetDefaults),
   ])
-

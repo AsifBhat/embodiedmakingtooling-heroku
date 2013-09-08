@@ -41,9 +41,31 @@ jQuery ($) ->
     # Get pixel position based on grid coordinates
     inv = grid.screenpos(x, y)
 
-    # Show content search
-    $("#content-search").css({
+    # Keep content search reference
+    contentSearch = $("#content-search")
+
+    # Show content search at corrent position
+    contentSearch.css({
+      "display": "",
       "left": (inv.x + grid.origin.x) + "px",
       "top": (inv.y + grid.origin.y) + "px"
-    }).find("input").focus()
+    }).find("input")
+        # Handle selecting content element
+        .on('typeahead:selected', (obj, datum) ->
+
+          # Remove selected events, they're for one time use only
+          $(this).off('typeahead:selected')
+
+          # Update the new element
+          newElement.text(datum.id)
+
+          # Hide the content search
+          contentSearch.css('display', 'none')
+        )
+
+        # Clear the previous query
+        .typeahead('setQuery', '')
+
+        # Place focus
+        .focus()
   )
