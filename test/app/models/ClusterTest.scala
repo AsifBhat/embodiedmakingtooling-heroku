@@ -45,6 +45,4 @@ class ClusterTest extends FunSuite {
     val neighbours = c.getNeighbours(Force.getElementById("F0001").get)
     assert(neighbours == Set())
   }
-
-
 }

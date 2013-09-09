@@ -1,26 +1,78 @@
 package controllers
 
 import play.api.mvc._
-import play.api.libs.json.Json
+import play.api.libs.json.Json._
 import models.{Story, SolutionComponent, Force}
 
 object Services extends Controller {
+  val baseUrl = "/api"
+
+  implicit val storyReader = reads[Story]
+  implicit val storyWriter = writes[Story]
+  implicit val forceRader = reads[Force]
+  implicit val forceWriter = writes[Force]
+  implicit val solutionComponentReader = reads[SolutionComponent]
+  implicit val solutionComponentWriter = writes[SolutionComponent]
+
+  def api = Action {
+    Ok(prettyPrint(obj("links" -> arr(s"$baseUrl/clusters"))))
+  }
+
+  def clusters = Action {
+    Ok(prettyPrint(obj(
+      "clusters" -> arr(
+        obj(
+          "graph" -> arr(
+            obj("C0001" -> arr("F0005", "F0006", "F0011", "F0012")),
+            obj("F0005" -> arr("F0006", "F0004", "F0007")),
+            obj("F0006" -> arr("F0007", "F0013")),
+            obj("F0004" -> arr("F0007")),
+            obj("F0007" -> arr("F0013")),
+            obj("F0012" -> arr("F0011"))
+          )
+        ),
+        obj(
+          "graph" -> arr(
+            obj("S0004" -> arr("F0010", "F0011")),
+            obj("F0010" -> arr("F0011"))
+          )
+        )
+      ),
+      "links" -> arr(
+        obj("title" -> "C0001", "href" -> s"$baseUrl/solutionComponents/C0001"),
+        obj("title" -> "S0004", "href" -> s"$baseUrl/stories/S0004"),
+        obj("title" -> "F0004", "href" -> s"$baseUrl/forces/F0004"),
+        obj("title" -> "F0005", "href" -> s"$baseUrl/forces/F0005"),
+        obj("title" -> "F0006", "href" -> s"$baseUrl/forces/F0006"),
+        obj("title" -> "F0007", "href" -> s"$baseUrl/forces/F0007"),
+        obj("title" -> "F0010", "href" -> s"$baseUrl/forces/F0010"),
+        obj("title" -> "F0011", "href" -> s"$baseUrl/forces/F0011"),
+        obj("title" -> "F0012", "href" -> s"$baseUrl/forces/F0012"),
+        obj("title" -> "F0013", "href" -> s"$baseUrl/forces/F0013")
+      ))))
+  }
 
   def stories = Action {
-    implicit val reader = Json.reads[Story]
-    implicit val writer = Json.writes[Story]
-    Ok(Json.toJson(Story.all()))
+    Ok(toJson(Story.all()))
+  }
+
+  def story(id: String) = Action {
+    Ok(toJson(Story.getElementById(id)))
   }
 
   def forces = Action {
-    implicit val reader = Json.reads[Force]
-    implicit val writer = Json.writes[Force]
-    Ok(Json.toJson(Force.all()))
+    Ok(toJson(Force.all()))
+  }
+
+  def force(id: String) = Action {
+    Ok(toJson(Force.getElementById(id)))
   }
 
   def solutionComponents = Action {
-    implicit val reader = Json.reads[SolutionComponent]
-    implicit val writer = Json.writes[SolutionComponent]
-    Ok(Json.toJson(SolutionComponent.all()))
+    Ok(toJson(SolutionComponent.all()))
+  }
+
+  def solutionComponent(id: String) = Action {
+    Ok(toJson(SolutionComponent.getElementById(id)))
   }
 }
