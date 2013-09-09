@@ -8,38 +8,35 @@ import org.scalatest.junit.JUnitRunner
 @RunWith(classOf[JUnitRunner])
 class ForceTest extends FunSuite {
 
-  test("Testing Force Element for equality if ID and Description are the same: Should Pass ") {
+  test("Equality if ID and Description are the same") {
     val force1 = new Force("F0001", "Meeting rooms are shared by a lot of people.")
     val force2 = new Force("F0001", "Meeting rooms are shared by a lot of people.")
 
     assert(force1 == force2)
   }
 
-  test("Testing Force Element for Inequality if IDs are different for two Force Objects: Should Pass ") {
+  test("Inequality if IDs are different for two Force Objects") {
     val force1 = new Force("F0001", "Meeting rooms are shared by a lot of people.")
     val force2 = new Force("F0002", "Meeting rooms are shared by a lot of people.")
 
     assert(force1 != force2)
   }
 
-  test("Testing Force Element for Inequality if Descriptions are different: Should Pass ") {
+  test("Inequality if Descriptions are different") {
     val force1 = new Force("F0001", "Meeting rooms are shared by a lot of people.")
     val force2 = new Force("F0001", "Meeting rooms contain expensive equipment.")
 
     assert(force1 != force2)
   }
 
-  test("Testing Force Element for Inequality for different IDs and Descriptions: Should Pass") {
+  test("Inequality for different IDs and Descriptions") {
     val force1 = new Force("F0001", "Meeting rooms are shared by a lot of people.")
     val force2 = new Force("F0002", "Meeting rooms contain expensive equipment.")
 
     assert(force1 != force2)
   }
 
-  test("Testing Force Element for null description: Should Pass") {
-    intercept[IllegalArgumentException] {
-      val force1 = new Force("F0001", "")
-    }
+  test("Empty description") {
+    new Force("F0001", "")
   }
-
 }
