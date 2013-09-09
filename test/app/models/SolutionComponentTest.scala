@@ -1,9 +1,9 @@
-package app.models.contents
+package app.models
 
 import org.scalatest.FunSuite
 import org.junit.runner.RunWith
-import models.contents._
 import org.scalatest.junit.JUnitRunner
+import models.SolutionComponent
 
 @RunWith(classOf[JUnitRunner])
 class SolutionComponentTest extends FunSuite {

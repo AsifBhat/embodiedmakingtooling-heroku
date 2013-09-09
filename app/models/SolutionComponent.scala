@@ -1,4 +1,4 @@
-package models.contents
+package models
 
 case class SolutionComponent(id: String, description: String) extends ContentElement
 

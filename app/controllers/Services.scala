@@ -2,7 +2,7 @@ package controllers
 
 import play.api.mvc._
 import play.api.libs.json.Json
-import models.contents.{SolutionComponent, Force, Story}
+import models.{Story, SolutionComponent, Force}
 
 object Services extends Controller {
 

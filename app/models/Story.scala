@@ -1,4 +1,4 @@
-package models.contents
+package models
 
 case class Story(id: String, description: String) extends ContentElement
 

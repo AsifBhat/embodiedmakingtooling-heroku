@@ -1,4 +1,4 @@
-package models.contents
+package models
 
 case class Force(id: String, description: String) extends ContentElement
 

@@ -1,4 +1,4 @@
-package models.contents
+package models
 
 trait ContentElement {
   def id: String

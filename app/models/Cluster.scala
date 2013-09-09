@@ -1,7 +1,8 @@
-package models.contents
+package models
 
+import scalax.collection.Graph
 
-import scalax.collection.Graph // or scalax.collection.mutable.Graph
+// or scalax.collection.mutable.Graph
 import scalax.collection.GraphEdge._
 
 // TODO [AK] Needs some work

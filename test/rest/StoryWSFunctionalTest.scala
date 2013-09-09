@@ -1,27 +1,20 @@
 package rest
 
-import org.specs2.mutable._
 import play.api.test._
 import play.api.test.Helpers._
 import play.api.libs.ws.WS
-import scala.concurrent.duration._
-import java.util.concurrent.TimeUnit
 
-class StoryWSFunctionalTest extends Specification {
+class StoryWSFunctionalTest extends BaseSpec {
 
-  "run in a server: Testing for Existence of WS" in {
-    running(TestServer(3333)) {
-
-      await(WS.url("http://localhost:3333/Stories").get, 5000).status must equalTo(OK)
-
+  "HTTP response status" in {
+    running(TestServer(port)) {
+      await(WS.url(s"$baseApi/stories").get, timeout).status must equalTo(OK)
     }
   }
-  
-  "run in a server: Testing for content type" in {
-    running(TestServer(3333)) {
 
-      await(WS.url("http://localhost:3333/Stories").get, 5000).header("content-type").toString must contain("application/json")
-
+  "Content type" in {
+    running(TestServer(port)) {
+      await(WS.url(s"$baseApi/stories").get, timeout).header("content-type").toString must contain("application/json")
     }
-  }  
+  }
 }
