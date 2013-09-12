@@ -23,18 +23,26 @@ object Services extends Controller {
       "clusters" -> arr(
         obj(
           "graph" -> arr(
-            obj("C0001" -> arr("F0005", "F0006", "F0011", "F0012")),
-            obj("F0005" -> arr("F0006", "F0004", "F0007")),
-            obj("F0006" -> arr("F0007", "F0013")),
-            obj("F0004" -> arr("F0007")),
-            obj("F0007" -> arr("F0013")),
-            obj("F0012" -> arr("F0011"))
+           obj("element" -> "C0001",
+                "relatedElements"-> arr("F0005", "F0006", "F0011", "F0012")),
+           obj("element" -> "F0005",
+                "relatedElements"-> arr("F0006", "F0004", "F0007")),
+           obj("element" -> "F0006",
+                "relatedElements"-> arr("F0007", "F0013")),
+           obj("element" -> "F0004",
+                "relatedElements"-> arr("F0007")),
+           obj("element" -> "F0007",
+                "relatedElements"-> arr("F0013")),
+           obj("element" -> "F0012",
+                "relatedElements"-> arr("F0011"))
           )
         ),
         obj(
           "graph" -> arr(
-            obj("S0004" -> arr("F0010", "F0011")),
-            obj("F0010" -> arr("F0011"))
+              obj("element" -> "S0004",
+                "relatedElements"-> arr("F0010", "F0011")),
+              obj("element" -> "F0010",
+                "relatedElements"-> arr("F0011"))
           )
         )
       ),
