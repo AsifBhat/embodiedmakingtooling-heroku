@@ -5,6 +5,73 @@ placed = []
 rootElement = ''
 currentCluster = ''
 
+
+# Variables required for translation of the cluster with origin 0,0 to a different area on the grid
+
+# Determines which quadrant the cluster will be displayed
+QUAD = 0
+
+# Current boundary of the used area along the x-axis
+NEG_X_BOUND = 0
+POS_X_BOUND = 0
+
+# Current boundary of the used area along the y-axis
+NEG_Y_BOUND = 0
+POS_Y_BOUND = 0
+
+# Extents of the current cluster
+NEG_X_EXTENT = 0
+POS_X_EXTENT = 0
+NEG_Y_EXTENT = 0
+POS_Y_EXTENT = 0
+x_offset = 0
+y_offset = 0
+
+calcOffsets = (a) ->
+ switch QUAD
+  when 0 
+   x_offset = POS_X_BOUND + 1 - NEG_X_EXTENT
+   y_offset = POS_Y_BOUND + 1 - NEG_Y_EXTENT
+  when 1 
+   x_offset = POS_X_BOUND + 1 - NEG_X_EXTENT
+   y_offset = NEG_Y_BOUND - 1 - POS_Y_EXTENT
+  when 2
+   x_offset = NEG_X_BOUND - 1 - POS_X_EXTENT
+   y_offset = NEG_Y_BOUND - 1 - POS_Y_EXTENT
+  when 3 
+   x_offset = NEG_X_BOUND - 1 - POS_X_EXTENT
+   y_offset = POS_Y_BOUND + 1 - NEG_Y_EXTENT
+ console.log("Quad:"+QUAD+", Offsets:"+x_offset+","+y_offset)
+  
+resetUsedAreaBoundaries = (posOnGrid) ->
+ if (posOnGrid.x < 0) && (posOnGrid.x < NEG_X_BOUND)
+  NEG_X_BOUND = posOnGrid.x
+ if (posOnGrid.x > 0) && (posOnGrid.x > POS_X_BOUND)
+  POS_X_BOUND = posOnGrid.x
+ if (posOnGrid.y < 0) && (posOnGrid.y < NEG_Y_BOUND)
+  NEG_Y_BOUND = posOnGrid.y
+ if (posOnGrid.y > 0) && (posOnGrid.y > POS_Y_BOUND)
+  POS_Y_BOUND = posOnGrid.y  
+ console.log("Reset used area:"+NEG_X_BOUND+","+POS_X_BOUND+","+NEG_Y_BOUND+","+POS_Y_BOUND)
+  
+ 
+getOffsetPos = (pos) -> 
+ newPos = { x:pos.x+x_offset, y:pos.y+y_offset }
+ newPos
+ 
+# Reset positioning variables after each cluster is displayed
+resetVariables = (a) ->
+ QUAD = (QUAD + 1) % 4
+ NEG_X_EXTENT = 0
+ POS_X_EXTENT = 0
+ NEG_Y_EXTENT = 0
+ POS_Y_EXTENT = 0
+ x_offset = 0
+ y_offset = 0
+ placed = []
+ posBeforeTranslation.length = []
+ 
+
 initPos = (link) ->
  rootElement = link.element
  posBeforeTranslation.push({ "coord" : {x:0, y:0} , "elem" : rootElement})
@@ -41,7 +108,7 @@ listOfPlacedRelatedElements = []
  
 getListOfPlacedRelatedElements = (elem) ->
   $.each(placed , (i,p) ->
-   relatedToCurrent = getRelatedElements(p.elem)
+   relatedToCurrent = getRelatedElements(elem)
    $.each(relatedToCurrent, (j,r) ->
     if(p.elem == r )
      listOfPlacedRelatedElements.push(p.elem)
@@ -68,8 +135,6 @@ getAllNeighbourCells =  (pos) ->
  allNeighbourCells[3] = {x:pos.x , y:pos.y-1 }
  allNeighbourCells[4] = {x:pos.x , y:pos.y+1 }
  allNeighbourCells[5] = {x:pos.x+1 , y:pos.y-1 }
- console.log("All neighbour cells for"+pos.x+pos.y)
- console.log(allNeighbourCells)
  allNeighbourCells
 
 
@@ -78,15 +143,9 @@ getIntersect = (allNeighbourCells) ->
  $.each(allNeighbourCells, (i, nb) ->
   $.each(intersectingNeighbourhood, (j, intersect) ->
    if(nb.x==intersect.x) && (nb.y == intersect.y)
-    console.log("Int found")
     tempInt.push({x:nb.x,y:nb.y})
-   else
-    #console.log("Int not found")
-    #console.log(nb) 
   )
  )   
- console.log("Result of intersect:")
- console.log(tempInt)
  tempInt   
 
 isEmpty = (pos) ->
@@ -108,15 +167,12 @@ getEmptyIntersect = (intersectingNeighbourhood) ->
      
   
 getIntersectingEmptyNeighbourhood = (mergedList) ->
-  console.log("getIntersectingEmptyNeighbourhood:mergedlist:"+mergedList)
   $.each(mergedList , (i,r) ->
     pos = getPlacedPosition(r)
     allNeighbourCells = getAllNeighbourCells(pos)
     if(i==0)
      intersectingNeighbourhood = allNeighbourCells
     intersectingNeighbourhood = getIntersect(allNeighbourCells)
-    console.log("getIntersectingEmptyNeighbourhood:intersectingNeighbourhood:")
-    console.log(intersectingNeighbourhood)
   )
   getEmptyIntersect(intersectingNeighbourhood)
   
@@ -132,27 +188,61 @@ placeHex =(elem,grid,x,y) ->
     elem.css("left", inv.x + "px")
     elem.css("top", inv.y + "px")
   
-place = (relElem,pos) ->
+placeInMem = (relElem,pos) ->
  console.log("x,y ")
  console.log(pos)
  posBeforeTranslation.push({"coord" : {x:pos.x, y:pos.y} , "elem" : relElem})
  placed.push({"elem" : relElem , "coord" : {x:pos.x, y:pos.y}})
- etype = relElem.substr(0,1)
- switch etype
-  when 'S' then cls = "stories"
-  when 'F' then cls = "forces"
-  when 'C' then cls = "solutionComponents"
- cellToPlace = createHex(cls,relElem)
- # gridElement = $("div","#hexagonal-grid")[0]
- # root = $(gridElement.root)
- gridElement = $('#hexagonal-grid')[0]
- grid = hex.grid(gridElement, {})
- root = $(grid.root)
- console.log(gridElement)
- root.append(cellToPlace)
- placeHex(cellToPlace,grid,pos.x,pos.y)
+ if pos.x<0 && pos.x<NEG_X_EXTENT
+  NEG_X_EXTENT = pos.x
+ if pos.x>0 && pos.x>POS_X_EXTENT
+  POS_X_EXTENT = pos.x
+ if pos.y<0 && pos.y<NEG_Y_EXTENT
+  NEG_Y_EXTENT = pos.y
+ if pos.y>0 && pos.y>POS_Y_EXTENT
+  POS_Y_EXTENT = pos.y 
+ console.log("Placed in memory:"+relElem+"EXTENTS:"+ NEG_X_EXTENT+","+POS_X_EXTENT+","+NEG_Y_EXTENT+","+POS_Y_EXTENT)
+  
  
+placeOnGrid = (a) ->
+ console.log("Inside place on grid")
+ calcOffsets('a')
+ $.each(placed, (i,p) -> 
+  relElem = p.elem
+  etype = relElem.substr(0,1)
+  switch etype
+   when 'S' then cls = "stories"
+   when 'F' then cls = "forces"
+   when 'C' then cls = "solutionComponents"
+  cellToPlace = createHex(cls,relElem)
+  # gridElement = $("div","#hexagonal-grid")[0]
+  # root = $(gridElement.root)
+  gridElement = $('#hexagonal-grid')[0]
+  grid = hex.grid(gridElement, {})
+  root = $(grid.root)
+  root.append(cellToPlace)
+  posOnGrid = getOffsetPos(p.coord)
+  # console.log("Got offset pos:"+posOnGrid.x+","+posOnGrid.y+" for pos:"+p.coord.x+","+p.coord.y)
+  placeHex(cellToPlace,grid,posOnGrid.x,posOnGrid.y)
+  resetUsedAreaBoundaries(posOnGrid)
+ ) 
  
+getEmptyNBcount = (pos) ->
+ allnb = getAllNeighbourCells(pos)
+ numEmpty = 0
+ $.each(allnb, (i, nb) ->
+  if isEmpty(nb)
+   numEmpty = numEmpty + 1
+ )
+ numEmpty  
+ 
+getUniqueNeighbourhood = ( nbhood, nbCount) ->
+ toReturn = {x:0,y:0}
+ $.each(nbhood, (i, nb) ->
+  if getEmptyNBcount(nb) == nbCount
+   toReturn = {x:nb.x,y:nb.y}    
+ )
+ toReturn
    
 placeNewElement = (relElem) ->
  # Check related elements of all placed elements.  See if current element is present in any of those lists
@@ -160,14 +250,13 @@ placeNewElement = (relElem) ->
  # Check related element list of current element.  See if any of the placed elements are in this list
    getListOfPlacedRelatedElements(relElem) 
  # Merge two lists 
-   console.log("Two lists to merge: "+listOfRelatedPlacedElements+" and "+listOfPlacedRelatedElements)
    mergedList = $.merge( $.merge([],listOfRelatedPlacedElements), listOfPlacedRelatedElements)
    mergedList.push(rootElement)
-   console.log("merged "+listOfRelatedPlacedElements+ " and " + listOfPlacedRelatedElements+" to get "+mergedList + " for "+ relElem)
    emptyIntersectingNeighbourhood = getIntersectingEmptyNeighbourhood($.unique(mergedList))
-   console.log("Empty intersecting neighbourhood:")
-   console.log(emptyIntersectingNeighbourhood)
-   place(relElem, emptyIntersectingNeighbourhood[0])
+   emptyNBcnt = 6 - ($.unique(mergedList).length )
+   console.log("empty neighbour cell count should be:"+emptyNBcnt)
+   finalMemPos = getUniqueNeighbourhood(emptyIntersectingNeighbourhood, emptyNBcnt)
+   placeInMem(relElem, finalMemPos)
    listOfRelatedPlacedElements.length = 0
    intersectingNeighbourhood.length = 0
    listOfPlacedRelatedElements.length = 0
@@ -186,17 +275,24 @@ placeElements = (relatedElements) ->
 
 displayCluster = (graph) ->
  rootElement = graph[0].element
- place(rootElement,{x:0,y:0})
+ placeInMem(rootElement,{x:0,y:0})
  $.each(graph, (i,value) ->
   console.log(value.element+" -> "+value.relatedElements)
   rootElement = value.element
   placeElements(value.relatedElements)
   console.log("---------") 
  ) 
+ 
 
 displayAllClusters = (clustersJson) ->
-  currentCluster = clustersJson.clusters[0].graph
-  displayCluster(currentCluster)
+  $.each(clustersJson.clusters, (i, value) ->
+   currentCluster = value.graph
+   displayCluster(currentCluster)
+   placeOnGrid ('a')
+   resetVariables ('a')
+   console.log("---------") 
+   console.log("---------")  
+  ) 
 
 clustersRequest = $.getJSON "/api/clusters"
 clustersRequest.success (data) ->

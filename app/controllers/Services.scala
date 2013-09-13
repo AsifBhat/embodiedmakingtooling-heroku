@@ -44,6 +44,32 @@ object Services extends Controller {
               obj("element" -> "F0010",
                 "relatedElements"-> arr("F0011"))
           )
+        ),
+      obj(
+          "graph" -> arr(
+           obj("element" -> "C0001",
+                "relatedElements"-> arr("F0005", "F0006", "F0011", "F0012")),
+           obj("element" -> "F0005",
+                "relatedElements"-> arr("F0006", "F0004", "F0007")),
+           obj("element" -> "F0006",
+                "relatedElements"-> arr("F0007", "F0013")),
+           obj("element" -> "F0004",
+                "relatedElements"-> arr("F0007")),
+           obj("element" -> "F0007",
+                "relatedElements"-> arr("F0013")),
+           obj("element" -> "F0012",
+                "relatedElements"-> arr("F0011"))
+          )
+        ),
+        obj(
+          "graph" -> arr(
+              obj("element" -> "S0004",
+                "relatedElements"-> arr("F0010")),
+              obj("element" -> "F0010",
+                "relatedElements"-> arr("F0011")),
+              obj("element" -> "F0011",
+                "relatedElements"-> arr("F0012"))  
+          )
         )
       ),
       "links" -> arr(
