@@ -22,6 +22,7 @@ object Services extends Controller {
     Ok(prettyPrint(obj(
       "clusters" -> arr(
         obj(
+          "clusterId" -> "G0001", 
           "graph" -> arr(
            obj("element" -> "C0001",
                 "relatedElements"-> arr("F0005", "F0006", "F0011", "F0012")),
@@ -38,6 +39,7 @@ object Services extends Controller {
           )
         ),
         obj(
+          "clusterId" -> "G0002",  
           "graph" -> arr(
               obj("element" -> "S0004",
                 "relatedElements"-> arr("F0010", "F0011")),
@@ -46,6 +48,7 @@ object Services extends Controller {
           )
         ),
       obj(
+          "clusterId" -> "G0003",
           "graph" -> arr(
            obj("element" -> "C0001",
                 "relatedElements"-> arr("F0005", "F0006", "F0011", "F0012")),
@@ -62,6 +65,7 @@ object Services extends Controller {
           )
         ),
         obj(
+          "clusterId" -> "G0004",  
           "graph" -> arr(
               obj("element" -> "S0004",
                 "relatedElements"-> arr("F0010")),
@@ -69,6 +73,13 @@ object Services extends Controller {
                 "relatedElements"-> arr("F0011")),
               obj("element" -> "F0011",
                 "relatedElements"-> arr("F0012"))  
+          )
+        ),
+        obj(
+          "clusterId" -> "G0005",  
+          "graph" -> arr(
+              obj("element" -> "S0004",
+                "relatedElements"-> arr("F0010","F0011","F0012"))             
           )
         )
       ),
