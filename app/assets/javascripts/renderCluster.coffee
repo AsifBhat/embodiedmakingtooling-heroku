@@ -34,13 +34,13 @@ calcOffsets = (a) ->
    y_offset = POS_Y_BOUND + 1 - NEG_Y_EXTENT
   when 1 
    x_offset = POS_X_BOUND + 1 - NEG_X_EXTENT
-   y_offset = NEG_Y_BOUND - 1 - POS_Y_EXTENT
+   y_offset = NEG_Y_BOUND - 1 + POS_Y_EXTENT
   when 2
-   x_offset = NEG_X_BOUND - 1 - POS_X_EXTENT
-   y_offset = NEG_Y_BOUND - 1 - POS_Y_EXTENT
+   x_offset = NEG_X_BOUND - 1 + POS_X_EXTENT
+   y_offset = NEG_Y_BOUND - 1 + POS_Y_EXTENT
   when 3 
    x_offset = NEG_X_BOUND - 1 - POS_X_EXTENT
-   y_offset = POS_Y_BOUND + 1 - NEG_Y_EXTENT
+   y_offset = POS_Y_BOUND - 1 - NEG_Y_EXTENT
  console.log("Quad:"+QUAD+", Offsets:"+x_offset+","+y_offset)
   
 resetUsedAreaBoundaries = (posOnGrid) ->
