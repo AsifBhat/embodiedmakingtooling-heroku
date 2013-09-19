@@ -4,7 +4,8 @@ posBeforeTranslation = []
 placed = []
 rootElement = ''
 currentCluster = ''
-
+currentClusterId = ''
+window.posAfterTranslation = []
 
 # Variables required for translation of the cluster with origin 0,0 to a different area on the grid
 
@@ -41,7 +42,6 @@ calcOffsets = (a) ->
   when 3 
    x_offset = NEG_X_BOUND - 1 - POS_X_EXTENT
    y_offset = POS_Y_BOUND - 1 - NEG_Y_EXTENT
- console.log("Quad:"+QUAD+", Offsets:"+x_offset+","+y_offset)
   
 resetUsedAreaBoundaries = (posOnGrid) ->
  if (posOnGrid.x < 0) && (posOnGrid.x < NEG_X_BOUND)
@@ -51,9 +51,7 @@ resetUsedAreaBoundaries = (posOnGrid) ->
  if (posOnGrid.y < 0) && (posOnGrid.y < NEG_Y_BOUND)
   NEG_Y_BOUND = posOnGrid.y
  if (posOnGrid.y > 0) && (posOnGrid.y > POS_Y_BOUND)
-  POS_Y_BOUND = posOnGrid.y  
- console.log("Reset used area:"+NEG_X_BOUND+","+POS_X_BOUND+","+NEG_Y_BOUND+","+POS_Y_BOUND)
-  
+  POS_Y_BOUND = posOnGrid.y    
  
 getOffsetPos = (pos) -> 
  newPos = { x:pos.x+x_offset, y:pos.y+y_offset }
@@ -127,7 +125,6 @@ getPlacedPosition = (r) ->
   pos
   
 getAllNeighbourCells =  (pos) ->
- console.log(pos)
  allNeighbourCells = [] 
  allNeighbourCells[0] = {x:pos.x-1 , y:pos.y }
  allNeighbourCells[1] = {x:pos.x+1 , y:pos.y }
@@ -189,8 +186,6 @@ placeHex =(elem,grid,x,y) ->
     elem.css("top", inv.y + "px")
   
 placeInMem = (relElem,pos) ->
- console.log("x,y ")
- console.log(pos)
  posBeforeTranslation.push({"coord" : {x:pos.x, y:pos.y} , "elem" : relElem})
  placed.push({"elem" : relElem , "coord" : {x:pos.x, y:pos.y}})
  if pos.x<0 && pos.x<NEG_X_EXTENT
@@ -200,12 +195,9 @@ placeInMem = (relElem,pos) ->
  if pos.y<0 && pos.y<NEG_Y_EXTENT
   NEG_Y_EXTENT = pos.y
  if pos.y>0 && pos.y>POS_Y_EXTENT
-  POS_Y_EXTENT = pos.y 
- console.log("Placed in memory:"+relElem+"EXTENTS:"+ NEG_X_EXTENT+","+POS_X_EXTENT+","+NEG_Y_EXTENT+","+POS_Y_EXTENT)
-  
+  POS_Y_EXTENT = pos.y   
  
 placeOnGrid = (a) ->
- console.log("Inside place on grid")
  calcOffsets('a')
  $.each(placed, (i,p) -> 
   relElem = p.elem
@@ -222,8 +214,8 @@ placeOnGrid = (a) ->
   root = $(grid.root)
   root.append(cellToPlace)
   posOnGrid = getOffsetPos(p.coord)
-  # console.log("Got offset pos:"+posOnGrid.x+","+posOnGrid.y+" for pos:"+p.coord.x+","+p.coord.y)
   placeHex(cellToPlace,grid,posOnGrid.x,posOnGrid.y)
+  window.posAfterTranslation.push({ "coord" : {x:posOnGrid.x, y:posOnGrid.y} , "elem" : relElem, "clusterid" :currentClusterId })
   resetUsedAreaBoundaries(posOnGrid)
  ) 
  
@@ -254,7 +246,6 @@ placeNewElement = (relElem) ->
    mergedList.push(rootElement)
    emptyIntersectingNeighbourhood = getIntersectingEmptyNeighbourhood($.unique(mergedList))
    emptyNBcnt = 6 - ($.unique(mergedList).length )
-   console.log("empty neighbour cell count should be:"+emptyNBcnt)
    finalMemPos = getUniqueNeighbourhood(emptyIntersectingNeighbourhood, emptyNBcnt)
    placeInMem(relElem, finalMemPos)
    listOfRelatedPlacedElements.length = 0
@@ -265,9 +256,7 @@ placeNewElement = (relElem) ->
 placeElements = (relatedElements) ->
  $.each(relatedElements, (i,relElem) ->
   if isPlaced relElem
-   console.log("Already Placed "+relElem)
   else 
-   console.log("Not Placed "+relElem)
    placeNewElement(relElem)
  )
      
@@ -277,21 +266,18 @@ displayCluster = (graph) ->
  rootElement = graph[0].element
  placeInMem(rootElement,{x:0,y:0})
  $.each(graph, (i,value) ->
-  console.log(value.element+" -> "+value.relatedElements)
   rootElement = value.element
   placeElements(value.relatedElements)
-  console.log("---------") 
  ) 
  
 
 displayAllClusters = (clustersJson) ->
   $.each(clustersJson.clusters, (i, value) ->
    currentCluster = value.graph
-   displayCluster(currentCluster)
+   currentClusterId = value.clusterId
+   displayCluster(value.graph)
    placeOnGrid ('a')
    resetVariables ('a')
-   console.log("---------") 
-   console.log("---------")  
   ) 
 
 clustersRequest = $.getJSON "/api/clusters"
