@@ -8,6 +8,7 @@ GET        /                              controllers.Application.index
 # REST Services
 GET        /api                           controllers.Services.api
 GET        /api/clusters                  controllers.Services.clusters
+GET        /api/clusters/:id              controllers.Services.cluster(id: String)
 POST       /api/clusters                  controllers.Services.createCluster
 PUT        /api/clusters/:id              controllers.Services.updateCluster(id: String)
 GET        /api/stories                   controllers.Services.stories

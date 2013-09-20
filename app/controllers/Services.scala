@@ -1,25 +1,21 @@
 package controllers
 
 import play.api.mvc._
+import play.api.libs.json._
 import play.api.libs.json.Json._
-import models.{Story, SolutionComponent, Force}
+import models._
+import scalax.collection.Graph
 
 object Services extends Controller {
   val baseUrl = "/api"
 
   implicit val storyReader = reads[Story]
   implicit val storyWriter = writes[Story]
-  implicit val forceRader = reads[Force]
+  implicit val forceReader = reads[Force]
   implicit val forceWriter = writes[Force]
   implicit val solutionComponentReader = reads[SolutionComponent]
   implicit val solutionComponentWriter = writes[SolutionComponent]
-
-  def api = Action {
-    Ok(prettyPrint(obj("links" -> arr(s"$baseUrl/clusters"))))
-  }
-
-  def clusters = Action {
-    Ok(prettyPrint(obj(
+  val tempClusters = obj(
       "clusters" -> arr(
         obj(
           "clusterId" -> "G0001", 
@@ -94,7 +90,36 @@ object Services extends Controller {
         obj("title" -> "F0011", "href" -> s"$baseUrl/forces/F0011"),
         obj("title" -> "F0012", "href" -> s"$baseUrl/forces/F0012"),
         obj("title" -> "F0013", "href" -> s"$baseUrl/forces/F0013")
-      ))))
+      ))
+  
+  /*implicit val clusterReader = new Reads[Cluster] {
+  def reads(js: JsValue): Cluster = {
+    Cluster(
+      (js \ "clusterId").as[String],
+      ((js \ "graph" \ "element")).as[List[(ContentElement,ContentElement)]]
+    )
+  }
+}
+  implicit val clusterWriter = writes[Cluster]
+*/
+  def api = Action {
+    Ok(prettyPrint(obj("links" -> arr(s"$baseUrl/clusters"))))
+  }
+
+  def clusters = Action {
+    prettyPrint(tempClusters)
+    Ok((tempClusters))
+  }
+  
+  def cluster(id: String) = Action {
+    var x = 0
+    var toReturn = (tempClusters \ "clusters" )(0)
+    for( x <- 0 to 4 ){
+    	val t = (tempClusters \ "clusters" )(x)
+    	if ((t \ "clusterId").toString == id)
+    	  toReturn = t
+    }
+    Ok(toReturn)
   }
 
   def stories = Action {
@@ -121,7 +146,9 @@ object Services extends Controller {
     Ok(toJson(SolutionComponent.getElementById(id)))
   }
   
-  def createCluster = Action{
+  def createCluster = Action{ request =>
+  val clusterWithoutID = request.body
+  //val clusterWithID = 
     Ok("Created Cluster")
   }
   
