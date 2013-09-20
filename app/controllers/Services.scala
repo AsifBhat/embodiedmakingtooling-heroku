@@ -120,4 +120,12 @@ object Services extends Controller {
   def solutionComponent(id: String) = Action {
     Ok(toJson(SolutionComponent.getElementById(id)))
   }
+  
+  def createCluster = Action{
+    Ok("Created Cluster")
+  }
+  
+  def updateCluster (id: String) = Action{
+    Ok("Updated cluster with id " + id)
+  }
 }
