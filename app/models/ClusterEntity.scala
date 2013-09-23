@@ -1,10 +1,18 @@
 package models
 
+import play.api.libs.json._
+import play.api.libs.functional.syntax._
+
 case class ClusterEntity(id:String, relations: List[(String, List[String])]){
   
   private var graphRelations: List[(ContentElement,ContentElement)] = getGraphRelations
   
-  private var cluster = new Cluster(id,graphRelations)
+  private var cluster = if(graphRelations.length==0) {
+    val rootelem = getContentElement(relations(0)._1)
+    new Cluster(id,List((rootelem,rootelem)))
+  }
+  else new Cluster(id,graphRelations)
+  
   
   def getGraphRelations : List[(ContentElement,ContentElement)] = {
     relations.map(rel => rel._2.map(dest => (getContentElement(rel._1) ,getContentElement(rel._1)))).flatten
@@ -25,4 +33,20 @@ case class ClusterEntity(id:String, relations: List[(String, List[String])]){
     val prnrel = relations.map(rel => rel._1 +" -> "+ rel._2)
     prnid+prnrel
   }
+  
+  
+}
+
+object ClusterEntity {
+  // Custom reader to handle the "String number" usecase
+  implicit val reader  = (
+    (__ \ "clusterId").read[String],
+     (__ \ "graph").read(
+      (__ \ "element").read[String] and
+      (__ \ "relatedElements").read[List[String]]
+      tupled
+    )
+  )
+
+ 
 }
