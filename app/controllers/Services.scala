@@ -17,16 +17,19 @@ object Services extends Controller {
   implicit val forceWriter = writes[Force]
   implicit val solutionComponentReader = reads[SolutionComponent]
   implicit val solutionComponentWriter = writes[SolutionComponent]
-  implicit val clusterEntityReader = reads[ClusterEntity]
-  
-  
   implicit val complexreads: Reads[(String,List[String])] = (
-      (__ \ "graph").read (
 		((__ \ "element").read[String] and
         (__ \ "relatedElements").read[List[String]]
         tupled) 
-        )
   ) 
+  implicit val clusterEntityReader = reads[ClusterEntity]
+  implicit val complexwrites: Writes[(String,List[String])] = (
+		((__ \ "element").write[String] and
+        (__ \ "relatedElements").write[List[String]]
+        tupled) 
+  ) 
+  implicit val clusterEntityWriter = writes[ClusterEntity]  
+  
 
   var tempCounter = 6
   val tempClusters = obj(
@@ -152,15 +155,10 @@ object Services extends Controller {
   }
   
   def createCluster = Action{ request =>
-   	val requestBodyAsJson = scala.util.parsing.json.JSON.parseFull(request.body.asJson.getOrElse().toString)
-      
-   	var requestMapObject = requestBodyAsJson.getOrElse() //fetch the map containing 'graph'
-    //println(clusterObject + " JSON String: " + request.body.asJson.getOrElse().toString)
-   // Created("Created Cluster")
-  val clusterWithoutIdJson = request.body.asJson.get
-  val clusterWithoutId: JsResult[ClusterEntity] = clusterWithoutIdJson.validate(clusterEntityReader)
-  val nextId = "G000".concat(tempCounter.toString)
-  Ok(clusterWithoutId.toString)
+      val clusterWithoutIdJson = request.body.asJson.get
+      val res: JsResult[ClusterEntity] = clusterWithoutIdJson.validate(clusterEntityReader)
+      val clusterWithoutId = res.get
+      Ok(toJson(clusterWithoutId))
   }
   
   def updateCluster (id: String) = Action{

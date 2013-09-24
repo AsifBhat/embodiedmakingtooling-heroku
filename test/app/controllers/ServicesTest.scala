@@ -8,6 +8,7 @@ import controllers._
 import play.api.libs.json._
 import play.api.libs.json.Json._
 import rest.BaseSpec
+import scala.concurrent.Await
 
 class ServicesTest extends  BaseSpec {
 
@@ -23,11 +24,11 @@ class ServicesTest extends  BaseSpec {
     }
   }  
   
-  /*"Create new cluster" in {
+  "Create new cluster" in {
     running(TestServer(port)) {
-      await(WS.url(s"$baseApi/clusters/G0001").post(Map("newcluster" -> List(tempNewCluster))), timeout).body must equalTo(((tempClusters \ "clusters")(0)).toString)
+      await(WS.url(s"$baseApi/clusters").post(tempNewCluster), timeout).body must equalTo((tempNewCluster).toString)
     }
-  }  */
+  }  
   
   val base = "/api"
     
@@ -109,8 +110,8 @@ class ServicesTest extends  BaseSpec {
       ))
       
       val tempNewCluster = obj(
-          "clusterId" -> "G0005",  
-          "graph" -> arr(
+          "id" -> "G0005",  
+          "relations" -> arr(
               obj("element" -> "C0002",
                 "relatedElements"-> arr("F0010","F0011"))             
           )
