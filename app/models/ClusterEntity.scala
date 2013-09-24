@@ -37,16 +37,3 @@ case class ClusterEntity(id:String, relations: List[(String, List[String])]){
   
 }
 
-object ClusterEntity {
-  // Custom reader to handle the "String number" usecase
-  implicit val reader  = (
-    (__ \ "clusterId").read[String],
-     (__ \ "graph").read(
-      (__ \ "element").read[String] and
-      (__ \ "relatedElements").read[List[String]]
-      tupled
-    )
-  )
-
- 
-}

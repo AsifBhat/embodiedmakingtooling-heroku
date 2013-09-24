@@ -21,7 +21,6 @@ class ClusterEntityTest extends FunSuite {
             ("F0010",List("F0011"))
             )
         )
-    println(ce)
     assert(ce!=null)
   }
   

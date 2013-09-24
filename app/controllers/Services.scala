@@ -3,8 +3,10 @@ package controllers
 import play.api.mvc._
 import play.api.libs.json._
 import play.api.libs.json.Json._
-import models._
+import models.{Force,Story,SolutionComponent, ClusterEntity}
 import scalax.collection.Graph
+import play.api.libs.functional.syntax._
+import play.api.libs.json.Reads._
 
 object Services extends Controller {
   val baseUrl = "/api"
@@ -15,6 +17,18 @@ object Services extends Controller {
   implicit val forceWriter = writes[Force]
   implicit val solutionComponentReader = reads[SolutionComponent]
   implicit val solutionComponentWriter = writes[SolutionComponent]
+  implicit val clusterEntityReader = reads[ClusterEntity]
+  
+  
+  implicit val complexreads: Reads[(String,List[String])] = (
+      (__ \ "graph").read (
+		((__ \ "element").read[String] and
+        (__ \ "relatedElements").read[List[String]]
+        tupled) 
+        )
+  ) 
+
+  var tempCounter = 6
   val tempClusters = obj(
       "clusters" -> arr(
         obj(
@@ -92,16 +106,7 @@ object Services extends Controller {
         obj("title" -> "F0013", "href" -> s"$baseUrl/forces/F0013")
       ))
   
-  /*implicit val clusterReader = new Reads[Cluster] {
-  def reads(js: JsValue): Cluster = {
-    Cluster(
-      (js \ "clusterId").as[String],
-      ((js \ "graph" \ "element")).as[List[(ContentElement,ContentElement)]]
-    )
-  }
-}
-  implicit val clusterWriter = writes[Cluster]
-*/
+
   def api = Action {
     Ok(prettyPrint(obj("links" -> arr(s"$baseUrl/clusters"))))
   }
@@ -151,7 +156,11 @@ object Services extends Controller {
       
    	var requestMapObject = requestBodyAsJson.getOrElse() //fetch the map containing 'graph'
     //println(clusterObject + " JSON String: " + request.body.asJson.getOrElse().toString)
-    Created("Created Cluster")
+   // Created("Created Cluster")
+  val clusterWithoutIdJson = request.body.asJson.get
+  val clusterWithoutId: JsResult[ClusterEntity] = clusterWithoutIdJson.validate(clusterEntityReader)
+  val nextId = "G000".concat(tempCounter.toString)
+  Ok(clusterWithoutId.toString)
   }
   
   def updateCluster (id: String) = Action{

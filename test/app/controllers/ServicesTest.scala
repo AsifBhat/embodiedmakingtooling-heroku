@@ -23,6 +23,12 @@ class ServicesTest extends  BaseSpec {
     }
   }  
   
+  /*"Create new cluster" in {
+    running(TestServer(port)) {
+      await(WS.url(s"$baseApi/clusters/G0001").post(Map("newcluster" -> List(tempNewCluster))), timeout).body must equalTo(((tempClusters \ "clusters")(0)).toString)
+    }
+  }  */
+  
   val base = "/api"
     
   val tempClusters = obj(
@@ -101,5 +107,13 @@ class ServicesTest extends  BaseSpec {
         obj("title" -> "F0012", "href" -> s"$base/forces/F0012"),
         obj("title" -> "F0013", "href" -> s"$base/forces/F0013")
       ))
+      
+      val tempNewCluster = obj(
+          "clusterId" -> "G0005",  
+          "graph" -> arr(
+              obj("element" -> "C0002",
+                "relatedElements"-> arr("F0010","F0011"))             
+          )
+        )
   
 }

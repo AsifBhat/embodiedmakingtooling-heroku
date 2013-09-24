@@ -67,5 +67,5 @@ object Cluster {
      List()
   }
   
-  def getElementById(id: String): Option[Cluster] = all().find(_.id == id)
+  def getClusterById(id: String): Option[Cluster] = all().find(_.id == id)
 }
