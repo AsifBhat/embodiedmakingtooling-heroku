@@ -147,9 +147,11 @@ object Services extends Controller {
   }
   
   def createCluster = Action{ request =>
-  val clusterWithoutID = request.body
-  //val clusterWithID = 
-    Ok("Created Cluster")
+   	val requestBodyAsJson = scala.util.parsing.json.JSON.parseFull(request.body.asJson.getOrElse().toString)
+      
+   	var requestMapObject = requestBodyAsJson.getOrElse() //fetch the map containing 'graph'
+    //println(clusterObject + " JSON String: " + request.body.asJson.getOrElse().toString)
+    Created("Created Cluster")
   }
   
   def updateCluster (id: String) = Action{
