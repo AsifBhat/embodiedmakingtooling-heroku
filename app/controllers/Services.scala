@@ -3,7 +3,7 @@ package controllers
 import play.api.mvc._
 import play.api.libs.json._
 import play.api.libs.json.Json._
-import models.{Force,Story,SolutionComponent, ClusterEntity}
+import models.{Force,Story,SolutionComponent, ClusterEntity, Cluster}
 import scalax.collection.Graph
 import play.api.libs.functional.syntax._
 import play.api.libs.json.Reads._
@@ -161,7 +161,12 @@ object Services extends Controller {
       Created(toJson(clusterWithoutId))
   }
   
-  def updateCluster (id: String) = Action{
+  def updateCluster (id: String) = Action{ request =>
+    println("Id searched for: " + id)
+    val updatedClusterObject = request.body.asJson.get
+    val res: JsResult[ClusterEntity] = updatedClusterObject.validate(clusterEntityReader)
+    val clusterForUpdate = Cluster.getClusterById( id)
+    println(clusterForUpdate)
     Ok("Updated cluster with id " + id)
   }
 }
