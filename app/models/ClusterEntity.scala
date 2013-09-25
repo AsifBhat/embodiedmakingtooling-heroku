@@ -15,7 +15,7 @@ case class ClusterEntity(id:String, relations: List[(String, List[String])]){
   
   
   def getGraphRelations : List[(ContentElement,ContentElement)] = {
-    relations.map(rel => rel._2.map(dest => (getContentElement(rel._1) ,getContentElement(rel._1)))).flatten
+    relations.map(rel => rel._2.map(dest => (getContentElement(rel._1) ,getContentElement(dest)))).flatten
   }
   
   private def getContentElement(id:String):ContentElement ={
