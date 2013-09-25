@@ -20,23 +20,49 @@ class ServicesTest extends  BaseSpec {
 
   "Cluster By Id" in {
     running(TestServer(port)) {
-      await(WS.url(s"$baseApi/clusters/G0001").get, timeout).body must equalTo(((tempClusters \ "clusters")(0)).toString)
+      await(WS.url(s"$baseApi/clusters/G1").get, timeout).body must equalTo(((tempClusters \ "clusters")(0)).toString)
+    }
+  }  
+  
+   "Cluster By Id" in {
+    running(TestServer(port)) {
+      await(WS.url(s"$baseApi/clusters/G2").get, timeout).body must equalTo(((tempClusters \ "clusters")(1)).toString)
+    }
+  }  
+   
+    "Cluster By Id" in {
+    running(TestServer(port)) {
+      await(WS.url(s"$baseApi/clusters/G3").get, timeout).body must equalTo(((tempClusters \ "clusters")(2)).toString)
+    }
+  }  
+    
+     "Cluster By Id" in {
+    running(TestServer(port)) {
+      await(WS.url(s"$baseApi/clusters/G4").get, timeout).body must equalTo(((tempClusters \ "clusters")(3)).toString)
+    }
+  }  
+     
+      "Cluster By Id" in {
+    running(TestServer(port)) {
+      await(WS.url(s"$baseApi/clusters/G5").get, timeout).body must equalTo(((tempClusters \ "clusters")(4)).toString)
     }
   }  
   
   "Create new cluster" in {
     running(TestServer(port)) {
-      await(WS.url(s"$baseApi/clusters").post(tempNewCluster), timeout).body must equalTo((tempNewCluster).toString)
+      await(WS.url(s"$baseApi/clusters").post(tempNewClusterWithoutId), timeout).body must equalTo((tempNewClusterWithId).toString)
     }
   }  
+  
+  /* ************************************Test Data **********************************/
   
   val base = "/api"
     
   val tempClusters = obj(
       "clusters" -> arr(
         obj(
-          "clusterId" -> "G0001", 
-          "graph" -> arr(
+          "id" -> "G1", 
+          "relations" -> arr(
            obj("element" -> "C0001",
                 "relatedElements"-> arr("F0005", "F0006", "F0011", "F0012")),
            obj("element" -> "F0005",
@@ -52,8 +78,8 @@ class ServicesTest extends  BaseSpec {
           )
         ),
         obj(
-          "clusterId" -> "G0002",  
-          "graph" -> arr(
+          "id" -> "G2",  
+          "relations" -> arr(
               obj("element" -> "S0004",
                 "relatedElements"-> arr("F0010", "F0011")),
               obj("element" -> "F0010",
@@ -61,8 +87,8 @@ class ServicesTest extends  BaseSpec {
           )
         ),
       obj(
-          "clusterId" -> "G0003",
-          "graph" -> arr(
+          "id" -> "G3",
+          "relations" -> arr(
            obj("element" -> "C0001",
                 "relatedElements"-> arr("F0005", "F0006", "F0011", "F0012")),
            obj("element" -> "F0005",
@@ -78,8 +104,8 @@ class ServicesTest extends  BaseSpec {
           )
         ),
         obj(
-          "clusterId" -> "G0004",  
-          "graph" -> arr(
+          "id" -> "G4",  
+          "relations" -> arr(
               obj("element" -> "S0004",
                 "relatedElements"-> arr("F0010")),
               obj("element" -> "F0010",
@@ -89,13 +115,13 @@ class ServicesTest extends  BaseSpec {
           )
         ),
         obj(
-          "clusterId" -> "G0005",  
-          "graph" -> arr(
+          "id" -> "G5",  
+          "relations" -> arr(
               obj("element" -> "S0004",
                 "relatedElements"-> arr("F0010","F0011","F0012"))             
           )
         )
-      ),
+      )/*,
       "links" -> arr(
         obj("title" -> "C0001", "href" -> s"$base/solutionComponents/C0001"),
         obj("title" -> "S0004", "href" -> s"$base/stories/S0004"),
@@ -107,10 +133,18 @@ class ServicesTest extends  BaseSpec {
         obj("title" -> "F0011", "href" -> s"$base/forces/F0011"),
         obj("title" -> "F0012", "href" -> s"$base/forces/F0012"),
         obj("title" -> "F0013", "href" -> s"$base/forces/F0013")
-      ))
+      )*/)
       
-      val tempNewCluster = obj(
-          "id" -> "G0005",  
+      val tempNewClusterWithoutId = obj(
+          "id" -> "noid",  
+          "relations" -> arr(
+              obj("element" -> "C0002",
+                "relatedElements"-> arr("F0010","F0011"))             
+          )
+        )
+        
+      val tempNewClusterWithId = obj(
+          "id" -> "G6",  
           "relations" -> arr(
               obj("element" -> "C0002",
                 "relatedElements"-> arr("F0010","F0011"))             

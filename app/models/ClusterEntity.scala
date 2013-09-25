@@ -3,7 +3,7 @@ package models
 import play.api.libs.json._
 import play.api.libs.functional.syntax._
 
-case class ClusterEntity(id:String, relations: List[(String, List[String])]){
+case class ClusterEntity(var id:String, relations: List[(String, List[String])]){
   
   private var graphRelations: List[(ContentElement,ContentElement)] = getGraphRelations
   
@@ -34,6 +34,60 @@ case class ClusterEntity(id:String, relations: List[(String, List[String])]){
     prnid+prnrel
   }
   
+}
+
+object ClusterEntity{
+	
+  var nextIdCnt = 6
   
+  var allClusters: List[ClusterEntity] = List(
+  
+   new ClusterEntity ("G1",
+		List(("C0001", List("F0005","F0006","F0011","F0012")),
+			("F0005", List("F0006","F0004","F0007")),
+			("F0006",List("F0007","F0013")),
+			("F0004", List("F0007")),
+			("F0007", List("F0013")),
+			("F0012", List("F0011"))
+		    )   
+   ),   
+    new ClusterEntity ("G2",
+		List(("S0004", List("F0010","F0011")),
+			("F0010", List("F0011"))
+		    )   
+   ),
+   new ClusterEntity ("G3",
+		List(("C0001", List("F0005","F0006","F0011","F0012")),
+			("F0005", List("F0006","F0004","F0007")),
+			("F0006",List("F0007","F0013")),
+			("F0004", List("F0007")),
+			("F0007", List("F0013")),
+			("F0012", List("F0011"))
+		    )   
+   ),
+   new ClusterEntity("G4",
+        List(("S0004",List("F0010")),
+            ("F0010",List("F0011")),
+            ("F0011",List("F0012"))
+            )
+   ),
+   new ClusterEntity("G5",
+        List(("S0004",List("F0010","F0011","F0012"))
+        )   
+  )
+)
+  
+  def all: List[ClusterEntity] = allClusters
+  
+  def addClusterToMem(newCluster: ClusterEntity):ClusterEntity={
+    var clusterToAdd = newCluster
+    val nextId = "G"+nextIdCnt    
+    clusterToAdd.id = nextId
+    nextIdCnt = nextIdCnt+1
+    allClusters = newCluster::allClusters
+    newCluster
+  }
+    
+  def getClusterById(id: String): Option[ClusterEntity] = all.find(c => c.id==id)
 }
 

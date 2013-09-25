@@ -9,11 +9,6 @@ import play.api.libs.json.Json._
 
 @RunWith(classOf[JUnitRunner])
 class ClusterEntityTest extends FunSuite {
-  val c = new Cluster("G0002", List(
-        		(Story.getElementById("S0004").get, Force.getElementById("F0010").get),
-        		(Story.getElementById("S0004").get, Force.getElementById("F0011").get),
-        		(Force.getElementById("F0010").get, Force.getElementById("F0011").get)))
-  
   
   test("Test cluster creation") {
     val ce = new ClusterEntity("G0001",
@@ -29,21 +24,13 @@ class ClusterEntityTest extends FunSuite {
     assert(newcluster!=null)
   }
   
-  
-  
-  /*test("Cluster deserialization" {
-	  val temp = obj(
-          "clusterId" -> "G0005",  
-          "graph" -> arr(
-              obj("element" -> "S0004",
-                "relatedElements"-> arr("F0010","F0011","F0012"))             
-          )
-        )
-    temp.validate[ClusterEntity].fold(
-    valid = ( res => Ok(res.name) ),
-    invalid = ( e => BadRequest(e.toString) )
-  )
-  }*/
-
+  test("Add new cluster to memory"){
+    val oldLength = ClusterEntity.all.length
+    val newcluster = new ClusterEntity("G0001",List(("S0004",List())))
+    val clusterWithId = ClusterEntity.addClusterToMem(newcluster)
+    println(clusterWithId.id)
+    val newLength = ClusterEntity.all.length
+    assert(oldLength == newLength-1)
+  }
  
 }
