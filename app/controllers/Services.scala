@@ -158,7 +158,6 @@ object Services extends Controller {
       val clusterWithoutIdJson = request.body.asJson.get
       val res: JsResult[ClusterEntity] = clusterWithoutIdJson.validate(clusterEntityReader)
       val clusterWithoutId = res.get
-      println(clusterWithoutId)
       Created(toJson(clusterWithoutId))
   }
   
