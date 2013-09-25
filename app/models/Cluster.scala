@@ -59,7 +59,7 @@ object Cluster {
         		(Force.getElementById("F0012").get, Force.getElementById("F0011").get))),
         new Cluster("G0002", List(
         		(Story.getElementById("S0004").get, Force.getElementById("F0010").get),
-        		(SolutionComponent.getElementById("S0004").get, Force.getElementById("F0011").get),
+        		(SolutionComponent.getElementById("C0004").get, Force.getElementById("F0011").get),
         		(Force.getElementById("F0010").get, Force.getElementById("F0011").get)))
         
         )
