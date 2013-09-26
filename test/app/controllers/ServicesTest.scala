@@ -9,12 +9,33 @@ import play.api.libs.json._
 import play.api.libs.json.Json._
 import rest.BaseSpec
 import scala.concurrent.Await
+import play.api.libs.functional.syntax._
+import play.api.libs.json.Reads._
+import models.{Force,Story,SolutionComponent, ClusterEntity, Cluster}
 
 class ServicesTest extends  BaseSpec {
+  implicit val storyReader = reads[Story]
+  implicit val storyWriter = writes[Story]
+  implicit val forceReader = reads[Force]
+  implicit val forceWriter = writes[Force]
+  implicit val solutionComponentReader = reads[SolutionComponent]
+  implicit val solutionComponentWriter = writes[SolutionComponent]
+  implicit val complexreads: Reads[(String,List[String])] = (
+		  ((__ \ "element").read[String] and
+        (__ \ "relatedElements").read[List[String]]
+        tupled)
+  )
+  implicit val clusterEntityReader = reads[ClusterEntity]
+  implicit val complexwrites: Writes[(String,List[String])] = (
+		  ((__ \ "element").write[String] and
+        (__ \ "relatedElements").write[List[String]]
+        tupled)
+  )
+  implicit val clusterEntityWriter = writes[ClusterEntity] 
 
   "All Clusters" in {
     running(TestServer(port)) {
-      await(WS.url(s"$baseApi/clusters").get, timeout).body must equalTo(tempClusters.toString)
+      await( WS.url(s"$baseApi/clusters").get, timeout).body must equalTo((obj("clusters" -> ClusterEntity.all)).toString)
     }
   }
 

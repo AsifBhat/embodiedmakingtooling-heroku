@@ -28,6 +28,8 @@ case class ClusterEntity(var id:String, relations: List[(String, List[String])])
     element
   }
   
+  def getCluster = {this.cluster}
+  
   override def toString() = {
     val prnid = "Cluster ID: "+id+"\n"
     val prnrel = relations.map(rel => rel._1 +" -> "+ rel._2)

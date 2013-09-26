@@ -7,6 +7,7 @@ import models.{Force,Story,SolutionComponent, ClusterEntity, Cluster}
 import scalax.collection.Graph
 import play.api.libs.functional.syntax._
 import play.api.libs.json.Reads._
+import scala.collection.mutable.ListBuffer
 
 object Services extends Controller {
   val baseUrl = "/api"
@@ -78,11 +79,12 @@ object Services extends Controller {
   }
   
   def updateCluster (id: String) = Action{ request =>
-    println("Id searched for: " + id)
     val updatedClusterObject = request.body.asJson.get
     val res: JsResult[ClusterEntity] = updatedClusterObject.validate(clusterEntityReader)
-    val clusterForUpdate = Cluster.getClusterById( id)
-    println(clusterForUpdate)
+    var listOfClusters = Cluster.all().to[ListBuffer];
+    var updatedCluster = res.get.getCluster
+    listOfClusters.map( cluster => if(cluster.id != id)updatedCluster )
+    
     Ok("Updated cluster with id " + id)
   }
 }

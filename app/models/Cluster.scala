@@ -42,8 +42,7 @@ case class Cluster(id: String,
 }
 
 object Cluster {
-   def all():List[Cluster] = {
-    List(
+   private var clusterList : List[Cluster] =    List(
         new Cluster("G0001", List(
         		(SolutionComponent.getElementById("C0001").get, Force.getElementById("F0005").get),
         		(SolutionComponent.getElementById("C0001").get, Force.getElementById("F0006").get),
@@ -63,9 +62,10 @@ object Cluster {
         		(Force.getElementById("F0010").get, Force.getElementById("F0011").get)))
         
         )
-     
-     List()
+ 
+   def all():List[Cluster] = {
+     clusterList
   }
   
-  def getClusterById(id: String): Option[Cluster] = all().find(_.id == id)
+  def getClusterById(id: String): Option[Cluster] = clusterList.find(_.id == id)
 }
