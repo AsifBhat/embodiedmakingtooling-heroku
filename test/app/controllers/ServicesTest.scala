@@ -24,33 +24,13 @@ class ServicesTest extends  BaseSpec {
     }
   }  
   
-   "Cluster By Id" in {
-    running(TestServer(port)) {
-      await(WS.url(s"$baseApi/clusters/G2").get, timeout).body must equalTo(((tempClusters \ "clusters")(1)).toString)
-    }
-  }  
-   
-    "Cluster By Id" in {
-    running(TestServer(port)) {
-      await(WS.url(s"$baseApi/clusters/G3").get, timeout).body must equalTo(((tempClusters \ "clusters")(2)).toString)
-    }
-  }  
-    
-     "Cluster By Id" in {
-    running(TestServer(port)) {
-      await(WS.url(s"$baseApi/clusters/G4").get, timeout).body must equalTo(((tempClusters \ "clusters")(3)).toString)
-    }
-  }  
-     
-      "Cluster By Id" in {
-    running(TestServer(port)) {
-      await(WS.url(s"$baseApi/clusters/G5").get, timeout).body must equalTo(((tempClusters \ "clusters")(4)).toString)
-    }
-  }  
   
-  "Create new cluster" in {
+  "Create new cluster " in {
     running(TestServer(port)) {
-      await(WS.url(s"$baseApi/clusters").post(tempNewClusterWithoutId), timeout).body must equalTo((tempNewClusterWithId).toString)
+      val result = await(WS.url(s"$baseApi/clusters").post(tempNewClusterWithoutId), timeout)
+      result.body must equalTo((tempNewClusterWithId).toString)
+      result.status must equalTo(CREATED)
+      
     }
   }  
   

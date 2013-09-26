@@ -74,7 +74,7 @@ object Services extends Controller {
       val res: JsResult[ClusterEntity] = clusterWithoutIdJson.validate(clusterEntityReader)
       val clusterWithoutId = res.get
       val clusterWithId = ClusterEntity.addClusterToMem(clusterWithoutId)
-      Ok(toJson(clusterWithId))
+      Created(toJson(clusterWithId))
   }
   
   def updateCluster (id: String) = Action{ request =>
