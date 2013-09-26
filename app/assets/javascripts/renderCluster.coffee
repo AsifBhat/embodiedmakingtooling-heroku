@@ -262,10 +262,10 @@ placeElements = (relatedElements) ->
      
  
 
-displayCluster = (graph) ->
- rootElement = graph[0].element
+displayCluster = (relations) ->
+ rootElement = relations[0].element
  placeInMem(rootElement,{x:0,y:0})
- $.each(graph, (i,value) ->
+ $.each(relations, (i,value) ->
   rootElement = value.element
   placeElements(value.relatedElements)
  ) 
@@ -273,15 +273,15 @@ displayCluster = (graph) ->
 
 displayAllClusters = (clustersJson) ->
   $.each(clustersJson.clusters, (i, value) ->
-   currentCluster = value.graph
-   currentClusterId = value.clusterId
-   displayCluster(value.graph)
+   currentCluster = value.relations
+   currentClusterId = value.id
+   displayCluster(value.relations)
    placeOnGrid ('a')
    resetVariables ('a')
   ) 
 
 clustersRequest = $.getJSON "/api/clusters"
 clustersRequest.success (data) ->
- displayAllClusters(data)
+  displayAllClusters(data)
  
  

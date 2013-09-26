@@ -47,9 +47,12 @@ addLinkToCluster = (link, clusters) ->
    )
   ) 
   newGraph.push(link)
-  clusterToUpdate = {"clusterId":clusters[0].clusterId, "graph":newGraph}
+  clusterToUpdate = {"id":clusters[0].clusterId, "relations":newGraph}
   console.log(clusterToUpdate)  
   console.log(clusterToDelete)
+
+createCallBack = (data, textStatus, jqXHR)  ->
+  console.log(textStatus)
 
 window.updateClusters = (obj, datum, dataset,posx,posy) ->
     pos = { x:posx , y:posy }
@@ -64,8 +67,18 @@ window.updateClusters = (obj, datum, dataset,posx,posy) ->
        nbClusters.push(getClusterInCell(value))
     )
     if loneCell 
-     console.log("New Cluster")
-     # create graph object , REST call 
+     newclusterdata =  {"id":"newid","relations":[{"element":datum.id,"relatedElements":["F0001","F0002"]}]}
+     $.ajax
+      url: '/api/clusters',
+      type: 'POST',
+      dataType: "json",
+      contentType: "application/json",
+      data : JSON.stringify(newclusterdata),
+      success: (data, status, response) ->
+       console.log("New cluster creation request sent:")
+       console.log(data)
+      error: (jqXHR, textStatus, errorThrown) ->
+       alert errorThrown     
      window.posAfterTranslation.push({ "coord" : {x:posx, y:posy} , "elem" : datum.id, "clusterid" :"newclusterid" })
     else 
      nbClusters = $.unique(nbClusters)
@@ -75,11 +88,10 @@ window.updateClusters = (obj, datum, dataset,posx,posy) ->
      link = {"element":datum.id, "relatedElements":nbElements}
      clustersToMerge = []
      $.each(nbClusters, (i, nbc) ->
-       #clusterRequest = $.getJSON "/api/clusters"+nbc
-       clusterRequest = $.getJSON "/api/clusters"
+       clusterRequest = $.getJSON "/api/cluster/"+nbc
        clusterRequest.success (data) ->
-      	 #clustersToMerge.push(data)
+      	 clustersToMerge.push(data)
      ) 	  	 
-     #addLinkToCluster(link, clustersToMerge)
+     addLinkToCluster(link, clustersToMerge)
 
 #----------------------------------------------------
