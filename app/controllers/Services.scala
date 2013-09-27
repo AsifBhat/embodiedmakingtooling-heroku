@@ -39,7 +39,7 @@ object Services extends Controller {
   def clusters = Action {
    //prettyPrint(toJson(ClusterEntity.all))\
     val clusters = ClusterEntity.all
-    Ok(obj("clusters" -> clusters))
+    Ok(toJson(obj("clusters" -> clusters)))
   }
   
   def cluster(id: String) = Action {
@@ -81,10 +81,12 @@ object Services extends Controller {
   def updateCluster (id: String) = Action{ request =>
     val updatedClusterObject = request.body.asJson.get
     val res: JsResult[ClusterEntity] = updatedClusterObject.validate(clusterEntityReader)
-    var listOfClusters = Cluster.all().to[ListBuffer];
-    var updatedCluster = res.get.getCluster
-    listOfClusters.map( cluster => if(cluster.id != id)updatedCluster )
-    
+    var listOfClusters = ClusterEntity.all
+    var updatedCluster = res.get
+    ClusterEntity.allClusters = listOfClusters.map( 
+        cluster => 
+          if(cluster.id == id) updatedCluster else cluster ).asInstanceOf[List[ClusterEntity]]
+    println("Updated Cluster: " + ClusterEntity.all)
     Ok("Updated cluster with id " + id)
   }
 }
