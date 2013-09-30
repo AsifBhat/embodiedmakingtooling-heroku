@@ -87,13 +87,13 @@ object Services extends Controller {
         cluster => 
           if(cluster.id == id) updatedCluster else cluster ).asInstanceOf[List[ClusterEntity]]
     
-    Ok("Updated cluster with id " + id)
+    Ok(toJson(id))
   }
   
   def deleteCluster(id: String) = Action {
   	var ce = ClusterEntity.getClusterById(id)
   	ClusterEntity.allClusters = ClusterEntity.all.filter( cluster => (cluster.id != id))
-  	Ok("Deleted Cluster" + id)
+  	Ok(id)
     
   }
   

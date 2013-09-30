@@ -41,15 +41,15 @@ updatePositions = (idToKeep, idsToChange) ->
   console.log(idToKeep, idsToChange)
   $.each(idsToChange, (i, id)->
     $.each(window.posAfterTranslation, (j, pos) ->
-      if(pos.clusterid == id)
+      if ((pos.clusterid == id) || (pos.clusterid == "temp"))
         pos.clusterid = idToKeep
     )
   )
-  console.log("**********")
+  console.log("window.posAfterTranslation: ")
   console.log(window.posAfterTranslation)
  
 clusterToUpdate = {} 
-mergeAndAddLink = (link, clusters) ->
+mergeAndAddLink = (link, clusters, posUpdate) ->
   console.log("clusters to merge")
   console.log clusters
   newGraph = []
@@ -61,10 +61,12 @@ mergeAndAddLink = (link, clusters) ->
      newGraph.push(l)
    )
   ) 
-  console.log("********")
+  console.log("Clusters to delete:")
   console.log clustersToDelete
   newGraph.push(link)
   clusterToUpdate = {"id":clusters[0].id, "relations":newGraph}
+  posUpdate.clusterid = clusters[0].id
+  window.posAfterTranslation.push(posUpdate)
   console.log "To update cluster:"
   console.log(clusterToUpdate)  
   $.ajax
@@ -73,10 +75,10 @@ mergeAndAddLink = (link, clusters) ->
       dataType: "json",
       contentType: "application/json",
       data : JSON.stringify(clusterToUpdate),
-      success: (updatedCluster, status, response) ->
+      success: (updatedClusterId, status, response) ->
        console.log("Cluster update request sent:")
-       console.log(updatedCluster)
-       updatePositions(updatedCluster.id,clustersToDelete)
+       console.log(updatedClusterId)
+       updatePositions(updatedClusterId,clustersToDelete)
       error: (jqXHR, textStatus, errorThrown) ->
        console.log errorThrown 
   console.log "To delete clusters:"
@@ -123,19 +125,23 @@ window.updateClusters = (obj, datum, dataset,posx,posy) ->
        console.log errorThrown     
     else 
      nbClusters = $.unique(nbClusters)    
-     link = {"element":datum.id, "relatedElements":nbElements}      
+     console.log("nbClusters: ")
+     console.log(nbClusters)
+     link = {"element":datum.id, "relatedElements":nbElements}     
      $.each(nbClusters, (i, nbc) ->
-       $.ajax
-        url: '/api/clusters/'+nbc,
-        type: 'GET',
-        contentType: "application/json",
-        success: (cluster, status, response) ->
-         clustersToMerge.push(cluster)
-         if(i==nbClusters.length-1)
-           mergeAndAddLink(link, clustersToMerge) 
-        error: (jqXHR, textStatus, errorThrown) ->
-         console.log errorThrown
-         console.log(nbc)    
+       if(nbc!="temp")
+        $.ajax
+         url: '/api/clusters/'+nbc,
+         type: 'GET',
+         contentType: "application/json",
+         success: (cluster, status, response) ->
+          clustersToMerge.push(cluster)
+          if (i == nbClusters.length-1)  
+        	  posUpdate = { "coord" : {x:posx, y:posy} , "elem" : datum.id, "clusterid" :"temp" }
+        	  mergeAndAddLink(link, clustersToMerge, posUpdate)
+         error: (jqXHR, textStatus, errorThrown) ->
+           console.log errorThrown
+           console.log(nbc)    
      ) 
      
      	  	 

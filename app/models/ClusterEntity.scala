@@ -57,7 +57,7 @@ object ClusterEntity{
 		List(("S0004", List("F0010","F0011")),
 			("F0010", List("F0011"))
 		    )   
-   ),
+   )/*,
    new ClusterEntity ("G3",
 		List(("C0001", List("F0005","F0006","F0011","F0012")),
 			("F0005", List("F0006","F0004","F0007")),
@@ -76,7 +76,7 @@ object ClusterEntity{
    new ClusterEntity("G5",
         List(("S0004",List("F0010","F0011","F0012"))
         )   
-  )
+  )*/
 )
   
   def all: List[ClusterEntity] = allClusters
