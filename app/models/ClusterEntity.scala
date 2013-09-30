@@ -82,9 +82,8 @@ object ClusterEntity{
   def all: List[ClusterEntity] = allClusters
   
   def addClusterToMem(newCluster: ClusterEntity):ClusterEntity={
-    var clusterToAdd = newCluster
-    val nextId = "G"+nextIdCnt    
-    clusterToAdd.id = nextId
+    val nextId = "G"+nextIdCnt
+    var clusterToAdd = new ClusterEntity(nextId,newCluster.relations.sortBy(r => 0-r._2.length))
     nextIdCnt = nextIdCnt+1
     allClusters = newCluster::allClusters
     newCluster
