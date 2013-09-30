@@ -54,8 +54,8 @@ object ClusterEntity{
 		    )   
    ),   
     new ClusterEntity ("G2",
-		List(("S0004", List("F0010","F0011")),
-			("F0010", List("F0011"))
+		List(("S0004", List("F0010","F0001")),
+			("F0010", List("F0002"))
 		    )   
    )/*,
    new ClusterEntity ("G3",
@@ -86,7 +86,7 @@ object ClusterEntity{
     var clusterToAdd = new ClusterEntity(nextId,newCluster.relations.sortBy(r => 0-r._2.length))
     nextIdCnt = nextIdCnt+1
     allClusters = newCluster::allClusters
-    newCluster
+    clusterToAdd
   }
     
   def getClusterById(id: String): Option[ClusterEntity] = all.find(c => c.id==id)

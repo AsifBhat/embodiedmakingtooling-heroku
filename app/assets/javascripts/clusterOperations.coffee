@@ -35,6 +35,7 @@ getClusterInCell = (pos) ->
  )	 
  cluster
 
+ #-------------------------------------------------------------------------------------- 
 
 updatePositions = (idToKeep, idsToChange) ->
   console.log "ID to keep and IDs to change"
@@ -49,18 +50,22 @@ updatePositions = (idToKeep, idsToChange) ->
   console.log(window.posAfterTranslation)
  
 clusterToUpdate = {} 
+  
+#--------------------------------------------------------------------------------------  
 mergeAndAddLink = (link, clusters, posUpdate) ->
   console.log("clusters to merge")
   console.log clusters
   newGraph = []
   clustersToDelete = []
+  console.log(clusters)	
   $.each(clusters, (i, cluster) ->
-   if(i>0)
-    clustersToDelete.push(cluster.id)
    $.each(cluster.relations, (j,l) ->
      newGraph.push(l)
    )
   ) 
+   
+  (if cluster.id != clusters[0].id then (clustersToDelete.push cluster.id)) for cluster in clusters
+
   console.log("Clusters to delete:")
   console.log clustersToDelete
   newGraph.push(link)
@@ -95,6 +100,8 @@ mergeAndAddLink = (link, clusters, posUpdate) ->
       error: (jqXHR, textStatus, errorThrown) ->
        console.log errorThrown   
   )
+  
+ #-------------------------------------------------------------------------------------- 
   
 window.updateClusters = (obj, datum, dataset,posx,posy) ->
     pos = { x:posx , y:posy }
