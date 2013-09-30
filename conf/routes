@@ -11,6 +11,7 @@ GET        /api/clusters                  controllers.Services.clusters
 GET        /api/clusters/:id              controllers.Services.cluster(id: String)
 POST       /api/clusters                  controllers.Services.createCluster
 PUT        /api/clusters/:id              controllers.Services.updateCluster(id: String)
+DELETE     /api/clusters/:id              controllers.Services.deleteCluster(id:String)
 GET        /api/stories                   controllers.Services.stories
 GET        /api/stories/:id               controllers.Services.story(id: String)
 GET        /api/forces                    controllers.Services.forces
