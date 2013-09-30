@@ -35,13 +35,13 @@ calcOffsets = (a) ->
    y_offset = POS_Y_BOUND + 1 - NEG_Y_EXTENT
   when 1 
    x_offset = POS_X_BOUND + 1 - NEG_X_EXTENT
-   y_offset = NEG_Y_BOUND - 1 + POS_Y_EXTENT
+   y_offset = NEG_Y_BOUND - 1 - POS_Y_EXTENT
   when 2
-   x_offset = NEG_X_BOUND - 1 + POS_X_EXTENT
+   x_offset = NEG_X_BOUND - 1 - POS_X_EXTENT
    y_offset = NEG_Y_BOUND - 1 + POS_Y_EXTENT
   when 3 
    x_offset = NEG_X_BOUND - 1 - POS_X_EXTENT
-   y_offset = POS_Y_BOUND - 1 - NEG_Y_EXTENT
+   y_offset = POS_Y_BOUND + 1 - NEG_Y_EXTENT
   
 resetUsedAreaBoundaries = (posOnGrid) ->
  if (posOnGrid.x < 0) && (posOnGrid.x < NEG_X_BOUND)
@@ -243,7 +243,8 @@ placeNewElement = (relElem) ->
    getListOfPlacedRelatedElements(relElem) 
  # Merge two lists 
    mergedList = $.merge( $.merge([],listOfRelatedPlacedElements), listOfPlacedRelatedElements)
-   mergedList.push(rootElement)
+   if(relElem != rootElement)
+     mergedList.push(rootElement)
    emptyIntersectingNeighbourhood = getIntersectingEmptyNeighbourhood($.unique(mergedList))
    emptyNBcnt = 6 - ($.unique(mergedList).length )
    finalMemPos = getUniqueNeighbourhood(emptyIntersectingNeighbourhood, emptyNBcnt)
@@ -254,6 +255,8 @@ placeNewElement = (relElem) ->
  
  
 placeElements = (relatedElements) ->
+ if(!isPlaced rootElement)
+  placeNewElement(rootElement)
  $.each(relatedElements, (i,relElem) ->
   if isPlaced relElem
   else 
@@ -267,6 +270,7 @@ displayCluster = (relations) ->
  placeInMem(rootElement,{x:0,y:0})
  $.each(relations, (i,value) ->
   rootElement = value.element
+  # placeNewElement(rootElement)
   placeElements(value.relatedElements)
  ) 
  
