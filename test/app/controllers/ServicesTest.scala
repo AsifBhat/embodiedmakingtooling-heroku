@@ -21,13 +21,13 @@ class ServicesTest extends  BaseSpec {
   implicit val solutionComponentReader = reads[SolutionComponent]
   implicit val solutionComponentWriter = writes[SolutionComponent]
   implicit val complexreads: Reads[(String,List[String])] = (
-		  ((__ \ "element").read[String] and
+      ((__ \ "element").read[String] and
         (__ \ "relatedElements").read[List[String]]
         tupled)
   )
   implicit val clusterEntityReader = reads[ClusterEntity]
   implicit val complexwrites: Writes[(String,List[String])] = (
-		  ((__ \ "element").write[String] and
+      ((__ \ "element").write[String] and
         (__ \ "relatedElements").write[List[String]]
         tupled)
   )
@@ -41,7 +41,8 @@ class ServicesTest extends  BaseSpec {
 
   "Cluster By Id" in {
     running(TestServer(port)) {
-      await(WS.url(s"$baseApi/clusters/G1").get, timeout).body must equalTo(((tempClusters \ "clusters")(0)).toString)
+      var clusterId = ClusterEntity.all.head.id
+      await(WS.url(s"$baseApi/clusters/"+ clusterId).get, timeout).body must equalTo((Json.toJson(ClusterEntity.all.head)).toString)
     }
   }  
   

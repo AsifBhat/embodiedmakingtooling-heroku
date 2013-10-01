@@ -21,9 +21,9 @@ case class ClusterEntity(var id:String, relations: List[(String, List[String])])
   private def getContentElement(id:String):ContentElement ={
     val contentElementType = id.subSequence(0, 1)
     val element = contentElementType match {
-    	case "F" => Force.getElementById(id).get
-    	case "S" => Story.getElementById(id).get
-    	case "C" => SolutionComponent.getElementById(id).get
+      case "F" => Force.getElementById(id).get
+      case "S" => Story.getElementById(id).get
+      case "C" => SolutionComponent.getElementById(id).get
     }
     element
   }
@@ -39,33 +39,33 @@ case class ClusterEntity(var id:String, relations: List[(String, List[String])])
 }
 
 object ClusterEntity{
-	
+  
   var nextIdCnt = 6
   
   var allClusters: List[ClusterEntity] = List(
   
    new ClusterEntity ("G1",
-		List(("C0001", List("F0005","F0006","F0011","F0012")),
-			("F0005", List("F0006","F0004","F0007")),
-			("F0006",List("F0007","F0013")),
-			("F0004", List("F0007")),
-			("F0007", List("F0013")),
-			("F0012", List("F0011"))
-		    )   
+    List(("C0001", List("F0005","F0006","F0011","F0012")),
+      ("F0005", List("F0006","F0004","F0007")),
+      ("F0006",List("F0007","F0013")),
+      ("F0004", List("F0007")),
+      ("F0007", List("F0013")),
+      ("F0012", List("F0011"))
+        )   
    ),   
     new ClusterEntity ("G2",
-		List(("S0004", List("F0010","F0001")),
-			("F0010", List("F0002"))
-		    )   
-   )/*,
+    List(("S0004", List("F0010","F0001")),
+      ("F0010", List("F0002"))
+        )   
+   ),
    new ClusterEntity ("G3",
-		List(("C0001", List("F0005","F0006","F0011","F0012")),
-			("F0005", List("F0006","F0004","F0007")),
-			("F0006",List("F0007","F0013")),
-			("F0004", List("F0007")),
-			("F0007", List("F0013")),
-			("F0012", List("F0011"))
-		    )   
+    List(("C0001", List("F0005","F0006","F0011","F0012")),
+      ("F0005", List("F0006","F0004","F0007")),
+      ("F0006",List("F0007","F0013")),
+      ("F0004", List("F0007")),
+      ("F0007", List("F0013")),
+      ("F0012", List("F0011"))
+        )   
    ),
    new ClusterEntity("G4",
         List(("S0004",List("F0010")),
@@ -76,7 +76,7 @@ object ClusterEntity{
    new ClusterEntity("G5",
         List(("S0004",List("F0010","F0011","F0012"))
         )   
-  )*/
+  )
 )
   
   def all: List[ClusterEntity] = allClusters
