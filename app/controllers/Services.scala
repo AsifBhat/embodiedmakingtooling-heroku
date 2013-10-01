@@ -1,55 +1,49 @@
 package controllers
 
 import play.api.mvc._
+import play.api.libs.json._
 import play.api.libs.json.Json._
-import models.{Story, SolutionComponent, Force}
+import models.{Force,Story,SolutionComponent, ClusterEntity, Cluster}
+import scalax.collection.Graph
+import play.api.libs.functional.syntax._
+import play.api.libs.json.Reads._
+import scala.collection.mutable.ListBuffer
 
 object Services extends Controller {
   val baseUrl = "/api"
 
   implicit val storyReader = reads[Story]
   implicit val storyWriter = writes[Story]
-  implicit val forceRader = reads[Force]
+  implicit val forceReader = reads[Force]
   implicit val forceWriter = writes[Force]
   implicit val solutionComponentReader = reads[SolutionComponent]
   implicit val solutionComponentWriter = writes[SolutionComponent]
+  implicit val complexreads: Reads[(String,List[String])] = (
+		  ((__ \ "element").read[String] and
+        (__ \ "relatedElements").read[List[String]]
+        tupled)
+  )
+  implicit val clusterEntityReader = reads[ClusterEntity]
+  implicit val complexwrites: Writes[(String,List[String])] = (
+		  ((__ \ "element").write[String] and
+        (__ \ "relatedElements").write[List[String]]
+        tupled)
+  )
+  implicit val clusterEntityWriter = writes[ClusterEntity] 
 
+ 
   def api = Action {
     Ok(prettyPrint(obj("links" -> arr(s"$baseUrl/clusters"))))
   }
 
   def clusters = Action {
-    Ok(prettyPrint(obj(
-      "clusters" -> arr(
-        obj(
-          "graph" -> arr(
-            obj("C0001" -> arr("F0005", "F0006", "F0011", "F0012")),
-            obj("F0005" -> arr("F0006", "F0004", "F0007")),
-            obj("F0006" -> arr("F0007", "F0013")),
-            obj("F0004" -> arr("F0007")),
-            obj("F0007" -> arr("F0013")),
-            obj("F0012" -> arr("F0011"))
-          )
-        ),
-        obj(
-          "graph" -> arr(
-            obj("S0004" -> arr("F0010", "F0011")),
-            obj("F0010" -> arr("F0011"))
-          )
-        )
-      ),
-      "links" -> arr(
-        obj("title" -> "C0001", "href" -> s"$baseUrl/solutionComponents/C0001"),
-        obj("title" -> "S0004", "href" -> s"$baseUrl/stories/S0004"),
-        obj("title" -> "F0004", "href" -> s"$baseUrl/forces/F0004"),
-        obj("title" -> "F0005", "href" -> s"$baseUrl/forces/F0005"),
-        obj("title" -> "F0006", "href" -> s"$baseUrl/forces/F0006"),
-        obj("title" -> "F0007", "href" -> s"$baseUrl/forces/F0007"),
-        obj("title" -> "F0010", "href" -> s"$baseUrl/forces/F0010"),
-        obj("title" -> "F0011", "href" -> s"$baseUrl/forces/F0011"),
-        obj("title" -> "F0012", "href" -> s"$baseUrl/forces/F0012"),
-        obj("title" -> "F0013", "href" -> s"$baseUrl/forces/F0013")
-      ))))
+   //prettyPrint(toJson(ClusterEntity.all))\
+    val clusters = ClusterEntity.allClusters
+    Ok(toJson(obj("clusters" -> clusters)))
+  }
+  
+  def cluster(id: String) = Action {
+    Ok(toJson(ClusterEntity.getClusterById(id)))
   }
 
   def stories = Action {
@@ -75,4 +69,32 @@ object Services extends Controller {
   def solutionComponent(id: String) = Action {
     Ok(toJson(SolutionComponent.getElementById(id)))
   }
+  
+  def createCluster = Action{ request =>
+      val clusterWithoutIdJson = request.body.asJson.get
+      val res: JsResult[ClusterEntity] = clusterWithoutIdJson.validate(clusterEntityReader)
+      val clusterWithoutId = res.get
+      val clusterWithId = ClusterEntity.addClusterToMem(clusterWithoutId)
+      Created(toJson(clusterWithId))
+  }
+  
+  def updateCluster (id: String) = Action{ request =>
+    val updatedClusterObject = request.body.asJson.get
+    val res: JsResult[ClusterEntity] = updatedClusterObject.validate(clusterEntityReader)
+    var listOfClusters = ClusterEntity.all
+    var updatedCluster = new ClusterEntity(res.get.id, res.get.relations.sortBy(r => 0-r._2.length))
+    ClusterEntity.allClusters = listOfClusters.map( 
+        cluster => 
+          if(cluster.id == id) updatedCluster else cluster ).asInstanceOf[List[ClusterEntity]]
+    
+    Ok(toJson(id))
+  }
+  
+  def deleteCluster(id: String) = Action {
+  	var ce = ClusterEntity.getClusterById(id)
+  	ClusterEntity.allClusters = ClusterEntity.all.filter( cluster => (cluster.id != id))
+  	Ok(id)
+    
+  }
+  
 }

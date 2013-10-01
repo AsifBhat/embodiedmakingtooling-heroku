@@ -1,4 +1,5 @@
 jQuery ($) ->
+ 
   createHex = (grid, styleClass) ->
     $("<div class='hex'/>").css({
       "width": grid.tileWidth + "px",
@@ -62,6 +63,7 @@ jQuery ($) ->
 
           # Hide the content search
           contentSearch.css('display', 'none')
+          window.updateClusters(obj, datum, dataset,x,y)
         )
 
         # Clear the previous query
