@@ -85,7 +85,7 @@ object ClusterEntity{
     val nextId = "G"+nextIdCnt
     var clusterToAdd = new ClusterEntity(nextId,newCluster.relations.sortBy(r => 0-r._2.length))
     nextIdCnt = nextIdCnt+1
-    allClusters = newCluster::allClusters
+    allClusters = clusterToAdd::allClusters
     clusterToAdd
   }
     
