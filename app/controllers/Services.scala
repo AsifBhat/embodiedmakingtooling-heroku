@@ -8,6 +8,8 @@ import scalax.collection.Graph
 import play.api.libs.functional.syntax._
 import play.api.libs.json.Reads._
 import scala.collection.mutable.ListBuffer
+import java.io._
+import scala.util.matching.Regex
 
 object Services extends Controller {
   val baseUrl = "/api"
@@ -95,6 +97,21 @@ object Services extends Controller {
   	ClusterEntity.allClusters = ClusterEntity.all.filter( cluster => (cluster.id != id))
   	Ok(id)
     
+  }
+  
+    def importFile = Action(parse.temporaryFile) { request =>
+    request.body.moveTo(new File("/tmp/picture"), true)
+    val reader = scala.io.Source.fromFile("/tmp/picture")
+    val pattern = new Regex("(?i)([CSF]\\d+)\\.?\\s+(.+)")
+    val lineItr = reader.getLines()
+    while(lineItr.hasNext){
+      pattern.findAllIn(lineItr.next).matchData foreach {
+        m => m.subgroups.foreach { e => println(e) }
+      }
+    }
+    reader.close
+    Ok("File uploaded")
+
   }
   
 }

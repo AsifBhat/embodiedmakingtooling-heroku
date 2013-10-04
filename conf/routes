@@ -18,6 +18,7 @@ GET        /api/forces                    controllers.Services.forces
 GET        /api/forces/:id                controllers.Services.force(id: String)
 GET        /api/solutionComponents        controllers.Services.solutionComponents
 GET        /api/solutionComponents/:id    controllers.Services.solutionComponent(id: String)
+POST       /api/importcontent             controllers.Services.importFile
 
 # Map static resources from the /public folder to the /assets URL path
 GET        /assets/*file                  controllers.Assets.at(path="/public", file)

@@ -1,25 +1,36 @@
 @main("The Embodied Making Tool") {
 
 <div id="menubar">
-  <!-- div class="pull-right">
-		  <div class="import_btn btn btn-inverse btn-sm">
-		   <input type="file" name="csvfile">
-		  </div>
-		  <button class="btn btn-success btn-sm">
-		   Import
-		  </button>
-  </div> -->
+		 <div class="imprtfrm">
+				  @helper.form(action = routes.Services.importFile() , 'id -> "import_file",
+				       'enctype -> "multipart/form-data" , 'method -> "POST", 
+				       'name -> "import_file") {
+				           <div class="pull-right">
+				             <div class="import_btn">
+				              <input type="file" name="csvfile">
+				             </div>
+				             <button class="btn btn-success" id="import_button">Import</button>
+				           </div>
+				    }
+		 </div>
 </div>
+<div class="" id="message_board" style="display : none;">
+  <div id="bar"></div>
+  <div id="percent">0%</div>
+  <div id="message"></div>
+</div>
+
 <div id="hexagonal-grid">
 </div>
 <div id="content-search">
     <input type="text" name="query">
 </div>
-
+<script src="http://malsup.github.com/jquery.form.js"></script>
  <script src="@routes.Assets.at("javascripts/clusterOperations.js")"></script> 
 <script src="@routes.Assets.at("javascripts/hexgrid.js")"></script>
 <script src="@routes.Assets.at("javascripts/elementSearch.js")"></script> 
 <script src="@routes.Assets.at("javascripts/renderCluster.js")"></script> 
+<script src="@routes.Assets.at("javascripts/fileuploadhandler.js")"></script> 
 
 }
 
