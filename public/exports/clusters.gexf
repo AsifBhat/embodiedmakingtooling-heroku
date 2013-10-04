@@ -1,0 +1,348 @@
+<gexf version="1.2" xmlns:viz="http://www.gexf.net/1.2draft/viz" xmlns="http://www.gexf.net/1.2draft/viz">
+  <graph mode="static" defaultedgetype="directed">
+  	<attributes class="edge">
+      <attribute id="clusterID" title="clusterID" type="string"/>
+    </attributes>
+	<nodes>
+  <node id="F0001" label="F0001">
+      <viz:size value="32"></viz:size>
+      <viz:shape value="square"/>
+      <viz:color r="255" g="0" b="0"></viz:color>
+    </node><node id="F0002" label="F0002">
+      <viz:size value="32"></viz:size>
+      <viz:shape value="square"/>
+      <viz:color r="255" g="0" b="0"></viz:color>
+    </node><node id="F0003" label="F0003">
+      <viz:size value="32"></viz:size>
+      <viz:shape value="square"/>
+      <viz:color r="255" g="0" b="0"></viz:color>
+    </node><node id="F0004" label="F0004">
+      <viz:size value="32"></viz:size>
+      <viz:shape value="square"/>
+      <viz:color r="255" g="0" b="0"></viz:color>
+    </node><node id="F0005" label="F0005">
+      <viz:size value="32"></viz:size>
+      <viz:shape value="square"/>
+      <viz:color r="255" g="0" b="0"></viz:color>
+    </node><node id="F0006" label="F0006">
+      <viz:size value="32"></viz:size>
+      <viz:shape value="square"/>
+      <viz:color r="255" g="0" b="0"></viz:color>
+    </node><node id="F0007" label="F0007">
+      <viz:size value="32"></viz:size>
+      <viz:shape value="square"/>
+      <viz:color r="255" g="0" b="0"></viz:color>
+    </node><node id="F0008" label="F0008">
+      <viz:size value="32"></viz:size>
+      <viz:shape value="square"/>
+      <viz:color r="255" g="0" b="0"></viz:color>
+    </node><node id="F0009" label="F0009">
+      <viz:size value="32"></viz:size>
+      <viz:shape value="square"/>
+      <viz:color r="255" g="0" b="0"></viz:color>
+    </node><node id="F0010" label="F0010">
+      <viz:size value="32"></viz:size>
+      <viz:shape value="square"/>
+      <viz:color r="255" g="0" b="0"></viz:color>
+    </node><node id="F0011" label="F0011">
+      <viz:size value="32"></viz:size>
+      <viz:shape value="square"/>
+      <viz:color r="255" g="0" b="0"></viz:color>
+    </node><node id="F0012" label="F0012">
+      <viz:size value="32"></viz:size>
+      <viz:shape value="square"/>
+      <viz:color r="255" g="0" b="0"></viz:color>
+    </node><node id="F0013" label="F0013">
+      <viz:size value="32"></viz:size>
+      <viz:shape value="square"/>
+      <viz:color r="255" g="0" b="0"></viz:color>
+    </node><node id="F0014" label="F0014">
+      <viz:size value="32"></viz:size>
+      <viz:shape value="square"/>
+      <viz:color r="255" g="0" b="0"></viz:color>
+    </node>
+  <node id="S0001" label="S0001">
+      <viz:size value="32"></viz:size>
+      <viz:shape value="square"/>
+      <viz:color r="0" g="255" b="0"></viz:color> </node><node id="S0002" label="S0002">
+      <viz:size value="32"></viz:size>
+      <viz:shape value="square"/>
+      <viz:color r="0" g="255" b="0"></viz:color> </node><node id="S0003" label="S0003">
+      <viz:size value="32"></viz:size>
+      <viz:shape value="square"/>
+      <viz:color r="0" g="255" b="0"></viz:color> </node><node id="S0004" label="S0004">
+      <viz:size value="32"></viz:size>
+      <viz:shape value="square"/>
+      <viz:color r="0" g="255" b="0"></viz:color> </node><node id="S0005" label="S0005">
+      <viz:size value="32"></viz:size>
+      <viz:shape value="square"/>
+      <viz:color r="0" g="255" b="0"></viz:color> </node><node id="S0006" label="S0006">
+      <viz:size value="32"></viz:size>
+      <viz:shape value="square"/>
+      <viz:color r="0" g="255" b="0"></viz:color> </node>
+  <node id="C0001" label="C0001">
+      <viz:size value="32"></viz:size>
+      <viz:shape value="diamond"/>
+      <viz:color r="0" g="0" b="255"></viz:color>
+    </node><node id="C0002" label="C0002">
+      <viz:size value="32"></viz:size>
+      <viz:shape value="diamond"/>
+      <viz:color r="0" g="0" b="255"></viz:color>
+    </node><node id="C0003" label="C0003">
+      <viz:size value="32"></viz:size>
+      <viz:shape value="diamond"/>
+      <viz:color r="0" g="0" b="255"></viz:color>
+    </node><node id="C0004" label="C0004">
+      <viz:size value="32"></viz:size>
+      <viz:shape value="diamond"/>
+      <viz:color r="0" g="0" b="255"></viz:color>
+    </node><node id="C0005" label="C0005">
+      <viz:size value="32"></viz:size>
+      <viz:shape value="diamond"/>
+      <viz:color r="0" g="0" b="255"></viz:color>
+    </node><node id="C0006" label="C0006">
+      <viz:size value="32"></viz:size>
+      <viz:shape value="diamond"/>
+      <viz:color r="0" g="0" b="255"></viz:color>
+    </node><node id="C0007" label="C0007">
+      <viz:size value="32"></viz:size>
+      <viz:shape value="diamond"/>
+      <viz:color r="0" g="0" b="255"></viz:color>
+    </node>
+  </nodes>
+  <edges>
+    <edge id="1" source="C0001" target="F0005">
+          	<attvalues>
+              <attvalue for="0" value="G1"/>
+            </attvalues>
+            <viz:color r="157" g="213" b="78"/>
+            <viz:thickness value="10"/>
+            <viz:shape value="double"/>
+          </edge><edge id="2" source="C0001" target="F0006">
+          	<attvalues>
+              <attvalue for="0" value="G1"/>
+            </attvalues>
+            <viz:color r="157" g="213" b="78"/>
+            <viz:thickness value="10"/>
+            <viz:shape value="double"/>
+          </edge><edge id="3" source="C0001" target="F0011">
+          	<attvalues>
+              <attvalue for="0" value="G1"/>
+            </attvalues>
+            <viz:color r="157" g="213" b="78"/>
+            <viz:thickness value="10"/>
+            <viz:shape value="double"/>
+          </edge><edge id="4" source="C0001" target="F0012">
+          	<attvalues>
+              <attvalue for="0" value="G1"/>
+            </attvalues>
+            <viz:color r="157" g="213" b="78"/>
+            <viz:thickness value="10"/>
+            <viz:shape value="double"/>
+          </edge><edge id="5" source="F0005" target="F0006">
+          	<attvalues>
+              <attvalue for="0" value="G1"/>
+            </attvalues>
+            <viz:color r="157" g="213" b="78"/>
+            <viz:thickness value="10"/>
+            <viz:shape value="double"/>
+          </edge><edge id="6" source="F0005" target="F0004">
+          	<attvalues>
+              <attvalue for="0" value="G1"/>
+            </attvalues>
+            <viz:color r="157" g="213" b="78"/>
+            <viz:thickness value="10"/>
+            <viz:shape value="double"/>
+          </edge><edge id="7" source="F0005" target="F0007">
+          	<attvalues>
+              <attvalue for="0" value="G1"/>
+            </attvalues>
+            <viz:color r="157" g="213" b="78"/>
+            <viz:thickness value="10"/>
+            <viz:shape value="double"/>
+          </edge><edge id="8" source="F0006" target="F0007">
+          	<attvalues>
+              <attvalue for="0" value="G1"/>
+            </attvalues>
+            <viz:color r="157" g="213" b="78"/>
+            <viz:thickness value="10"/>
+            <viz:shape value="double"/>
+          </edge><edge id="9" source="F0006" target="F0013">
+          	<attvalues>
+              <attvalue for="0" value="G1"/>
+            </attvalues>
+            <viz:color r="157" g="213" b="78"/>
+            <viz:thickness value="10"/>
+            <viz:shape value="double"/>
+          </edge><edge id="10" source="F0004" target="F0007">
+          	<attvalues>
+              <attvalue for="0" value="G1"/>
+            </attvalues>
+            <viz:color r="157" g="213" b="78"/>
+            <viz:thickness value="10"/>
+            <viz:shape value="double"/>
+          </edge><edge id="11" source="F0007" target="F0013">
+          	<attvalues>
+              <attvalue for="0" value="G1"/>
+            </attvalues>
+            <viz:color r="157" g="213" b="78"/>
+            <viz:thickness value="10"/>
+            <viz:shape value="double"/>
+          </edge><edge id="12" source="F0012" target="F0011">
+          	<attvalues>
+              <attvalue for="0" value="G1"/>
+            </attvalues>
+            <viz:color r="157" g="213" b="78"/>
+            <viz:thickness value="10"/>
+            <viz:shape value="double"/>
+          </edge><edge id="13" source="S0004" target="F0010">
+          	<attvalues>
+              <attvalue for="0" value="G2"/>
+            </attvalues>
+            <viz:color r="157" g="213" b="78"/>
+            <viz:thickness value="10"/>
+            <viz:shape value="double"/>
+          </edge><edge id="14" source="S0004" target="F0001">
+          	<attvalues>
+              <attvalue for="0" value="G2"/>
+            </attvalues>
+            <viz:color r="157" g="213" b="78"/>
+            <viz:thickness value="10"/>
+            <viz:shape value="double"/>
+          </edge><edge id="15" source="F0010" target="F0002">
+          	<attvalues>
+              <attvalue for="0" value="G2"/>
+            </attvalues>
+            <viz:color r="157" g="213" b="78"/>
+            <viz:thickness value="10"/>
+            <viz:shape value="double"/>
+          </edge><edge id="16" source="C0001" target="F0005">
+          	<attvalues>
+              <attvalue for="0" value="G3"/>
+            </attvalues>
+            <viz:color r="157" g="213" b="78"/>
+            <viz:thickness value="10"/>
+            <viz:shape value="double"/>
+          </edge><edge id="17" source="C0001" target="F0006">
+          	<attvalues>
+              <attvalue for="0" value="G3"/>
+            </attvalues>
+            <viz:color r="157" g="213" b="78"/>
+            <viz:thickness value="10"/>
+            <viz:shape value="double"/>
+          </edge><edge id="18" source="C0001" target="F0011">
+          	<attvalues>
+              <attvalue for="0" value="G3"/>
+            </attvalues>
+            <viz:color r="157" g="213" b="78"/>
+            <viz:thickness value="10"/>
+            <viz:shape value="double"/>
+          </edge><edge id="19" source="C0001" target="F0012">
+          	<attvalues>
+              <attvalue for="0" value="G3"/>
+            </attvalues>
+            <viz:color r="157" g="213" b="78"/>
+            <viz:thickness value="10"/>
+            <viz:shape value="double"/>
+          </edge><edge id="20" source="F0005" target="F0006">
+          	<attvalues>
+              <attvalue for="0" value="G3"/>
+            </attvalues>
+            <viz:color r="157" g="213" b="78"/>
+            <viz:thickness value="10"/>
+            <viz:shape value="double"/>
+          </edge><edge id="21" source="F0005" target="F0004">
+          	<attvalues>
+              <attvalue for="0" value="G3"/>
+            </attvalues>
+            <viz:color r="157" g="213" b="78"/>
+            <viz:thickness value="10"/>
+            <viz:shape value="double"/>
+          </edge><edge id="22" source="F0005" target="F0007">
+          	<attvalues>
+              <attvalue for="0" value="G3"/>
+            </attvalues>
+            <viz:color r="157" g="213" b="78"/>
+            <viz:thickness value="10"/>
+            <viz:shape value="double"/>
+          </edge><edge id="23" source="F0006" target="F0007">
+          	<attvalues>
+              <attvalue for="0" value="G3"/>
+            </attvalues>
+            <viz:color r="157" g="213" b="78"/>
+            <viz:thickness value="10"/>
+            <viz:shape value="double"/>
+          </edge><edge id="24" source="F0006" target="F0013">
+          	<attvalues>
+              <attvalue for="0" value="G3"/>
+            </attvalues>
+            <viz:color r="157" g="213" b="78"/>
+            <viz:thickness value="10"/>
+            <viz:shape value="double"/>
+          </edge><edge id="25" source="F0004" target="F0007">
+          	<attvalues>
+              <attvalue for="0" value="G3"/>
+            </attvalues>
+            <viz:color r="157" g="213" b="78"/>
+            <viz:thickness value="10"/>
+            <viz:shape value="double"/>
+          </edge><edge id="26" source="F0007" target="F0013">
+          	<attvalues>
+              <attvalue for="0" value="G3"/>
+            </attvalues>
+            <viz:color r="157" g="213" b="78"/>
+            <viz:thickness value="10"/>
+            <viz:shape value="double"/>
+          </edge><edge id="27" source="F0012" target="F0011">
+          	<attvalues>
+              <attvalue for="0" value="G3"/>
+            </attvalues>
+            <viz:color r="157" g="213" b="78"/>
+            <viz:thickness value="10"/>
+            <viz:shape value="double"/>
+          </edge><edge id="28" source="S0004" target="F0010">
+          	<attvalues>
+              <attvalue for="0" value="G4"/>
+            </attvalues>
+            <viz:color r="157" g="213" b="78"/>
+            <viz:thickness value="10"/>
+            <viz:shape value="double"/>
+          </edge><edge id="29" source="F0010" target="F0011">
+          	<attvalues>
+              <attvalue for="0" value="G4"/>
+            </attvalues>
+            <viz:color r="157" g="213" b="78"/>
+            <viz:thickness value="10"/>
+            <viz:shape value="double"/>
+          </edge><edge id="30" source="F0011" target="F0012">
+          	<attvalues>
+              <attvalue for="0" value="G4"/>
+            </attvalues>
+            <viz:color r="157" g="213" b="78"/>
+            <viz:thickness value="10"/>
+            <viz:shape value="double"/>
+          </edge><edge id="31" source="S0004" target="F0010">
+          	<attvalues>
+              <attvalue for="0" value="G5"/>
+            </attvalues>
+            <viz:color r="157" g="213" b="78"/>
+            <viz:thickness value="10"/>
+            <viz:shape value="double"/>
+          </edge><edge id="32" source="S0004" target="F0011">
+          	<attvalues>
+              <attvalue for="0" value="G5"/>
+            </attvalues>
+            <viz:color r="157" g="213" b="78"/>
+            <viz:thickness value="10"/>
+            <viz:shape value="double"/>
+          </edge><edge id="33" source="S0004" target="F0012">
+          	<attvalues>
+              <attvalue for="0" value="G5"/>
+            </attvalues>
+            <viz:color r="157" g="213" b="78"/>
+            <viz:thickness value="10"/>
+            <viz:shape value="double"/>
+          </edge> 
+  </edges>
+  </graph>
+  </gexf>

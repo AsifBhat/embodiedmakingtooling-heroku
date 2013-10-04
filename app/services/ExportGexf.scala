@@ -56,6 +56,6 @@ val xmlString = <gexf xmlns="http://www.gexf.net/1.2draft/viz" version="1.2"
   </graph>
   </gexf>;
     
-  val file =   XML.save(fileName, xmlString )  // Need to append file name if folder name is supplied
+  val file =   XML.save(fileName, xmlString )  
 }
 }
