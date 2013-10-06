@@ -72,3 +72,8 @@ jQuery ($) ->
         # Place focus
         .focus()
   )
+  
+window.consoleLog = (logInfo) ->
+  if(window.console)
+    console.log logInfo
+    

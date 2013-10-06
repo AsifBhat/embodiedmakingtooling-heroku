@@ -1,7 +1,5 @@
 package models
 
-import play.api.libs.json._
-import play.api.libs.functional.syntax._
 
 case class ClusterEntity(var id:String, relations: List[(String, List[String])]){
   

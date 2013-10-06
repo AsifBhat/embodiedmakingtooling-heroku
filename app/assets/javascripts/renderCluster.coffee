@@ -190,8 +190,8 @@ placeHex =(elem,grid,x,y) ->
   
 placeInMem = (relElem,pos) ->
  posBeforeTranslation.push({"coord" : {x:pos.x, y:pos.y} , "elem" : relElem})
- console.log("placed in mem:")
- console.log ({"coord" : {x:pos.x, y:pos.y} , "elem" : relElem})
+ consoleLog("placed in mem:")
+ window.consoleLog ({"coord" : {x:pos.x, y:pos.y} , "elem" : relElem})
  placed.push({"elem" : relElem , "coord" : {x:pos.x, y:pos.y}})
  if pos.x<0 && pos.x<NEG_X_EXTENT
   NEG_X_EXTENT = pos.x
@@ -248,8 +248,8 @@ placeNewElement = (relElem) ->
    getListOfPlacedRelatedElements(relElem) 
  # Merge two lists 
    mergedList = $.merge( $.merge([],listOfRelatedPlacedElements), listOfPlacedRelatedElements)
-   console.log("=========")
-   console.log mergedList
+   window.consoleLog("=========")
+   window.consoleLog mergedList
    if(relElem != rootElement)
        mergedList.push(rootElement)
        emptyIntersectingNeighbourhood = getIntersectingEmptyNeighbourhood($.unique(mergedList))
@@ -275,7 +275,7 @@ placeElements = (relatedElements) ->
  $.each(relatedElements, (i,relElem) ->
   if isPlaced relElem
   else if skipRelation
-   console.log("skipping relation")
+   window.consoleLog("skipping relation")
   else 
    placeNewElement(relElem)
  )
@@ -286,8 +286,8 @@ displayCluster = (relations) ->
  rootElement = relations[0].element
  placeInMem(rootElement,{x:0,y:0})
  $.each(relations, (i,value) ->
-  console.log("Relation: ")
-  console.log value
+  window.consoleLog("Relation: ")
+  window.consoleLog value
   currentRelation = value
   rootElement = value.element
   skipRelation = false
