@@ -64,13 +64,13 @@ mergeAndAddLink = (link, clusters, posUpdate) ->
    )
   ) 
    
-  (if cluster.id != clusters[0].id then (clustersToDelete.push cluster.id)) for cluster in clusters
-
+  # (if cluster.id != clusters[0].id then (clustersToDelete.push cluster.id)) for cluster in clusters
+  idToKeep = clusters.splice(0,1)
   window.consoleLog("Clusters to delete:")
-  window.consoleLog clustersToDelete
+  window.consoleLog clusters
   newGraph.push(link)
-  clusterToUpdate = {"id":clusters[0].id, "relations":newGraph}
-  posUpdate.clusterid = clusters[0].id
+  clusterToUpdate = {"id":idToKeep[0].id, "relations":newGraph}
+  posUpdate.clusterid = idToKeep[0].id
   window.posAfterTranslation.push(posUpdate)
   window.consoleLog "To update cluster:"
   window.consoleLog(clusterToUpdate)  
@@ -83,17 +83,15 @@ mergeAndAddLink = (link, clusters, posUpdate) ->
       success: (updatedClusterId, status, response) ->
        window.consoleLog("Cluster update request sent:")
        window.consoleLog(updatedClusterId)
-       updatePositions(updatedClusterId,clustersToDelete)
+       updatePositions(updatedClusterId,clusters)
       error: (jqXHR, textStatus, errorThrown) ->
        window.consoleLog errorThrown 
   window.consoleLog "To delete clusters:"
-  window.consoleLog(clustersToDelete)
-  $.each(clustersToDelete, (i, ctoDel) ->
+  window.consoleLog(clusters)
+  $.each(clusters, (i, ctoDel) ->
     $.ajax
-      url: '/api/clusters/'+ctoDel,
+      url: '/api/clusters/'+ctoDel.id,
       type: 'DELETE',
-      contentType: "application/json",
-      data : JSON.stringify(ctoDel),
       success: (data, status, response) ->
        window.consoleLog("Cluster delete request sent:")
        window.consoleLog(data)
