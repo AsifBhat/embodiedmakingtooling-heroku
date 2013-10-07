@@ -19,7 +19,7 @@ isEmpty = (pos) ->
  )	
  empty	
  
-getElementInCell = (pos) ->
+window.getElementInCell = (pos) ->
  elem = ''
  $.each(window.posAfterTranslation, (i,position) ->
   if (position.coord.x == pos.x) && (position.coord.y == pos.y)  
