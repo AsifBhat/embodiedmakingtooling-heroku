@@ -141,6 +141,7 @@ window.updateClusters = (obj, datum, dataset,posx,posy) ->
          contentType: "application/json",
          success: (cluster, status, response) ->
           clustersToMerge.push(cluster)
+          console.log("Pushed to clustersToMerge: "+nbc)
           if (i == nbClusters.length-1)  
         	  posUpdate = { "coord" : {x:posx, y:posy} , "elem" : datum.id, "clusterid" :"temp" }
         	  mergeAndAddLink(link, clustersToMerge, posUpdate)

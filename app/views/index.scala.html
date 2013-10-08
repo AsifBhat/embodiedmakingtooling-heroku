@@ -8,7 +8,11 @@
 <div id="content-search">
     <input type="text" name="query">
 </div>
-
+<script>
+$(document).ready(function() {
+	  $.ajaxSetup({ cache: false });
+	});
+</script>
 <script src="@routes.Assets.at("javascripts/clusterOperations.js")"></script> 
 <script src="@routes.Assets.at("javascripts/hexgrid.js")"></script>
 <script src="@routes.Assets.at("javascripts/elementSearch.js")"></script> 
