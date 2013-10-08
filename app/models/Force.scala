@@ -3,7 +3,7 @@ package models
 case class Force(id: String, description: String) extends ContentElement
 
 object Force {
-  def all(): List[Force] = List(
+  var allForces = List(
     new Force("F0001", "Meeting rooms are shared by a lot of people."),
     new Force("F0002", "Meeting rooms contain expensive equipment."),
     new Force("F0003", "Desire to protect equipment in meeting rooms."),
@@ -19,6 +19,8 @@ object Force {
     new Force("F0013", "Inability to distinguish keys of meeting rooms."),
     new Force("F0014", "Use of high-quality equipment in meetings.")
   )
+  
+  def all(): List[Force] = allForces
 
   def getElementById(id: String): Option[Force] = all().find(_.id == id)
 }

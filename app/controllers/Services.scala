@@ -8,6 +8,7 @@ import play.api.libs.functional.syntax._
 import play.api.libs.json.Reads._
 import java.io._
 import scala.util.matching.Regex
+import scala.collection.mutable.ListBuffer
 
 object Services extends Controller {
   val baseUrl = "/api"
@@ -94,20 +95,34 @@ object Services extends Controller {
     Ok(id)
   }
 
-  def importFile = Action(parse.temporaryFile) {
-    request =>
-      request.body.moveTo(new File("/tmp/picture"), true)
-      val reader = scala.io.Source.fromFile("/tmp/picture")
-      val pattern = new Regex("(?i)([CSF]\\d+)\\.?\\s+(.+)")
-      val lineItr = reader.getLines()
-      while (lineItr.hasNext) {
-        pattern.findAllIn(lineItr.next).matchData foreach {
-          m => m.subgroups.foreach {
-            e => println(e)
-          }
+  def importFile = Action(parse.temporaryFile) { request =>    
+    val tempFile = File.createTempFile("temp_upload", null)
+    request.body.moveTo(tempFile, true)
+    val reader = scala.io.Source.fromFile(tempFile.getCanonicalFile())
+    val lineItr = reader.getLines()
+    val pattern = new Regex("(?i)([CSF]\\d+)\\.?\\s+(.+)")
+    val newStrs = ListBuffer[Story]()
+    val newFrcs = ListBuffer[Force]()
+    val newScs = ListBuffer[SolutionComponent]()
+    
+    while(lineItr.hasNext){
+      pattern.findAllIn(lineItr.next).matchData foreach {
+        m => {
+          var grpChar: Char = m.subgroups(0).toLowerCase().charAt(0)
+          if (grpChar == 'c') newScs +=(SolutionComponent(m.subgroups(0), m.subgroups(1)))
+          else if(grpChar == 's' ) newStrs +=(Story(m.subgroups(0), m.subgroups(1)))
+          else if(grpChar == 'f') newFrcs +=(Force(m.subgroups(0), m.subgroups(1)))
         }
       }
-      reader.close
-      Ok("File uploaded")
+    }
+    reader.close
+    Force.allForces = newFrcs.toList
+    Story.allStories = newStrs.toList
+    SolutionComponent.allSolutionComponents = newScs.toList
+    ClusterEntity.allClusters = List[ClusterEntity]() 
+    Ok("<b>Import Complete:</b> " +
+    		"<br>Forces: " + newFrcs.size + 
+    		"<br>Stories: " + newStrs.size + 
+    		"<br>SolutionComponents: "+ newScs.size)
   }
 }

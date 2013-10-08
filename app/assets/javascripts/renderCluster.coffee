@@ -301,12 +301,15 @@ displayCluster = (relations) ->
  
 
 displayAllClusters = (clustersJson) ->
-  $.each(clustersJson.clusters, (i, value) ->
-   currentCluster = value
-   displayCluster(value.relations)
-   placeOnGrid ('a')
-   resetVariables ('a')
-  )
+  if (clustersJson.clusters == undefined || clustersJson.clusters == undefined || clustersJson.clusters.length < 1)
+    window.consoleLog('No Clusters recieved..')
+  else
+    $.each(clustersJson.clusters, (i, value) ->
+     currentCluster = value
+     displayCluster(value.relations)
+     placeOnGrid ('a')
+     resetVariables ('a')
+    )
  
 clustersRequest = $.getJSON "/api/clusters"
 clustersRequest.success (data) ->
