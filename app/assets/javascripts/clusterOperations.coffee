@@ -138,6 +138,7 @@ window.updateClusters = (obj, datum, dataset,posx,posy) ->
         $.ajax
          url: '/api/clusters/'+nbc,
          type: 'GET',
+         async: false,
          contentType: "application/json",
          success: (cluster, status, response) ->
           clustersToMerge.push(cluster)
