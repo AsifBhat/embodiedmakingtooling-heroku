@@ -11,9 +11,7 @@ case class Cluster(id: String,
                    relations: List[(ContentElement, ContentElement)]) {
   require(relations.length > 0, "Cannot create empty cluster")
 
-  private var clusterGraph = getGraph
-
-  private def getGraph() = {
+  private var clusterGraph = {
     val srcnodes = relations map (r => r._1)
     val destnodes = relations map (r => r._2)
     val edges = relations map (r => DiEdge(r._1, r._2))
@@ -35,7 +33,7 @@ case class Cluster(id: String,
   }
 
   override def toString() = {
-    val clusterString = (clusterGraph.edges.toList) map (e => "\n" + e.nodes.toList(0).value.id + " --> " + e.nodes.toList(1).value.id)
+    val clusterString = clusterGraph.edges.toList map (e => "\n" + e.nodes.toList(0).value.id + " --> " + e.nodes.toList(1).value.id)
     clusterString.toString
   }
 

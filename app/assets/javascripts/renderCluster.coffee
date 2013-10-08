@@ -80,7 +80,7 @@ initPos = (link) ->
  
 isPlaced = (elem) ->
  isPresent = false
- $.each(placed, (i,p) ->
+ $.each(posBeforeTranslation, (i,p) ->
   if p.elem == elem
    isPresent = true
  )
@@ -135,18 +135,22 @@ getAllNeighbourCells =  (pos) ->
  allNeighbourCells[3] = {x:pos.x , y:pos.y-1 }
  allNeighbourCells[4] = {x:pos.x , y:pos.y+1 }
  allNeighbourCells[5] = {x:pos.x+1 , y:pos.y-1 }
+ console.log("allneighbourcells")
+ console.log(allNeighbourCells)
  allNeighbourCells
 
-
 getIntersect = (allNeighbourCells) ->
- tempInt = []
+ console.log("in getintersect")
+ console.log(intersectingNeighbourhood)
+ intersectArr = []
  $.each(allNeighbourCells, (i, nb) ->
   $.each(intersectingNeighbourhood, (j, intersect) ->
    if(nb.x==intersect.x) && (nb.y == intersect.y)
-    tempInt.push({x:nb.x,y:nb.y})
+    intersectArr.push nb
   )
- )   
- tempInt   
+ ) 
+ console.log(intersectArr)
+ intersectArr  
 
 isEmpty = (pos) ->
  empty = true
@@ -163,6 +167,8 @@ getEmptyIntersect = (intersectingNeighbourhood) ->
       if isEmpty(pos)
        emptyIntersectingNeighbourhood.push(pos)
     )
+    console.log("emptyIntersectingNeighbourhood")
+    console.log(emptyIntersectingNeighbourhood)
     emptyIntersectingNeighbourhood
      
   
@@ -173,6 +179,8 @@ getIntersectingEmptyNeighbourhood = (mergedList) ->
     if(i==0)
      intersectingNeighbourhood = allNeighbourCells
     intersectingNeighbourhood = getIntersect(allNeighbourCells)
+    console.log("after getintersect was assigned to intersecting nbhood")
+    console.log(intersectingNeighbourhood)
   )
   getEmptyIntersect(intersectingNeighbourhood)
   
@@ -239,6 +247,7 @@ getUniqueNeighbourhood = ( nbhood, nbCount) ->
   if getEmptyNBcount(nb) == nbCount
    toReturn = {x:nb.x,y:nb.y}    
  )
+ console.log(toReturn)
  toReturn
    
 placeNewElement = (relElem) ->
@@ -254,11 +263,15 @@ placeNewElement = (relElem) ->
        mergedList.push(rootElement)
        emptyIntersectingNeighbourhood = getIntersectingEmptyNeighbourhood($.unique(mergedList))
        emptyNBcnt = 6 - ($.unique(mergedList).length )
-       finalMemPos = getUniqueNeighbourhood(emptyIntersectingNeighbourhood, emptyNBcnt)
+       if(emptyIntersectingNeighbourhood.length == 1)
+        finalMemPos = emptyIntersectingNeighbourhood[0]
+       else
+        finalMemPos = getUniqueNeighbourhood(emptyIntersectingNeighbourhood, emptyNBcnt)
        placeInMem(relElem, finalMemPos)  
    else if(mergedList.length == 0)
      skipRelation = true
      roundTwo.push(currentRelation) # this element will always be the root element
+     console.log("Pushed to round two"+currentRelation)
    else       
      emptyIntersectingNeighbourhood = getIntersectingEmptyNeighbourhood($.unique(mergedList))
      emptyNBcnt = 6 - ($.unique(mergedList).length )

@@ -20,7 +20,7 @@ GET        /api/solutionComponents        controllers.Services.solutionComponent
 GET        /api/solutionComponents/:id    controllers.Services.solutionComponent(id: String)
 
 # Utilities
-GET		   /export/:fileName			  controllers.Utilities.exportAsGexf(fileName)			
+GET		   /export          			  controllers.Utilities.exportAsGexf
 
 # Map static resources from the /public folder to the /assets URL path
 GET        /assets/*file                  controllers.Assets.at(path="/public", file)

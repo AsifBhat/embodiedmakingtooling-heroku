@@ -1,22 +1,18 @@
 @main("The Embodied Making Tool") {
 
 <div id="menubar" class="container">
-  <!-- div class="pull-right">
-		  <div class="import_btn btn btn-inverse btn-sm">
-		   <input type="file" name="csvfile">
-		  </div>
-		  <button class="btn btn-success btn-sm">
-		   Import
-		  </button>
-  </div> -->
-  <button class="btn btn-success btn-mini" onClick="exportGraph('fileName')" >Export</button>
+  <button id="exportToGexf" class="btn btn-success btn-mini">Download as GEXF</button>
 </div>
-<div id="hexagonal-grid">
-</div>
+
+<div id="hexagonal-grid"></div>
 <div id="content-search">
     <input type="text" name="query">
 </div>
-
+<script>
+$(document).ready(function() {
+	  $.ajaxSetup({ cache: false });
+	});
+</script>
 <script src="@routes.Assets.at("javascripts/clusterOperations.js")"></script> 
 <script src="@routes.Assets.at("javascripts/hexgrid.js")"></script>
 <script src="@routes.Assets.at("javascripts/elementSearch.js")"></script> 
