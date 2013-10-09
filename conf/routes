@@ -19,6 +19,9 @@ GET        /api/forces/:id                controllers.Services.force(id: String)
 GET        /api/solutionComponents        controllers.Services.solutionComponents
 GET        /api/solutionComponents/:id    controllers.Services.solutionComponent(id: String)
 
+GET		   /api/positions                 controllers.PositionServices.allPos
+POST	   /api/positions                 controllers.PositionServices.createPos
+
 # Utilities
 GET		   /export          			  controllers.Utilities.exportAsGexf
 
