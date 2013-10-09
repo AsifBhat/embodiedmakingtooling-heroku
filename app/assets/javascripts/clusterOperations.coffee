@@ -114,6 +114,7 @@ window.updateClusters = (obj, datum, dataset,posx,posy) ->
        nbClusters.push(getClusterInCell(value))
     )
     clustersToMerge = []
+    newPosData = ''
     if loneCell 
      newclusterdata =  {"id":"newid","relations":[{"element":datum.id,"relatedElements":[]}]}
      $.ajax
@@ -121,13 +122,26 @@ window.updateClusters = (obj, datum, dataset,posx,posy) ->
       type: 'POST',
       dataType: "json",
       contentType: "application/json",
+      async: false,
       data : JSON.stringify(newclusterdata),
       success: (createdCluster, status, response) ->
        window.consoleLog("New cluster creation request sent:")
        window.consoleLog(createdCluster)
        window.posAfterTranslation.push({ "coord" : {x:posx, y:posy} , "elem" : datum.id, "clusterid" :createdCluster.id })
+       newPosData = {elementId: datum.id, clusterId:createdCluster.id, xPos:posx, yPos:posy}
       error: (jqXHR, textStatus, errorThrown) ->
-       window.consoleLog errorThrown     
+       window.consoleLog errorThrown  
+     $.ajax
+      url: '/api/positions',
+      type: 'POST',
+      dataType: "json",
+      contentType: "application/json",
+      data : JSON.stringify(newPosData),
+      success: (createdPos, status, response) ->
+       window.consoleLog("New position creation request sent:")
+       window.consoleLog(createdPos)
+      error: (jqXHR, textStatus, errorThrown) ->
+       window.consoleLog errorThrown           
     else 
      nbClusters = $.unique(nbClusters)    
      window.consoleLog("nbClusters: ")
