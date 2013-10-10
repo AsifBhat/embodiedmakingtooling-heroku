@@ -9,6 +9,7 @@ window.posAfterTranslation = []
 roundTwo = []
 currentRelation = ''
 skipRelation = false
+displayingRoundTwo = false
 
 # Variables required for translation of the cluster with origin 0,0 to a different area on the grid
 
@@ -135,13 +136,9 @@ getAllNeighbourCells =  (pos) ->
  allNeighbourCells[3] = {x:pos.x , y:pos.y-1 }
  allNeighbourCells[4] = {x:pos.x , y:pos.y+1 }
  allNeighbourCells[5] = {x:pos.x+1 , y:pos.y-1 }
- console.log("allneighbourcells")
- console.log(allNeighbourCells)
  allNeighbourCells
 
 getIntersect = (allNeighbourCells) ->
- console.log("in getintersect")
- console.log(intersectingNeighbourhood)
  intersectArr = []
  $.each(allNeighbourCells, (i, nb) ->
   $.each(intersectingNeighbourhood, (j, intersect) ->
@@ -212,7 +209,7 @@ placeInMem = (relElem,pos) ->
  
 placeOnGrid = (a) ->
  calcOffsets('a')
- $.each(placed, (i,p) -> 
+ $.each(posBeforeTranslation, (i,p) -> 
   relElem = p.elem
   etype = relElem.substr(0,1)
   switch etype
@@ -271,11 +268,15 @@ placeNewElement = (relElem) ->
    else if(mergedList.length == 0)
      skipRelation = true
      roundTwo.push(currentRelation) # this element will always be the root element
-     console.log("Pushed to round two"+currentRelation)
+     console.log("Pushed to round two")
+     console.log(currentRelation)
    else       
      emptyIntersectingNeighbourhood = getIntersectingEmptyNeighbourhood($.unique(mergedList))
      emptyNBcnt = 6 - ($.unique(mergedList).length )
-     finalMemPos = getUniqueNeighbourhood(emptyIntersectingNeighbourhood, emptyNBcnt)
+     if(emptyIntersectingNeighbourhood.length == 1)
+       finalMemPos = emptyIntersectingNeighbourhood[0]
+     else  
+       finalMemPos = getUniqueNeighbourhood(emptyIntersectingNeighbourhood, emptyNBcnt)
      placeInMem(relElem, finalMemPos)     
    listOfRelatedPlacedElements.length = 0
    intersectingNeighbourhood.length = 0
@@ -289,6 +290,7 @@ placeElements = (relatedElements) ->
   if isPlaced relElem
   else if skipRelation
    window.consoleLog("skipping relation")
+   false
   else 
    placeNewElement(relElem)
  )
@@ -306,11 +308,16 @@ displayCluster = (relations) ->
   skipRelation = false
   placeElements(value.relatedElements)
  ) 
- $.each(roundTwo, (i,value) ->
-    currentRelation = value
-    rootElement = value.element
-    placeElements(value.relatedElements)
- ) 
+ console.log("Starting round two")
+ console.log(roundTwo)
+ while(roundTwo.length > 0)
+  displayingRoundTwo = true
+  currentRelation = roundTwo.shift()
+  rootElement = currentRelation.element
+  placeElements(currentRelation.relatedElements) 
+ console.log "End of roundTwo"
+ console.log roundTwo
+ displayingRoundTwo = false 
  
 
 displayAllClusters = (clustersJson) ->
@@ -325,4 +332,4 @@ clustersRequest = $.getJSON "/api/clusters"
 clustersRequest.success (data) ->
   clustersJson = data
   displayAllClusters(clustersJson)
- 
+  clustersJson = []
