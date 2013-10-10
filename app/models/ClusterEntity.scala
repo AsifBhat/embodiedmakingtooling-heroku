@@ -42,7 +42,7 @@ object ClusterEntity{
   
   var allClusters: List[ClusterEntity] = List(
   
-   new ClusterEntity ("G1",
+   /*new ClusterEntity ("G1",
     List(("C0001", List("F0005","F0006","F0011","F0012")),
       ("F0005", List("F0006","F0004","F0007")),
       ("F0006",List("F0007","F0013")),
@@ -70,9 +70,9 @@ object ClusterEntity{
             ("F0010",List("F0011")),
             ("F0011",List("F0012"))
             )
-   ),
+   ),*/
    new ClusterEntity("G5",
-        List(("S0004",List("F0010","F0011","F0012"))
+        List(("S0005",List("F0010","F0011","F0012"))
         )   
   )
 )
