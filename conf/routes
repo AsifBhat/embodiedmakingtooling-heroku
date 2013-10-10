@@ -21,7 +21,7 @@ GET        /api/solutionComponents/:id    controllers.Services.solutionComponent
 
 GET		   /api/positions                 controllers.PositionServices.allPos
 POST	   /api/positions                 controllers.PositionServices.createPos
-
+PUT	       /api/positions/:clusterIdToDel controllers.PositionServices.updatePos(clusterIdToDel: String) 
 # Utilities
 GET		   /export          			  controllers.Utilities.exportAsGexf
 

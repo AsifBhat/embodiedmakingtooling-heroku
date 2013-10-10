@@ -6,6 +6,7 @@ import play.api.libs.json.Json._
 import play.api.libs.functional.syntax._
 import play.api.libs.json.Reads._
 import models.PositionForHexGrid
+import play.data.DynamicForm
 
 object PositionServices extends Controller {
   
@@ -23,19 +24,22 @@ object PositionServices extends Controller {
       val createdpos = PositionForHexGrid.addPosToMem(pos)
       Created(toJson(createdpos))
   }
-
- /* def updateCluster(id: String) = Action {
+ 
+  def updatePos(clusterIdToDel: String) = Action {
     request =>
-      val updatedClusterObject = request.body.asJson.get
-      val res: JsResult[ClusterEntity] = updatedClusterObject.validate(clusterEntityReader)
-      val listOfClusters = ClusterEntity.all
-      val updatedCluster = new ClusterEntity(res.get.id, res.get.relations.sortBy(r => 0 - r._2.length))
-      ClusterEntity.allClusters = listOfClusters.map(cluster => if (cluster.id == id) updatedCluster else cluster)
+      println(request.body.asJson)
+      val clusterIdToKeep = request.body.asJson.get.as[String]
+      println(clusterIdToKeep)
+      val allPositions = PositionForHexGrid.all
+      PositionForHexGrid.allPos = allPositions.map(pos => 
+        if (pos.clusterId == clusterIdToDel) 
+          new PositionForHexGrid(pos.posId,pos.elementId,clusterIdToKeep, pos.xPos, pos.yPos) 
+        else pos)
 
-      Ok(toJson(id))
+      Ok(toJson(new PositionForHexGrid("","","",0,0)))
   }
 
-  def deleteCluster(id: String) = Action {
+  /*def deleteCluster(id: String) = Action {
     ClusterEntity.allClusters = ClusterEntity.all.filter(cluster => cluster.id != id)
     Ok(id)
   }*/

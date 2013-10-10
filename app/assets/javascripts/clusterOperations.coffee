@@ -110,8 +110,24 @@ mergeAndAddLink = (link, clusters, posUpdate) ->
        window.consoleLog(createdPos)
        window.posOnGrid.push(createdPos)
       error: (jqXHR, textStatus, errorThrown) ->
-       window.consoleLog errorThrown  
-  
+       window.consoleLog errorThrown         
+  # Update positions - when there is a merge, there is 
+  # 1) a call to create a pos entry (above)
+  # 2) an update call - PUT - with the cluster id to be replaced. The payload will be the id to keep.
+  #    The expected response should be the list of altered positions.[TODO]
+  $.each(clusters, (i, ctoDel) ->
+    $.ajax
+      url: '/api/positions/'+ctoDel.id,
+      type: 'PUT',
+      dataType: "json",
+      data: JSON.stringify(idToKeep[0].id),
+      contentType: "application/json",
+      success: (listOfUpdatedPos, status, response) ->
+       window.consoleLog("Position update request sent for deleted cluster(ID)s")
+       window.consoleLog(listOfUpdatedPos) # [TODO]
+      error: (jqXHR, textStatus, errorThrown) ->
+       window.consoleLog errorThrown   
+  )  
  #-------------------------------------------------------------------------------------- 
   
 window.updateClusters = (obj, datum, dataset,posx,posy) ->
