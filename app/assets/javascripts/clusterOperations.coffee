@@ -19,7 +19,7 @@ isEmpty = (pos) ->
  )	
  empty	
  
-getElementInCell = (pos) ->
+window.getElementInCell = (pos) ->
  elem = ''
  $.each(window.posOnGrid, (i,position) ->
   if (position.xPos == pos.x) && (position.yPos == pos.y)  
