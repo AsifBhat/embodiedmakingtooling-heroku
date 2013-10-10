@@ -20,6 +20,9 @@ GET        /api/solutionComponents        controllers.Services.solutionComponent
 GET        /api/solutionComponents/:id    controllers.Services.solutionComponent(id: String)
 POST       /api/importcontent             controllers.Services.importFile
 
+GET		   /api/positions                 controllers.PositionServices.allPos
+POST	   /api/positions                 controllers.PositionServices.createPos
+PUT	       /api/positions/:clusterIdToDel controllers.PositionServices.updatePos(clusterIdToDel: String) 
 # Utilities
 GET		   /export          			  controllers.Utilities.exportAsGexf
 

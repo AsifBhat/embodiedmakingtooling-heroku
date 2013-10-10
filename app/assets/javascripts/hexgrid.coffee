@@ -21,11 +21,35 @@ jQuery ($) ->
   # Element to show the currently hovered tile
   hoveredElement = createHex(grid, 'current')
   root.append(hoveredElement)
+  idwithtooltip =  $('<div id="desctooltip" style="z-index:100;width:1px;height:1px;position:absolute;" data-placement="top" data-toggle="tooltip" type="button"></div>')
+  
+  # Placing tooltip if not an empty cell
+  placeTooltip = (x,y,elementid) ->   
+    inv = grid.screenpos(x, y)
+    typeind = elementid.substr(0,1)
+    switch typeind
+     when 'S' then etype = "stories"
+     when 'F' then etype = "forces"
+     when 'C' then etype = "solutionComponents"
+    elementRequest = $.getJSON "/api/"+etype+"/"+elementid
+    elementRequest.success (data) ->
+     description = data.description 
+     idwithtooltip.attr("data-original-title",description)
+    idwithtooltip.css("margin-left", inv.x+10 + "px")
+    idwithtooltip.css("margin-top", inv.y + "px")
+    root.append(idwithtooltip)
+    $("#desctooltip").tooltip('show');
 
   # Setting mouse movement related tile events
-  grid.addEvent("tileover", (e, x, y) ->
+  grid.addEvent("tileover", (e, xc, yc) ->
     # Highlight the currently hovered cell
-    placeHex(hoveredElement,x,y)
+    pos = {x:xc,y:yc}
+    elementUnderMouse = window.getElementInCell(pos)
+    if(elementUnderMouse!='')
+      placeTooltip(xc,yc,elementUnderMouse)
+    else
+      $("#desctooltip").tooltip('hide');
+    placeHex(hoveredElement,xc,yc)    
   )
 
   # Tiletap is only fired when not dragging the grid
@@ -57,12 +81,14 @@ jQuery ($) ->
         .on('typeahead:selected', (obj, datum, dataset) ->
 
           # Update the new element
-          newElement.text(datum.id)
+                 
           newElement.removeClass('new')
           newElement.addClass(dataset)
-
+          
           # Hide the content search
           contentSearch.css('display', 'none')
+          newElement.text(datum.id)
+          newElement.css('z-index','100')
           window.updateClusters(obj, datum, dataset,x,y)
         )
 

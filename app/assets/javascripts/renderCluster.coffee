@@ -9,6 +9,7 @@ window.posAfterTranslation = []
 roundTwo = []
 currentRelation = ''
 skipRelation = false
+displayingRoundTwo = false
 
 # Variables required for translation of the cluster with origin 0,0 to a different area on the grid
 
@@ -80,7 +81,7 @@ initPos = (link) ->
  
 isPlaced = (elem) ->
  isPresent = false
- $.each(placed, (i,p) ->
+ $.each(posBeforeTranslation, (i,p) ->
   if p.elem == elem
    isPresent = true
  )
@@ -137,16 +138,16 @@ getAllNeighbourCells =  (pos) ->
  allNeighbourCells[5] = {x:pos.x+1 , y:pos.y-1 }
  allNeighbourCells
 
-
 getIntersect = (allNeighbourCells) ->
- tempInt = []
+ intersectArr = []
  $.each(allNeighbourCells, (i, nb) ->
   $.each(intersectingNeighbourhood, (j, intersect) ->
    if(nb.x==intersect.x) && (nb.y == intersect.y)
-    tempInt.push({x:nb.x,y:nb.y})
+    intersectArr.push nb
   )
- )   
- tempInt   
+ ) 
+ console.log(intersectArr)
+ intersectArr  
 
 isEmpty = (pos) ->
  empty = true
@@ -163,6 +164,8 @@ getEmptyIntersect = (intersectingNeighbourhood) ->
       if isEmpty(pos)
        emptyIntersectingNeighbourhood.push(pos)
     )
+    console.log("emptyIntersectingNeighbourhood")
+    console.log(emptyIntersectingNeighbourhood)
     emptyIntersectingNeighbourhood
      
   
@@ -173,6 +176,8 @@ getIntersectingEmptyNeighbourhood = (mergedList) ->
     if(i==0)
      intersectingNeighbourhood = allNeighbourCells
     intersectingNeighbourhood = getIntersect(allNeighbourCells)
+    console.log("after getintersect was assigned to intersecting nbhood")
+    console.log(intersectingNeighbourhood)
   )
   getEmptyIntersect(intersectingNeighbourhood)
   
@@ -204,7 +209,7 @@ placeInMem = (relElem,pos) ->
  
 placeOnGrid = (a) ->
  calcOffsets('a')
- $.each(placed, (i,p) -> 
+ $.each(posBeforeTranslation, (i,p) -> 
   relElem = p.elem
   etype = relElem.substr(0,1)
   switch etype
@@ -239,6 +244,7 @@ getUniqueNeighbourhood = ( nbhood, nbCount) ->
   if getEmptyNBcount(nb) == nbCount
    toReturn = {x:nb.x,y:nb.y}    
  )
+ console.log(toReturn)
  toReturn
    
 placeNewElement = (relElem) ->
@@ -254,15 +260,23 @@ placeNewElement = (relElem) ->
        mergedList.push(rootElement)
        emptyIntersectingNeighbourhood = getIntersectingEmptyNeighbourhood($.unique(mergedList))
        emptyNBcnt = 6 - ($.unique(mergedList).length )
-       finalMemPos = getUniqueNeighbourhood(emptyIntersectingNeighbourhood, emptyNBcnt)
+       if(emptyIntersectingNeighbourhood.length == 1)
+        finalMemPos = emptyIntersectingNeighbourhood[0]
+       else
+        finalMemPos = getUniqueNeighbourhood(emptyIntersectingNeighbourhood, emptyNBcnt)
        placeInMem(relElem, finalMemPos)  
    else if(mergedList.length == 0)
      skipRelation = true
      roundTwo.push(currentRelation) # this element will always be the root element
+     console.log("Pushed to round two")
+     console.log(currentRelation)
    else       
      emptyIntersectingNeighbourhood = getIntersectingEmptyNeighbourhood($.unique(mergedList))
      emptyNBcnt = 6 - ($.unique(mergedList).length )
-     finalMemPos = getUniqueNeighbourhood(emptyIntersectingNeighbourhood, emptyNBcnt)
+     if(emptyIntersectingNeighbourhood.length == 1)
+       finalMemPos = emptyIntersectingNeighbourhood[0]
+     else  
+       finalMemPos = getUniqueNeighbourhood(emptyIntersectingNeighbourhood, emptyNBcnt)
      placeInMem(relElem, finalMemPos)     
    listOfRelatedPlacedElements.length = 0
    intersectingNeighbourhood.length = 0
@@ -276,6 +290,7 @@ placeElements = (relatedElements) ->
   if isPlaced relElem
   else if skipRelation
    window.consoleLog("skipping relation")
+   false
   else 
    placeNewElement(relElem)
  )
@@ -293,11 +308,16 @@ displayCluster = (relations) ->
   skipRelation = false
   placeElements(value.relatedElements)
  ) 
- $.each(roundTwo, (i,value) ->
-    currentRelation = value
-    rootElement = value.element
-    placeElements(value.relatedElements)
- ) 
+ console.log("Starting round two")
+ console.log(roundTwo)
+ while(roundTwo.length > 0)
+  displayingRoundTwo = true
+  currentRelation = roundTwo.shift()
+  rootElement = currentRelation.element
+  placeElements(currentRelation.relatedElements) 
+ console.log "End of roundTwo"
+ console.log roundTwo
+ displayingRoundTwo = false 
  
 
 displayAllClusters = (clustersJson) ->
@@ -315,4 +335,4 @@ clustersRequest = $.getJSON "/api/clusters"
 clustersRequest.success (data) ->
   clustersJson = data
   displayAllClusters(clustersJson)
- 
+  clustersJson = []
