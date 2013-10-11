@@ -20,7 +20,6 @@ class ClusterTest extends FunSuite {
   }
 
   test("Printing a cluster") {
-    println(c)
   }
 
   test("Empty Cluster creation") {

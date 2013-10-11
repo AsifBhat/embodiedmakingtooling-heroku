@@ -28,9 +28,7 @@ class ClusterEntityTest extends FunSuite {
     val oldLength = ClusterEntity.all.length
     val newcluster = new ClusterEntity("G0001",List(("S0004",List())))
     val clusterWithId = ClusterEntity.addClusterToMem(newcluster)
-    println(clusterWithId.id)
     val newLength = ClusterEntity.all.length
     assert(oldLength == newLength-1)
   }
- 
 }

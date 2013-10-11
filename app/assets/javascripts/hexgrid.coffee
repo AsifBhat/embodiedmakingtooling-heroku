@@ -1,7 +1,13 @@
 jQuery ($) ->
- 
-  createHex = (grid, styleClass) ->
-    $("<div class='hex'/>").css({
+  # Creating a grid
+  gridElement = $('#hexagonal-grid')[0]
+  grid = hex.grid(gridElement, {})
+  size = hex.size(grid.elem)
+  grid.reorient(size.x * 0.5, size.y * 0.5)
+  root = $(grid.root)
+
+  createHex = (styleClass, text = "") ->
+    $("<div class='hex' >"+text+"</div>").css({
       "width": grid.tileWidth + "px",
       "height": grid.tileHeight + "px",
       "line-height": grid.tileHeight + "px",
@@ -12,14 +18,8 @@ jQuery ($) ->
     elem.css("left", inv.x + "px")
     elem.css("top", inv.y + "px")
 
-  gridElement = $('#hexagonal-grid')[0]
-
-  # Creating a grid
-  grid = hex.grid(gridElement, {})
-  root = $(grid.root)
-
   # Element to show the currently hovered tile
-  hoveredElement = createHex(grid, 'current')
+  hoveredElement = createHex('current')
   root.append(hoveredElement)
   idwithtooltip =  $('<div id="desctooltip" style="z-index:100;width:1px;height:1px;position:absolute;" data-placement="top" data-toggle="tooltip" type="button"></div>')
   
@@ -55,7 +55,7 @@ jQuery ($) ->
   # Tiletap is only fired when not dragging the grid
   grid.addEvent("tiletap", (e, x, y) ->
     # Create new placeholder element to give a visual indication where we will be creating our new element
-    newElement = createHex(grid, 'new')
+    newElement = createHex('new')
 
     # Place the element on the grid
     placeHex(newElement,x,y)
@@ -98,8 +98,34 @@ jQuery ($) ->
         # Place focus
         .focus()
   )
-  
+
+  window.posOnGrid = []
+
+
+  placeOnGrid = (elemwithpos) ->
+    elemid = elemwithpos.elementId
+    etype = elemid.substr(0,1)
+    switch etype
+      when 'S' then cls = "stories"
+      when 'F' then cls = "forces"
+      when 'C' then cls = "solutionComponents"
+    cellToPlace = createHex(cls, elemid)
+
+    root.append(cellToPlace)
+    placeHex(cellToPlace,elemwithpos.xPos,elemwithpos.yPos)
+    window.posOnGrid.push({ "posId": elemwithpos.posId, "elementId" : elemwithpos.elementId, "clusterId" :elemwithpos.clusterId , "xPos" : elemwithpos.xPos, "yPos": elemwithpos.yPos })
+
+  displayAllClusters = (clustersJson) ->
+    $.each(clustersJson, (i, value) ->
+      placeOnGrid (value)
+    )
+
+  clusterPosRequest = $.getJSON "/api/positions"
+  clusterPosRequest.success (data) ->
+    clustersPosJson = data
+    displayAllClusters(clustersPosJson)
+
+
 window.consoleLog = (logInfo) ->
-  if(window.console)
-    console.log logInfo
+  console?.log logInfo
     

@@ -27,9 +27,7 @@ object PositionServices extends Controller {
  
   def updatePos(clusterIdToDel: String) = Action {
     request =>
-      println(request.body.asJson)
       val clusterIdToKeep = request.body.asJson.get.as[String]
-      println(clusterIdToKeep)
       val allPositions = PositionForHexGrid.all
       PositionForHexGrid.allPos = allPositions.map(pos => 
         if (pos.clusterId == clusterIdToDel) 

@@ -38,24 +38,19 @@ getClusterInCell = (pos) ->
  #-------------------------------------------------------------------------------------- 
 
 updatePositions = (idToKeep, idsToChange) ->
-  window.consoleLog "ID to keep and IDs to change"
-  window.consoleLog(idToKeep, idsToChange)
   $.each(idsToChange, (i, id)->
     $.each(window.posOnGrid, (j, pos) ->
       if ((pos.clusterId == id) || (pos.clusterId == "temp"))
         pos.clusterId = idToKeep
     )
   )
-  window.consoleLog("window.posOnGrid: ")
-  window.consoleLog(window.posOnGrid)
- 
+
 clusterToUpdate = {} 
   
 #--------------------------------------------------------------------------------------  
 mergeAndAddLink = (link, clusters, posUpdate) ->
   newGraph = []
   clustersToDelete = []
-  window.consoleLog(clusters)	
   $.each(clusters, (i, cluster) ->
    $.each(cluster.relations, (j,l) ->
      newGraph.push(l)
@@ -64,14 +59,9 @@ mergeAndAddLink = (link, clusters, posUpdate) ->
    
   # (if cluster.id != clusters[0].id then (clustersToDelete.push cluster.id)) for cluster in clusters
   idToKeep = clusters.splice(0,1)
-  window.consoleLog("Clusters to delete:")
-  window.consoleLog clusters
   newGraph.push(link)
   clusterToUpdate = {"id":idToKeep[0].id, "relations":newGraph}
   posUpdate.clusterId = idToKeep[0].id
-  # TODO 
-  window.consoleLog "To update cluster:"
-  window.consoleLog(clusterToUpdate)  
   $.ajax
       url: '/api/clusters/'+clusterToUpdate.id,
       type: 'PUT',
@@ -79,19 +69,14 @@ mergeAndAddLink = (link, clusters, posUpdate) ->
       contentType: "application/json",
       data : JSON.stringify(clusterToUpdate),
       success: (updatedClusterId, status, response) ->
-       window.consoleLog("Cluster update request sent:")
-       window.consoleLog(updatedClusterId)
        updatePositions(updatedClusterId,clusters)
       error: (jqXHR, textStatus, errorThrown) ->
        window.consoleLog errorThrown 
-  window.consoleLog "To delete clusters:"
-  window.consoleLog(clusters)
   $.each(clusters, (i, ctoDel) ->
     $.ajax
       url: '/api/clusters/'+ctoDel.id,
       type: 'DELETE',
       success: (data, status, response) ->
-       window.consoleLog("Cluster delete request sent:")
        window.consoleLog(data)
       error: (jqXHR, textStatus, errorThrown) ->
        window.consoleLog errorThrown   
@@ -106,8 +91,6 @@ mergeAndAddLink = (link, clusters, posUpdate) ->
       contentType: "application/json",
       data : JSON.stringify(posUpdate),
       success: (createdPos, status, response) ->
-       window.consoleLog("Position creation request sent for cluster update:")
-       window.consoleLog(createdPos)
        window.posOnGrid.push(createdPos)
       error: (jqXHR, textStatus, errorThrown) ->
        window.consoleLog errorThrown         
@@ -123,7 +106,6 @@ mergeAndAddLink = (link, clusters, posUpdate) ->
       data: JSON.stringify(idToKeep[0].id),
       contentType: "application/json",
       success: (listOfUpdatedPos, status, response) ->
-       window.consoleLog("Position update request sent for deleted cluster(ID)s")
        window.consoleLog(listOfUpdatedPos) # [TODO]
       error: (jqXHR, textStatus, errorThrown) ->
        window.consoleLog errorThrown   
@@ -154,8 +136,6 @@ window.updateClusters = (obj, datum, dataset,posx,posy) ->
       async: false,
       data : JSON.stringify(newclusterdata),
       success: (createdCluster, status, response) ->
-       window.consoleLog("New cluster creation request sent:")
-       window.consoleLog(createdCluster)
        posDataToSend = {posId:"temp", elementId: datum.id, clusterId:createdCluster.id, xPos:posx, yPos:posy}
       error: (jqXHR, textStatus, errorThrown) ->
        window.consoleLog errorThrown  
@@ -167,16 +147,12 @@ window.updateClusters = (obj, datum, dataset,posx,posy) ->
       contentType: "application/json",
       data : JSON.stringify(posDataToSend),
       success: (createdPos, status, response) ->
-       window.consoleLog("New position creation request sent:")
-       window.consoleLog(createdPos)
        window.posOnGrid.push(createdPos)
       error: (jqXHR, textStatus, errorThrown) ->
        window.consoleLog errorThrown           
     else 
      nbClusters = $.unique(nbClusters)    
-     window.consoleLog("nbClusters: ")
-     window.consoleLog(nbClusters)
-     link = {"element":datum.id, "relatedElements":nbElements}     
+     link = {"element":datum.id, "relatedElements":nbElements}
      $.each(nbClusters, (i, nbc) ->
         $.ajax
          url: '/api/clusters/'+nbc,
@@ -187,8 +163,7 @@ window.updateClusters = (obj, datum, dataset,posx,posy) ->
           clustersToMerge.push(cluster)
          error: (jqXHR, textStatus, errorThrown) ->
            window.consoleLog errorThrown
-           window.consoleLog(nbc)    
-     ) 
+     )
      posUpdate = {posId: "temp", elementId: datum.id, clusterId:"temp", xPos:posx, yPos:posy }
      mergeAndAddLink(link, clustersToMerge, posUpdate)
 
