@@ -11,6 +11,7 @@
 <script>
 $(document).ready(function() {
 	  $.ajaxSetup({ cache: false });
+	  $.ajaxSetup({async: false});
 	});
 </script>
 <script src="@routes.Assets.at("javascripts/clusterOperations.js")"></script> 
