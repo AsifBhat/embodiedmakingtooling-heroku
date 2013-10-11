@@ -3,7 +3,7 @@ package controllers
 import play.api.mvc._
 import play.api.libs.json._
 import play.api.libs.json.Json._
-import models.{Force, Story, SolutionComponent, ClusterEntity}
+import models.{Force, Story, SolutionComponent, ClusterEntity, PositionForHexGrid}
 import play.api.libs.functional.syntax._
 import play.api.libs.json.Reads._
 import java.io._
@@ -120,6 +120,7 @@ object Services extends Controller {
     Story.allStories = newStrs.toList
     SolutionComponent.allSolutionComponents = newScs.toList
     ClusterEntity.allClusters = List[ClusterEntity]() 
+    PositionForHexGrid.allPos = List[PositionForHexGrid]()
     Ok("<b>Import Complete:</b> " +
     		"<br>Forces: " + newFrcs.size + 
     		"<br>Stories: " + newStrs.size + 
