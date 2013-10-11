@@ -3,9 +3,12 @@ package controllers
 import play.api.mvc._
 import play.api.libs.json._
 import play.api.libs.json.Json._
-import models.{Force, Story, SolutionComponent, ClusterEntity}
+import models.{Force, Story, SolutionComponent, ClusterEntity, PositionForHexGrid}
 import play.api.libs.functional.syntax._
 import play.api.libs.json.Reads._
+import java.io._
+import scala.util.matching.Regex
+import scala.collection.mutable.ListBuffer
 
 object Services extends Controller {
   val baseUrl = "/api"
@@ -90,5 +93,37 @@ object Services extends Controller {
   def deleteCluster(id: String) = Action {
     ClusterEntity.allClusters = ClusterEntity.all.filter(cluster => cluster.id != id)
     Ok(id)
+  }
+
+  def importFile = Action(parse.temporaryFile) { request =>    
+    val tempFile = File.createTempFile("temp_upload", null)
+    request.body.moveTo(tempFile, true)
+    val reader = scala.io.Source.fromFile(tempFile.getCanonicalFile())
+    val lineItr = reader.getLines()
+    val pattern = new Regex("(?i)([CSF]\\d+)\\.?\\s+(.+)")
+    val newStrs = ListBuffer[Story]()
+    val newFrcs = ListBuffer[Force]()
+    val newScs = ListBuffer[SolutionComponent]()
+    
+    while(lineItr.hasNext){
+      pattern.findAllIn(lineItr.next).matchData foreach {
+        m => {
+          var grpChar: Char = m.subgroups(0).toLowerCase().charAt(0)
+          if (grpChar == 'c') newScs +=(SolutionComponent(m.subgroups(0), m.subgroups(1)))
+          else if(grpChar == 's' ) newStrs +=(Story(m.subgroups(0), m.subgroups(1)))
+          else if(grpChar == 'f') newFrcs +=(Force(m.subgroups(0), m.subgroups(1)))
+        }
+      }
+    }
+    reader.close
+    Force.allForces = newFrcs.toList
+    Story.allStories = newStrs.toList
+    SolutionComponent.allSolutionComponents = newScs.toList
+    ClusterEntity.allClusters = List[ClusterEntity]() 
+    PositionForHexGrid.allPos = List[PositionForHexGrid]()
+    Ok("<b>Import Complete:</b> " +
+    		"<br>Forces: " + newFrcs.size + 
+    		"<br>Stories: " + newStrs.size + 
+    		"<br>SolutionComponents: "+ newScs.size)
   }
 }
