@@ -9,17 +9,13 @@
     <input type="text" name="query">
 </div>
 <script>
-$(document).ready(function() {
-	  $.ajaxSetup({ cache: false });
-	  $.ajaxSetup({async: false});
-	});
+$(function() {
+    $.ajaxSetup({ cache: false, async: false });
+    $("#hint").tooltip('show')
+});
 </script>
-<script src="@routes.Assets.at("javascripts/clusterOperations.js")"></script> 
+<script src="@routes.Assets.at("javascripts/clusterOperations.js")"></script>
 <script src="@routes.Assets.at("javascripts/hexgrid.js")"></script>
-<script src="@routes.Assets.at("javascripts/elementSearch.js")"></script> 
-<script src="@routes.Assets.at("javascripts/drawClusters.js")"></script>
-<script src="@routes.Assets.at("javascripts/export.js")"></script>  
-<script>
-$("#hint").tooltip('show')
-</script>
+<script src="@routes.Assets.at("javascripts/elementSearch.js")"></script>
+<script src="@routes.Assets.at("javascripts/export.js")"></script>
 }
