@@ -7,7 +7,6 @@ jQuery ($) ->
   root = $(grid.root)
 
   createHex = (styleClass, text = "") ->
-    console.log("2")
     $("<div class='hex' >"+text+"</div>").css({
       "width": grid.tileWidth + "px",
       "height": grid.tileHeight + "px",
@@ -128,6 +127,5 @@ jQuery ($) ->
 
 
 window.consoleLog = (logInfo) ->
-  if(window.console)
-    console.log logInfo
+  console?.log logInfo
     
