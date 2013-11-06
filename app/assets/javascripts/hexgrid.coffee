@@ -31,10 +31,17 @@ jQuery ($) ->
      when 'S' then etype = "stories"
      when 'F' then etype = "forces"
      when 'C' then etype = "solutionComponents"
+    
+    ###
+    
+    COMMENTED TO REMOVE THE REST CALLS AND AS A MARKER FOR INJECTING DATA OTHERWISE
+
     elementRequest = $.getJSON "/api/"+etype+"/"+elementid
+    
     elementRequest.success (data) ->
-     description = data.description 
-     idwithtooltip.attr("data-original-title",description)
+      description = data.description 
+      idwithtooltip.attr("data-original-title",description)
+    ###
     idwithtooltip.css("margin-left", inv.x+10 + "px")
     idwithtooltip.css("margin-top", inv.y + "px")
     root.append(idwithtooltip)
@@ -120,11 +127,12 @@ jQuery ($) ->
       placeOnGrid (value)
     )
 
+  ###
   clusterPosRequest = $.getJSON "/api/positions"
   clusterPosRequest.success (data) ->
     clustersPosJson = data
     displayAllClusters(clustersPosJson)
-
+  ###
 
 window.consoleLog = (logInfo) ->
   console?.log logInfo

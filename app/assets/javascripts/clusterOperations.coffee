@@ -62,6 +62,9 @@ mergeAndAddLink = (link, clusters, posUpdate) ->
   newGraph.push(link)
   clusterToUpdate = {"id":idToKeep[0].id, "relations":newGraph}
   posUpdate.clusterId = idToKeep[0].id
+  ###
+    Putting marker to denote the below REST calls should be removed
+  ###
   $.ajax
       url: '/api/clusters/'+clusterToUpdate.id,
       type: 'PUT',
@@ -73,6 +76,9 @@ mergeAndAddLink = (link, clusters, posUpdate) ->
       error: (jqXHR, textStatus, errorThrown) ->
        window.consoleLog errorThrown 
   $.each(clusters, (i, ctoDel) ->
+    ###
+      Putting marker to denote the below REST calls should be removed
+    ###
     $.ajax
       url: '/api/clusters/'+ctoDel.id,
       type: 'DELETE',
@@ -83,6 +89,10 @@ mergeAndAddLink = (link, clusters, posUpdate) ->
   )  
   # Update positions on server
   # Update positions - when there is no merge, there is only a call to create a pos entry
+  ###
+    Putting marker to denote the below REST calls should be removed
+  ###
+
   $.ajax
       url: '/api/positions',
       type: 'POST',
@@ -126,6 +136,9 @@ window.updateClusters = (obj, datum, dataset,posx,posy) ->
     )
     clustersToMerge = []
     posDataToSend = ''
+    ###
+      Putting marker to denote the below REST calls should be removed
+    ###
     if loneCell 
      newclusterdata =  {"id":"newid","relations":[{"element":datum.id,"relatedElements":[]}]}
      $.ajax
@@ -139,6 +152,10 @@ window.updateClusters = (obj, datum, dataset,posx,posy) ->
        posDataToSend = {posId:"temp", elementId: datum.id, clusterId:createdCluster.id, xPos:posx, yPos:posy}
       error: (jqXHR, textStatus, errorThrown) ->
        window.consoleLog errorThrown  
+
+      ###
+        Putting marker to denote the below REST calls should be removed
+      ###
      $.ajax
       url: '/api/positions',
       type: 'POST',
@@ -154,6 +171,9 @@ window.updateClusters = (obj, datum, dataset,posx,posy) ->
      nbClusters = $.unique(nbClusters)    
      link = {"element":datum.id, "relatedElements":nbElements}
      $.each(nbClusters, (i, nbc) ->
+        ###
+           Putting marker to denote the below REST calls should be removed
+        ###
         $.ajax
          url: '/api/clusters/'+nbc,
          type: 'GET',
