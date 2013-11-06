@@ -13,7 +13,9 @@
              </div>
              <button class="btn btn-success btn-mini" id="import_button">Import</button>
         }
-     </div>
+    <button id="authorizeButton" disabled>You must authorize</button>
+    <button id="addPos" >Add Pos</button>
+ </div>
 <div class="" id="message_board" style="display : none;">
   <div id="message"></div>
 </div>
@@ -31,10 +33,4 @@
 <script src="@routes.Assets.at("javascripts/export.js")"></script>
 <script src="@routes.Assets.at("javascripts/fileuploadhandler.js")"></script>
 
-<script>
-    $(function() {
-	  $.ajaxSetup({ cache: false });
-      $("#hint").tooltip('show')
-	});
-</script>
 }

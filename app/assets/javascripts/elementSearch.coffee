@@ -25,7 +25,7 @@ jQuery ($) ->
 
   # Load data sets
   $('#content-search input').typeahead([
-    $.extend(true, { name: 'stories', prefetch: {url: 'api/stories'} }, datasetDefaults),
-    $.extend(true, { name: 'forces', prefetch: {url: 'api/forces'} }, datasetDefaults),
-    $.extend(true, { name: 'solutionComponents', prefetch: {url: 'api/solutionComponents'} }, datasetDefaults),
+    $.extend(true, { name: 'stories', prefetch: {} }, datasetDefaults),
+    $.extend(true, { name: 'forces', prefetch: {} }, datasetDefaults),
+    $.extend(true, { name: 'solutionComponents', prefetch: { } }, datasetDefaults),
   ])

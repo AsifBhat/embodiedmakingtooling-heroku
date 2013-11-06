@@ -33,13 +33,7 @@ jQuery ($) ->
      when 'C' then etype = "solutionComponents"
     
     ###
-    
-    COMMENTED TO REMOVE THE REST CALLS AND AS A MARKER FOR INJECTING DATA OTHERWISE
-
-    elementRequest = $.getJSON "/api/"+etype+"/"+elementid
-    
-    elementRequest.success (data) ->
-      description = data.description 
+    Get element description by searching vizdata.contentElements
       idwithtooltip.attr("data-original-title",description)
     ###
     idwithtooltip.css("margin-left", inv.x+10 + "px")
@@ -96,7 +90,10 @@ jQuery ($) ->
           contentSearch.css('display', 'none')
           newElement.text(datum.id)
           newElement.css('z-index','100')
-          window.updateClusters(obj, datum, dataset,x,y)
+          # When a content element is selected from the typeahead, it could be
+          # a new entry to the positions list or an update to an already 
+          # existing entry.
+          # window.updatePositions(obj, datum, dataset,x,y)
         )
 
         # Clear the previous query
@@ -117,7 +114,6 @@ jQuery ($) ->
       when 'F' then cls = "forces"
       when 'C' then cls = "solutionComponents"
     cellToPlace = createHex(cls, elemid)
-
     root.append(cellToPlace)
     placeHex(cellToPlace,elemwithpos.xPos,elemwithpos.yPos)
     window.posOnGrid.push({ "posId": elemwithpos.posId, "elementId" : elemwithpos.elementId, "clusterId" :elemwithpos.clusterId , "xPos" : elemwithpos.xPos, "yPos": elemwithpos.yPos })
@@ -127,12 +123,8 @@ jQuery ($) ->
       placeOnGrid (value)
     )
 
-  ###
-  clusterPosRequest = $.getJSON "/api/positions"
-  clusterPosRequest.success (data) ->
-    clustersPosJson = data
-    displayAllClusters(clustersPosJson)
-  ###
+  # Call below code during fileOnload and data change event
+  #displayAllClusters(clustersPosJson)
 
 window.consoleLog = (logInfo) ->
   console?.log logInfo

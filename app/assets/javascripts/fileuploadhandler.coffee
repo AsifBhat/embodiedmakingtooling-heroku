@@ -1,4 +1,4 @@
-$('document').ready(() -> # Why do we need 5 different ways to do the same think? What about consistency?
+jQuery ($) -> -> # Why do we need 5 different ways to do the same think? What about consistency?
     options = {
       beforeSend: () -> 
         $('#message').html("")
@@ -24,4 +24,3 @@ $('document').ready(() -> # Why do we need 5 different ways to do the same think
         $('#message_board').fadeOut(6000)
     }
     $('#import_file').ajaxForm(options)
-  )
