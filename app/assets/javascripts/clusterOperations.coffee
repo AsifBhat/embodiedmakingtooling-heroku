@@ -25,10 +25,13 @@ isEmpty = (pos) ->
  
 window.getElementInCell = (pos) ->
  elem = ''
+ consoleLog 'Postion input: '
+ consoleLog pos
  $.each(window.posOnGrid, (i,position) ->
-  if (position.xPos == pos.x) && (position.yPos == pos.y)  
+  consoleLog position
+  if (position.x == pos.x) && (position.y == pos.y)  
     elem = position.elementId
- )	 
+ )
  elem
  
 getClusterInCell = (pos) ->
@@ -45,10 +48,11 @@ getClusterInCell = (pos) ->
 # We could either have two separate calls from here to update positions and relations or 
 # let the position methods call the relations methods.
 window.updatePositions = (obj, datum, dataset,posx,posy) ->
-  position = { posId:posid, x:posx, y:posy, elementId:datum }
+  position = { posId:posid, x:posx, y:posy, elementId:datum, description : " x: "+posx+", y: "+posy }
   posid = posid + 1
   window.global_vizdata.addPosition(position)
   consoleLog("Adding position")
   consoleLog(position)
+  consoleLog ('datum: ' + datum)
     
 #----------------------------------------------------

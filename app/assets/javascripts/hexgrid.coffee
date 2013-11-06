@@ -21,10 +21,11 @@ jQuery ($) ->
   # Element to show the currently hovered tile
   hoveredElement = createHex('current')
   root.append(hoveredElement)
-  idwithtooltip =  $('<div id="desctooltip" style="z-index:100;width:1px;height:1px;position:absolute;" data-placement="top" data-toggle="tooltip" type="button"></div>')
+  idwithtooltip = $('<div id="desctooltip" style="z-index:100;width:1px;height:1px;position:absolute;" data-placement="top" data-toggle="tooltip" type="button"></div>')
   
   # Placing tooltip if not an empty cell
-  placeTooltip = (x,y,elementid) ->   
+  placeTooltip = (x,y,elementid) ->
+    consoleLog 'cell tool tip triggered : ' + elementid
     inv = grid.screenpos(x, y)
     typeind = elementid.substr(0,1)
     switch typeind
@@ -36,8 +37,10 @@ jQuery ($) ->
     Get element description by searching vizdata.contentElements
       idwithtooltip.attr("data-original-title",description)
     ###
-    idwithtooltip.css("margin-left", inv.x+10 + "px")
-    idwithtooltip.css("margin-top", inv.y + "px")
+    idwithtooltip.attr("data-original-title", elementid)
+    idwithtooltip.css("margin-left", inv.x+23 + "px")
+    idwithtooltip.css("margin-top", inv.y+5 + "px")
+    #consoleLog ' ID With tool Tip : ' +idwithtooltip
     root.append(idwithtooltip)
     $("#desctooltip").tooltip('show');
 
@@ -46,6 +49,7 @@ jQuery ($) ->
     # Highlight the currently hovered cell
     pos = {x:xc,y:yc}
     elementUnderMouse = window.getElementInCell(pos)
+    consoleLog elementUnderMouse
     if(elementUnderMouse!='')
       placeTooltip(xc,yc,elementUnderMouse)
     else
@@ -109,14 +113,14 @@ jQuery ($) ->
 
   placeOnGrid = (elemwithpos) ->
     elemid = elemwithpos.elementId
-    ###
+    
     etype = elemid.substr(0,1)
     switch etype
       when 'S' then cls = "stories"
       when 'F' then cls = "forces"
       when 'C' then cls = "solutionComponents"
-    ###
-    cls = "stories"
+    
+    #cls = "stories"
     cellToPlace = createHex(cls, elemid)
     root.append(cellToPlace)
     placeHex(cellToPlace,elemwithpos.x,elemwithpos.y)

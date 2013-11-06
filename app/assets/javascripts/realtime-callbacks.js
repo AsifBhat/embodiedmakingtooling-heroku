@@ -6,6 +6,7 @@ var posid=0, elemid=0, x=0;
 
 /** Call back configured to register types */
 function registerTypes() {
+  console.log('Registering callback types');
   consoleLog("Registering types...")
   var VizDataModel = function() {}
   VizDataModel.prototype.positions = gapi.drive.realtime.custom.collaborativeField('positions');
@@ -17,6 +18,7 @@ function registerTypes() {
     consoleLog("Adding pos:")
     consoleLog(position)
     this.positions.push(position);
+    window.posOnGrid = window.global_vizdata.positions.asArray();
     consoleLog('Position added locally, current count:' +
         this.positions.length);
   };
@@ -75,11 +77,11 @@ function initializeModel(model) {
   /* Once the document has been loaded, we can create instances of the custom object 
   by calling create on the model with either the class or the string name used to 
   register the type. */
-  vizdata = model.create('VizDataModel');
+  window.vizdata = model.create('VizDataModel');
   consoleLog("Initial model state for new project has been created")
   /*After creating the VizDataModel object, we can now assign it to an object in the 
   hierarchy (in this case, the root) as follows */
-  model.getRoot().set('vizdata', vizdata);  
+  model.getRoot().set('vizdata', window.vizdata);  
 }
 
 /**
@@ -92,13 +94,19 @@ function initializeModel(model) {
 function onFileLoaded(doc) {
   window.global_vizdata = doc.getModel().getRoot().get('vizdata');
   window.global_vizdata.positions.addEventListener(gapi.drive.realtime.EventType.VALUES_ADDED, doValueChanged);
+  
+  window.posOnGrid = window.global_vizdata.positions.asArray();
+  console.log('Model Below: ');
+  console.log(window.posOnGrid);
+  
   var addButton = document.getElementById('addPos');
   addButton.onclick = function(e) {
-    var position = {posId:posid, x:x,y:0, elementId:elemid}
+    var position = {posId:posid, x:x , y:0, elementId:elemid}
     posid = posid +1
     x= x+1
     elemid = elemid + 2
     window.global_vizdata.addPosition(position)
+    console.log('posid: '+ posid + ', x: ' + x + ' elemid: '+ elemid);
   };
   consoleLog("On file loaded...")
   window.displayAllPositions(window.global_vizdata.getPositions())
