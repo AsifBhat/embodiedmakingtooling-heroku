@@ -21,7 +21,7 @@ function registerTypes() {
         this.positions.length);
   };
   VizDataModel.prototype.getPositions = function() {
-    return this.positions.toArray();
+    return this.positions.asArray();
   };
   gapi.drive.realtime.custom.registerType(VizDataModel, 'VizDataModel');
   gapi.drive.realtime.custom.setInitializer(VizDataModel, doInitialize);
@@ -46,7 +46,10 @@ events so that local changes can be ignored. See Handle Events for more
 detailed information on event handling.
 */ 
 function doValueChanged (){
+  var model = gapi.drive.realtime.custom.getModel(this);
+  vizdata = model.getRoot().get('vizdata');
   consoleLog("Model value changed...")
+  window.displayAllPositions(vizdata.getPositions())
 }
 
 /**
@@ -95,48 +98,9 @@ function onFileLoaded(doc) {
     posid = posid +1
     x= x+1
     elemid = elemid + 2
+    vizdata = doc.getModel().getRoot().get('vizdata');
     vizdata.addPosition(position)
   };
-
-  //------------------ sample code - to be removed
-  /*var string = doc.getModel().getRoot().get('text');
-
-  // Keeping one box updated with a String binder.
-  var textArea1 = document.getElementById('editor1');
-  gapi.drive.realtime.databinding.bindString(string, textArea1);
-
-  // Keeping one box updated with a custom EventListener.
-  var textArea2 = document.getElementById('editor2');
-  var updateTextArea2 = function(e) {
-    textArea2.value = string;
-  };
-  string.addEventListener(gapi.drive.realtime.EventType.TEXT_INSERTED, updateTextArea2);
-  string.addEventListener(gapi.drive.realtime.EventType.TEXT_DELETED, updateTextArea2);
-  textArea2.onkeyup = function() {
-    string.setText(textArea2.value);
-  };
-  updateTextArea2();
-
-  // Enabling UI Elements.
-  textArea1.disabled = false;
-  textArea2.disabled = false;*/
-
-  // Add logic for undo button.
-  /*var model = doc.getModel();
-  var undoButton = document.getElementById('undoButton');
-  var redoButton = document.getElementById('redoButton');
-
-  undoButton.onclick = function(e) {
-    model.undo();
-  };
-  redoButton.onclick = function(e) {
-    model.redo();
-  };
-*/
-  // Add event handler for UndoRedoStateChanged events.
-  /*var onUndoRedoStateChanged = function(e) {
-    undoButton.disabled = !e.canUndo;
-    redoButton.disabled = !e.canRedo;
-  };*/
-  //model.addEventListener(gapi.drive.realtime.EventType.UNDO_REDO_STATE_CHANGED, onUndoRedoStateChanged);
+  consoleLog("On file loaded...")
+  window.displayAllPositions(vizdata.getPositions())
 }

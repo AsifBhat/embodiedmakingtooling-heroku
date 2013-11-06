@@ -93,7 +93,7 @@ jQuery ($) ->
           # When a content element is selected from the typeahead, it could be
           # a new entry to the positions list or an update to an already 
           # existing entry.
-          # window.updatePositions(obj, datum.value, dataset,x,y)
+          window.updatePositions(obj, datum.value, dataset,x,y)
         )
 
         # Clear the previous query
@@ -108,24 +108,31 @@ jQuery ($) ->
 
   placeOnGrid = (elemwithpos) ->
     elemid = elemwithpos.elementId
+    ###
     etype = elemid.substr(0,1)
     switch etype
       when 'S' then cls = "stories"
       when 'F' then cls = "forces"
       when 'C' then cls = "solutionComponents"
+    ###
+    cls = "stories"
     cellToPlace = createHex(cls, elemid)
     root.append(cellToPlace)
-    placeHex(cellToPlace,elemwithpos.xPos,elemwithpos.yPos)
-    window.posOnGrid.push({ "posId": elemwithpos.posId, "elementId" : elemwithpos.elementId, "clusterId" :elemwithpos.clusterId , "xPos" : elemwithpos.xPos, "yPos": elemwithpos.yPos })
+    consoleLog("cell to place")
+    consoleLog(cellToPlace)
+    placeHex(cellToPlace,elemwithpos.x,elemwithpos.y)
+    
 
-  displayAllClusters = (clustersJson) ->
-    $.each(clustersJson, (i, value) ->
+  window.displayAllPositions = (positions) ->
+    consoleLog("Displaying all clusters")
+    consoleLog(positions)
+    $.each(positions, (i, value) ->
+      consoleLog("Inside loop")
+      consoleLog(value)
       placeOnGrid (value)
     )
 
-  # Call below code during fileOnload and data change event
-  #displayAllClusters(clustersPosJson)
 
-window.consoleLog = (logInfo) ->
-  console?.log logInfo
+  window.consoleLog = (logInfo) ->
+    console?.log logInfo
     
