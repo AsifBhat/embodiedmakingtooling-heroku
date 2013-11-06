@@ -104,6 +104,7 @@ jQuery ($) ->
   )
 
   window.posOnGrid = []
+  window.global_vizdata = {}
 
 
   placeOnGrid = (elemwithpos) ->
@@ -118,8 +119,6 @@ jQuery ($) ->
     cls = "stories"
     cellToPlace = createHex(cls, elemid)
     root.append(cellToPlace)
-    consoleLog("cell to place")
-    consoleLog(cellToPlace)
     placeHex(cellToPlace,elemwithpos.x,elemwithpos.y)
     
 
@@ -127,8 +126,6 @@ jQuery ($) ->
     consoleLog("Displaying all clusters")
     consoleLog(positions)
     $.each(positions, (i, value) ->
-      consoleLog("Inside loop")
-      consoleLog(value)
       placeOnGrid (value)
     )
 

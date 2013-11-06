@@ -45,12 +45,10 @@ getClusterInCell = (pos) ->
 # We could either have two separate calls from here to update positions and relations or 
 # let the position methods call the relations methods.
 window.updatePositions = (obj, datum, dataset,posx,posy) ->
-  model = gapi.drive.realtime.custom.getModel(this);
-  vizdata = model.getRoot().get('vizdata');
-  position = {posId:posid, x:posx, y:posy, elementId:datum.value}
-  posid = posid +1
-  vizdata.addPosition(position)
-  consoleLog("After adding position")
-  consoleLog(vizdata.positions)
+  position = { posId:posid, x:posx, y:posy, elementId:datum }
+  posid = posid + 1
+  window.global_vizdata.addPosition(position)
+  consoleLog("Adding position")
+  consoleLog(position)
     
 #----------------------------------------------------

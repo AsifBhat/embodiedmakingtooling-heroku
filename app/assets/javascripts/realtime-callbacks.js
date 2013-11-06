@@ -49,7 +49,7 @@ function doValueChanged (){
   var model = gapi.drive.realtime.custom.getModel(this);
   vizdata = model.getRoot().get('vizdata');
   consoleLog("Model value changed...")
-  window.displayAllPositions(vizdata.getPositions())
+  window.displayAllPositions(window.global_vizdata.getPositions())
 }
 
 /**
@@ -90,17 +90,16 @@ function initializeModel(model) {
  * 'at'param doc {gapi.drive.realtime.Document} the Realtime document.
  */
 function onFileLoaded(doc) {
-  vizdata = doc.getModel().getRoot().get('vizdata');
-  vizdata.positions.addEventListener(gapi.drive.realtime.EventType.VALUES_ADDED, doValueChanged);
+  window.global_vizdata = doc.getModel().getRoot().get('vizdata');
+  window.global_vizdata.positions.addEventListener(gapi.drive.realtime.EventType.VALUES_ADDED, doValueChanged);
   var addButton = document.getElementById('addPos');
   addButton.onclick = function(e) {
     var position = {posId:posid, x:x,y:0, elementId:elemid}
     posid = posid +1
     x= x+1
     elemid = elemid + 2
-    vizdata = doc.getModel().getRoot().get('vizdata');
-    vizdata.addPosition(position)
+    window.global_vizdata.addPosition(position)
   };
   consoleLog("On file loaded...")
-  window.displayAllPositions(vizdata.getPositions())
+  window.displayAllPositions(window.global_vizdata.getPositions())
 }
