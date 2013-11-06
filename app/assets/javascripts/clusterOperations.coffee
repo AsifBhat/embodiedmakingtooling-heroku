@@ -10,7 +10,11 @@ getAllNeighbourCells =  (pos) ->
  allNeighbourCells[4] = {x:pos.x , y:pos.y+1 }
  allNeighbourCells[5] = {x:pos.x+1 , y:pos.y-1 }
  allNeighbourCells
- 
+ # Temporary variables
+posid=0
+elemid=0
+x=0
+
 isEmpty = (pos) ->
  empty = true
  $.each(window.posOnGrid, (i,position) ->
@@ -35,11 +39,15 @@ getClusterInCell = (pos) ->
  )	 
  cluster
 
- #-------------------------------------------------------------------------------------- 
+#-------------------------------------------------------------------------------------- 
 # Update positions should call the addPos method of VizDataModel to add a new enty.
 # The update and delete methods for the positions are yet to be written.
 # We could either have two separate calls from here to update positions and relations or 
 # let the position methods call the relations methods.
 window.updatePositions = (obj, datum, dataset,posx,posy) ->
+  vizdata = doc.getModel().getRoot().get('vizdata');
+  position = {posId:posid, x:posx, y:posy, elementId:datum.value}
+  posid = posid +1
+  vizdata.addPosition(position)
     
 #----------------------------------------------------

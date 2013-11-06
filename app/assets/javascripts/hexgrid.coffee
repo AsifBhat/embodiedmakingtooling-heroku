@@ -88,12 +88,12 @@ jQuery ($) ->
           
           # Hide the content search
           contentSearch.css('display', 'none')
-          newElement.text(datum.id)
+          newElement.text(datum.value) # datum.id later
           newElement.css('z-index','100')
           # When a content element is selected from the typeahead, it could be
           # a new entry to the positions list or an update to an already 
           # existing entry.
-          # window.updatePositions(obj, datum, dataset,x,y)
+          # window.updatePositions(obj, datum.value, dataset,x,y)
         )
 
         # Clear the previous query
