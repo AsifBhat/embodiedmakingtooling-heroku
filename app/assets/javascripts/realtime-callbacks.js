@@ -26,10 +26,23 @@ function registerTypes() {
   VizDataModel.prototype.getPositions = function() {
     return this.positions.asArray();
   };
+  
+  var comparator = function (a,b) {
+    consoleLog(a.posId+" - "+b.posId)
+    consoleLog(a.posId == b.posId)
+    return (a.posId == b.posId) 
+
+  }
+
+  VizDataModel.prototype.removePosition = function(position) {
+    var toremove = this.positions.indexOf(position, comparator);
+    consoleLog("To remove index "+toremove);
+    this.positions.remove(toremove);
+  };
   VizDataModel.prototype.getElements = function() {
     return this.elements.asArray();
   };
-  VizDataModel.prototype.addElement = function(element, ind, arr) {
+  VizDataModel.prototype.addElement = function(element) {
     this.elements.push(element);
   };
   gapi.drive.realtime.custom.registerType(VizDataModel, 'VizDataModel');

@@ -49,7 +49,6 @@ jQuery ($) ->
     # Highlight the currently hovered cell
     pos = {x:xc,y:yc}
     elementUnderMouse = window.getElementInCell(pos)
-    consoleLog elementUnderMouse
     if(elementUnderMouse!='')
       placeTooltip(xc,yc,elementUnderMouse)
     else

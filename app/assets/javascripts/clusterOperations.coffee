@@ -26,19 +26,18 @@ isEmpty = (pos) ->
 window.getElementInCell = (pos) ->
  elem = ''
  $.each(window.posOnGrid, (i,position) ->
-  consoleLog position
   if (position.x == pos.x) && (position.y == pos.y)  
     elem = position.elementId
  )
  elem
- 
-getClusterInCell = (pos) ->
- cluster = ''
- $.each(window.posOnGrid, (i,position) ->
-  if (position.xPos == pos.x) && (position.yPos == pos.y)  
-    cluster = position.clusterId  
- )	 
- cluster
+
+getPositionInCell = (pos) ->
+  positionToReturn = ''
+  $.each(window.global_vizdata.getPositions(), (i,position) ->
+    if (position.x == pos.x) && (position.y == pos.y)  
+      positionToReturn = position
+  )
+  positionToReturn
 
 #-------------------------------------------------------------------------------------- 
 # Update positions should call the addPos method of VizDataModel to add a new enty.
@@ -46,11 +45,21 @@ getClusterInCell = (pos) ->
 # We could either have two separate calls from here to update positions and relations or 
 # let the position methods call the relations methods.
 window.updatePositions = (obj, datum, dataset,posx,posy) ->
-  position = { posId:posid, x:posx, y:posy, elementId:datum, description : " x: "+posx+", y: "+posy }
-  posid = posid + 1
-  window.global_vizdata.addPosition(position)
-  consoleLog("Adding position")
-  consoleLog(position)
-  consoleLog ('datum: ' + datum)
+  pos = {x: posx, y:posy}
+  existingPosition = getPositionInCell(pos)
+  consoleLog("Existing position")
+  consoleLog(existingPosition)
+  if( existingPosition == '')
+    position = { posId:posid, x:posx, y:posy, elementId:datum, description : " x: "+posx+", y: "+posy }
+    posid = posid + 1
+    window.global_vizdata.addPosition(position)
+    consoleLog("Adding position")
+    consoleLog(position)
+    consoleLog ('datum: ' + datum)
+  else
+    position = { posId:existingPosition.posId, x:posx, y:posy, elementId:datum, description : " x: "+posx+", y: "+posy }
+    window.global_vizdata.removePosition(existingPosition)
+    window.global_vizdata.addPosition(position)
+
     
 #----------------------------------------------------
