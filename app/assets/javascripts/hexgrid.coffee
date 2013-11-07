@@ -21,7 +21,9 @@ jQuery ($) ->
   # Element to show the currently hovered tile
   hoveredElement = createHex('current')
   root.append(hoveredElement)
-  idwithtooltip = $('<div id="desctooltip" style="z-index:100;width:1px;height:1px;position:absolute;" data-placement="top" data-toggle="tooltip" type="button"></div>')
+  idwithtooltip =  $('<div id="desctooltip" data-html="true" data-trigger="hover" style="z-index:1000;width:40px;height:40px;opacity:.5;position:absolute;" data-placement="top" type="button"></div>')
+  idwithtooltip.css("width", size + "px")
+  idwithtooltip.css("height", size + "px")
   
   # Placing tooltip if not an empty cell
   placeTooltip = (x,y,elementid) ->
@@ -37,12 +39,16 @@ jQuery ($) ->
     Get element description by searching vizdata.contentElements
       idwithtooltip.attr("data-original-title",description)
     ###
-    idwithtooltip.attr("data-original-title", elementid)
-    idwithtooltip.css("margin-left", inv.x+23 + "px")
-    idwithtooltip.css("margin-top", inv.y+5 + "px")
-    #consoleLog ' ID With tool Tip : ' +idwithtooltip
+    #idwithtooltip.attr("data-original-title", elementid)
+    idwithtooltip.attr("data-original-title",elementid+"<button style='margin-left:5px;z-index:1000;' id='deleteButton'><span class='.glyphicon .glyphicon-remove-circle'  style='width:20px; height:20px;z-index:1000;'></span>Remove</button>")
     root.append(idwithtooltip)
-    $("#desctooltip").tooltip('show');
+    $("#deleteButton").click((e) -> 
+      #window.deleteContentElement(parseInt(x,10),parseInt(y,10))
+      e.stopPropagation()
+    )
+    idwithtooltip.css("left", inv.x + "px")
+    idwithtooltip.css("top", inv.y + "px")
+    $("#desctooltip").tooltip('show')
 
   # Setting mouse movement related tile events
   grid.addEvent("tileover", (e, xc, yc) ->
