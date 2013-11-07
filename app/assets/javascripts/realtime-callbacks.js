@@ -11,6 +11,7 @@ function registerTypes() {
   var VizDataModel = function() {}
   VizDataModel.prototype.positions = gapi.drive.realtime.custom.collaborativeField('positions');
   VizDataModel.prototype.relations = gapi.drive.realtime.custom.collaborativeField('relations');
+  VizDataModel.prototype.elements = gapi.drive.realtime.custom.collaborativeField('elements');
   /*
   Add a new position item to the list
   */
@@ -24,6 +25,12 @@ function registerTypes() {
   };
   VizDataModel.prototype.getPositions = function() {
     return this.positions.asArray();
+  };
+  VizDataModel.prototype.getElements = function() {
+    return this.elements.asArray();
+  };
+  VizDataModel.prototype.addElement = function(element, ind, arr) {
+    this.elements.push(element);
   };
   gapi.drive.realtime.custom.registerType(VizDataModel, 'VizDataModel');
   gapi.drive.realtime.custom.setInitializer(VizDataModel, doInitialize);
@@ -54,6 +61,7 @@ function doValueChanged (){
   window.displayAllPositions(window.global_vizdata.getPositions())
 }
 
+
 /**
  * The initializer is called exactly once in the lifetime of an object, 
  * immediately after the object is first created. When that object is reloaded
@@ -64,7 +72,27 @@ function doValueChanged (){
  function doInitialize() {  
   var model = gapi.drive.realtime.custom.getModel(this);
   this.positions = model.createList()
-  consoleLog("Initialize object the first time it is created")
+  this.elements = model.createList()
+  var temp;
+  // This should be populated by data from a flat file
+  $.ajax ({
+         url: '/assets/javascripts/sampleElements.json',
+         type: 'GET',
+         async: false,
+         contentType: "application/json",
+         success: function(data, status, response) {
+          temp = data},
+         error: function (jqXHR, textStatus, errorThrown) {
+           window.consoleLog ("AJAX error: "+errorThrown);}
+         });
+  consoleLog("Initialize object the first time it is created");
+  model.beginCompoundOperation();
+  for (var i=0;i<temp.length;i++)
+  { 
+    this.addElement(temp[i]);
+  }  
+  model.endCompoundOperation();
+  window.consoleLog(this.getElements())
  }
 
 /**

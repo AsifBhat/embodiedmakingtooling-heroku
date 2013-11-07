@@ -25,8 +25,6 @@ isEmpty = (pos) ->
  
 window.getElementInCell = (pos) ->
  elem = ''
- consoleLog 'Postion input: '
- consoleLog pos
  $.each(window.posOnGrid, (i,position) ->
   consoleLog position
   if (position.x == pos.x) && (position.y == pos.y)  
