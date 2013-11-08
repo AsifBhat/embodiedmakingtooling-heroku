@@ -17,15 +17,15 @@ x=0
 
 isEmpty = (pos) ->
  empty = true
- $.each(window.posOnGrid, (i,position) ->
-  if (position.xPos == pos.x) && (position.yPos == pos.y)  
+ $.each(window.global_vizdata, (i,position) ->
+  if (position.x == pos.x) && (position.y == pos.y)  
     empty = false
  )	
  empty	
  
 window.getElementInCell = (pos) ->
  elem = ''
- $.each(window.posOnGrid, (i,position) ->
+ $.each(window.global_vizdata.getPositions(), (i,position) ->
   if (position.x == pos.x) && (position.y == pos.y)  
     elem = position.elementId
  )
@@ -55,7 +55,6 @@ window.updatePositions = (obj, datum, dataset,posx,posy) ->
     window.global_vizdata.addPosition(position)
     consoleLog("Adding position")
     consoleLog(position)
-    consoleLog ('datum: ' + datum)
   else
     position = { posId:existingPosition.posId, x:posx, y:posy, elementId:datum, description : " x: "+posx+", y: "+posy }
     window.global_vizdata.removePosition(existingPosition)

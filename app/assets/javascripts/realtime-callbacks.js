@@ -19,7 +19,6 @@ function registerTypes() {
     consoleLog("Adding pos:")
     consoleLog(position)
     this.positions.push(position);
-    window.posOnGrid = window.global_vizdata.positions.asArray();
     consoleLog('Position added locally, current count:' +
         this.positions.length);
   };
@@ -69,7 +68,6 @@ detailed information on event handling.
 */ 
 function doValueChanged (){
   var model = gapi.drive.realtime.custom.getModel(this);
-  vizdata = model.getRoot().get('vizdata');
   consoleLog("Model value changed...")
   window.displayAllPositions(window.global_vizdata.getPositions())
 }
@@ -118,11 +116,11 @@ function initializeModel(model) {
   /* Once the document has been loaded, we can create instances of the custom object 
   by calling create on the model with either the class or the string name used to 
   register the type. */
-  window.vizdata = model.create('VizDataModel');
+  window.global_vizdata = model.create('VizDataModel');
   consoleLog("Initial model state for new project has been created")
   /*After creating the VizDataModel object, we can now assign it to an object in the 
   hierarchy (in this case, the root) as follows */
-  model.getRoot().set('vizdata', window.vizdata);  
+  model.getRoot().set('vizdata', window.global_vizdata);  
 }
 
 /**
@@ -135,10 +133,6 @@ function initializeModel(model) {
 function onFileLoaded(doc) {
   window.global_vizdata = doc.getModel().getRoot().get('vizdata');
   window.global_vizdata.positions.addEventListener(gapi.drive.realtime.EventType.VALUES_ADDED, doValueChanged);
-  
-  window.posOnGrid = window.global_vizdata.positions.asArray();
-  console.log('Model Below: ');
-  console.log(window.posOnGrid);
   
   var addButton = document.getElementById('addPos');
   addButton.onclick = function(e) {

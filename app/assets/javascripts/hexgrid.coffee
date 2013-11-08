@@ -5,6 +5,7 @@ jQuery ($) ->
   size = hex.size(grid.elem)
   grid.reorient(size.x * 0.5, size.y * 0.5)
   root = $(grid.root)
+  deleteClicked = false
 
   createHex = (styleClass, text = "") ->
     $("<div class='hex' >"+text+"</div>").css({
@@ -49,12 +50,10 @@ jQuery ($) ->
     
     $('.tooltip').mouseenter((e)->
       e.stopPropagation()
-      consoleLog 'hovering over tooltip'
       #$("#desctooltip").tooltip('show')
     )
     $('.tooltip').mouseleave((e)->
       e.stopPropagation()
-      consoleLog 'hovering out of tooltip'
       #$("#desctooltip").tooltip('hide');
     )
     $(".tooltip").click((e) -> 
@@ -66,6 +65,7 @@ jQuery ($) ->
       #window.deleteContentElement(parseInt(x,10),parseInt(y,10))
       e.stopPropagation()
       consoleLog 'delete triggered'
+      $("#content-search").css("display","none")
     )
 
 
@@ -77,12 +77,13 @@ jQuery ($) ->
     if(elementUnderMouse!='')
       placeTooltip(xc,yc,elementUnderMouse)
     else
-      $("#desctooltip").tooltip('hide');
+      # $("#desctooltip").tooltip('hide');
     placeHex(hoveredElement,xc,yc)    
   )
 
   # Tiletap is only fired when not dragging the grid
   grid.addEvent("tiletap", (e, x, y) ->
+
     # Create new placeholder element to give a visual indication where we will be creating our new element
     newElement = createHex('new')
 
@@ -131,7 +132,6 @@ jQuery ($) ->
         .focus()
   )
 
-  window.posOnGrid = []
   window.global_vizdata = {}
 
 
@@ -144,7 +144,7 @@ jQuery ($) ->
       when 'F' then cls = "forces"
       when 'C' then cls = "solutionComponents"
     
-    #cls = "stories"
+    #cls = "forces"
     cellToPlace = createHex(cls, elemid)
     root.append(cellToPlace)
     placeHex(cellToPlace,elemwithpos.x,elemwithpos.y)
