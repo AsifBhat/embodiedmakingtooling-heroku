@@ -21,7 +21,7 @@ jQuery ($) ->
   # Element to show the currently hovered tile
   hoveredElement = createHex('current')
   root.append(hoveredElement)
-  idwithtooltip =  $('<div id="desctooltip" data-html="true" data-trigger="hover" style="z-index:1000;width:40px;height:40px;opacity:.5;position:absolute;" data-placement="top" type="button"></div>')
+  idwithtooltip =  $('<div id="desctooltip" data-html="true" data-trigger="focus" style="z-index:1000;width:40px;height:40px;opacity:.5;position:absolute;" data-placement="top" type="button"></div>')
   idwithtooltip.css("width", size + "px")
   idwithtooltip.css("height", size + "px")
   
@@ -39,16 +39,35 @@ jQuery ($) ->
     Get element description by searching vizdata.contentElements
       idwithtooltip.attr("data-original-title",description)
     ###
-    #idwithtooltip.attr("data-original-title", elementid)
-    idwithtooltip.attr("data-original-title",elementid+"<button style='margin-left:5px;z-index:1000;' id='deleteButton'><span class='.glyphicon .glyphicon-remove-circle'  style='width:20px; height:20px;z-index:1000;'></span>Remove</button>")
+    idwithtooltip.attr("data-original-title",elementid+"<button style='z-index:1000;font-size:1em;' id='deleteButton' class='btn-mini'><span class='icon-remove remove_btn'></span></button>")
     root.append(idwithtooltip)
+
+    idwithtooltip.css("left", inv.x + "px")
+    idwithtooltip.css("top", inv.y+15 + "px")
+    #$("#desctooltip").tooltip({delay: 500})
+    $("#desctooltip").tooltip('show')
+    
+    $('.tooltip').mouseenter((e)->
+      e.stopPropagation()
+      consoleLog 'hovering over tooltip'
+      #$("#desctooltip").tooltip('show')
+    )
+    $('.tooltip').mouseleave((e)->
+      e.stopPropagation()
+      consoleLog 'hovering out of tooltip'
+      #$("#desctooltip").tooltip('hide');
+    )
+    $(".tooltip").click((e) -> 
+      #window.deleteContentElement(parseInt(x,10),parseInt(y,10))
+      e.stopPropagation()
+      consoleLog 'tooltip clicked'
+    )
     $("#deleteButton").click((e) -> 
       #window.deleteContentElement(parseInt(x,10),parseInt(y,10))
       e.stopPropagation()
+      consoleLog 'delete triggered'
     )
-    idwithtooltip.css("left", inv.x + "px")
-    idwithtooltip.css("top", inv.y + "px")
-    $("#desctooltip").tooltip('show')
+
 
   # Setting mouse movement related tile events
   grid.addEvent("tileover", (e, xc, yc) ->
