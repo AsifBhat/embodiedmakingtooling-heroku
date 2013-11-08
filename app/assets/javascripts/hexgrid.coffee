@@ -40,7 +40,8 @@ jQuery ($) ->
     Get element description by searching vizdata.contentElements
       idwithtooltip.attr("data-original-title",description)
     ###
-    idwithtooltip.attr("data-original-title",elementid+"<button style='z-index:1000;font-size:1em;' id='deleteButton' class='btn-mini'><span class='icon-remove remove_btn'></span></button>")
+
+    idwithtooltip.attr("data-original-title",window.getElementDescription(elementid)+"<br/><button style='z-index:1000;font-size:1em;' id='deleteButton' class='btn-mini'><span class='icon-remove remove_btn'></span></button>")
     root.append(idwithtooltip)
 
     idwithtooltip.css("left", inv.x + "px")

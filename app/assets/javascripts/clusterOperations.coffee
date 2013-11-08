@@ -39,6 +39,15 @@ getPositionInCell = (pos) ->
   )
   positionToReturn
 
+window.getElementDescription = (elementId) ->
+  description = ''
+  $.each(window.global_vizdata.getElements(), (i, element)->
+    if(element.elementId == elementId)
+      description = element.description
+      return
+  )
+  description
+
 #-------------------------------------------------------------------------------------- 
 # Update positions should call the addPos method of VizDataModel to add a new enty.
 # The update and delete methods for the positions are yet to be written.
