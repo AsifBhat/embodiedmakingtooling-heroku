@@ -62,10 +62,10 @@ jQuery ($) ->
       consoleLog 'tooltip clicked'
     )
     $("#deleteButton").click((e) -> 
-      #window.deleteContentElement(parseInt(x,10),parseInt(y,10))
       e.stopPropagation()
       consoleLog 'delete triggered'
       $("#content-search").css("display","none")
+      window.deletePosition(parseInt(x,10),parseInt(y,10))
     )
 
 
@@ -146,6 +146,7 @@ jQuery ($) ->
     
     #cls = "forces"
     cellToPlace = createHex(cls, elemid)
+    $(cellToPlace).attr("id",elemwithpos.posId)
     root.append(cellToPlace)
     placeHex(cellToPlace,elemwithpos.x,elemwithpos.y)
     

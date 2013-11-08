@@ -133,6 +133,8 @@ function initializeModel(model) {
 function onFileLoaded(doc) {
   window.global_vizdata = doc.getModel().getRoot().get('vizdata');
   window.global_vizdata.positions.addEventListener(gapi.drive.realtime.EventType.VALUES_ADDED, doValueChanged);
+  window.global_vizdata.positions.addEventListener(gapi.drive.realtime.EventType.VALUES_REMOVED, doValueChanged);
+  
   
   var addButton = document.getElementById('addPos');
   addButton.onclick = function(e) {

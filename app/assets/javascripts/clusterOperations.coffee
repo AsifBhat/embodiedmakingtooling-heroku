@@ -62,3 +62,15 @@ window.updatePositions = (obj, datum, dataset,posx,posy) ->
 
     
 #----------------------------------------------------
+
+window.deletePosition = (posx, posy) ->
+  consoleLog("To delete"+posx+","+posy)
+  todel = getPositionInCell({x:posx,y:posy})
+  consoleLog(todel)
+  window.global_vizdata.removePosition(todel)
+  currentCell = $(todel.posId)
+  currentCell.removeClass('stories')
+  currentCell.removeClass('forces')
+  currentCell.removeClass('solutionComponents')
+  currentCell.removeClass('new')
+  currentCell.addClass('current')
