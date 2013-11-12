@@ -35,7 +35,7 @@ detailed information on event handling.
 function doValueChanged (){
   var model = gapi.drive.realtime.custom.getModel(this);
   EM_APP.util.consoleLog("Model value changed...");
-  window.displayAllPositions(EM_APP.vizdata.getPositions());
+  EM_APP.grid.displayAllPositions(EM_APP.vizdata.getPositions());
 }
 
 
@@ -82,7 +82,7 @@ function initializeModel(model) {
   by calling create on the model with either the class or the string name used to 
   register the type. */
   EM_APP.vizdata = model.create('VizDataModel');
-  consoleLog("Initial model state for new project has been created");
+  EM_APP.util.consoleLog("Initial model state for new project has been created");
   /*After creating the VizDataModel object, we can now assign it to an object in the 
   hierarchy (in this case, the root) as follows */
   model.getRoot().set('vizdata', EM_APP.vizdata);
@@ -99,15 +99,6 @@ function onFileLoaded(doc) {
   EM_APP.vizdata = doc.getModel().getRoot().get('vizdata');
   EM_APP.vizdata.positions.addEventListener(gapi.drive.realtime.EventType.VALUES_ADDED, doValueChanged);
   EM_APP.vizdata.positions.addEventListener(gapi.drive.realtime.EventType.VALUES_REMOVED, doValueChanged);
-  var addButton = document.getElementById('addPos');
-  addButton.onclick = function(e) {
-    var position = {posId:posid, x:x , y:0, elementId:elemid};
-    posid = posid +1;
-    x= x+1;
-    elemid = elemid + 2;
-    EM_APP.vizdata.addPosition(position);
-    EM_APP.util.consoleLog('posid: '+ posid + ', x: ' + x + ' elemid: '+ elemid);
-  };
   EM_APP.util.consoleLog("On file loaded...");
-  grid.displayAllPositions(EM_APP.vizdata.getPositions());
+  EM_APP.grid.displayAllPositions(EM_APP.vizdata.getPositions());
 }

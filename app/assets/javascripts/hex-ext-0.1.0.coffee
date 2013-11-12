@@ -20,12 +20,24 @@ jQuery ($) ->
   root.append(hoveredElement)
   idwithtooltip =  $('<div id="desctooltip" data-html="true" data-trigger="focus" style="z-index:1000;width:40px;height:40px;opacity:.5;position:absolute;" data-placement="top" type="button"></div>')
   idwithtooltip.css("width", size + "px")
-  idwithtooltip.css("height", size + "px")  
+  idwithtooltip.css("height", size + "px") 
+
+   # Create new placeholder element to give a visual indication where we will be creating our new element
+  newElement = EM_APP.grid.createHex('new') 
 
   EM_APP.grid.placeHex =(elem,x,y) ->
     inv = EM_APP.grid.screenpos(x, y)
     elem.css("left", inv.x + "px")
     elem.css("top", inv.y + "px")
+
+  EM_APP.grid.showHoveredElement = (xc, yc) ->
+    this.placeHex(hoveredElement,xc,yc)  
+
+  EM_APP.grid.placeNewElement = (xc, yc) ->
+    this.placeHex(newElement,xc,yc)
+    # Show the new element on the grid
+    root.append(newElement)
+    newElement
 
   # Placing tooltip if not an empty cell
   # elementid should be replaced with the content to be displayed in the tooltip.

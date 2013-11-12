@@ -1,68 +1,67 @@
-var VizDataModel = function() {};
-  
-VizDataModel.prototype.addPosition = function(position) {
-  EM_APP.util.consoleLog("Adding pos:");
-  EM_APP.util.consoleLog(position);
-  this.positions.push(position);
-  EM_APP.util.consoleLog('Position added locally, current count:' +
-      this.positions.length);
-};
+  var VizDataModel = function() {};
 
-VizDataModel.prototype.getPositions = function() {
-  return this.positions.asArray();
-};
+  VizDataModel.prototype.addPosition = function(position) {
+    EM_APP.util.consoleLog("Adding pos:");
+    EM_APP.util.consoleLog(position);
+    this.positions.push(position);
+    EM_APP.util.consoleLog('Position added locally, current count:' +
+        this.positions.length);
+  };
 
-var comparator = function (a,b) {
-  return (a.posId == b.posId);
-};
+  VizDataModel.prototype.getPositions = function() {
+    return this.positions.asArray();
+  };
 
-VizDataModel.prototype.removePosition = function(position) {
-  var toremove = this.positions.indexOf(position, comparator);
-  EM_APP.util.consoleLog("To remove index "+toremove);
-  this.positions.remove(toremove);
-};
+  var comparator = function (a,b) {
+    return (a.posId == b.posId);
+  };
 
-VizDataModel.prototype.getElements = function() {
-  return this.elements.asArray();
-};
+  VizDataModel.prototype.removePosition = function(position) {
+    var toremove = this.positions.indexOf(position, comparator);
+    EM_APP.util.consoleLog("To remove index "+toremove);
+    this.positions.remove(toremove);
+  };
 
-VizDataModel.prototype.addElement = function(element) {
-  this.elements.push(element);
-};
+  VizDataModel.prototype.getElements = function() {
+    return this.elements.asArray();
+  };
 
-VizDataModel.prototype.isEmpty = function(pos) {
-  var temp = EM_APP.vizdata.getPositions();
-  $(temp).each(function(i){
-    if ((this.x == pos.x) && (this.y == pos.y))
-      return false;
-  });
-  return true;
-};
+  VizDataModel.prototype.addElement = function(element) {
+    this.elements.push(element);
+  };
 
-VizDataModel.prototype.getElementInCell = function(pos) {
-  var temp = EM_APP.vizdata.getPositions();
-  $(temp).each(function(i){
-    if ((this.x == pos.x) && (this.y == pos.y))
-      return this.elementId;
-  });
-};
+  VizDataModel.prototype.isEmpty = function(pos) {
+    var temp = EM_APP.vizdata.getPositions();
+    $(temp).each(function(i){
+      if ((this.x == pos.x) && (this.y == pos.y))
+        return false;
+    });
+    return true;
+  };
 
-VizDataModel.prototype.getPositionInCell = function(pos) {
-  var temp = EM_APP.vizdata.getPositions();
-  $(temp).each(function(i){
-    if ((this.x == pos.x) && (this.y == pos.y))
-      return this;
-  });
-};
+  VizDataModel.prototype.getElementInCell = function(pos) {
+    var temp = EM_APP.vizdata.getPositions();
+    $(temp).each(function(i){
+      if ((this.x == pos.x) && (this.y == pos.y))
+        return this.elementId;
+    });
+  };
 
-VizDataModel.prototype.getElementDescription = function(elementId) {
-  var temp = EM_APP.vizdata.getElements();
-  $(temp).each(function(i){
-    if (this.elementId == elementId)
-      return this.description;
-  });
-};
+  VizDataModel.prototype.getPositionInCell = function(pos) {
+    var temp = EM_APP.vizdata.getPositions();
+    $(temp).each(function(i){
+      if ((this.x == pos.x) && (this.y == pos.y))
+        return this;
+    });
+  };
 
+  VizDataModel.prototype.getElementDescription = function(elementId) {
+    var temp = EM_APP.vizdata.getElements();
+    $(temp).each(function(i){
+      if (this.elementId == elementId)
+        return this.description;
+    });
+  };
  
 /*VizDataModel.prototype.getElementInCell = (pos) ->
  elem = ''

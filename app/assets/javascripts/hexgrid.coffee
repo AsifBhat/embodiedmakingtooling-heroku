@@ -6,25 +6,19 @@ jQuery ($) ->
     # Highlight the currently hovered cell
     pos = {x:xc,y:yc}
     elementUnderMouse = EM_APP.vizdata.getElementInCell(pos)
-    if(elementUnderMouse!='')
+    if(elementUnderMouse)
       # elementUnderMouse should be replaced with description
       EM_APP.grid.placeTooltip(xc,yc,elementUnderMouse)
     else
       # $("#desctooltip").tooltip('hide');
-    EM_APP.grid.placeHex(hoveredElement,xc,yc)    
+    EM_APP.grid.showHoveredElement(xc,yc)    
   )
 
   # Tiletap is only fired when not dragging the grid
   EM_APP.grid.addEvent("tiletap", (e, x, y) ->
 
-    # Create new placeholder element to give a visual indication where we will be creating our new element
-    newElement = EM_APP.grid.createHex('new')
-
     # Place the element on the grid
-    EM_APP.grid.placeHex(newElement,x,y)
-
-    # Show the new element on the grid
-    root.append(newElement)
+    newElement = EM_APP.grid.placeNewElement(x,y)
 
     # Get pixel position based on grid coordinates
     inv = EM_APP.grid.screenpos(x, y)
@@ -35,8 +29,8 @@ jQuery ($) ->
     # Show content search at corrent position
     contentSearch.css({
       "display": "",
-      "left": (inv.x + grid.origin.x) + "px",
-      "top": (inv.y + grid.origin.y) + "px"
+      "left": (inv.x + EM_APP.grid.origin.x) + "px",
+      "top": (inv.y + EM_APP.grid.origin.y) + "px"
     }).find("input")
         # Remove existing events
         .off('typeahead:selected')
@@ -55,7 +49,7 @@ jQuery ($) ->
           # When a content element is selected from the typeahead, it could be
           # a new entry to the positions list or an update to an already 
           # existing entry.
-          EM_APP.grid.updatePositions(obj, datum.value, dataset,x,y)
+          EM_APP.grid.updatePosition(obj, datum.value, dataset, x, y)
         )
 
         # Clear the previous query
