@@ -1,52 +1,10 @@
 jQuery ($) ->
 
-
-getAllNeighbourCells =  (pos) ->
- allNeighbourCells = [] 
- allNeighbourCells[0] = {x:pos.x-1 , y:pos.y }
- allNeighbourCells[1] = {x:pos.x+1 , y:pos.y }
- allNeighbourCells[2] = {x:pos.x-1 , y:pos.y+1 }
- allNeighbourCells[3] = {x:pos.x , y:pos.y-1 }
- allNeighbourCells[4] = {x:pos.x , y:pos.y+1 }
- allNeighbourCells[5] = {x:pos.x+1 , y:pos.y-1 }
- allNeighbourCells
  # Temporary variables
 posid=0
 elemid=0
 x=0
 
-isEmpty = (pos) ->
- empty = true
- $.each(window.global_vizdata, (i,position) ->
-  if (position.x == pos.x) && (position.y == pos.y)  
-    empty = false
- )	
- empty	
- 
-window.getElementInCell = (pos) ->
- elem = ''
- $.each(window.global_vizdata.getPositions(), (i,position) ->
-  if (position.x == pos.x) && (position.y == pos.y)  
-    elem = position.elementId
- )
- elem
-
-getPositionInCell = (pos) ->
-  positionToReturn = ''
-  $.each(window.global_vizdata.getPositions(), (i,position) ->
-    if (position.x == pos.x) && (position.y == pos.y)  
-      positionToReturn = position
-  )
-  positionToReturn
-
-window.getElementDescription = (elementId) ->
-  description = ''
-  $.each(window.global_vizdata.getElements(), (i, element)->
-    if(element.elementId == elementId)
-      description = element.description
-      return
-  )
-  description
 
 #-------------------------------------------------------------------------------------- 
 # Update positions should call the addPos method of VizDataModel to add a new enty.
