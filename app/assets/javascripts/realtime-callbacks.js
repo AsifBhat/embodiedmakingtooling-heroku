@@ -7,6 +7,9 @@ var posid=0, elemid=0, x=0;
 /** Call back configured to register types */
 function registerTypes() {
   EM_APP.util.consoleLog("Registering types...");
+  VizDataModel.prototype.positions = gapi.drive.realtime.custom.collaborativeField('positions');
+  VizDataModel.prototype.relations = gapi.drive.realtime.custom.collaborativeField('relations');
+  VizDataModel.prototype.elements = gapi.drive.realtime.custom.collaborativeField('elements');
   gapi.drive.realtime.custom.registerType(VizDataModel, 'VizDataModel');
   gapi.drive.realtime.custom.setInitializer(VizDataModel, doInitialize);
 }

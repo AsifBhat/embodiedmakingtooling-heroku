@@ -1,7 +1,4 @@
 var VizDataModel = function() {};
-VizDataModel.prototype.positions = gapi.drive.realtime.custom.collaborativeField('positions');
-VizDataModel.prototype.relations = gapi.drive.realtime.custom.collaborativeField('relations');
-VizDataModel.prototype.elements = gapi.drive.realtime.custom.collaborativeField('elements');
   
 VizDataModel.prototype.addPosition = function(position) {
   EM_APP.util.consoleLog("Adding pos:");
