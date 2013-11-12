@@ -90,7 +90,7 @@ jQuery ($) ->
     cellToPlace = EM_APP.grid.createHex(cls, elemid)
     $(cellToPlace).attr("id",elemwithpos.posId)
     root.append(cellToPlace)
-    placeHex(cellToPlace,elemwithpos.x,elemwithpos.y)
+    this.placeHex(cellToPlace,elemwithpos.x,elemwithpos.y)
     
 
   EM_APP.grid.displayAllPositions = (positions) ->

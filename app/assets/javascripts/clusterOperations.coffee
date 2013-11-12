@@ -13,10 +13,10 @@ x=0
 # let the position methods call the relations methods.
 EM_APP.grid.updatePosition = (obj, datum, dataset,posx,posy) ->
   pos = {x: posx, y:posy}
-  existingPosition = getPositionInCell(pos)
+  existingPosition = EM_APP.vizdata.getPositionInCell(pos)
   EM_APP.util.consoleLog("Existing position")
   EM_APP.util.consoleLog(existingPosition)
-  if( existingPosition == '')
+  if(typeof existingPosition  == 'undefined')
     position = { posId:posid, x:posx, y:posy, elementId:datum, description : " x: "+posx+", y: "+posy }
     posid = posid + 1
     EM_APP.vizdata.addPosition(position)
@@ -29,7 +29,7 @@ EM_APP.grid.updatePosition = (obj, datum, dataset,posx,posy) ->
 
     
 #----------------------------------------------------
-
+###
 EM_APP.grid.deletePosition = (posx, posy) ->
   EM_APP.util.consoleLog("To delete"+posx+","+posy)
   todel = EM_APP.vizdata.getPositionInCell({x:posx,y:posy})
@@ -41,3 +41,4 @@ EM_APP.grid.deletePosition = (posx, posy) ->
   currentCell.removeClass('solutionComponents')
   currentCell.removeClass('new')
   currentCell.addClass('current')
+  ###
