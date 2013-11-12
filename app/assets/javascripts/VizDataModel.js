@@ -10,6 +10,7 @@ VizDataModel.prototype.addPosition = function(position) {
   EM_APP.util.consoleLog('Position added locally, current count:' +
       this.positions.length);
 };
+
 VizDataModel.prototype.getPositions = function() {
   return this.positions.asArray();
 };
@@ -23,9 +24,11 @@ VizDataModel.prototype.removePosition = function(position) {
   EM_APP.util.consoleLog("To remove index "+toremove);
   this.positions.remove(toremove);
 };
+
 VizDataModel.prototype.getElements = function() {
   return this.elements.asArray();
 };
+
 VizDataModel.prototype.addElement = function(element) {
   this.elements.push(element);
 };

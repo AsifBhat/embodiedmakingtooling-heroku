@@ -11,7 +11,7 @@ x=0
 # The update and delete methods for the positions are yet to be written.
 # We could either have two separate calls from here to update positions and relations or 
 # let the position methods call the relations methods.
-window.updatePositions = (obj, datum, dataset,posx,posy) ->
+EM_APP.grid.updatePositions = (obj, datum, dataset,posx,posy) ->
   pos = {x: posx, y:posy}
   existingPosition = getPositionInCell(pos)
   EM_APP.util.consoleLog("Existing position")
@@ -30,9 +30,9 @@ window.updatePositions = (obj, datum, dataset,posx,posy) ->
     
 #----------------------------------------------------
 
-window.deletePosition = (posx, posy) ->
+EM_APP.grid.deletePosition = (posx, posy) ->
   EM_APP.util.consoleLog("To delete"+posx+","+posy)
-  todel = getPositionInCell({x:posx,y:posy})
+  todel = EM_APP.vizdata.getPositionInCell({x:posx,y:posy})
   EM_APP.util.consoleLog(todel)
   EM_APP.vizdata.removePosition(todel)
   currentCell = $(todel.posId)

@@ -106,5 +106,5 @@ function onFileLoaded(doc) {
     EM_APP.util.consoleLog('posid: '+ posid + ', x: ' + x + ' elemid: '+ elemid);
   };
   EM_APP.util.consoleLog("On file loaded...");
-  window.displayAllPositions(EM_APP.vizdata.getPositions());
+  grid.displayAllPositions(EM_APP.vizdata.getPositions());
 }

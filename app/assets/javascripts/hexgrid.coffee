@@ -2,32 +2,32 @@ jQuery ($) ->
 
 
   # Setting mouse movement related tile events
-  grid.addEvent("tileover", (e, xc, yc) ->
+  EM_APP.grid.addEvent("tileover", (e, xc, yc) ->
     # Highlight the currently hovered cell
     pos = {x:xc,y:yc}
-    elementUnderMouse = window.getElementInCell(pos)
+    elementUnderMouse = EM_APP.vizdata.getElementInCell(pos)
     if(elementUnderMouse!='')
       # elementUnderMouse should be replaced with description
-      placeTooltip(xc,yc,elementUnderMouse)
+      EM_APP.grid.placeTooltip(xc,yc,elementUnderMouse)
     else
       # $("#desctooltip").tooltip('hide');
-    placeHex(hoveredElement,xc,yc)    
+    EM_APP.grid.placeHex(hoveredElement,xc,yc)    
   )
 
   # Tiletap is only fired when not dragging the grid
-  grid.addEvent("tiletap", (e, x, y) ->
+  EM_APP.grid.addEvent("tiletap", (e, x, y) ->
 
     # Create new placeholder element to give a visual indication where we will be creating our new element
-    newElement = createHex('new')
+    newElement = EM_APP.grid.createHex('new')
 
     # Place the element on the grid
-    placeHex(newElement,x,y)
+    EM_APP.grid.placeHex(newElement,x,y)
 
     # Show the new element on the grid
     root.append(newElement)
 
     # Get pixel position based on grid coordinates
-    inv = grid.screenpos(x, y)
+    inv = EM_APP.grid.screenpos(x, y)
 
     # Keep content search reference
     contentSearch = $("#content-search")
@@ -55,7 +55,7 @@ jQuery ($) ->
           # When a content element is selected from the typeahead, it could be
           # a new entry to the positions list or an update to an already 
           # existing entry.
-          window.updatePositions(obj, datum.value, dataset,x,y)
+          EM_APP.grid.updatePositions(obj, datum.value, dataset,x,y)
         )
 
         # Clear the previous query
