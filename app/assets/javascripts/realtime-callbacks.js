@@ -6,44 +6,7 @@ var posid=0, elemid=0, x=0;
 
 /** Call back configured to register types */
 function registerTypes() {
-  console.log('Registering callback types');
-  consoleLog("Registering types...")
-  var VizDataModel = function() {}
-  VizDataModel.prototype.positions = gapi.drive.realtime.custom.collaborativeField('positions');
-  VizDataModel.prototype.relations = gapi.drive.realtime.custom.collaborativeField('relations');
-  VizDataModel.prototype.elements = gapi.drive.realtime.custom.collaborativeField('elements');
-  /*
-  Add a new position item to the list
-  */
-  VizDataModel.prototype.addPosition = function(position) {
-    consoleLog("Adding pos:")
-    consoleLog(position)
-    this.positions.push(position);
-    consoleLog('Position added locally, current count:' +
-        this.positions.length);
-  };
-  VizDataModel.prototype.getPositions = function() {
-    return this.positions.asArray();
-  };
-  
-  var comparator = function (a,b) {
-    consoleLog(a.posId+" - "+b.posId)
-    consoleLog(a.posId == b.posId)
-    return (a.posId == b.posId) 
-
-  }
-
-  VizDataModel.prototype.removePosition = function(position) {
-    var toremove = this.positions.indexOf(position, comparator);
-    consoleLog("To remove index "+toremove);
-    this.positions.remove(toremove);
-  };
-  VizDataModel.prototype.getElements = function() {
-    return this.elements.asArray();
-  };
-  VizDataModel.prototype.addElement = function(element) {
-    this.elements.push(element);
-  };
+  consoleLog("Registering types...");
   gapi.drive.realtime.custom.registerType(VizDataModel, 'VizDataModel');
   gapi.drive.realtime.custom.setInitializer(VizDataModel, doInitialize);
 }
@@ -65,11 +28,11 @@ model change. In those cases UI updates should still be done from change
 listeners, but listener code should check the isLocal property of change 
 events so that local changes can be ignored. See Handle Events for more 
 detailed information on event handling.
-*/ 
+*/
 function doValueChanged (){
   var model = gapi.drive.realtime.custom.getModel(this);
-  consoleLog("Model value changed...")
-  window.displayAllPositions(window.global_vizdata.getPositions())
+  consoleLog("Model value changed...");
+  window.displayAllPositions(window.global_vizdata.getPositions());
 }
 
 
@@ -80,10 +43,10 @@ function doValueChanged (){
  * populated by loading saved data from the server. Initializer methods may 
  * take parameters, so the initial object state can be set up at creation time.   
  */
- function doInitialize() {  
+ function doInitialize() {
   var model = gapi.drive.realtime.custom.getModel(this);
-  this.positions = model.createList()
-  this.elements = model.createList()
+  this.positions = model.createList();
+  this.elements = model.createList();
   var temp;
   // This should be populated by data from a flat file
   $.ajax ({
@@ -92,18 +55,17 @@ function doValueChanged (){
          async: false,
          contentType: "application/json",
          success: function(data, status, response) {
-          temp = data},
+          temp = data;},
          error: function (jqXHR, textStatus, errorThrown) {
            window.consoleLog ("AJAX error: "+errorThrown);}
          });
   consoleLog("Initialize object the first time it is created");
   model.beginCompoundOperation();
-  for (var i=0;i<temp.length;i++)
-  { 
+  for (var i=0;i<temp.length;i++){
     this.addElement(temp[i]);
-  }  
+  }
   model.endCompoundOperation();
-  window.consoleLog(this.getElements())
+  window.consoleLog(this.getElements());
  }
 
 /**
@@ -117,10 +79,10 @@ function initializeModel(model) {
   by calling create on the model with either the class or the string name used to 
   register the type. */
   window.global_vizdata = model.create('VizDataModel');
-  consoleLog("Initial model state for new project has been created")
+  consoleLog("Initial model state for new project has been created");
   /*After creating the VizDataModel object, we can now assign it to an object in the 
   hierarchy (in this case, the root) as follows */
-  model.getRoot().set('vizdata', window.global_vizdata);  
+  model.getRoot().set('vizdata', window.global_vizdata);
 }
 
 /**
@@ -133,18 +95,16 @@ function initializeModel(model) {
 function onFileLoaded(doc) {
   window.global_vizdata = doc.getModel().getRoot().get('vizdata');
   window.global_vizdata.positions.addEventListener(gapi.drive.realtime.EventType.VALUES_ADDED, doValueChanged);
-  window.global_vizdata.positions.addEventListener(gapi.drive.realtime.EventType.VALUES_REMOVED, doValueChanged);
-  
-  
+  window.global_vizdata.positions.addEventListener(gapi.drive.realtime.EventType.VALUES_REMOVED, doValueChanged);  
   var addButton = document.getElementById('addPos');
   addButton.onclick = function(e) {
-    var position = {posId:posid, x:x , y:0, elementId:elemid}
-    posid = posid +1
-    x= x+1
-    elemid = elemid + 2
-    window.global_vizdata.addPosition(position)
+    var position = {posId:posid, x:x , y:0, elementId:elemid};
+    posid = posid +1;
+    x= x+1;
+    elemid = elemid + 2;
+    window.global_vizdata.addPosition(position);
     console.log('posid: '+ posid + ', x: ' + x + ' elemid: '+ elemid);
   };
-  consoleLog("On file loaded...")
-  window.displayAllPositions(window.global_vizdata.getPositions())
+  consoleLog("On file loaded...");
+  window.displayAllPositions(window.global_vizdata.getPositions());
 }
