@@ -40,27 +40,34 @@
   };
 
   VizDataModel.prototype.getElementInCell = function(pos) {
+    var toReturn = '';
     var temp = EM_APP.vizdata.getPositions();
     $(temp).each(function(i){
-      if ((this.x == pos.x) && (this.y == pos.y))
-        return this.elementId;
+      if ((this.x == pos.x) && (this.y == pos.y)){
+        toReturn = this.elementId;
+      }
     });
+    return toReturn;
   };
 
   VizDataModel.prototype.getPositionInCell = function(pos) {
+    var toReturn = '';
     var temp = EM_APP.vizdata.getPositions();
     $(temp).each(function(i){
       if ((this.x == pos.x) && (this.y == pos.y))
-        return this;
+        toReturn = this;
     });
+    return toReturn;
   };
 
   VizDataModel.prototype.getElementDescription = function(elementId) {
+    var desc = '';
     var temp = EM_APP.vizdata.getElements();
     $(temp).each(function(i){
       if (this.elementId == elementId)
-        return this.description;
+        desc = this.description;
     });
+    return desc;
   };
  
 /*VizDataModel.prototype.getElementInCell = (pos) ->

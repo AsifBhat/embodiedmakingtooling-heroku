@@ -6,6 +6,6 @@ EM_APP.util.consoleLog = function(logInfo) {
 	if(console) console.log(logInfo);
 };
 
-EM_APP.grid = function () {};
+EM_APP.grid = {};
     
     

@@ -18,7 +18,7 @@ jQuery ($) ->
     # Element to show the currently hovered tile
   hoveredElement = EM_APP.grid.createHex('current')
   root.append(hoveredElement)
-  idwithtooltip =  $('<div id="desctooltip" data-html="true" data-trigger="focus" style="z-index:1000;width:40px;height:40px;opacity:.5;position:absolute;" data-placement="top" type="button"></div>')
+  idwithtooltip =  $('#desctooltip')
   idwithtooltip.css("width", size + "px")
   idwithtooltip.css("height", size + "px") 
 
@@ -41,8 +41,7 @@ jQuery ($) ->
 
   # Placing tooltip if not an empty cell
   # elementid should be replaced with the content to be displayed in the tooltip.
-  EM_APP.grid.placeTooltip = (x,y,elementid) ->
-    EM_APP.util.consoleLog 'cell tool tip triggered : ' + elementid
+  EM_APP.grid.showTooltip = (x,y,elementid) ->
     inv = EM_APP.grid.screenpos(x, y)
     typeind = elementid.substr(0,1)
     switch typeind
@@ -51,32 +50,18 @@ jQuery ($) ->
      when 'C' then etype = "solutionComponents"
 
     idwithtooltip.attr("data-original-title",elementid+"<br/><button style='z-index:1000;font-size:1em;' id='deleteButton' class='btn-mini'><span class='icon-remove remove_btn'></span></button>")
-    root.append(idwithtooltip)
-
-    idwithtooltip.css("left", inv.x + "px")
-    idwithtooltip.css("top", inv.y+15 + "px")
-    #$("#desctooltip").tooltip({delay: 500})
+    idwithtooltip.css({
+      "display": "",
+      "left": (inv.x + EM_APP.grid.origin.x) + "px",
+      "top": (inv.y + EM_APP.grid.origin.y) + "px"
+    })
     $("#desctooltip").tooltip('show')
-    
-    $('.tooltip').mouseenter((e)->
-      e.stopPropagation()
-      #$("#desctooltip").tooltip('show')
-    )
-    $('.tooltip').mouseleave((e)->
-      e.stopPropagation()
-      #$("#desctooltip").tooltip('hide');
-    )
-    $(".tooltip").click((e) -> 
-      #window.deleteContentElement(parseInt(x,10),parseInt(y,10))
-      e.stopPropagation()
-      EM_APP.util.consoleLog 'tooltip clicked'
-    )
     $("#deleteButton").click((e) -> 
-      e.stopPropagation()
-      EM_APP.util.consoleLog 'delete triggered'
-      $("#content-search").css("display","none")
-      window.deletePosition(parseInt(x,10),parseInt(y,10))
+      EM_APP.grid.deletePosition(parseInt(x,10),parseInt(y,10))
     )
+
+  EM_APP.grid.hideTooltip = () ->  
+    $("#desctooltip").tooltip('hide')
 
   EM_APP.grid.placeOnGrid = (elemwithpos) ->
     elemid = elemwithpos.elementId
@@ -94,6 +79,8 @@ jQuery ($) ->
     
 
   EM_APP.grid.displayAllPositions = (positions) ->
+    $('.forces, .solutionComponents, .stories').remove()
+    $("#desctooltip").tooltip('hide')
     EM_APP.util.consoleLog("Displaying all clusters")
     EM_APP.util.consoleLog(positions)
     $.each(positions, (i, value) ->

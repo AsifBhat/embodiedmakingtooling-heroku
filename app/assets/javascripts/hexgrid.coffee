@@ -6,11 +6,13 @@ jQuery ($) ->
     # Highlight the currently hovered cell
     pos = {x:xc,y:yc}
     elementUnderMouse = EM_APP.vizdata.getElementInCell(pos)
-    if(elementUnderMouse)
-      # elementUnderMouse should be replaced with description
-      EM_APP.grid.placeTooltip(xc,yc,elementUnderMouse)
+    if(elementUnderMouse != '')
+      # The tooltip info at this stage is just the description.  Later this
+      # could be some rich content.
+      tooltipinfo = EM_APP.vizdata.getElementDescription(elementUnderMouse)
+      EM_APP.grid.showTooltip(xc,yc,tooltipinfo)
     else
-      # $("#desctooltip").tooltip('hide');
+      EM_APP.grid.hideTooltip()
     EM_APP.grid.showHoveredElement(xc,yc)    
   )
 
