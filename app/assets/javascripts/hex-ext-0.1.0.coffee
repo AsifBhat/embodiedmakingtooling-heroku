@@ -49,7 +49,7 @@ jQuery ($) ->
      when 'F' then etype = "forces"
      when 'C' then etype = "solutionComponents"
 
-    idwithtooltip.attr("data-original-title",elementid+"<br/><button style='z-index:1000;font-size:1em;' id='deleteButton' class='btn-mini'><span class='icon-remove remove_btn'></span></button>")
+    idwithtooltip.attr("data-original-title",elementid+"<br/><button id='deleteButton' class='btn-mini'><span class='icon-remove remove_btn'></span></button>")
     idwithtooltip.css({
       "display": "",
       "left": (inv.x + EM_APP.grid.origin.x) + "px",
