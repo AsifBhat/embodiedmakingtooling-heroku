@@ -4,10 +4,10 @@ VizDataModel.prototype.relations = gapi.drive.realtime.custom.collaborativeField
 VizDataModel.prototype.elements = gapi.drive.realtime.custom.collaborativeField('elements');
   
 VizDataModel.prototype.addPosition = function(position) {
-  consoleLog("Adding pos:");
-  consoleLog(position);
+  EM_APP.util.consoleLog("Adding pos:");
+  EM_APP.util.consoleLog(position);
   this.positions.push(position);
-  consoleLog('Position added locally, current count:' +
+  EM_APP.util.consoleLog('Position added locally, current count:' +
       this.positions.length);
 };
 VizDataModel.prototype.getPositions = function() {
@@ -15,14 +15,12 @@ VizDataModel.prototype.getPositions = function() {
 };
 
 var comparator = function (a,b) {
-  consoleLog(a.posId+" - "+b.posId);
-  consoleLog(a.posId == b.posId);
-  return (a.posId == b.posId) ;
+  return (a.posId == b.posId);
 };
 
 VizDataModel.prototype.removePosition = function(position) {
   var toremove = this.positions.indexOf(position, comparator);
-  consoleLog("To remove index "+toremove);
+  EM_APP.util.consoleLog("To remove index "+toremove);
   this.positions.remove(toremove);
 };
 VizDataModel.prototype.getElements = function() {

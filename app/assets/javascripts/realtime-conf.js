@@ -50,7 +50,7 @@ var realtimeOptions = {
    * Function to be called after authorization and before loading files.
    */
   afterAuth: null // No action.
-}
+};
 
 /**
  * Start the Realtime loader with the options.

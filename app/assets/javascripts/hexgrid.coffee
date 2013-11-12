@@ -65,9 +65,4 @@ jQuery ($) ->
         .focus()
   )
 
-
-  window.global_vizdata = {}
-
-  window.consoleLog = (logInfo) ->
-    console?.log logInfo
     

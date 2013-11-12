@@ -31,7 +31,7 @@ jQuery ($) ->
   # Placing tooltip if not an empty cell
   # elementid should be replaced with the content to be displayed in the tooltip.
   placeTooltip = (x,y,elementid) ->
-    consoleLog 'cell tool tip triggered : ' + elementid
+    EM_APP.util.consoleLog 'cell tool tip triggered : ' + elementid
     inv = grid.screenpos(x, y)
     typeind = elementid.substr(0,1)
     switch typeind
@@ -58,11 +58,11 @@ jQuery ($) ->
     $(".tooltip").click((e) -> 
       #window.deleteContentElement(parseInt(x,10),parseInt(y,10))
       e.stopPropagation()
-      consoleLog 'tooltip clicked'
+      EM_APP.util.consoleLog 'tooltip clicked'
     )
     $("#deleteButton").click((e) -> 
       e.stopPropagation()
-      consoleLog 'delete triggered'
+      EM_APP.util.consoleLog 'delete triggered'
       $("#content-search").css("display","none")
       window.deletePosition(parseInt(x,10),parseInt(y,10))
     )
@@ -83,8 +83,8 @@ jQuery ($) ->
     
 
   window.displayAllPositions = (positions) ->
-    consoleLog("Displaying all clusters")
-    consoleLog(positions)
+    EM_APP.util.consoleLog("Displaying all clusters")
+    EM_APP.util.consoleLog(positions)
     $.each(positions, (i, value) ->
       placeOnGrid (value)
     )

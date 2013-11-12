@@ -6,7 +6,7 @@ var posid=0, elemid=0, x=0;
 
 /** Call back configured to register types */
 function registerTypes() {
-  consoleLog("Registering types...");
+  EM_APP.util.consoleLog("Registering types...");
   gapi.drive.realtime.custom.registerType(VizDataModel, 'VizDataModel');
   gapi.drive.realtime.custom.setInitializer(VizDataModel, doInitialize);
 }
@@ -31,8 +31,8 @@ detailed information on event handling.
 */
 function doValueChanged (){
   var model = gapi.drive.realtime.custom.getModel(this);
-  consoleLog("Model value changed...");
-  window.displayAllPositions(window.global_vizdata.getPositions());
+  EM_APP.util.consoleLog("Model value changed...");
+  window.displayAllPositions(EM_APP.vizdata.getPositions());
 }
 
 
@@ -57,15 +57,15 @@ function doValueChanged (){
          success: function(data, status, response) {
           temp = data;},
          error: function (jqXHR, textStatus, errorThrown) {
-           window.consoleLog ("AJAX error: "+errorThrown);}
+           EM_APP.util.consoleLog ("AJAX error: "+errorThrown);}
          });
-  consoleLog("Initialize object the first time it is created");
+  EM_APP.util.consoleLog("Initialize object the first time it is created");
   model.beginCompoundOperation();
   for (var i=0;i<temp.length;i++){
     this.addElement(temp[i]);
   }
   model.endCompoundOperation();
-  window.consoleLog(this.getElements());
+  EM_APP.util.consoleLog(this.getElements());
  }
 
 /**
@@ -78,11 +78,11 @@ function initializeModel(model) {
   /* Once the document has been loaded, we can create instances of the custom object 
   by calling create on the model with either the class or the string name used to 
   register the type. */
-  window.global_vizdata = model.create('VizDataModel');
+  EM_APP.vizdata = model.create('VizDataModel');
   consoleLog("Initial model state for new project has been created");
   /*After creating the VizDataModel object, we can now assign it to an object in the 
   hierarchy (in this case, the root) as follows */
-  model.getRoot().set('vizdata', window.global_vizdata);
+  model.getRoot().set('vizdata', EM_APP.vizdata);
 }
 
 /**
@@ -93,18 +93,18 @@ function initializeModel(model) {
  * 'at'param doc {gapi.drive.realtime.Document} the Realtime document.
  */
 function onFileLoaded(doc) {
-  window.global_vizdata = doc.getModel().getRoot().get('vizdata');
-  window.global_vizdata.positions.addEventListener(gapi.drive.realtime.EventType.VALUES_ADDED, doValueChanged);
-  window.global_vizdata.positions.addEventListener(gapi.drive.realtime.EventType.VALUES_REMOVED, doValueChanged);  
+  EM_APP.vizdata = doc.getModel().getRoot().get('vizdata');
+  EM_APP.vizdata.positions.addEventListener(gapi.drive.realtime.EventType.VALUES_ADDED, doValueChanged);
+  EM_APP.vizdata.positions.addEventListener(gapi.drive.realtime.EventType.VALUES_REMOVED, doValueChanged);
   var addButton = document.getElementById('addPos');
   addButton.onclick = function(e) {
     var position = {posId:posid, x:x , y:0, elementId:elemid};
     posid = posid +1;
     x= x+1;
     elemid = elemid + 2;
-    window.global_vizdata.addPosition(position);
-    console.log('posid: '+ posid + ', x: ' + x + ' elemid: '+ elemid);
+    EM_APP.vizdata.addPosition(position);
+    EM_APP.util.consoleLog('posid: '+ posid + ', x: ' + x + ' elemid: '+ elemid);
   };
-  consoleLog("On file loaded...");
-  window.displayAllPositions(window.global_vizdata.getPositions());
+  EM_APP.util.consoleLog("On file loaded...");
+  window.displayAllPositions(EM_APP.vizdata.getPositions());
 }
