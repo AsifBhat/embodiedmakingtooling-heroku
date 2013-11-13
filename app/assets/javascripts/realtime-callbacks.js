@@ -35,7 +35,7 @@ detailed information on event handling.
 function doValueChanged (){
   var model = gapi.drive.realtime.custom.getModel(this);
   Util.log.console("Model value changed...");
-  EM_APP.grid.displayAllPositions(EM_APP.vizdata.getPositions());
+  appContext.grid.displayAllPositions(appContext.vizdata.getPositions());
 }
 
 
@@ -81,11 +81,11 @@ function initializeModel(model) {
   /* Once the document has been loaded, we can create instances of the custom object 
   by calling create on the model with either the class or the string name used to 
   register the type. */
-  EM_APP.vizdata = model.create('VizDataModel');
+  appContext.vizdata = model.create('VizDataModel');
   Util.log.console("Initial model state for new project has been created");
   /*After creating the VizDataModel object, we can now assign it to an object in the 
   hierarchy (in this case, the root) as follows */
-  model.getRoot().set('vizdata', EM_APP.vizdata);
+  model.getRoot().set('vizdata', appContext.vizdata);
 }
 
 /**
@@ -96,9 +96,9 @@ function initializeModel(model) {
  * 'at'param doc {gapi.drive.realtime.Document} the Realtime document.
  */
 function onFileLoaded(doc) {
-  EM_APP.vizdata = doc.getModel().getRoot().get('vizdata');
-  EM_APP.vizdata.positions.addEventListener(gapi.drive.realtime.EventType.VALUES_ADDED, doValueChanged);
-  EM_APP.vizdata.positions.addEventListener(gapi.drive.realtime.EventType.VALUES_REMOVED, doValueChanged);
+  appContext.vizdata = doc.getModel().getRoot().get('vizdata');
+  appContext.vizdata.positions.addEventListener(gapi.drive.realtime.EventType.VALUES_ADDED, doValueChanged);
+  appContext.vizdata.positions.addEventListener(gapi.drive.realtime.EventType.VALUES_REMOVED, doValueChanged);
   Util.log.console("On file loaded...");
-  EM_APP.grid.displayAllPositions(EM_APP.vizdata.getPositions());
+  appContext.grid.displayAllPositions(appContext.vizdata.getPositions());
 }

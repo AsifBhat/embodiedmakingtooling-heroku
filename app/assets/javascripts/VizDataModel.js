@@ -31,7 +31,7 @@
   };
 
   VizDataModel.prototype.isEmpty = function(pos) {
-    var temp = EM_APP.vizdata.getPositions();
+    var temp = appContext.vizdata.getPositions();
     $(temp).each(function(i){
       if ((this.x == pos.x) && (this.y == pos.y))
         return false;
@@ -41,7 +41,7 @@
 
   VizDataModel.prototype.getElementInCell = function(pos) {
     var toReturn = '';
-    var temp = EM_APP.vizdata.getPositions();
+    var temp = appContext.vizdata.getPositions();
     $(temp).each(function(i){
       if ((this.x == pos.x) && (this.y == pos.y)){
         toReturn = this.elementId;
@@ -52,7 +52,7 @@
 
   VizDataModel.prototype.getPositionInCell = function(pos) {
     var toReturn = '';
-    var temp = EM_APP.vizdata.getPositions();
+    var temp = appContext.vizdata.getPositions();
     $(temp).each(function(i){
       if ((this.x == pos.x) && (this.y == pos.y))
         toReturn = this;
@@ -62,7 +62,7 @@
 
   VizDataModel.prototype.getElementDescription = function(elementId) {
     var desc = '';
-    var temp = EM_APP.vizdata.getElements();
+    var temp = appContext.vizdata.getElements();
     $(temp).each(function(i){
       if (this.elementId == elementId)
         desc = this.description;
@@ -72,7 +72,7 @@
  
 /*VizDataModel.prototype.getElementInCell = (pos) ->
  elem = ''
- $.each(EM_APP.vizdata.getPositions(), (i,position) ->
+ $.each(appContext.vizdata.getPositions(), (i,position) ->
   if (position.x == pos.x) && (position.y == pos.y)  
     elem = position.elementId
  )
@@ -80,7 +80,7 @@
 
 VizDataModel.prototype.getPositionInCell = (pos) ->
   positionToReturn = ''
-  $.each(EM_APP.vizdata.getPositions(), (i,position) ->
+  $.each(appContext.vizdata.getPositions(), (i,position) ->
     if (position.x == pos.x) && (position.y == pos.y)  
       positionToReturn = position
   )
@@ -88,7 +88,7 @@ VizDataModel.prototype.getPositionInCell = (pos) ->
 
 VizDataModel.prototype.getElementDescription = (elementId) ->
   description = ''
-  $.each(EM_APP.vizdata.getElements(), (i, element)->
+  $.each(appContext.vizdata.getElements(), (i, element)->
     if(element.elementId == elementId)
       description = element.description
       return

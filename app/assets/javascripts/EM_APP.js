@@ -1,7 +1,5 @@
-var EM_APP = function () {} ;
+var appContext = function () {} ;
 
-EM_APP.util = {};
+appContext.util = {};
 
-EM_APP.grid = {};
-    
-    
+appContext.grid = {};

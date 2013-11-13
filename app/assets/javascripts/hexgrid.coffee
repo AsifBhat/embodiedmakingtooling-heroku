@@ -2,28 +2,28 @@ jQuery ($) ->
 
 
   # Setting mouse movement related tile events
-  EM_APP.grid.addEvent("tileover", (e, xc, yc) ->
+  appContext.grid.addEvent("tileover", (e, xc, yc) ->
     # Highlight the currently hovered cell
     pos = {x:xc,y:yc}
-    elementUnderMouse = EM_APP.vizdata.getElementInCell(pos)
+    elementUnderMouse = appContext.vizdata.getElementInCell(pos)
     if(elementUnderMouse != '')
       # The tooltip info at this stage is just the description.  Later this
       # could be some rich content.
-      tooltipinfo = EM_APP.vizdata.getElementDescription(elementUnderMouse)
-      EM_APP.grid.showTooltip(xc,yc,tooltipinfo)
+      tooltipinfo = appContext.vizdata.getElementDescription(elementUnderMouse)
+      appContext.grid.showTooltip(xc,yc,tooltipinfo)
     else
-      EM_APP.grid.hideTooltip()
-    EM_APP.grid.showHoveredElement(xc,yc)    
+      appContext.grid.hideTooltip()
+    appContext.grid.showHoveredElement(xc,yc)    
   )
 
   # Tiletap is only fired when not dragging the grid
-  EM_APP.grid.addEvent("tiletap", (e, x, y) ->
+  appContext.grid.addEvent("tiletap", (e, x, y) ->
 
     # Place the element on the grid
-    newElement = EM_APP.grid.placeNewElement(x,y)
+    newElement = appContext.grid.placeNewElement(x,y)
 
     # Get pixel position based on grid coordinates
-    inv = EM_APP.grid.screenpos(x, y)
+    inv = appContext.grid.screenpos(x, y)
 
     # Keep content search reference
     contentSearch = $("#content-search")
@@ -31,8 +31,8 @@ jQuery ($) ->
     # Show content search at corrent position
     contentSearch.css({
       "display": "",
-      "left": (inv.x + EM_APP.grid.origin.x) + "px",
-      "top": (inv.y + EM_APP.grid.origin.y) + "px"
+      "left": (inv.x + appContext.grid.origin.x) + "px",
+      "top": (inv.y + appContext.grid.origin.y) + "px"
     }).find("input")
         # Remove existing events
         .off('typeahead:selected')
@@ -51,7 +51,7 @@ jQuery ($) ->
           # When a content element is selected from the typeahead, it could be
           # a new entry to the positions list or an update to an already 
           # existing entry.
-          EM_APP.grid.updatePosition(obj, datum.value, dataset, x, y)
+          appContext.grid.updatePosition(obj, datum.value, dataset, x, y)
         )
 
         # Clear the previous query
