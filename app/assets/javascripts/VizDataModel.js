@@ -1,10 +1,10 @@
   var VizDataModel = function() {};
 
   VizDataModel.prototype.addPosition = function(position) {
-    EM_APP.util.consoleLog("Adding pos:");
-    EM_APP.util.consoleLog(position);
+    Util.log.console("Adding pos:");
+    Util.log.console(position);
     this.positions.push(position);
-    EM_APP.util.consoleLog('Position added locally, current count:' +
+    Util.log.console('Position added locally, current count:' +
         this.positions.length);
   };
 
@@ -18,7 +18,7 @@
 
   VizDataModel.prototype.removePosition = function(position) {
     var toremove = this.positions.indexOf(position, comparator);
-    EM_APP.util.consoleLog("To remove index "+toremove);
+    Util.log.console("To remove index "+toremove);
     this.positions.remove(toremove);
   };
 

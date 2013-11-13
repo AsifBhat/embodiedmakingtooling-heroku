@@ -81,8 +81,8 @@ jQuery ($) ->
   EM_APP.grid.displayAllPositions = (positions) ->
     $('.forces, .solutionComponents, .stories').remove()
     $("#desctooltip").tooltip('hide')
-    EM_APP.util.consoleLog("Displaying all clusters")
-    EM_APP.util.consoleLog(positions)
+    Util.log.console("Displaying all clusters")
+    Util.log.console(positions)
     $.each(positions, (i, value) ->
       EM_APP.grid.placeOnGrid (value)
     )

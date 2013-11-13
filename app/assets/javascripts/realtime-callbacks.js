@@ -6,7 +6,7 @@ var posid=0, elemid=0, x=0;
 
 /** Call back configured to register types */
 function registerTypes() {
-  EM_APP.util.consoleLog("Registering types...");
+  Util.log.console("Registering types...");
   VizDataModel.prototype.positions = gapi.drive.realtime.custom.collaborativeField('positions');
   VizDataModel.prototype.relations = gapi.drive.realtime.custom.collaborativeField('relations');
   VizDataModel.prototype.elements = gapi.drive.realtime.custom.collaborativeField('elements');
@@ -34,7 +34,7 @@ detailed information on event handling.
 */
 function doValueChanged (){
   var model = gapi.drive.realtime.custom.getModel(this);
-  EM_APP.util.consoleLog("Model value changed...");
+  Util.log.console("Model value changed...");
   EM_APP.grid.displayAllPositions(EM_APP.vizdata.getPositions());
 }
 
@@ -60,15 +60,15 @@ function doValueChanged (){
          success: function(data, status, response) {
           temp = data;},
          error: function (jqXHR, textStatus, errorThrown) {
-           EM_APP.util.consoleLog ("AJAX error: "+errorThrown);}
+           Util.log.console ("AJAX error: "+errorThrown);}
          });
-  EM_APP.util.consoleLog("Initialize object the first time it is created");
+  Util.log.console("Initialize object the first time it is created");
   model.beginCompoundOperation();
   for (var i=0;i<temp.length;i++){
     this.addElement(temp[i]);
   }
   model.endCompoundOperation();
-  EM_APP.util.consoleLog(this.getElements());
+  Util.log.console(this.getElements());
  }
 
 /**
@@ -82,7 +82,7 @@ function initializeModel(model) {
   by calling create on the model with either the class or the string name used to 
   register the type. */
   EM_APP.vizdata = model.create('VizDataModel');
-  EM_APP.util.consoleLog("Initial model state for new project has been created");
+  Util.log.console("Initial model state for new project has been created");
   /*After creating the VizDataModel object, we can now assign it to an object in the 
   hierarchy (in this case, the root) as follows */
   model.getRoot().set('vizdata', EM_APP.vizdata);
@@ -99,6 +99,6 @@ function onFileLoaded(doc) {
   EM_APP.vizdata = doc.getModel().getRoot().get('vizdata');
   EM_APP.vizdata.positions.addEventListener(gapi.drive.realtime.EventType.VALUES_ADDED, doValueChanged);
   EM_APP.vizdata.positions.addEventListener(gapi.drive.realtime.EventType.VALUES_REMOVED, doValueChanged);
-  EM_APP.util.consoleLog("On file loaded...");
+  Util.log.console("On file loaded...");
   EM_APP.grid.displayAllPositions(EM_APP.vizdata.getPositions());
 }
