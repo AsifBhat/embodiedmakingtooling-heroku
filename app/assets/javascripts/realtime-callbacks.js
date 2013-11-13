@@ -86,6 +86,7 @@ function initializeModel(model) {
   /*After creating the VizDataModel object, we can now assign it to an object in the 
   hierarchy (in this case, the root) as follows */
   model.getRoot().set('vizdata', appContext.vizdata);
+  appContext.grid.activateListeners();
 }
 
 /**
@@ -101,4 +102,5 @@ function onFileLoaded(doc) {
   appContext.vizdata.positions.addEventListener(gapi.drive.realtime.EventType.VALUES_REMOVED, doValueChanged);
   Util.log.console("On file loaded...");
   appContext.grid.displayAllPositions(appContext.vizdata.getPositions());
+  appContext.grid.activateListeners();
 }
