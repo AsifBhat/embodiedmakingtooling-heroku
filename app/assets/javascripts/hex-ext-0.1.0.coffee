@@ -41,15 +41,9 @@ jQuery ($) ->
 
   # Placing tooltip if not an empty cell
   # elementid should be replaced with the content to be displayed in the tooltip.
-  appContext.grid.showTooltip = (x,y,elementid) ->
+  appContext.grid.showTooltip = (x,y,tooltipInfo) ->
     inv = appContext.grid.screenpos(x, y)
-    typeind = elementid.substr(0,1)
-    switch typeind
-     when 'S' then etype = "stories"
-     when 'F' then etype = "forces"
-     when 'C' then etype = "solutionComponents"
-
-    idwithtooltip.attr("data-original-title",elementid+"<br/><button id='deleteButton' class='btn-mini'><span class='icon-remove remove_btn'></span></button>")
+    idwithtooltip.attr("data-original-title",tooltipInfo+"<br/><button id='deleteButton' class='btn-mini'><span class='icon-remove remove_btn'></span></button>")
     idwithtooltip.css({
       "display": "",
       "left": (inv.x + appContext.grid.origin.x) + "px",
