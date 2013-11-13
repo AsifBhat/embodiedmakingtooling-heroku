@@ -16,4 +16,6 @@ EnvJasmine.loadGlobal(EnvJasmine.libDir + "jquery-1.9.1.js");
 
 // Import all modules (in theory this should be done with RequireJs, but it fails for some reason)
 // FIXME: check why we can't use RequireJs instead of manually importing files
-EnvJasmine.loadGlobal(EnvJasmine.rootDir + "todo.js");
+EnvJasmine.loadGlobal(EnvJasmine.rootDir + "VizDataModel.js");
+EnvJasmine.loadGlobal(EnvJasmine.rootDir + "app.utils.js");
+
