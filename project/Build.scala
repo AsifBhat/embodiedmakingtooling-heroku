@@ -30,7 +30,7 @@ object ApplicationBuild extends Build {
     // Add your own project settings here
     // jasmine configuration, overridden as we don't follow the default project structure sbt-jasmine expects
     appJsDir <+= baseDirectory / "app/assets/javascripts",
-    appJsLibDir <+= baseDirectory / "public/javascripts/lib",
+    appJsLibDir <+= baseDirectory / "public/javascripts",
     jasmineTestDir <+= baseDirectory / "test/assets/",
     jasmineConfFile <+= baseDirectory / "test/assets/test.dependencies.js",
     // link jasmine to the standard 'sbt test' action. Now when running 'test' jasmine tests will be run, and if they pass
