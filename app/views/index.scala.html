@@ -1,31 +1,14 @@
 @main("The Embodied Making Tool") {
 
 <div id="menubar">
-    <button id="exportToGexf" class="btn btn-success btn-mini">Download as GEXF</button>
-
-      @helper.form(action = routes.Services.importFile(),
-           'id -> "import_file",
-           'enctype -> "multipart/form-data",
-           'method -> "POST",
-           'name -> "import_file") {
-             <div class="import_btn">
-               <input type="file" name="csvfile">
-             </div>
-             <button class="btn btn-success btn-mini" id="import_button">Import</button>
-        }
     <button id="authorizeButton" disabled>You must authorize</button>
-    <button id="addPos" >Add Pos</button>
- </div>
-<div class="" id="message_board">
+</div>
+<div id="message_board">
   <div id="message"></div>
 </div>
 <div id="desctooltip" data-html="true" data-trigger="focus" data-placement="top" type="button"></div>
 <div id="hexagonal-grid"></div>
-
 <div id="content-search">
     <input type="text" name="query">
 </div>
-
-
-
 }
