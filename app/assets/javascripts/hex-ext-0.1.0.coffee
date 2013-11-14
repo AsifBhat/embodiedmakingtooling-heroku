@@ -1,8 +1,7 @@
 jQuery ($) ->
 
   # Creating a grid
-  gridElement = $('#hexagonal-grid')[0]
-  appContext.grid = hex.grid(gridElement, {})
+  appContext.grid = hex.grid($('#hexagonal-grid')[0], {})
   size = hex.size(appContext.grid.elem)
   appContext.grid.reorient(size.x * 0.5, size.y * 0.5)
   root = $(appContext.grid.root)
