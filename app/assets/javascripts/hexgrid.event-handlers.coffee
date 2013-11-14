@@ -1,24 +1,24 @@
 jQuery ($) ->
-  appContext.grid.hoverEventHandler = (e, x, y) ->
+  AppContext.grid.hoverEventHandler = (e, x, y) ->
       # Highlight the currently hovered cell
       pos = {x:x,y:y}
-      elementUnderMouse = appContext.vizdata.getElementInCell(pos)
+      elementUnderMouse = AppContext.vizdata.getElementInCell(pos)
       if(elementUnderMouse != '')
         # The tooltip info at this stage is just the description.  Later this
         # could be some rich content.
-        tooltipInfo = appContext.vizdata.getElementDescription(elementUnderMouse)
-        appContext.grid.showTooltip(x,y,tooltipInfo)
+        tooltipInfo = AppContext.vizdata.getElementDescription(elementUnderMouse)
+        AppContext.grid.showTooltip(x,y,tooltipInfo)
       else
-        appContext.grid.hideTooltip()
-      appContext.grid.showHoveredElement(x,y) 
+        AppContext.grid.hideTooltip()
+      AppContext.grid.showHoveredElement(x,y) 
 
-  appContext.grid.clickEventHandler = (e, x, y) ->
+  AppContext.grid.clickEventHandler = (e, x, y) ->
     
     # Place the element on the grid
-    newElement = appContext.grid.placeNewElement(x,y)
+    newElement = AppContext.grid.placeNewElement(x,y)
 
     # Get pixel position based on grid coordinates
-    inv = appContext.grid.screenpos(x, y)
+    inv = AppContext.grid.screenpos(x, y)
 
     # Keep content search reference
     contentSearch = $("#content-search")
@@ -26,8 +26,8 @@ jQuery ($) ->
     # Show content search at corrent position
     contentSearch.css({
       "display": "",
-      "left": (inv.x + appContext.grid.origin.x) + "px",
-      "top": (inv.y + appContext.grid.origin.y) + "px"
+      "left": (inv.x + AppContext.grid.origin.x) + "px",
+      "top": (inv.y + AppContext.grid.origin.y) + "px"
     }).find("input")
         # Remove existing events
         .off('typeahead:selected')
@@ -46,7 +46,7 @@ jQuery ($) ->
           # When a content element is selected from the typeahead, it could be
           # a new entry to the positions list or an update to an already 
           # existing entry.
-          appContext.grid.updatePosition(obj, datum.value, dataset, x, y)
+          AppContext.grid.updatePosition(obj, datum.value, dataset, x, y)
         )
 
         # Clear the previous query

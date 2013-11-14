@@ -1,5 +1,3 @@
-var appContext = function () {} ;
+var AppContext = function () {} ;
 
-appContext.util = {};
-
-appContext.grid = {};
+AppContext.grid = {};

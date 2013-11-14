@@ -35,7 +35,7 @@ detailed information on event handling.
 function doValueChanged (){
   var model = gapi.drive.realtime.custom.getModel(this);
   Util.log.console("Model value changed...");
-  appContext.grid.displayAllPositions(appContext.vizdata.getPositions());
+  AppContext.grid.displayAllPositions(AppContext.vizdata.getPositions());
 }
 
 
@@ -81,12 +81,12 @@ function initializeModel(model) {
   /* Once the document has been loaded, we can create instances of the custom object 
   by calling create on the model with either the class or the string name used to 
   register the type. */
-  appContext.vizdata = model.create('VizDataModel');
+  AppContext.vizdata = model.create('VizDataModel');
   Util.log.console("Initial model state for new project has been created");
   /*After creating the VizDataModel object, we can now assign it to an object in the 
   hierarchy (in this case, the root) as follows */
-  model.getRoot().set('vizdata', appContext.vizdata);
-  appContext.grid.activateListeners();
+  model.getRoot().set('vizdata', AppContext.vizdata);
+  AppContext.grid.activateListeners();
 }
 
 /**
@@ -97,10 +97,10 @@ function initializeModel(model) {
  * 'at'param doc {gapi.drive.realtime.Document} the Realtime document.
  */
 function onFileLoaded(doc) {
-  appContext.vizdata = doc.getModel().getRoot().get('vizdata');
-  appContext.vizdata.positions.addEventListener(gapi.drive.realtime.EventType.VALUES_ADDED, doValueChanged);
-  appContext.vizdata.positions.addEventListener(gapi.drive.realtime.EventType.VALUES_REMOVED, doValueChanged);
+  AppContext.vizdata = doc.getModel().getRoot().get('vizdata');
+  AppContext.vizdata.positions.addEventListener(gapi.drive.realtime.EventType.VALUES_ADDED, doValueChanged);
+  AppContext.vizdata.positions.addEventListener(gapi.drive.realtime.EventType.VALUES_REMOVED, doValueChanged);
   Util.log.console("On file loaded...");
-  appContext.grid.displayAllPositions(appContext.vizdata.getPositions());
-  appContext.grid.activateListeners();
+  AppContext.grid.displayAllPositions(AppContext.vizdata.getPositions());
+  AppContext.grid.activateListeners();
 }

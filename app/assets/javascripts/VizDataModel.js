@@ -31,7 +31,7 @@
   };
 
   VizDataModel.prototype.isEmpty = function(pos) {
-    var temp = appContext.vizdata.getPositions();
+    var temp = AppContext.vizdata.getPositions();
     $(temp).each(function(i){
       if ((this.x == pos.x) && (this.y == pos.y))
         return false;
@@ -41,7 +41,7 @@
 
   VizDataModel.prototype.getElementInCell = function(pos) {
     var toReturn = '';
-    var temp = appContext.vizdata.getPositions();
+    var temp = AppContext.vizdata.getPositions();
     $(temp).each(function(i){
       if ((this.x == pos.x) && (this.y == pos.y)){
         toReturn = this.elementId;
@@ -52,7 +52,7 @@
 
   VizDataModel.prototype.getPositionInCell = function(pos) {
     var toReturn = '';
-    var temp = appContext.vizdata.getPositions();
+    var temp = AppContext.vizdata.getPositions();
     $(temp).each(function(i){
       if ((this.x == pos.x) && (this.y == pos.y))
         toReturn = this;
@@ -62,7 +62,7 @@
 
   VizDataModel.prototype.getElementDescription = function(elementId) {
     var desc = '';
-    var temp = appContext.vizdata.getElements();
+    var temp = AppContext.vizdata.getElements();
     $(temp).each(function(i){
       if (this.elementId == elementId)
         desc = this.description;
@@ -72,7 +72,7 @@
  
 /*VizDataModel.prototype.getElementInCell = (pos) ->
  elem = ''
- $.each(appContext.vizdata.getPositions(), (i,position) ->
+ $.each(AppContext.vizdata.getPositions(), (i,position) ->
   if (position.x == pos.x) && (position.y == pos.y)  
     elem = position.elementId
  )
@@ -80,7 +80,7 @@
 
 VizDataModel.prototype.getPositionInCell = (pos) ->
   positionToReturn = ''
-  $.each(appContext.vizdata.getPositions(), (i,position) ->
+  $.each(AppContext.vizdata.getPositions(), (i,position) ->
     if (position.x == pos.x) && (position.y == pos.y)  
       positionToReturn = position
   )
@@ -88,7 +88,7 @@ VizDataModel.prototype.getPositionInCell = (pos) ->
 
 VizDataModel.prototype.getElementDescription = (elementId) ->
   description = ''
-  $.each(appContext.vizdata.getElements(), (i, element)->
+  $.each(AppContext.vizdata.getElements(), (i, element)->
     if(element.elementId == elementId)
       description = element.description
       return
