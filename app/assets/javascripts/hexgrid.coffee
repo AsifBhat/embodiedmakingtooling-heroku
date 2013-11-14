@@ -8,7 +8,7 @@ jQuery ($) ->
 
     # Tiletap is only fired when not dragging the grid
     appContext.grid.addEvent("tiletap", (e, x, y) ->
-      appContext.grid.clickEventHandler()
+      appContext.grid.clickEventHandler(e,x,y)
     )
 
     
