@@ -89,3 +89,14 @@ jQuery ($) ->
   	allNeighbourCells[4] = {x:pos.x , y:pos.y+1 }
   	allNeighbourCells[5] = {x:pos.x+1 , y:pos.y-1 }
   	allNeighbourCells  
+
+  appContext.grid.activateListeners = () ->
+    # Setting mouse movement related tile events
+    appContext.grid.addEvent("tileover", (e, x, y) ->
+      appContext.grid.hoverEventHandler(e,x,y)   
+    )
+
+    # Tiletap is only fired when not dragging the grid
+    appContext.grid.addEvent("tiletap", (e, x, y) ->
+      appContext.grid.clickEventHandler(e,x,y)
+    )
