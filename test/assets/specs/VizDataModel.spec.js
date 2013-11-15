@@ -1,23 +1,17 @@
-describe("Tests for VizDataModel", function() {
+describe("VizDataModel.positions", function() {
   var vizdata;
   var position = {"posId":1, "x":0, "y":0, "elementId":"F01"};
 
   beforeEach(function() {
-    VizDataModel.prototype.positions = [];
-    VizDataModel.prototype.relations = [];
-    VizDataModel.prototype.elements = [];
+    startRealtime();
     vizdata = new VizDataModel();
   });
 
   afterEach(function() {
   });
 
-  it("Vizdata is not null", function() {
+  it("Vizdata should not be null", function() {
     expect(vizdata).not.toBeNull();
   });
 
-  /*it("Add a position and remove the same", function() {
-    expect(vizdata.addPosition(position)).not.toThrow();
-    expect(vizdata.removePosition(position)).not.toThrow();
-  });*/
 });
