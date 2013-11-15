@@ -5,8 +5,12 @@ var realtimeOptions = {
   /**
    * Client ID from the console.
    * Original ID */
-   // clientId: '509986836118-ovgff4oirilvn05cdvarpi6dcpap20kr.apps.googleusercontent.com',
+   // for localhost
+   //clientId: '883917966367-ldups260gjb3lq4e15jbevk5om5mugg9.apps.googleusercontent.com',
+   
+   // for heroku-staging
   clientId: '883917966367-h1np3jeqi9v00aku4ugphoh1f5939jnk.apps.googleusercontent.com',
+
 
   /**
    * The ID of the button to click to authorize. Must be a DOM element ID.
