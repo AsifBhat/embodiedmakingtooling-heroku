@@ -7,7 +7,7 @@ var realtimeOptions = {
    * Original ID */
    // clientId: '509986836118-ovgff4oirilvn05cdvarpi6dcpap20kr.apps.googleusercontent.com',
    
-   clientId: '694851080006.apps.googleusercontent.com',
+  clientId: '694851080006.apps.googleusercontent.com',
 
   /**
    * The ID of the button to click to authorize. Must be a DOM element ID.
