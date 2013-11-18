@@ -10,7 +10,8 @@
 
 // Dependencies for the unit test via Jasmine
 EnvJasmine.loadGlobal(EnvJasmine.libDir + "jquery-1.9.1.js");
-
+EnvJasmine.loadGlobal(EnvJasmine.libDir + "hex-0.1.0.js");
+EnvJasmine.loadGlobal(EnvJasmine.libDir + "/test/jasmine-jquery.js");
 // Import all modules (in theory this should be done with RequireJs, but it fails for some reason)
 // FIXME: check why we can't use RequireJs instead of manually importing files
 EnvJasmine.loadGlobal(EnvJasmine.rootDir + "VizDataModel.js");
@@ -19,4 +20,9 @@ EnvJasmine.loadGlobal(EnvJasmine.libDir + "api.js");
 EnvJasmine.loadGlobal(EnvJasmine.rootDir + "realtime-client-utils.js");
 EnvJasmine.loadGlobal(EnvJasmine.rootDir + "realtime-callbacks.js");
 EnvJasmine.loadGlobal(EnvJasmine.rootDir + "realtime-conf.js");
+EnvJasmine.loadGlobal(EnvJasmine.rootDir + "../../../target/scala-2.10/classes/public/javascripts/AppContext.js");
+EnvJasmine.loadGlobal(EnvJasmine.rootDir + "../../../target/scala-2.10/classes/public/javascripts/hex-ext-0.1.0.js");
 
+/*EnvJasmine.loadGlobal(EnvJasmine.rootDir + "realtime-conf.js");
+EnvJasmine.loadGlobal(EnvJasmine.rootDir + "realtime-conf.js");
+*/

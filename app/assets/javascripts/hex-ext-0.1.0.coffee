@@ -1,11 +1,14 @@
 jQuery ($) ->
-
+  root = ''
+  size = ''
   # Creating a grid
-  AppContext.grid = hex.grid($('#hexagonal-grid')[0], {})
-  size = hex.size(AppContext.grid.elem)
-  AppContext.grid.reorient(size.x * 0.5, size.y * 0.5)
-  root = $(AppContext.grid.root)
-
+  AppContext.grid.createGrid = (domelem) ->
+    AppContext.grid = hex.grid(domelem, {})
+    size = hex.size(AppContext.grid.elem)
+    AppContext.grid.reorient(size.x * 0.5, size.y * 0.5)
+    root = $(AppContext.grid.root)
+  
+  AppContext.grid.createGrid($('#hexagonal-grid')[0])
 
   AppContext.grid.createHex = (styleClass, text = "") ->
     $("<div class='hex' >"+text+"</div>").css({
