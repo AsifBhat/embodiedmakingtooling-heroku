@@ -18,7 +18,7 @@ jQuery ($) ->
     newElement = AppContext.grid.placeNewElement(x,y)
 
     # Get pixel position based on grid coordinates
-    inv = AppContext.grid.screenpos(x, y)
+    inv = AppContext.grid.grid.screenpos(x, y)
 
     # Keep content search reference
     contentSearch = $("#content-search")
@@ -26,8 +26,8 @@ jQuery ($) ->
     # Show content search at corrent position
     contentSearch.css({
       "display": "",
-      "left": (inv.x + AppContext.grid.origin.x) + "px",
-      "top": (inv.y + AppContext.grid.origin.y) + "px"
+      "left": (inv.x + AppContext.grid.grid.origin.x) + "px",
+      "top": (inv.y + AppContext.grid.grid.origin.y) + "px"
     }).find("input")
         # Remove existing events
         .off('typeahead:selected')
