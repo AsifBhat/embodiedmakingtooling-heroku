@@ -29,7 +29,7 @@ object ApplicationBuild extends Build {
   .settings(
     // Add your own project settings here
     // jasmine configuration, overridden as we don't follow the default project structure sbt-jasmine expects
-    appJsDir <+= baseDirectory / "app/assets/javascripts",
+    appJsDir <+= baseDirectory / "/target/scala-2.10/resource_managed/main/public/javascripts",
     appJsLibDir <+= baseDirectory / "public/javascripts",
     jasmineTestDir <+= baseDirectory / "test/assets/",
     jasmineConfFile <+= baseDirectory / "test/assets/test.dependencies.js",

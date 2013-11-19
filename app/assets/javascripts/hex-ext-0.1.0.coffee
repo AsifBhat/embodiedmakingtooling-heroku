@@ -17,22 +17,26 @@ AppContext.grid.initialize = () ->
   $(AppContext.grid.grid.root).append(AppContext.grid.hoveredElement)
   AppContext.grid.idwithtooltip =  $('#desctooltip')
   AppContext.grid.idwithtooltip.css("width", AppContext.grid.size + "px")
-  AppContext.grid.idwithtooltip.css("height", AppContext.grid.size + "px")     
+  AppContext.grid.idwithtooltip.css("height", AppContext.grid.size + "px")   
+  AppContext.grid 
+  # Should we somehow move content assisst here? 
 
 AppContext.grid.placeHex =(elem,x,y) ->
     inv = AppContext.grid.grid.screenpos(x, y)
     elem.css("left", inv.x + "px")
     elem.css("top", inv.y + "px")
+    elem
 
 AppContext.grid.showHoveredElement = (xc, yc) ->
   AppContext.grid.placeHex(AppContext.grid.hoveredElement,xc,yc)  
+  AppContext.grid.hoveredElement
 
 AppContext.grid.placeNewElement = (xc, yc) ->
-  newElement = AppContext.grid.createHex('new') 
-  AppContext.grid.placeHex(newElement,xc,yc)
+  AppContext.grid.newElement = AppContext.grid.createHex('new') 
+  AppContext.grid.placeHex(AppContext.grid.newElement,xc,yc)
   # Show the new element on the grid
-  $(AppContext.grid.grid.root).append(newElement)
-  newElement
+  $(AppContext.grid.grid.root).append(AppContext.grid.newElement)
+  AppContext.grid.newElement
 
 # Placing tooltip if not an empty cell
 # elementid should be replaced with the content to be displayed in the tooltip.
@@ -48,6 +52,7 @@ AppContext.grid.showTooltip = (x,y,tooltipInfo) ->
   $("#deleteButton").click((e) -> 
     AppContext.grid.deletePosition(parseInt(x,10),parseInt(y,10))
   )
+  AppContext.grid.idwithtooltip
 
 AppContext.grid.hideTooltip = () ->  
   $("#desctooltip").tooltip('hide')
