@@ -19,6 +19,7 @@ EnvJasmine.loadGlobal(EnvJasmine.rootDir + "hex-ext-0.1.0.js");
 // FIXME: check why we can't use RequireJs instead of manually importing files
 //EnvJasmine.loadGlobal(EnvJasmine.rootDir + "hex-ext.js");
 EnvJasmine.loadGlobal(EnvJasmine.rootDir + "VizDataModel.js");
+EnvJasmine.loadGlobal(EnvJasmine.rootDir + "clusterOperations.js");
 EnvJasmine.loadGlobal(EnvJasmine.rootDir + "Util.js");
 EnvJasmine.loadGlobal(EnvJasmine.libDir + "api.js");
 EnvJasmine.loadGlobal(EnvJasmine.rootDir + "realtime-client-utils.js");

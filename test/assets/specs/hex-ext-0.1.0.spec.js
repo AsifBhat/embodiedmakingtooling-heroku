@@ -44,11 +44,8 @@ describe("Grid library", function() {
 
 describe("Grid library cluster display", function() {
   var positions = [{"posId":1, "x":0, "y":0, "elementId":"F01"}, {"posId":2, "x":1, "y":0, "elementId":"F02"}] ;
-  var fixture, elem;
 
   beforeEach(function() {
-    fixture = setFixtures('<div id="hexagonal-grid"></div>');
-    elem = fixture.find('#hexagonal-grid')[0];
     spyOn(AppContext.grid, 'placeOnGrid');
     AppContext.grid.displayAllPositions(positions);
   });
