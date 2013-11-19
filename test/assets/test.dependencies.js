@@ -10,6 +10,7 @@
 
 // Dependencies for the unit test via Jasmine
 EnvJasmine.loadGlobal(EnvJasmine.libDir + "jquery-1.9.1.js");
+EnvJasmine.loadGlobal(EnvJasmine.libDir + "bootstrap-tooltip-v2.2.2.js");
 EnvJasmine.loadGlobal(EnvJasmine.libDir + "test/jasmine-jquery.js");
 EnvJasmine.loadGlobal(EnvJasmine.rootDir + "AppContext.js");
 EnvJasmine.loadGlobal(EnvJasmine.libDir + "hex-0.1.0.js");

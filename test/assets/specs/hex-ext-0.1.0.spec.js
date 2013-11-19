@@ -16,7 +16,7 @@ describe("Grid library", function() {
 
   it("Should initialize hovered element and tooltip", function() {
     expect(AppContext.grid.initialize().hoveredElement).not.toBeNull();
-    expect(AppContext.grid.initialize().idwithtooltip).not.toBeNull();
+    expect(AppContext.grid.initialize().idwithtooltip.selector).toEqual('#desctooltip');
   });
 
   it("Should create a new hex", function() {
@@ -31,22 +31,34 @@ describe("Grid library", function() {
     expect(AppContext.grid.placeNewElement(5,5)).toHaveClass("new");
   });
 
+  it("Should show tooltip", function() {
+    expect(AppContext.grid.showTooltip(1,2,"This is a sample tooltip")).toHaveData("data-original-title");
+  });
 
+  it("Should place an element on the grid", function() {
+    expect(AppContext.grid.placeOnGrid(position)).toHaveClass("forces");
+  });
+  
 });
 
-describe("Vizdata", function() {
-  var vizdata;
-  
+
+describe("Grid library cluster display", function() {
+  var positions = [{"posId":1, "x":0, "y":0, "elementId":"F01"}, {"posId":2, "x":1, "y":0, "elementId":"F02"}] ;
+  var fixture, elem;
+
   beforeEach(function() {
-    startRealtime();
-    vizdata = new VizDataModel();
+    fixture = setFixtures('<div id="hexagonal-grid"></div>');
+    elem = fixture.find('#hexagonal-grid')[0];
+    spyOn(AppContext.grid, 'placeOnGrid');
+    AppContext.grid.displayAllPositions(positions);
   });
 
   afterEach(function() {
   });
 
-  it("Should not be null", function() {
-    expect(vizdata).not.toBeNull();
+  it("Should display a list of elements on the grid", function() {
+    expect(AppContext.grid.placeOnGrid).toHaveBeenCalled();
+    expect(AppContext.grid.placeOnGrid.calls.length).toEqual(2);
   });
-
+  
 });
