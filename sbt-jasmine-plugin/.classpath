@@ -1,0 +1,51 @@
+<classpath>
+  <classpathentry output="target\scala-2.10\sbt-0.12\classes" path="src\main\scala" kind="src"></classpathentry>
+  <classpathentry output="target\scala-2.10\sbt-0.12\classes" path="src\main\java" kind="src"></classpathentry>
+  <classpathentry output="target\scala-2.10\sbt-0.12\test-classes" path="src\test\scala" kind="src"></classpathentry>
+  <classpathentry output="target\scala-2.10\sbt-0.12\test-classes" path="src\test\java" kind="src"></classpathentry>
+  <classpathentry path="C:\Users\Aruna\coena\sites\play-2.1.1\framework\.\..\repository\cache\org.mozilla\rhino\jars\rhino-1.7R3.jar" kind="lib"></classpathentry>
+  <classpathentry path="C:\Users\Aruna\coena\sites\play-2.1.1\repository\local\org.scala-sbt\sbt\0.12.2\jars\sbt.jar" kind="lib"></classpathentry>
+  <classpathentry path="C:\Users\Aruna\coena\sites\play-2.1.1\repository\local\org.scala-sbt\main\0.12.2\jars\main.jar" kind="lib"></classpathentry>
+  <classpathentry path="C:\Users\Aruna\coena\sites\play-2.1.1\repository\local\org.scala-sbt\actions\0.12.2\jars\actions.jar" kind="lib"></classpathentry>
+  <classpathentry path="C:\Users\Aruna\coena\sites\play-2.1.1\repository\local\org.scala-sbt\classpath\0.12.2\jars\classpath.jar" kind="lib"></classpathentry>
+  <classpathentry path="C:\Users\Aruna\coena\sites\play-2.1.1\repository\local\org.scala-sbt\launcher-interface\0.12.2\jars\launcher-interface.jar" kind="lib"></classpathentry>
+  <classpathentry kind="con" path="org.scala-ide.sdt.launching.SCALA_CONTAINER"></classpathentry>
+  <classpathentry path="C:\Users\Aruna\coena\sites\play-2.1.1\repository\local\org.scala-sbt\interface\0.12.2\jars\interface.jar" kind="lib"></classpathentry>
+  <classpathentry path="C:\Users\Aruna\coena\sites\play-2.1.1\repository\local\org.scala-sbt\io\0.12.2\jars\io.jar" kind="lib"></classpathentry>
+  <classpathentry path="C:\Users\Aruna\coena\sites\play-2.1.1\repository\local\org.scala-sbt\control\0.12.2\jars\control.jar" kind="lib"></classpathentry>
+  <classpathentry kind="con" path="org.scala-ide.sdt.launching.SCALA_COMPILER_CONTAINER"></classpathentry>
+  <classpathentry path="C:\Users\Aruna\coena\sites\play-2.1.1\repository\local\org.scala-sbt\completion\0.12.2\jars\completion.jar" kind="lib"></classpathentry>
+  <classpathentry path="C:\Users\Aruna\coena\sites\play-2.1.1\repository\local\org.scala-sbt\collections\0.12.2\jars\collections.jar" kind="lib"></classpathentry>
+  <classpathentry path="C:\Users\Aruna\coena\sites\play-2.1.1\repository\local\jline\jline\1.0\jars\jline.jar" kind="lib"></classpathentry>
+  <classpathentry path="C:\Users\Aruna\coena\sites\play-2.1.1\repository\local\org.scala-sbt\api\0.12.2\jars\api.jar" kind="lib"></classpathentry>
+  <classpathentry path="C:\Users\Aruna\coena\sites\play-2.1.1\repository\local\org.scala-sbt\compiler-integration\0.12.2\jars\compiler-integration.jar" kind="lib"></classpathentry>
+  <classpathentry path="C:\Users\Aruna\coena\sites\play-2.1.1\repository\local\org.scala-sbt\incremental-compiler\0.12.2\jars\incremental-compiler.jar" kind="lib"></classpathentry>
+  <classpathentry path="C:\Users\Aruna\coena\sites\play-2.1.1\repository\local\org.scala-sbt\logging\0.12.2\jars\logging.jar" kind="lib"></classpathentry>
+  <classpathentry path="C:\Users\Aruna\coena\sites\play-2.1.1\repository\local\org.scala-sbt\process\0.12.2\jars\process.jar" kind="lib"></classpathentry>
+  <classpathentry path="C:\Users\Aruna\coena\sites\play-2.1.1\repository\local\org.scala-sbt\compile\0.12.2\jars\compile.jar" kind="lib"></classpathentry>
+  <classpathentry path="C:\Users\Aruna\coena\sites\play-2.1.1\repository\local\org.scala-sbt\persist\0.12.2\jars\persist.jar" kind="lib"></classpathentry>
+  <classpathentry path="C:\Users\Aruna\coena\sites\play-2.1.1\repository\local\org.scala-tools.sbinary\sbinary_2.9.0\0.4.0\jars\sbinary_2.9.0.jar" kind="lib"></classpathentry>
+  <classpathentry path="C:\Users\Aruna\coena\sites\play-2.1.1\repository\local\org.scala-sbt\classfile\0.12.2\jars\classfile.jar" kind="lib"></classpathentry>
+  <classpathentry path="C:\Users\Aruna\coena\sites\play-2.1.1\repository\local\org.scala-sbt\compiler-ivy-integration\0.12.2\jars\compiler-ivy-integration.jar" kind="lib"></classpathentry>
+  <classpathentry path="C:\Users\Aruna\coena\sites\play-2.1.1\repository\local\org.scala-sbt\ivy\0.12.2\jars\ivy.jar" kind="lib"></classpathentry>
+  <classpathentry path="C:\Users\Aruna\coena\sites\play-2.1.1\repository\local\org.apache.ivy\ivy\2.3.0-rc1\jars\ivy.jar" kind="lib"></classpathentry>
+  <classpathentry path="C:\Users\Aruna\coena\sites\play-2.1.1\repository\local\com.jcraft\jsch\0.1.46\jars\jsch.jar" kind="lib"></classpathentry>
+  <classpathentry path="C:\Users\Aruna\coena\sites\play-2.1.1\repository\local\commons-httpclient\commons-httpclient\3.1\jars\commons-httpclient.jar" kind="lib"></classpathentry>
+  <classpathentry path="C:\Users\Aruna\coena\sites\play-2.1.1\repository\local\commons-logging\commons-logging\1.0.4\jars\commons-logging.jar" kind="lib"></classpathentry>
+  <classpathentry path="C:\Users\Aruna\coena\sites\play-2.1.1\repository\local\commons-codec\commons-codec\1.2\jars\commons-codec.jar" kind="lib"></classpathentry>
+  <classpathentry path="C:\Users\Aruna\coena\sites\play-2.1.1\repository\local\org.scala-sbt\run\0.12.2\jars\run.jar" kind="lib"></classpathentry>
+  <classpathentry path="C:\Users\Aruna\coena\sites\play-2.1.1\repository\local\org.scala-sbt\task-system\0.12.2\jars\task-system.jar" kind="lib"></classpathentry>
+  <classpathentry path="C:\Users\Aruna\coena\sites\play-2.1.1\repository\local\org.scala-sbt\tasks\0.12.2\jars\tasks.jar" kind="lib"></classpathentry>
+  <classpathentry path="C:\Users\Aruna\coena\sites\play-2.1.1\repository\local\org.scala-sbt\tracking\0.12.2\jars\tracking.jar" kind="lib"></classpathentry>
+  <classpathentry path="C:\Users\Aruna\coena\sites\play-2.1.1\repository\local\org.scala-sbt\cache\0.12.2\jars\cache.jar" kind="lib"></classpathentry>
+  <classpathentry path="C:\Users\Aruna\coena\sites\play-2.1.1\repository\local\org.scala-sbt\testing\0.12.2\jars\testing.jar" kind="lib"></classpathentry>
+  <classpathentry path="C:\Users\Aruna\coena\sites\play-2.1.1\repository\local\org.scala-sbt\test-agent\0.12.2\jars\test-agent.jar" kind="lib"></classpathentry>
+  <classpathentry path="C:\Users\Aruna\coena\sites\play-2.1.1\repository\local\org.scala-tools.testing\test-interface\0.5\jars\test-interface.jar" kind="lib"></classpathentry>
+  <classpathentry path="C:\Users\Aruna\coena\sites\play-2.1.1\repository\local\org.scala-sbt\command\0.12.2\jars\command.jar" kind="lib"></classpathentry>
+  <classpathentry path="C:\Users\Aruna\coena\sites\play-2.1.1\repository\local\org.scala-sbt\compiler-interface\0.12.2\jars\compiler-interface-src.jar" kind="lib"></classpathentry>
+  <classpathentry path="C:\Users\Aruna\coena\sites\play-2.1.1\repository\local\org.scala-sbt\compiler-interface\0.12.2\jars\compiler-interface-bin.jar" kind="lib"></classpathentry>
+  <classpathentry path="C:\Users\Aruna\coena\sites\play-2.1.1\repository\local\org.scala-sbt\precompiled-2_8_2\0.12.2\jars\compiler-interface-bin.jar" kind="lib"></classpathentry>
+  <classpathentry path="C:\Users\Aruna\coena\sites\play-2.1.1\repository\local\org.scala-sbt\precompiled-2_10_0\0.12.2\jars\compiler-interface-bin.jar" kind="lib"></classpathentry>
+  <classpathentry path="org.eclipse.jdt.launching.JRE_CONTAINER" kind="con"></classpathentry>
+  <classpathentry path="bin" kind="output"></classpathentry>
+</classpath>

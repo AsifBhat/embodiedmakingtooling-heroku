@@ -15,4 +15,6 @@ import sbt._
 object Plugins extends Build {
   lazy val plugins = Project("plugins", file("."))
     .dependsOn(uri("../sbt-jasmine-plugin"))
+    .dependsOn(uri("../lib/coffeescripted-sbt-0.2.3"))
 }
+
