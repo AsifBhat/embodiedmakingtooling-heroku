@@ -54,7 +54,7 @@ object ApplicationBuild extends Build {
   .settings(coffeeSettings: _*)
   .settings(
 	  sourceDirectory in (Compile, CoffeeKeys.coffee) <<= (sourceDirectory in Compile)(_ / "assets" / "javascripts"),
-	  resourceManaged in (Compile, CoffeeKeys.coffee) <<= (resourceManaged in Compile)(_ / "public" / "stylesheets")
+	  resourceManaged in (Compile, CoffeeKeys.coffee) <<= (resourceManaged in Compile)(_ / "public" / "javascripts")
    )
 
 
