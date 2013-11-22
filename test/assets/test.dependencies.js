@@ -23,6 +23,6 @@ EnvJasmine.loadGlobal(EnvJasmine.rootDir + "realtime-client-utils.js");
 EnvJasmine.loadGlobal(EnvJasmine.rootDir + "realtime-callbacks.js");
 EnvJasmine.loadGlobal(EnvJasmine.rootDir + "realtime-conf.js");
 // Coffeescript files
-EnvJasmine.loadGlobal(EnvJasmine.rootDir + "../../../target/scala-2.10/resource_managed/main/js/hex-ext.js");
-EnvJasmine.loadGlobal(EnvJasmine.rootDir + "../../../target/scala-2.10/resource_managed/main/js/clusterOperations.js");
+EnvJasmine.loadGlobal(EnvJasmine.rootDir + "../../../target/scala-2.10/resource_managed/main/public/javascripts/hex-ext-0.1.0.js");
+EnvJasmine.loadGlobal(EnvJasmine.rootDir + "../../../target/scala-2.10/resource_managed/main/public/javascripts/clusterOperations.js");
 

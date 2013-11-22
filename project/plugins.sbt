@@ -13,3 +13,5 @@ resolvers += Resolver.url("sbt-plugin-releases",
     Resolver.ivyStylePatterns)
 
 addSbtPlugin("me.lessis" % "coffeescripted-sbt" % "0.2.3")
+
+

@@ -4,8 +4,7 @@
     Util.log.console("Adding pos:");
     Util.log.console(position);
     this.positions.push(position);
-    Util.log.console('Position added locally, current count:' +
-        this.positions.length);
+    return this.positions.length;
   };
 
   VizDataModel.prototype.getPositions = function() {
@@ -70,27 +69,3 @@
     return desc;
   };
  
-/*VizDataModel.prototype.getElementInCell = (pos) ->
- elem = ''
- $.each(AppContext.vizdata.getPositions(), (i,position) ->
-  if (position.x == pos.x) && (position.y == pos.y)  
-    elem = position.elementId
- )
- elem
-
-VizDataModel.prototype.getPositionInCell = (pos) ->
-  positionToReturn = ''
-  $.each(AppContext.vizdata.getPositions(), (i,position) ->
-    if (position.x == pos.x) && (position.y == pos.y)  
-      positionToReturn = position
-  )
-  positionToReturn
-
-VizDataModel.prototype.getElementDescription = (elementId) ->
-  description = ''
-  $.each(AppContext.vizdata.getElements(), (i, element)->
-    if(element.elementId == elementId)
-      description = element.description
-      return
-  )
-  description*/
