@@ -37,14 +37,14 @@ object ApplicationBuild extends Build {
         }
         IO.copy( jssrcDst )
         // Copying css
-        val csssrc = b / "app/assets/stylesheets" 
+        /*val csssrc = b / "app/assets/stylesheets" 
         val cssdst = r / "public/stylesheets"
         val csssrcDst = (csssrc ** "*.css" ).get map {f => 
           val csspathRelativeToViewsFolder = f.getPath.substring(csssrc.getPath.length)
           val cssdstPath = cssdst / csspathRelativeToViewsFolder
           (f, cssdstPath)
         }
-        IO.copy( csssrcDst )
+        IO.copy( csssrcDst )*/
 
       }
   )
