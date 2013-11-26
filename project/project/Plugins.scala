@@ -14,7 +14,7 @@ import sbt._
 // in Build.scala, and then set the settings and configuration for Sbt-Jasmine
 object Plugins extends Build {
   lazy val plugins = Project("plugins", file("."))
-    .dependsOn(uri("../sbt-jasmine-plugin"))
+    .dependsOn(uri("../lib/sbt-jasmine-plugin"))
     .dependsOn(uri("../lib/coffeescripted-sbt-0.2.3"))
    // .dependsOn(uri("../lib/less-sbt-0.2.0-sbt-0.13"))
 }
