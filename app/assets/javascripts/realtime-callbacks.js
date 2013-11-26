@@ -103,4 +103,5 @@ function onFileLoaded(doc) {
   Util.log.console("On file loaded...");
   AppContext.grid.displayAllPositions(AppContext.vizdata.getPositions());
   AppContext.grid.activateListeners();
+  AppContext.grid.activateTypeAhead();
 }

@@ -6,7 +6,7 @@ jQuery ($) ->
       '<p class="content-description">{{description}}</p>',
     ].join(''),
     engine: Hogan,
-    prefetch: {
+    local: {
       # Time to live for data in milliseconds
       ttl: 5000,
 
@@ -23,7 +23,13 @@ jQuery ($) ->
     }
   }
 
-  # Load data sets
-  $('#content-search input').typeahead([
-    $.extend(true, { name: 'stories', prefetch: {url: '/assets/javascripts/sampleElements.json'} }, datasetDefaults),
-  ])
+  AppContext.grid.activateTypeAhead = () ->
+    # Load data sets
+    $('#content-search input').typeahead([
+      #$.extend(true, { name: 'stories', prefetch: {url: '/assets/javascripts/sampleElements.json'} }, datasetDefaults)
+      $.extend(true, { 
+        name: 'stories',
+        local: AppContext.vizdata.getElements() 
+      }, 
+      datasetDefaults)
+    ])
