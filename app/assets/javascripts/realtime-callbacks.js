@@ -50,6 +50,7 @@ function doValueChanged (){
   var model = gapi.drive.realtime.custom.getModel(this);
   this.positions = model.createList();
   this.elements = model.createList();
+  this.relations = model.createList();
   var temp;
   // This should be populated by data from a flat file
   $.ajax ({

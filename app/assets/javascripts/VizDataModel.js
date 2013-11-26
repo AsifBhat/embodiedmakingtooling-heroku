@@ -1,14 +1,17 @@
   var VizDataModel = function() {};
 
+
+  /*******************Position methods********************/
+
+  VizDataModel.prototype.getPositions = function() {
+    return this.positions.asArray();
+  };
+
   VizDataModel.prototype.addPosition = function(position) {
     Util.log.console("Adding pos:");
     Util.log.console(position);
     this.positions.push(position);
     return this.positions.length;
-  };
-
-  VizDataModel.prototype.getPositions = function() {
-    return this.positions.asArray();
   };
 
   var comparator = function (a,b) {
@@ -19,23 +22,6 @@
     var toremove = this.positions.indexOf(position, comparator);
     Util.log.console("To remove index "+toremove);
     this.positions.remove(toremove);
-  };
-
-  VizDataModel.prototype.getElements = function() {
-    return this.elements.asArray();
-  };
-
-  VizDataModel.prototype.addElement = function(element) {
-    this.elements.push(element);
-  };
-
-  VizDataModel.prototype.isEmpty = function(pos) {
-    var temp = AppContext.vizdata.getPositions();
-    $(temp).each(function(i){
-      if ((this.x == pos.x) && (this.y == pos.y))
-        return false;
-    });
-    return true;
   };
 
   VizDataModel.prototype.getElementInCell = function(pos) {
@@ -49,6 +35,15 @@
     return toReturn;
   };
 
+  VizDataModel.prototype.isEmpty = function(pos) {
+    var temp = AppContext.vizdata.getPositions();
+    $(temp).each(function(i){
+      if ((this.x == pos.x) && (this.y == pos.y))
+        return false;
+    });
+    return true;
+  };
+
   VizDataModel.prototype.getPositionInCell = function(pos) {
     var toReturn = '';
     var temp = AppContext.vizdata.getPositions();
@@ -59,6 +54,17 @@
     return toReturn;
   };
 
+  /*******************Element methods********************/
+
+  VizDataModel.prototype.getElements = function() {
+    return this.elements.asArray();
+  };
+
+  VizDataModel.prototype.addElement = function(element) {
+    this.elements.push(element);
+  };
+  
+
   VizDataModel.prototype.getElementDescription = function(elementId) {
     var desc = '';
     var temp = AppContext.vizdata.getElements();
@@ -68,4 +74,27 @@
     });
     return desc;
   };
+
+/*******************Relation methods*********************/
+
+  VizDataModel.prototype.getRelations = function() {
+    return this.relations.asArray();
+  };
+
+  VizDataModel.prototype.addRelation = function(relation) {
+    this.relations.push(relation);
+  };
+
+  var relcomparator = function (a,b) {
+    return ((a.srcPosId == b.srcPosId)&&(a.targetPosId == b.targetPosId));
+  };
+
+  VizDataModel.prototype.removeRelation = function(relation) {
+    var toremove = this.relations.indexOf(relation, relcomparator);
+    Util.log.console("To remove index in relations "+toremove);
+    this.relations.remove(toremove);
+  };
+
+
+  
  
