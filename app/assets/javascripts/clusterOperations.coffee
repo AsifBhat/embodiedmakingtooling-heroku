@@ -1,7 +1,16 @@
-posid=0
-elemid=0
+getNextPosId = () ->
+  allPos = AppContext.vizdata.getPositions()
+  nextId = 0
+  $.each(allPos, (i, pos) ->
+    if(pos.posId >= nextId)
+      nextId = pos.posId + 1
+  )
+  nextId
+
+
 
 AppContext.grid.updatePosition = (obj, datum, dataset,posx,posy) ->
+  posid = getNextPosId();
   pos = {x: posx, y:posy}
   existingPosition = AppContext.vizdata.getPositionInCell(pos)
   Util.log.console("Existing position")
@@ -22,7 +31,6 @@ AppContext.grid.updatePosition = (obj, datum, dataset,posx,posy) ->
         Util.log.console("Added relation")
         Util.log.console(rel)
     )
-    posid = posid + 1
   else
     position = { posId:existingPosition.posId, x:posx, y:posy, elementId:datum, description : " x: "+posx+", y: "+posy }
     posIdtoEdit = existingPosition.posId
