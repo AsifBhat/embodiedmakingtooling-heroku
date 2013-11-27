@@ -1,4 +1,4 @@
-describe("Cluster operations - add in empty cell", function() {
+xdescribe("Cluster operations - add in empty cell", function() {
   var position = {"posId":1, "x":0, "y":0, "elementId":"F01"};
   var vizdata;
 
