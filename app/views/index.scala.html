@@ -3,9 +3,13 @@
 <div id="menubar">
     <button id="authorizeButton" disabled>You must authorize</button>
     <button id='exportToGexf' onclick='AppContext.menu.exportToGexf()'>Download as GEXF</button>
+    <button id='showGraph' value='show' onclick='AppContext.menu.showGraph()'>Show Graph</button>
 </div>
 <div id="message_board">
   <div id="message"></div>
+</div>
+<div id='graphView' style='display:none;position:absolute;z-index: 1010;margin-top:100px;margin-left:100px;height:400px;width:400px;'>
+  <div id='sig' class="sigma"></div>
 </div>
 <div id="desctooltip" data-html="true" data-trigger="focus" data-placement="top" type="button"></div>
 <div id="hexagonal-grid"></div>
