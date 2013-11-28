@@ -94,7 +94,20 @@
     Util.log.console("To remove index in relations "+toremove);
     this.relations.remove(toremove);
   };
-
-
   
- 
+  //generic method to remove all the elements from the given instance -- used for import
+  VizDataModel.prototype.removeAllElements = function(){
+    Util.log.console('removing all content elements');
+    this.elements.removeRange(0, this.elements.length);
+  }
+
+  //generic method to add a new set of elements [parameter is an array of elements] -- used for import
+  VizDataModel.prototype.insertAllElements = function(importedElements){
+    Util.log.console('Adding new content elements');
+    this.elements.pushAll(importedElements);
+  }
+
+  VizDataModel.prototype.removeAllPositions = function(){
+    Util.log.console('Removing all positions');
+    this.positions.removeRange(0, this.positions.length);    
+  }

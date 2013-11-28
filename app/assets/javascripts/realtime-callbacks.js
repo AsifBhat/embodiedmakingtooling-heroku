@@ -38,6 +38,9 @@ function doValueChanged (){
   AppContext.grid.displayAllPositions(AppContext.vizdata.getPositions());
 }
 
+function doContentValueChanged(){
+  AppContext.grid.reloadTypeahead();
+}
 
 /**
  * The initializer is called exactly once in the lifetime of an object, 
@@ -88,6 +91,7 @@ function initializeModel(model) {
   hierarchy (in this case, the root) as follows */
   model.getRoot().set('vizdata', AppContext.vizdata);
   AppContext.grid.activateListeners();
+  //AppContext.grid.activateTypeahead();
 }
 
 /**
@@ -101,7 +105,9 @@ function onFileLoaded(doc) {
   AppContext.vizdata = doc.getModel().getRoot().get('vizdata');
   AppContext.vizdata.positions.addEventListener(gapi.drive.realtime.EventType.VALUES_ADDED, doValueChanged);
   AppContext.vizdata.positions.addEventListener(gapi.drive.realtime.EventType.VALUES_REMOVED, doValueChanged);
+  AppContext.vizdata.elements.addEventListener(gapi.drive.realtime.EventType.VALUES_REMOVED, doContentValueChanged);
   Util.log.console("On file loaded...");
   AppContext.grid.displayAllPositions(AppContext.vizdata.getPositions());
   AppContext.grid.activateListeners();
+  AppContext.grid.activateTypeahead(AppContext.vizdata.getElements());
 }
