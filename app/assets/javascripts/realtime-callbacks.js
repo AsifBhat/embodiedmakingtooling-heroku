@@ -87,6 +87,7 @@ function initializeModel(model) {
   hierarchy (in this case, the root) as follows */
   model.getRoot().set('vizdata', AppContext.vizdata);
   AppContext.grid.activateListeners();
+  //AppContext.grid.activateTypeahead();
 }
 
 /**
@@ -103,5 +104,5 @@ function onFileLoaded(doc) {
   Util.log.console("On file loaded...");
   AppContext.grid.displayAllPositions(AppContext.vizdata.getPositions());
   AppContext.grid.activateListeners();
-  AppContext.grid.activateTypeAhead();
+  AppContext.grid.activateTypeahead();
 }
