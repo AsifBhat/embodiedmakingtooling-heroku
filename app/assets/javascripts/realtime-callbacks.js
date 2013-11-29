@@ -38,6 +38,13 @@ function doValueChanged (){
   AppContext.grid.displayAllPositions(AppContext.vizdata.getPositions());
 }
 
+function doRelValueChanged (){
+  var model = gapi.drive.realtime.custom.getModel(this);
+  Util.log.console("Model value changed...");
+  AppContext.menu.updateGraph();
+}
+
+
 
 /**
  * The initializer is called exactly once in the lifetime of an object, 
@@ -101,6 +108,8 @@ function onFileLoaded(doc) {
   AppContext.vizdata = doc.getModel().getRoot().get('vizdata');
   AppContext.vizdata.positions.addEventListener(gapi.drive.realtime.EventType.VALUES_ADDED, doValueChanged);
   AppContext.vizdata.positions.addEventListener(gapi.drive.realtime.EventType.VALUES_REMOVED, doValueChanged);
+  AppContext.vizdata.relations.addEventListener(gapi.drive.realtime.EventType.VALUES_ADDED, doRelValueChanged);
+  AppContext.vizdata.relations.addEventListener(gapi.drive.realtime.EventType.VALUES_REMOVED, doRelValueChanged);
   Util.log.console("On file loaded...");
   AppContext.grid.displayAllPositions(AppContext.vizdata.getPositions());
   AppContext.grid.activateListeners();
