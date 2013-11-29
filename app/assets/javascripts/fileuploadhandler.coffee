@@ -26,8 +26,6 @@ jQuery ($) ->
         AppContext.vizdata.removeAllElements()
       if(AppContext.vizdata.getPositions().length > 0)
         AppContext.vizdata.removeAllPositions()
-
-
       $.each(fileLines, (idx, line) ->
         if(contentLineExp.test(line))
           tokens = line.split(/\s+(.+)/)
