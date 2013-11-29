@@ -77,3 +77,55 @@ xdescribe("Cluster operations - delete an element from a cell", function() {
   });
 });
 
+xdescribe('Testing Cluster Operations: ', function() {
+  var positions = {};
+  var elementId = '';
+        
+  beforeEach(function() {
+    positions.x = 0;
+    positions.y = 0;
+    elementId = 'F01';
+    VizDataModel.prototype.positions = [];
+    VizDataModel.prototype.relations = [];
+    VizDataModel.prototype.elements = [
+      {'elementId' : 'S0001' , 'description' : 'We share 10 meeting rooms, usually named after people to identify them, between 300 people, and the meeting rooms need to be kept locked.' },
+      {'elementId' : 'S0002' , 'description' : 'The receptionist helps book the room, and room users pick up the key, and usually drop it back.' },
+      {'elementId' : 'S0003' , 'description' : 'Although people are supposed to pick up and drop off the key with me, they rarely do. I have to run around and try and trace where the keys are.' },
+      {'elementId' : 'S0004' , 'description' : 'I often have back-to-back meetings, and I donâ€™t always have time to return the key.' },
+      {'elementId' : 'S0005' , 'description' : 'We lose keys to meeting rooms all the time and have to replace all the locks 3 or 4 times a year.' },
+      {'elementId' : 'S0006' , 'description' : 'We need presentation equipment for meetings.' },
+      {'elementId' : 'F01' , 'description' : 'Meeting rooms are shared by a lot of people.'},
+      {'elementId' : 'F02' , 'description' : 'Meeting rooms contain expensive equipment.'},
+      {'elementId' : 'F03' , 'description' : 'Desire to protect equipment in meeting rooms.'},
+      {'elementId' : 'F04' , 'description' : 'Limited number of meeting rooms.'},
+      {'elementId' : 'F05' , 'description' : 'Meeting rooms are booked with a single point.'},
+      {'elementId' : 'F06' , 'description' : 'Desire to pick up meeting room keys in 1 place.'},
+      {'elementId' : 'F07' , 'description' : 'Desire to return keys in 1 place.'},
+      {'elementId' : 'F08' , 'description' : 'Tendency for people to not return keys.'},
+      {'elementId' : 'F09' , 'description' : 'Difficulty in tracking down unreturned keys.'},
+      {'elementId' : 'F10' , 'description' : 'Individuals have several meetings without gaps.'},
+      {'elementId' : 'F11' , 'description' : 'Returning keys is often inconvenient'},
+      {'elementId' : 'F12' , 'description' : 'Frequent loss of meeting room keys.'},
+      {'elementId' : 'F13' , 'description' : 'Inability to distinguish keys of meeting rooms.'},
+      {'elementId' : 'F14' , 'description' : 'Use of high-quality equipment in meetings.'}
+    ];
+    this.positions = VizDataModel.prototype.positions;
+    this.positions.asArray = function(){
+      return VizDataModel.prototype.positions;
+    }
+
+    AppContext.vizdata = VizDataModel.prototype;
+  });
+
+  it('testing updatePosition on the cluster by adding a new cell on 0,0 : Position added? ', function() {
+    AppContext.grid.updatePosition(elementId, positions.x, positions.y);
+    isPositionPresent = false;
+    $.each(VizDataModel.prototype.positions, function(idx, position){
+      if(position.elementId == elementId && position.x == positions.x && position.y == positions.y){
+        isPositionPresent = true;
+        return;
+      }
+    });
+    expect(isPositionPresent).toBe(true);
+  });
+});
