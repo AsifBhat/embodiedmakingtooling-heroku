@@ -46,7 +46,7 @@ function doContentValueChanged(){
 function doRelValueChanged (){
   var model = gapi.drive.realtime.custom.getModel(this);
   Util.log.console("Relations value changed...");
-  
+  AppContext.menu.updateGraph();
 }
 
 
