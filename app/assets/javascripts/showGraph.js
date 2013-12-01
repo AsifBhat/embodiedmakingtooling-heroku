@@ -102,6 +102,7 @@ AppContext.menu.updateGraph = function(){
       relations = AppContext.vizdata.getRelations();
       $.map(relations, addedge);
       AppContext.menu.sigInst.randomLayout();
+      AppContext.menu.sigInst.draw();
     } else {
       Util.log.console("sigInst is defined");
       AppContext.menu.sigInst.emptyGraph();

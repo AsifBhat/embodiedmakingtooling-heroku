@@ -19,7 +19,7 @@ EnvJasmine.loadGlobal(EnvJasmine.libDir + "hex-0.1.0.js");
 EnvJasmine.loadGlobal(EnvJasmine.rootDir + "VizDataModel.js");
 EnvJasmine.loadGlobal(EnvJasmine.rootDir + "Util.js");
 EnvJasmine.loadGlobal(EnvJasmine.libDir + "api.js");
-EnvJasmine.loadGlobal(EnvJasmine.rootDir + "realtime-client-utils.js");
+EnvJasmine.loadGlobal(EnvJasmine.libDir + "realtime-client-utils.js");
 EnvJasmine.loadGlobal(EnvJasmine.rootDir + "realtime-callbacks.js");
 EnvJasmine.loadGlobal(EnvJasmine.rootDir + "realtime-conf.js");
 EnvJasmine.loadGlobal(EnvJasmine.rootDir + "export.js");
