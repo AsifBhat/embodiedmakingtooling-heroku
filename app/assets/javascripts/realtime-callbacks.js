@@ -36,6 +36,7 @@ function doValueChanged (){
   var model = gapi.drive.realtime.custom.getModel(this);
   Util.log.console("Model value changed...");
   AppContext.grid.displayAllPositions(AppContext.vizdata.getPositions());
+  
 }
 
 function doContentValueChanged(){
@@ -45,7 +46,7 @@ function doContentValueChanged(){
 function doRelValueChanged (){
   var model = gapi.drive.realtime.custom.getModel(this);
   Util.log.console("Relations value changed...");
-  AppContext.menu.updateGraph();
+  
 }
 
 

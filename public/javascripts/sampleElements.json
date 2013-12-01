@@ -1,10 +1,4 @@
 [
-  {"elementId" : "S0001" , "description" : "We share 10 meeting rooms, usually named after people to identify them, between 300 people, and the meeting rooms need to be kept locked." },
-  {"elementId" : "S0002" , "description" : "The receptionist helps book the room, and room users pick up the key, and usually drop it back." },
-  {"elementId" : "S0003" , "description" : "Although people are supposed to pick up and drop off the key with me, they rarely do. I have to run around and try and trace where the keys are." },
-  {"elementId" : "S0004" , "description" : "I often have back-to-back meetings, and I don't always have time to return the key." },
-  {"elementId" : "S0005" , "description" : "We lose keys to meeting rooms all the time and have to replace all the locks 3 or 4 times a year." },
-  {"elementId" : "S0006" , "description" : "We need presentation equipment for meetings." },
   {"elementId" : "F01" , "description" : "Meeting rooms are shared by a lot of people."},
   {"elementId" : "F02" , "description" : "Meeting rooms contain expensive equipment."},
   {"elementId" : "F03" , "description" : "Desire to protect equipment in meeting rooms."},

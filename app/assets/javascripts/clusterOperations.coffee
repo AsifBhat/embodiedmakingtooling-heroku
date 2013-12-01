@@ -45,12 +45,13 @@ AppContext.grid.updatePosition = (obj, datum, dataset,posx,posy) ->
         Util.log.console("Edited relation: srcposid")
         Util.log.console(newRelation)        
       else if (relation.targetPosId==posIdtoEdit)
-        newRelation = {srcElementId: relation.srcPosId, targetElementId: datum, srcPosId: relation.srcPosId, targetPosId:relation.targetPosId}
+        newRelation = {srcElementId: relation.srcElementId, targetElementId: datum, srcPosId: relation.srcPosId, targetPosId:relation.targetPosId}
         AppContext.vizdata.removeRelation(relation)
         AppContext.vizdata.addRelation(newRelation)  
         Util.log.console("Edited relation: targetposid")
         Util.log.console(newRelation)
     )
+  AppContext.menu.updateGraph();  
     # parse through relations array and find all occurences of this posId
     # if srcPosId replace srcElementID with this elementId - delete that relation and add a new relation
     # else if targetPosId replace targetElementId with this elementId
@@ -72,4 +73,5 @@ AppContext.grid.deletePosition = (posx, posy) ->
   domElemToDel.removeClass('solutionComponents')
   domElemToDel.removeClass('new')
   domElemToDel.addClass('current')
+  AppContext.menu.updateGraph(); 
   

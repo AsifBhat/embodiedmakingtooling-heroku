@@ -65,6 +65,7 @@ AppContext.menu.updateGraph = function(){
         minNodeSize: 1,
         maxNodeSize: 10
       });
+      
         // Bind events :
       AppContext.menu.sigInst.bind('overnodes',function(event){
         var nodes = event.content;
@@ -102,16 +103,17 @@ AppContext.menu.updateGraph = function(){
       $.map(relations, addedge);
       AppContext.menu.sigInst.randomLayout();
     } else {
-      Util.log.console("sigInst is defined")
-      var elems = AppContext.vizdata.getElements();
-      $.map(elems, addnode);
+      Util.log.console("sigInst is defined");
+      AppContext.menu.sigInst.emptyGraph();
+      var elems1 = AppContext.vizdata.getElements();
+      $.map(elems1, addnode);
       relations = AppContext.vizdata.getRelations();
       $.map(relations, addedge);
+      AppContext.menu.sigInst.randomLayout();
       AppContext.menu.sigInst.draw();
-      AppContext.menu.sigInst.refresh();
-      Util.log.console("Refreshed graph")
-    }    
-}
+      Util.log.console("Refreshed graph");
+    }
+};
 
 AppContext.menu.showGraph = function() {
   var gbtn = $('#showGraph')[0];
