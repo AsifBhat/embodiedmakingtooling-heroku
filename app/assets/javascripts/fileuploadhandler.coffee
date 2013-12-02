@@ -43,4 +43,5 @@ jQuery ($) ->
     else 
       Util.log.console ('HTML5 File API is not supported on your browser')
 
-  document.getElementById('import_file_input').addEventListener('change', handleFileSelect, false);
+  if(document.getElementById('import_file_input')!=null)
+    document.getElementById('import_file_input').addEventListener('change', handleFileSelect, false);

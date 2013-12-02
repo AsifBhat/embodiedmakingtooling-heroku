@@ -107,8 +107,9 @@ jQuery ($) ->
   AppContext.grid.size = ''
   AppContext.grid.hoveredElement = ''
   AppContext.grid.idwithtooltip = ''
-  AppContext.grid.newElement = ''     
-  AppContext.grid.createGrid($('#hexagonal-grid')[0])
-  AppContext.grid.initialize()
+  AppContext.grid.newElement = ''
+  if($('#hexagonal-grid')[0]!=undefined)     
+    AppContext.grid.createGrid($('#hexagonal-grid')[0])
+    AppContext.grid.initialize()
   
   
