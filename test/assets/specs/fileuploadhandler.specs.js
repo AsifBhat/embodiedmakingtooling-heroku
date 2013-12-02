@@ -1,4 +1,4 @@
-xdescribe("File Upload Handler: ", function() {
+describe("File Upload Handler: ", function() {
   var positions = {};
   var elementId = '';
   var fileText = "";
