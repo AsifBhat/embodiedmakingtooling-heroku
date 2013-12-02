@@ -11,28 +11,30 @@ jQuery ($) ->
   createElementJSON = (elemDescArray) ->
     elemJSON = {"elementId" : elemDescArray[0], "description": elemDescArray[1]}
 
+  readFileText = (fileText) ->
+    fileLines = fileText.split(splitToken)
+    contentLineExp = /([CFS]\d+)\s+(.+)/i
+    splitToken = /\n/
+    if(AppContext.vizdata.getElements().length > 0)
+      AppContext.vizdata.removeAllElements()
+    if(AppContext.vizdata.getPositions().length > 0)
+      AppContext.vizdata.removeAllPositions()
+    $.each(fileLines, (idx, line) ->
+      if(contentLineExp.test(line))
+        tokens = line.split(/\s+(.+)/)
+        AppContext.vizdata.addElement(createElementJSON(tokens))
+        true
+    )
+    AppContext.grid.reloadTypeahead()
+
   readFile = (file) ->
     fileReader = new FileReader()
     fileReader.readAsText(file);
     fileText = ''
-    fileLines = []
-    contentLineExp = /([CFS]\d+)\s+(.+)/i
-    splitToken = /\n/
-
     fileReader.onloadend =  () ->
       fileText = fileReader.result
-      fileLines = fileText.split(splitToken)
-      if(AppContext.vizdata.getElements().length > 0)
-        AppContext.vizdata.removeAllElements()
-      if(AppContext.vizdata.getPositions().length > 0)
-        AppContext.vizdata.removeAllPositions()
-      $.each(fileLines, (idx, line) ->
-        if(contentLineExp.test(line))
-          tokens = line.split(/\s+(.+)/)
-          AppContext.vizdata.addElement(createElementJSON(tokens))
-          true
-      )
-      AppContext.grid.reloadTypeahead()
+      readFileText(fileText)
+
 
   handleFileSelect = (evt) ->
     if(checkForHTML5FileSupport()) 

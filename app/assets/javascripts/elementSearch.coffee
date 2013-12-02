@@ -30,14 +30,3 @@ jQuery ($) ->
         datasetDefaults
       )
     )
-
-  AppContext.grid.reloadTypeahead = () ->
-    Util.log.console 'removing typeahead for resetting it'
-    timeoutID = {}
-    try
-      timeoutID = window.setTimeout(AppContext.grid.reload, 5000)#the timer is a hack for now: need to replace with some event that triggers post file upload
-    catch error
-      window.clearTimeout(timeoutID)
-    
-  AppContext.grid.reload = () ->
-    window.location.reload(true)

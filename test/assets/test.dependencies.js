@@ -26,4 +26,5 @@ EnvJasmine.loadGlobal(EnvJasmine.rootDir + "export.js");
 // Coffeescript files
 EnvJasmine.loadGlobal(EnvJasmine.rootDir + "../../../target/scala-2.10/resource_managed/main/public/javascripts/hex-ext-0.1.0.js");
 EnvJasmine.loadGlobal(EnvJasmine.rootDir + "../../../target/scala-2.10/resource_managed/main/public/javascripts/clusterOperations.js");
+EnvJasmine.loadGlobal(EnvJasmine.rootDir + "../../../target/scala-2.10/resource_managed/main/public/javascripts/fileuploadhandler.js");
 
