@@ -77,7 +77,7 @@ xdescribe("Cluster operations - delete an element from a cell", function() {
   });
 });
 
-xdescribe('Testing Cluster Operations: ', function() {
+describe('Testing Cluster Operations: ', function() {
   var positions = {};
   var elementId = '';
         
