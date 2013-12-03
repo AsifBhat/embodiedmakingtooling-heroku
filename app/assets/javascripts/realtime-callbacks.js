@@ -39,9 +39,9 @@ function doValueChanged (){
   
 }
 
-function doContentValueChanged(){
+/*function doContentValueChanged(){
   AppContext.grid.reloadTypeahead();
-}
+}*/
 
 function doRelValueChanged (){
   var model = gapi.drive.realtime.custom.getModel(this);
@@ -113,7 +113,7 @@ function onFileLoaded(doc) {
   AppContext.vizdata = doc.getModel().getRoot().get('vizdata');
   AppContext.vizdata.positions.addEventListener(gapi.drive.realtime.EventType.VALUES_ADDED, doValueChanged);
   AppContext.vizdata.positions.addEventListener(gapi.drive.realtime.EventType.VALUES_REMOVED, doValueChanged);
-  AppContext.vizdata.elements.addEventListener(gapi.drive.realtime.EventType.VALUES_REMOVED, doContentValueChanged);
+  //AppContext.vizdata.elements.addEventListener(gapi.drive.realtime.EventType.VALUES_REMOVED, doContentValueChanged);
   AppContext.vizdata.relations.addEventListener(gapi.drive.realtime.EventType.VALUES_ADDED, doRelValueChanged);
   AppContext.vizdata.relations.addEventListener(gapi.drive.realtime.EventType.VALUES_REMOVED, doRelValueChanged);
   Util.log.console("On file loaded...");

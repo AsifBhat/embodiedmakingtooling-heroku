@@ -12,9 +12,9 @@ jQuery ($) ->
     elemJSON = {"elementId" : elemDescArray[0], "description": elemDescArray[1]}
 
   readFileText = (fileText) ->
-    fileLines = fileText.split(splitToken)
-    contentLineExp = /([CFS]\d+)\s+(.+)/i
     splitToken = /\n/
+    contentLineExp = /([CFS]\d+)\s+(.+)/i
+    fileLines = fileText.split(splitToken)
     if(AppContext.vizdata.getElements().length > 0)
       AppContext.vizdata.removeAllElements()
     if(AppContext.vizdata.getPositions().length > 0)
