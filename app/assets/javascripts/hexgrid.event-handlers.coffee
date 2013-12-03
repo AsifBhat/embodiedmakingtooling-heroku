@@ -46,7 +46,7 @@ jQuery ($) ->
           # When a content element is selected from the typeahead, it could be
           # a new entry to the positions list or an update to an already 
           # existing entry.
-          AppContext.grid.updatePosition(obj, datum.value, dataset, x, y)
+          AppContext.grid.updatePosition(datum.value, x, y)
         )
 
         # Clear the previous query
