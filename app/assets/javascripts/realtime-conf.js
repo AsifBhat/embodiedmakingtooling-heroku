@@ -30,7 +30,7 @@ var realtimeOptions = {
   /**
    * The name of newly created Drive files.
    */
-  defaultTitle: "Embodied Making Analysis.emb",
+  defaultTitle: "Embodied Making Analysis.ema",
 
   /**
    * The MIME type of newly created Drive Files. By default the application
