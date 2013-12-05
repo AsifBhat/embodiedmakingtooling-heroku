@@ -117,6 +117,7 @@ function onFileLoaded(doc) {
   AppContext.vizdata.relations.addEventListener(gapi.drive.realtime.EventType.VALUES_ADDED, doRelValueChanged);
   AppContext.vizdata.relations.addEventListener(gapi.drive.realtime.EventType.VALUES_REMOVED, doRelValueChanged);
   Util.log.console("On file loaded...");
+  Util.log.console(AppContext.vizdata);
   AppContext.grid.displayAllPositions(AppContext.vizdata.getPositions());
   AppContext.grid.activateListeners();
   AppContext.grid.activateTypeahead(AppContext.vizdata.getElements());

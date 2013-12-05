@@ -37,7 +37,7 @@ var realtimeOptions = {
    * specific MIME type will be used:
    *     application/vnd.google-apps.drive-sdk.
    */
-  newFileMimeType: null, // Using default.
+  newFileMimeType: "application/json", // Using default.
 
   /**
    * Function to be called every time a Realtime file is loaded.
