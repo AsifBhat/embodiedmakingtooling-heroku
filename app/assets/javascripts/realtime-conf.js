@@ -53,7 +53,7 @@ var realtimeOptions = {
    * Function to be called after authorization and before loading files.
    * This should prompt for the file name for a new project.
    */
-  afterAuth: null // No action.
+  afterAuth: doAfterAuth // No action.
 };
 
 /**

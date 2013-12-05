@@ -110,7 +110,9 @@ function initializeModel(model) {
  * 'at'param doc {gapi.drive.realtime.Document} the Realtime document.
  */
 function onFileLoaded(doc) {
-  AppContext.vizdata = doc.getModel().getRoot().get('vizdata');
+  Util.log.console("Doc:");
+  Util.log.console(doc);
+  /*AppContext.vizdata = doc.getModel().getRoot().get('vizdata');
   AppContext.vizdata.positions.addEventListener(gapi.drive.realtime.EventType.VALUES_ADDED, doValueChanged);
   AppContext.vizdata.positions.addEventListener(gapi.drive.realtime.EventType.VALUES_REMOVED, doValueChanged);
   //AppContext.vizdata.elements.addEventListener(gapi.drive.realtime.EventType.VALUES_REMOVED, doContentValueChanged);
@@ -120,5 +122,9 @@ function onFileLoaded(doc) {
   Util.log.console(AppContext.vizdata);
   AppContext.grid.displayAllPositions(AppContext.vizdata.getPositions());
   AppContext.grid.activateListeners();
-  AppContext.grid.activateTypeahead(AppContext.vizdata.getElements());
+  AppContext.grid.activateTypeahead(AppContext.vizdata.getElements());*/
+}
+
+function doAfterAuth () {
+  Util.log.console("After auth");
 }
