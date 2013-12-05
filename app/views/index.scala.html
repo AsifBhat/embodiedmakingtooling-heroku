@@ -11,7 +11,13 @@
 	</div>
     <button id='showGraph' value='show' onclick='AppContext.menu.showGraph()'>Show Graph</button>
 </div>
-<div id="message_board">
+
+<div class="progress flash_board" id="progress_container">
+  <div class="bar" id="progress_bar"></div>
+  <br>
+  <div class="text-left text-info" style="display:none"><strong>Loading File: </strong></div>
+</div>
+<div id="message_board" class="flash_board">
   <div id="message"></div>
 </div>
 <div id='graphView' style='display:none;position:absolute;z-index: 1010;margin-top:100px;margin-left:100px;height:400px;width:400px;'>

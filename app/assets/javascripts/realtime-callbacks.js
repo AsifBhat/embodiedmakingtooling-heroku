@@ -140,7 +140,6 @@ function onFileLoaded(doc) {
   AppContext.grid.activateTypeahead(AppContext.vizdata.getElements());*/
 }
 
-function doAfterAuth (arg) {
+function doAfterAuth () {
   Util.log.console("After auth");
-  //Util.log.console(gapi.drive.realtime.getToken());
 }
