@@ -12,6 +12,21 @@ function registerTypes() {
   VizDataModel.prototype.elements = gapi.drive.realtime.custom.collaborativeField('elements');
   gapi.drive.realtime.custom.registerType(VizDataModel, 'VizDataModel');
   gapi.drive.realtime.custom.setInitializer(VizDataModel, doInitialize);
+  gapi.drive.realtime.custom.setOnLoaded(VizDataModel, onLoaded);
+}
+
+function onLoaded (){
+  Util.log.console("On Load");
+  var model = gapi.drive.realtime.custom.getModel(this);
+   AppContext.vizdata = model.getRoot().get('vizdata');
+  AppContext.vizdata.positions.addEventListener(gapi.drive.realtime.EventType.VALUES_ADDED, doValueChanged);
+  AppContext.vizdata.positions.addEventListener(gapi.drive.realtime.EventType.VALUES_REMOVED, doValueChanged);
+  //AppContext.vizdata.elements.addEventListener(gapi.drive.realtime.EventType.VALUES_REMOVED, doContentValueChanged);
+  AppContext.vizdata.relations.addEventListener(gapi.drive.realtime.EventType.VALUES_ADDED, doRelValueChanged);
+  AppContext.vizdata.relations.addEventListener(gapi.drive.realtime.EventType.VALUES_REMOVED, doRelValueChanged);
+  AppContext.grid.displayAllPositions(AppContext.vizdata.getPositions());
+  AppContext.grid.activateListeners();
+  AppContext.grid.activateTypeahead(AppContext.vizdata.getElements());
 }
 
 /**
@@ -112,8 +127,8 @@ function initializeModel(model) {
 function onFileLoaded(doc) {
   Util.log.console("Doc:");
   Util.log.console(doc);
-  /*AppContext.vizdata = doc.getModel().getRoot().get('vizdata');
-  AppContext.vizdata.positions.addEventListener(gapi.drive.realtime.EventType.VALUES_ADDED, doValueChanged);
+  AppContext.vizdata = doc.getModel().getRoot().get('vizdata');
+  /*AppContext.vizdata.positions.addEventListener(gapi.drive.realtime.EventType.VALUES_ADDED, doValueChanged);
   AppContext.vizdata.positions.addEventListener(gapi.drive.realtime.EventType.VALUES_REMOVED, doValueChanged);
   //AppContext.vizdata.elements.addEventListener(gapi.drive.realtime.EventType.VALUES_REMOVED, doContentValueChanged);
   AppContext.vizdata.relations.addEventListener(gapi.drive.realtime.EventType.VALUES_ADDED, doRelValueChanged);
@@ -125,6 +140,7 @@ function onFileLoaded(doc) {
   AppContext.grid.activateTypeahead(AppContext.vizdata.getElements());*/
 }
 
-function doAfterAuth () {
+function doAfterAuth (arg) {
   Util.log.console("After auth");
+  //Util.log.console(gapi.drive.realtime.getToken());
 }
