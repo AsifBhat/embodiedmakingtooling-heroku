@@ -47,8 +47,10 @@ AppContext.grid.showTooltip = (x,y,tooltipInfo) ->
     "top": (inv.y + AppContext.grid.grid.origin.y) + "px",
     "z-index" : 10
   })
+  tooltipHTML = tooltipInfo+'<br><button class="deleteButton btn-mini"><span class="icon-remove remove_btn"></span></button>'
   AppContext.grid.idwithtooltip.tooltip('show')
-  AppContext.grid.idwithtooltip.attr("data-original-title",tooltipInfo+'<br><button class="deleteButton btn-mini"><span class="icon-remove remove_btn"></span></button>')
+  AppContext.grid.idwithtooltip.attr("data-original-title",tooltipHTML)
+  $('.tooltip-inner').html(tooltipHTML)
   $(".deleteButton").click(() -> 
     AppContext.grid.deletePosition(parseInt(x,10),parseInt(y,10))
   )
