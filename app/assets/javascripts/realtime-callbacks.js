@@ -113,7 +113,7 @@ function initializeModel(model) {
   /*After creating the VizDataModel object, we can now assign it to an object in the 
   hierarchy (in this case, the root) as follows */
   model.getRoot().set('vizdata', AppContext.vizdata);
-  AppContext.grid.activateListeners();
+  //AppContext.grid.activateListeners();
   //AppContext.grid.activateTypeahead();
 }
 

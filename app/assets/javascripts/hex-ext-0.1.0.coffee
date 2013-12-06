@@ -16,8 +16,8 @@ AppContext.grid.initialize = () ->
   AppContext.grid.hoveredElement = AppContext.grid.createHex('current')
   $(AppContext.grid.grid.root).append(AppContext.grid.hoveredElement)
   AppContext.grid.idwithtooltip =  $('#desctooltip')
-  AppContext.grid.idwithtooltip.css("width", AppContext.grid.size + "px")
-  AppContext.grid.idwithtooltip.css("height", AppContext.grid.size + "px")   
+  AppContext.grid.idwithtooltip.css("width", AppContext.grid.grid.tileWidth + "px")
+  AppContext.grid.idwithtooltip.css("height", AppContext.grid.grid.tileHeight + "px")   
   AppContext.grid 
   # Should we somehow move content assisst here? 
 
@@ -42,16 +42,16 @@ AppContext.grid.placeNewElement = (xc, yc) ->
 # elementid should be replaced with the content to be displayed in the tooltip.
 AppContext.grid.showTooltip = (x,y,tooltipInfo) ->
   inv = AppContext.grid.grid.screenpos(x, y)
-  AppContext.grid.idwithtooltip.attr("data-original-title",tooltipInfo+"<br/><button id='deleteButton' class='btn-mini'><span class='icon-remove remove_btn'></span></button>")
   AppContext.grid.idwithtooltip.css({
-    "display": "",
     "left": (inv.x + AppContext.grid.grid.origin.x) + "px",
-    "top": (inv.y + AppContext.grid.grid.origin.y) + "px"
+    "top": (inv.y + AppContext.grid.grid.origin.y) + "px",
+    "z-index" : 10
   })
-  $("#desctooltip").tooltip('show')
+  AppContext.grid.idwithtooltip.attr("data-original-title",tooltipInfo+'<br><button id="deleteButton" class="btn-mini"><span class="icon-remove remove_btn"></span></button>')
   $("#deleteButton").click((e) -> 
     AppContext.grid.deletePosition(parseInt(x,10),parseInt(y,10))
   )
+  $("#desctooltip").tooltip('show')
   AppContext.grid.idwithtooltip
 
 AppContext.grid.hideTooltip = () ->  
@@ -100,6 +100,10 @@ AppContext.grid.activateListeners = () ->
   # Tiletap is only fired when not dragging the grid
   AppContext.grid.grid.addEvent("tiletap", (e, x, y) ->
     AppContext.grid.clickEventHandler(e,x,y)
+  )
+
+  AppContext.grid.grid.addEvent("tileout", (e, x, y) ->
+    AppContext.grid.hoveroutEventHandler(e, x, y)
   )
 
 jQuery ($) ->

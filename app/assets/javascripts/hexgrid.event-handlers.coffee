@@ -7,9 +7,8 @@ jQuery ($) ->
         # The tooltip info at this stage is just the description.  Later this
         # could be some rich content.
         tooltipInfo = AppContext.vizdata.getElementDescription(elementUnderMouse)
-        AppContext.grid.showTooltip(x,y,tooltipInfo)
-      else
-        AppContext.grid.hideTooltip()
+        if(tooltipInfo != '') 
+          AppContext.grid.showTooltip(x,y,tooltipInfo)
       AppContext.grid.showHoveredElement(x,y) 
 
   AppContext.grid.clickEventHandler = (e, x, y) ->
@@ -54,3 +53,6 @@ jQuery ($) ->
 
         # Place focus
         .focus()
+
+  AppContext.grid.hoveroutEventHandler = (e,x,y) ->
+    AppContext.grid.hideTooltip()
