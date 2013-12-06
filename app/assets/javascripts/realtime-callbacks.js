@@ -16,17 +16,6 @@ function registerTypes() {
 }
 
 /*function onLoaded (){
-  Util.log.console("On Load");
-  var model = gapi.drive.realtime.custom.getModel(this);
-   AppContext.vizdata = model.getRoot().get('vizdata');
-  AppContext.vizdata.positions.addEventListener(gapi.drive.realtime.EventType.VALUES_ADDED, doValueChanged);
-  AppContext.vizdata.positions.addEventListener(gapi.drive.realtime.EventType.VALUES_REMOVED, doValueChanged);
-  //AppContext.vizdata.elements.addEventListener(gapi.drive.realtime.EventType.VALUES_REMOVED, doContentValueChanged);
-  AppContext.vizdata.relations.addEventListener(gapi.drive.realtime.EventType.VALUES_ADDED, doRelValueChanged);
-  AppContext.vizdata.relations.addEventListener(gapi.drive.realtime.EventType.VALUES_REMOVED, doRelValueChanged);
-  AppContext.grid.displayAllPositions(AppContext.vizdata.getPositions());
-  AppContext.grid.activateListeners();
-  AppContext.grid.activateTypeahead(AppContext.vizdata.getElements());
 }*/
 
 /**
@@ -141,7 +130,6 @@ function onFileLoaded(doc) {
 }
 
 function empty(){
-
 }
 
 function doAfterAuth () {

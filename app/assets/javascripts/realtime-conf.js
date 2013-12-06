@@ -25,7 +25,7 @@ var realtimeOptions = {
   /**
    * Autocreate files right after auth automatically.
    */
-  autoCreate: false,
+  autoCreate: true,
 
   /**
    * The name of newly created Drive files.
