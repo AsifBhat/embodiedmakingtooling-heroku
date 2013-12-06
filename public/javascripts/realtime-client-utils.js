@@ -354,6 +354,7 @@ rtclient.RealtimeLoader.prototype.load = function() {
 
   // We have file IDs in the query parameters, so we will use them to load a file.
   if (fileIds) {
+    console.log("We have file IDs in the query parameters, so we will use them to load a file.");
     for (var index in fileIds) {
       gapi.drive.realtime.load(fileIds[index], this.onFileLoaded, this.initializeModel, this.handleErrors);
     }

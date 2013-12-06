@@ -12,10 +12,10 @@ function registerTypes() {
   VizDataModel.prototype.elements = gapi.drive.realtime.custom.collaborativeField('elements');
   gapi.drive.realtime.custom.registerType(VizDataModel, 'VizDataModel');
   gapi.drive.realtime.custom.setInitializer(VizDataModel, doInitialize);
-  gapi.drive.realtime.custom.setOnLoaded(VizDataModel, onLoaded);
+  //gapi.drive.realtime.custom.setOnLoaded(VizDataModel, onLoaded);
 }
 
-function onLoaded (){
+/*function onLoaded (){
   Util.log.console("On Load");
   var model = gapi.drive.realtime.custom.getModel(this);
    AppContext.vizdata = model.getRoot().get('vizdata');
@@ -27,7 +27,7 @@ function onLoaded (){
   AppContext.grid.displayAllPositions(AppContext.vizdata.getPositions());
   AppContext.grid.activateListeners();
   AppContext.grid.activateTypeahead(AppContext.vizdata.getElements());
-}
+}*/
 
 /**
 Callback in the event of the collaborative data being changed  
@@ -128,7 +128,7 @@ function onFileLoaded(doc) {
   Util.log.console("Doc:");
   Util.log.console(doc);
   AppContext.vizdata = doc.getModel().getRoot().get('vizdata');
-  /*AppContext.vizdata.positions.addEventListener(gapi.drive.realtime.EventType.VALUES_ADDED, doValueChanged);
+  AppContext.vizdata.positions.addEventListener(gapi.drive.realtime.EventType.VALUES_ADDED, doValueChanged);
   AppContext.vizdata.positions.addEventListener(gapi.drive.realtime.EventType.VALUES_REMOVED, doValueChanged);
   //AppContext.vizdata.elements.addEventListener(gapi.drive.realtime.EventType.VALUES_REMOVED, doContentValueChanged);
   AppContext.vizdata.relations.addEventListener(gapi.drive.realtime.EventType.VALUES_ADDED, doRelValueChanged);
@@ -137,9 +137,14 @@ function onFileLoaded(doc) {
   Util.log.console(AppContext.vizdata);
   AppContext.grid.displayAllPositions(AppContext.vizdata.getPositions());
   AppContext.grid.activateListeners();
-  AppContext.grid.activateTypeahead(AppContext.vizdata.getElements());*/
+  AppContext.grid.activateTypeahead(AppContext.vizdata.getElements());
+}
+
+function empty(){
+
 }
 
 function doAfterAuth () {
   Util.log.console("After auth");
+  //rtclient.createRealtimeFile("User suggested name.ema", "application/json",empty);
 }
