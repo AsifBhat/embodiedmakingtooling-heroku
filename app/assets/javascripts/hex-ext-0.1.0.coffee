@@ -77,8 +77,6 @@ AppContext.grid.placeOnGrid = (elemwithpos) ->
 AppContext.grid.displayAllPositions = (positions) ->
   $('.forces, .solutionComponents, .stories').remove()
   $("#desctooltip").tooltip('hide')
-  Util.log.console("Displaying all clusters")
-  Util.log.console(positions)
   $.each(positions, (i, value) ->
     AppContext.grid.placeOnGrid (value)
   )
@@ -114,8 +112,7 @@ jQuery ($) ->
   AppContext.grid.hoveredElement = ''
   AppContext.grid.idwithtooltip = ''
   AppContext.grid.newElement = ''
-  if($('#hexagonal-grid')[0]!=undefined)     
-    AppContext.grid.createGrid($('#hexagonal-grid')[0])
-    AppContext.grid.initialize()
-  
-  
+  AppContext.grid.initApp = () ->
+    if($('#hexagonal-grid')[0]!=undefined)     
+      AppContext.grid.createGrid($('#hexagonal-grid')[0])
+      AppContext.grid.initialize()
