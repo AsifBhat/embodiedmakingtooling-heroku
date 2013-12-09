@@ -1,27 +1,3 @@
-/**
- * Copyright 2013 Google Inc. All Rights Reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
- "use strict";
-
-/**
- * @fileoverview Common utility functionality for Google Drive Realtime API,
- * including authorization and file loading. This functionality should serve
- * mostly as a well-documented example, though is usable in its own right.
- */
-
 
 /**
  * @namespace Realtime client utilities namespace.
@@ -63,20 +39,15 @@ rtclient.REALTIME_MIMETYPE = 'application/vnd.google-apps.drive-sdk';
  */
 rtclient.getParams = function() {
   var params = {};
-  var hashFragment = window.location.search;
-  console.log(hashFragment);
+  var hashFragment = window.location.hash;
   if (hashFragment) {
     // split up the query string and store in an object
     var paramStrs = hashFragment.slice(1).split("&");
-    console.log("paramstrsssss")
-    console.log(paramStrs);
     for (var i = 0; i < paramStrs.length; i++) {
       var paramStr = paramStrs[i].split("=");
       params[paramStr[0]] = unescape(paramStr[1]);
-      console.log("Adding param"+paramStr)
     }
   }
-  console.log("Params::::::::::::")
   console.log(params);
   return params;
 }
@@ -100,7 +71,7 @@ rtclient.getOption = function(options, key, defaultValue) {
   if (value == undefined) {
     console.error(key + ' should be present in the options.');
   }
-  //console.log(value);
+  console.log(value);
   return value;
 }
 
@@ -346,8 +317,7 @@ rtclient.RealtimeLoader.prototype.handleErrors = function(e) {
  * parameters.
  */
 rtclient.RealtimeLoader.prototype.load = function() {
-  var fileIds = rtclient.params['ids'];
-  console.log(rtclient.params);
+  var fileIds = rtclient.params['fileIds'];
   if (fileIds) {
     fileIds = fileIds.split(',');
   }
@@ -360,7 +330,6 @@ rtclient.RealtimeLoader.prototype.load = function() {
 
   // We have file IDs in the query parameters, so we will use them to load a file.
   if (fileIds) {
-    console.log("We have file IDs in the query parameters, so we will use them to load a file.");
     for (var index in fileIds) {
       gapi.drive.realtime.load(fileIds[index], this.onFileLoaded, this.initializeModel, this.handleErrors);
     }

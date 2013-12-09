@@ -6,10 +6,12 @@ var realtimeOptions = {
    * Client ID from the console.
    * Original ID */
    // for localhost
-   //clientId: '883917966367-ldups260gjb3lq4e15jbevk5om5mugg9.apps.googleusercontent.com',
+   //changed to match the local Client-ID
+   //clientId: '71045400673-s9agh1hpuunu5v2k46bkbpivdrvf8ibj.apps.googleusercontent.com',
    
-   // for heroku-staging
-  clientId: '883917966367-h1np3jeqi9v00aku4ugphoh1f5939jnk.apps.googleusercontent.com',
+   // for heroku-staging 
+   // Changed to match the Client ID for Heroku App
+  clientId: '603105479306-nuf90e2hubq5paefcbr4kun5bcu86r6f.apps.googleusercontent.com',
 
 
   /**
@@ -37,7 +39,7 @@ var realtimeOptions = {
    * specific MIME type will be used:
    *     application/vnd.google-apps.drive-sdk.
    */
-  newFileMimeType: "application/json", // Using default.
+  newFileMimeType: null, // Using default.
 
   /**
    * Function to be called every time a Realtime file is loaded.
@@ -53,7 +55,7 @@ var realtimeOptions = {
    * Function to be called after authorization and before loading files.
    * This should prompt for the file name for a new project.
    */
-  afterAuth: doAfterAuth // No action.
+  afterAuth: null // No action.
 };
 
 /**
