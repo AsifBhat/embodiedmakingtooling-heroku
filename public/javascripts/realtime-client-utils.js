@@ -39,7 +39,11 @@ rtclient.REALTIME_MIMETYPE = 'application/vnd.google-apps.drive-sdk';
  */
 rtclient.getParams = function() {
   var params = {};
-  var hashFragment = window.location.hash;
+  var hashFragment = "";
+  if(window.location.hash.length != 0)
+    hashFragment = window.location.hash;
+  else if(window.location.search.length != 0 )
+    hashFragment = window.location.search;
   if (hashFragment) {
     // split up the query string and store in an object
     var paramStrs = hashFragment.slice(1).split("&");
@@ -318,6 +322,10 @@ rtclient.RealtimeLoader.prototype.handleErrors = function(e) {
  */
 rtclient.RealtimeLoader.prototype.load = function() {
   var fileIds = rtclient.params['fileIds'];
+
+  if(window.location.search.length != 0 )
+    fileIds = rtclient.params['ids'];
+
   if (fileIds) {
     fileIds = fileIds.split(',');
   }

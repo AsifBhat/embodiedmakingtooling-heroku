@@ -4,7 +4,7 @@
 //var developerKey = 'AIzaSyBYEmPSy44XpEXayCK9Xt8_vw_qKLFAkFs';
 
 //Heroku App Key
-var developerKey = 'AIzaSyA1k5GbuawECoBOIQaTFr3PRKB-Gq0RWEM';
+var developerKey = 'AIzaSyD7MkLjTksTUuovzbvMfXHMrYMh7EnYAz4';
 
 AppContext.grid.loadApplication = function(){
   AppContext.grid.initApp();

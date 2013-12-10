@@ -11,7 +11,7 @@ var realtimeOptions = {
    
    // for heroku-staging 
    // Changed to match the Client ID for Heroku App
-  clientId: '603105479306-nuf90e2hubq5paefcbr4kun5bcu86r6f.apps.googleusercontent.com',
+   clientId: '883917966367-h1np3jeqi9v00aku4ugphoh1f5939jnk.apps.googleusercontent.com',
 
 
   /**
@@ -39,7 +39,7 @@ var realtimeOptions = {
    * specific MIME type will be used:
    *     application/vnd.google-apps.drive-sdk.
    */
-  newFileMimeType: null, // Using default.
+  newFileMimeType: "application/json", // Using default.
 
   /**
    * Function to be called every time a Realtime file is loaded.
