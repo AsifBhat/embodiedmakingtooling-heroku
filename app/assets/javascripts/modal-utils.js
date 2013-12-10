@@ -101,9 +101,8 @@ function createPicker() {
   }
 
 $(document).ready(function(){
-  if(window.location.hash.length == 0)
+  if(window.location.hash.length == 0 && window.location.search.length == 0)
     AppContext.grid.loadPicker();
   else
     window.onload = AppContext.grid.loadApplication();
-  //$('#project_name').text(realtimeOptions.defaultTitle);
 });
