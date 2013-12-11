@@ -70,7 +70,6 @@ function doRelValueChanged (){
   AppContext.menu.updateGraph();
 }
 
-
 /**
  * The initializer is called exactly once in the lifetime of an object, 
  * immediately after the object is first created. When that object is reloaded
@@ -101,7 +100,6 @@ function doRelValueChanged (){
     this.addElement(temp[i]);
   }
   model.endCompoundOperation();
-  Util.log.console(this.getElements());
  }
 
 /**
@@ -119,8 +117,6 @@ function initializeModel(model) {
   /*After creating the VizDataModel object, we can now assign it to an object in the 
   hierarchy (in this case, the root) as follows */
   model.getRoot().set('vizdata', AppContext.vizdata);
-  //AppContext.grid.activateListeners();
-  //AppContext.grid.activateTypeahead();
 }
 
 /**
@@ -133,25 +129,22 @@ function initializeModel(model) {
 function onFileLoaded(doc) {
   Util.log.console("Doc:");
   Util.log.console(doc);
+  Util.log.console("On file loaded...");
   AppContext.vizdata = doc.getModel().getRoot().get('vizdata');
+
   AppContext.vizdata.positions.addEventListener(gapi.drive.realtime.EventType.VALUES_ADDED, doPosValueChanged);
   AppContext.vizdata.positions.addEventListener(gapi.drive.realtime.EventType.VALUES_REMOVED, doPosValueChanged);
   AppContext.vizdata.elements.addEventListener(gapi.drive.realtime.EventType.VALUES_ADDED, doContentValueChanged);
   AppContext.vizdata.elements.addEventListener(gapi.drive.realtime.EventType.VALUES_REMOVED, doContentValueChanged);
   /*AppContext.vizdata.elements.addEventListener(gapi.drive.realtime.EventType.VALUES_CHANGED, doContentValueChanged);*/
+
   AppContext.vizdata.relations.addEventListener(gapi.drive.realtime.EventType.VALUES_ADDED, doRelValueChanged);
   AppContext.vizdata.relations.addEventListener(gapi.drive.realtime.EventType.VALUES_REMOVED, doRelValueChanged);
-  Util.log.console("On file loaded...");
-  Util.log.console(AppContext.vizdata);
+
   AppContext.grid.displayAllPositions(AppContext.vizdata.getPositions());
+  
   AppContext.grid.activateListeners();
   AppContext.grid.activateTypeahead(AppContext.vizdata.getElements());
-}
 
-function empty(){
-}
-
-function doAfterAuth () {
-  Util.log.console("After auth");
-  //rtclient.createRealtimeFile("User suggested name.ema", "application/json",empty);
+  AppContext.project.getFileDetails();
 }

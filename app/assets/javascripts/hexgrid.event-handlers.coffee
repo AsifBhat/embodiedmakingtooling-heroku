@@ -72,5 +72,7 @@ jQuery ($) ->
 
   AppContext.grid.hoveroutEventHandler = (e,x,y) ->
     AppContext.grid.hideTooltip()
-
   
+  AppContext.project.handleNameChange = () ->
+    $('.proj_title').text(AppContext.vizdata.getProjectTitle());
+
