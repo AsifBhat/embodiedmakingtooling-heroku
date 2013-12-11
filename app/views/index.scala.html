@@ -1,15 +1,17 @@
 @main("The Embodied Making Tool") {
-
-<div id="menubar">
-    <button id="authorizeButton" disabled>Authorize</button>
-    <button id='exportToGexf' onclick='AppContext.menu.exportToGexf()'>Download as GEXF</button>
-    <div id="import_file">
-		<span class="label label-info import_label">Select a File to Import</span>
-	    <div class="import_btn">
-	       <input type="file" name="importedFile" id="import_file_input">
-		</div>
-	</div>
-    <button id='showGraph' value='show' onclick='AppContext.menu.showGraph()'>Show Graph</button>
+<div class="row page-header">
+  <div class="row title_holder"><div class="proj_title span6">Sticky footer</div><div class="title_edit span3"><button id="edit_project_name" class="btn-mini"><span class="icon-edit"></span></button></div></div>
+  <div id="menubar">
+      <button id="authorizeButton" disabled>Authorize</button>
+      <button id='exportToGexf' onclick='AppContext.menu.exportToGexf()'>Download as GEXF</button>
+      <div id="import_file">
+  		<span class="label label-info import_label">Select a File to Import</span>
+  	    <div class="import_btn">
+  	       <input type="file" name="importedFile" id="import_file_input">
+  		</div>
+  	</div>
+      <button id='showGraph' value='show' onclick='AppContext.menu.showGraph()'>Show Graph</button>
+  </div>
 </div>
 
 <div class="progress flash_board" id="progress_container">
