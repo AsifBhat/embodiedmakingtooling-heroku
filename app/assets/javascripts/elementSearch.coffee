@@ -20,6 +20,7 @@ jQuery ($) ->
     #<input type="text" name="query">
     #$('#content-search').append('<input type="text" name="query">')
 
+    
     $('body').append('<div id="content-search"><input type="text" name="query"></div>'); 
     $('#content-search input').typeahead(
       $.extend(true, 
@@ -30,3 +31,17 @@ jQuery ($) ->
         datasetDefaults
       )
     )
+
+  AppContext.grid.reloadTypeahead = (elementList)  ->
+    $('#content-search input').typeahead('destroy');
+    $('#content-search input').typeahead(
+      $.extend(true, 
+        {
+          name: 'stories'+Math.random(), 
+          local: generateLocalElements(elementList)
+        },
+        datasetDefaults
+      )
+    )
+    Util.log.console("Reloaded")
+    Util.log.console(elementList)

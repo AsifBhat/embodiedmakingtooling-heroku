@@ -4,6 +4,8 @@ AppContext.grid = {};
 
 AppContext.menu = {};
 
+AppContext.controllers = {};
+
 
 AppContext.grid.reloadTypeahead = function() {
   Util.log.console ('Reloading the page to recreate typeahead');

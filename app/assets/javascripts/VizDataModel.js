@@ -60,6 +60,36 @@
     return this.elements.asArray();
   };
 
+  isStory = function(elem){
+    return (elem.elementId.substr(0,1)=='S');
+  };
+
+  isForce = function(elem){
+    return (elem.elementId.substr(0,1)=='F');
+  };
+
+  isSolution = function(elem){
+    return (elem.elementId.substr(0,1)=='C');
+  };
+
+  VizDataModel.prototype.getStories = function() {
+    var temp = this.elements.asArray();
+    return temp.filter(isStory);
+  };
+
+  VizDataModel.prototype.getForces = function() {
+    var temp = this.elements.asArray();
+    return temp.filter(isForce);
+  };
+
+  VizDataModel.prototype.getSolutions = function() {
+    var temp = this.elements.asArray();
+    return temp.filter(isSolution);
+  };
+
+  VizDataModel.prototype.addElement = function(element) {
+    this.elements.push(element);
+  };
   VizDataModel.prototype.addElement = function(element) {
     this.elements.push(element);
   };

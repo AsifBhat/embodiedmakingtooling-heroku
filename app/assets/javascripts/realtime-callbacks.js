@@ -36,16 +36,16 @@ listeners, but listener code should check the isLocal property of change
 events so that local changes can be ignored. See Handle Events for more 
 detailed information on event handling.
 */
-function doValueChanged (){
+function doPosValueChanged (){
   var model = gapi.drive.realtime.custom.getModel(this);
   Util.log.console("Model value changed...");
   AppContext.grid.displayAllPositions(AppContext.vizdata.getPositions());
   
 }
 
-/*function doContentValueChanged(){
-  AppContext.grid.reloadTypeahead();
-}*/
+function doContentValueChanged(){
+  AppContext.grid.reloadTypeahead(AppContext.vizdata.getElements());
+}
 
 function doRelValueChanged (){
   var model = gapi.drive.realtime.custom.getModel(this);
@@ -117,9 +117,11 @@ function onFileLoaded(doc) {
   Util.log.console("Doc:");
   Util.log.console(doc);
   AppContext.vizdata = doc.getModel().getRoot().get('vizdata');
-  AppContext.vizdata.positions.addEventListener(gapi.drive.realtime.EventType.VALUES_ADDED, doValueChanged);
-  AppContext.vizdata.positions.addEventListener(gapi.drive.realtime.EventType.VALUES_REMOVED, doValueChanged);
-  //AppContext.vizdata.elements.addEventListener(gapi.drive.realtime.EventType.VALUES_REMOVED, doContentValueChanged);
+  AppContext.vizdata.positions.addEventListener(gapi.drive.realtime.EventType.VALUES_ADDED, doPosValueChanged);
+  AppContext.vizdata.positions.addEventListener(gapi.drive.realtime.EventType.VALUES_REMOVED, doPosValueChanged);
+  AppContext.vizdata.elements.addEventListener(gapi.drive.realtime.EventType.VALUES_ADDED, doContentValueChanged);
+  /*AppContext.vizdata.elements.addEventListener(gapi.drive.realtime.EventType.VALUES_REMOVED, doContentValueChanged);
+  AppContext.vizdata.elements.addEventListener(gapi.drive.realtime.EventType.VALUES_CHANGED, doContentValueChanged);*/
   AppContext.vizdata.relations.addEventListener(gapi.drive.realtime.EventType.VALUES_ADDED, doRelValueChanged);
   AppContext.vizdata.relations.addEventListener(gapi.drive.realtime.EventType.VALUES_REMOVED, doRelValueChanged);
   Util.log.console("On file loaded...");

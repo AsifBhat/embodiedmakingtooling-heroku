@@ -10,7 +10,151 @@
 		</div>
 	</div>
     <button id='showGraph' value='show' onclick='AppContext.menu.showGraph()'>Show Graph</button>
+    <button onclick='AppContext.menu.showElements()'>Elements</button>
 </div>
+
+<!-- Elements -->
+<div id='elementsContainer' style='margin-top:100px;position:absolute;margin-left:100px;z-index:1010;display:none;background-color:white;'>
+         <div id='newElementContainer'  style='width:400px; margin-left:5%;'>
+            <div class="panel-group" id="accordion">
+               <div class="panel panel-default">
+                  <div class="panel-heading">
+                     <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="" href="#collapseThree">
+                          <div class="row">
+                            <span class="badge" style='margin-left:5%;'>New</span>
+                          </div>  
+                        </a>
+                     </h4>
+                  </div>
+                  <div id="collapseThree" class="panel-collapse collapse">
+                     <div class="panel-body" >
+                        <div class="row">
+                          
+                          <div class="span5"><!--<textarea  id="elemtextarea" rows='1' style="overflow:hidden;width:90%;margin-left:5%;margin-bottom:1%;color:#808080;border-color: #dbdbdb;line-height: 14px;
+                                           font-size: 12px;resize:none;height:33px;"></textarea></div> -->
+                                           <textarea class='elementsView' style='width:90%;margin-bottom:1%;line-height: 14px;font-size:12px;resize:none;height:33px; overflow:hidden;color:#808080;border-color: #dbdbdb;' autofocus oninput='enableButtons(this.value)' id='newElementText'></textarea></div>
+                        </div>
+                        <div class="row">
+                          
+                          <div  class="span5">
+                            <div class="btn-group" id="addElementsbtn" data-toggle="buttons-radio">
+                              <!--<button type="button" class="btn btn-default btn-small">
+                                  <span class="glyphicon glyphicon-plus"></span> Story
+                              </button> -->
+                              <a href="#" class="btn btn-default btn-mini disabled" onClick='addStory()'><i class="icon-plus icon-black"></i> Story</a>
+                              <a href="#" class="btn btn-default btn-mini disabled" onClick='addForce()'><i class="icon-plus icon-black"></i> Force</a>
+                              <a href="#" class="btn btn-default btn-mini disabled" onClick='addSolution()'><i class="icon-plus icon-black"></i> Solution</a>
+                            </div>
+                          </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+
+               <div class="panel panel-default">
+                  <div class="panel-heading">
+                     <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="" href="#collapsetwo">
+                          <div class="row">
+                            <span class="badge" style='margin-left:5%;'>Edit</span>
+                          </div> 
+                        </a>  
+                          
+                     </h4>
+                  </div>
+                  <div id="collapsetwo" class="panel-collapse collapse">
+
+                     <div class="panel-body">
+                        <ul class="nav nav-tabs">
+                          <li class='active' ><a href="#stories" data-toggle="tab">Stories</a></li>
+                          <li><a href="#forces" data-toggle="tab">Forces</a></li>
+                          <li><a href="#components" data-toggle="tab">Sol... Comp...</a></li>
+                        </ul>                          
+                        <div >
+                           <div style='width: 100%;'>
+                              <!-- Tab panes -->
+                              <div class="tab-content" style="height: 250px;overflow-y: scroll;overflow-x: hidden;">
+                                <!-------------------------------- STORIES --------------------- -->
+                                <div class="tab-pane  fade in active" id="stories">
+                                  <div ng-controller="AppContext.controllers.StoriesListCtrl" class='container' style='width: 380px;' id="storiesList">
+                                    <div>
+                                    <div class="row-fluid" ng-repeat="story in stories">
+                                       <div class="row" style='margin-top:1%;'>
+                                          <div class="span8 offset1"><textarea class='elementsView' style='width:100%;line-height: 14px;font-size: 12px;resize:none;height:17px;overflow:hidden;color:#808080;border-color: #dbdbdb;' >{{story.description}}</textarea>
+                                          </div>
+                                          <div class="span2 offset1">
+                                             <div class='row'>
+                                                <a href="#" class="btn btn-default btn-mini"><i class="icon-remove icon-black"></i></a> 
+                                                <a href="#" class="btn btn-default btn-mini"><i class="icon-pencil icon-black"></i></a>
+                                             </div>
+                                          </div>
+                                       </div>
+                                      </div> 
+                                  </div>
+                                  </div>
+                                </div>
+
+                                  <!-------------------------------- FORCES --------------------- -->
+                                <div class="tab-pane  fade  " id="forces">
+                                  <div ng-controller="AppContext.controllers.ForcesListCtrl" class='container' style='width: 380px;' id="forcesList">
+                                    <div>
+                                    <div class="row-fluid" ng-repeat="force in forces">
+                                       <div class="row" style='margin-top:1%;'>
+                                          <div class="span8 offset1"><textarea class='elementsView' style='width:100%;line-height: 14px;font-size: 12px;resize:none;height:17px;overflow:hidden;color:#808080;border-color: #dbdbdb;' >{{force.description}}</textarea>
+                                          </div>
+                                          <div class="span2 offset1">
+                                             <div class='row'>
+                                                <a href="#" class="btn btn-default btn-mini"><i class="icon-remove icon-black"></i></a> 
+                                                <a href="#" class="btn btn-default btn-mini"><i class="icon-pencil icon-black"></i></a>
+                                             </div>
+                                          </div>
+                                       </div>
+                                      </div> 
+                                  </div>
+                                  </div>
+                                </div>
+
+
+                                  <!-------------------------------- SOLUTIONS --------------------- -->
+                                <div class="tab-pane  fade  " id="components">
+                                  <div ng-controller="AppContext.controllers.SolutionsListCtrl" class='container' style='width: 380px;' id="componentsList">
+                                    <div>
+                                    <div class="row-fluid" ng-repeat="solution in solutions">
+                                       <div class="row" style='margin-top:1%;'>
+                                          <div class="span8 offset1"><textarea class='elementsView' style='width:100%;line-height: 14px;font-size: 12px;resize:none;height:17px;overflow:hidden;color:#808080;border-color: #dbdbdb;' >{{solution.description}}</textarea>
+                                          </div>
+                                          <div class="span2 offset1">
+                                             <div class='row'>
+                                                <a href="#" class="btn btn-default btn-mini"><i class="icon-remove icon-black"></i></a> 
+                                                <a href="#" class="btn btn-default btn-mini"><i class="icon-pencil icon-black"></i></a>
+                                             </div>
+                                          </div>
+                                       </div>
+                                      </div> 
+                                  </div>
+                                  </div>
+                                </div>
+
+
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+
+            </div>
+            <!-- end accordion -->
+         </div> <!-- end newElementContainer-->
+    </div><!-- End - Elements -->
+
+<script>
+
+   setTimeout(function () {$('.elementsView').autogrow();},12000);
+
+         
+</script>
 
 <div class="progress flash_board" id="progress_container">
   <div class="bar" id="progress_bar"></div>
