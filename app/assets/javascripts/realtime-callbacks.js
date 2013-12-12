@@ -45,6 +45,22 @@ function doPosValueChanged (){
 
 function doContentValueChanged(){
   AppContext.grid.reloadTypeahead(AppContext.vizdata.getElements());
+  // get the change and update only that category
+  var temp1 =  JSON.parse(JSON.stringify(AppContext.vizdata.getStories()));
+  var temp2 =  JSON.parse(JSON.stringify(AppContext.vizdata.getForces()));
+  var temp3 =  JSON.parse(JSON.stringify(AppContext.vizdata.getSolutions()));
+  var scope1 = angular.element($("#storiesList")).scope();
+  scope1.$apply(function(){
+      scope1.stories = temp1;
+  });
+  var scope2 = angular.element($("#forcesList")).scope();
+  scope2.$apply(function(){
+      scope2.forces = temp2;
+  });
+  var scope3 = angular.element($("#solutionsList")).scope();
+  scope3.$apply(function(){
+      scope3.solutions = temp3;
+  });
 }
 
 function doRelValueChanged (){

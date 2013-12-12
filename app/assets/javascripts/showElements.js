@@ -38,8 +38,23 @@ AppContext.controllers.SolutionsListCtrl = function ($scope) {
 };
 
 AppContext.menu.showElements = function (){
-  var elementsContainer = $('#elementsContainer')[0];
+  
   $(elementsContainer).css("display", "");
+  var ebtn = $('#showElements')[0];
+  var action = $(ebtn).attr("value");
+  var elementsContainer = $('#elementsContainer')[0];
+  
+  if(action == 'show'){
+    $(elementsContainer).css("display", "");
+    $(ebtn).html("Hide Elements");
+    $(ebtn).attr("value","hide");
+    AppContext.menu.updateGraph();
+    
+  } else {
+    $(elementsContainer).css("display", "none");
+    $(ebtn).html("Show Elements");
+    $(ebtn).attr("value","show");
+  }
 };
 
 getNextElemId = function(allElem) {
@@ -91,7 +106,7 @@ addStory = function() {
 
 addForce = function() {
   var desc = getNewElementdesc();
-  var idstr = "S"+getNextForceId();
+  var idstr = "F"+getNextForceId();
   var elemObj = {"elementId": idstr, "description":desc};
   AppContext.vizdata.addElement(elemObj);
   Util.log.console(elemObj);
@@ -100,7 +115,7 @@ addForce = function() {
 
 addSolution = function() {
   var desc = getNewElementdesc();
-  var idstr = "S"+getNextSolutionId();
+  var idstr = "C"+getNextSolutionId();
   var elemObj = {"elementId": idstr, "description":desc};
   AppContext.vizdata.addElement(elemObj);
   Util.log.console(elemObj);

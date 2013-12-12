@@ -10,11 +10,11 @@
 		</div>
 	</div>
     <button id='showGraph' value='show' onclick='AppContext.menu.showGraph()'>Show Graph</button>
-    <button onclick='AppContext.menu.showElements()'>Elements</button>
+    <button id='showElements' value='show' onclick='AppContext.menu.showElements()'>Show Elements</button>
 </div>
 
 <!-- Elements -->
-<div id='elementsContainer' style='margin-top:100px;position:absolute;margin-left:100px;z-index:1010;display:none;background-color:white;'>
+<div id='elementsContainer' style='margin-top:100px;position:absolute;margin-left:100px;z-index:1010;display:none;background-color:#ccc;'>
          <div id='newElementContainer'  style='width:400px; margin-left:5%;'>
             <div class="panel-group" id="accordion">
                <div class="panel panel-default">
@@ -65,7 +65,7 @@
                   </div>
                   <div id="collapsetwo" class="panel-collapse collapse">
 
-                     <div class="panel-body">
+                     <div class="panel-body" style='width:95%;'>
                         <ul class="nav nav-tabs">
                           <li class='active' ><a href="#stories" data-toggle="tab">Stories</a></li>
                           <li><a href="#forces" data-toggle="tab">Forces</a></li>
@@ -118,7 +118,7 @@
 
                                   <!-------------------------------- SOLUTIONS --------------------- -->
                                 <div class="tab-pane  fade  " id="components">
-                                  <div ng-controller="AppContext.controllers.SolutionsListCtrl" class='container' style='width: 380px;' id="componentsList">
+                                  <div ng-controller="AppContext.controllers.SolutionsListCtrl" class='container' style='width: 380px;' id="solutionsList">
                                     <div>
                                     <div class="row-fluid" ng-repeat="solution in solutions">
                                        <div class="row" style='margin-top:1%;'>
