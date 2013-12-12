@@ -35,6 +35,7 @@ AppContext.project.updateTitleText = () ->
   $('.proj_title').text(AppContext.project.projectTitle.split('\.')[0])
 
 AppContext.project.sendChangeTitleRequest = (newTitle) ->
+  newTitle = newTitle + '.ema'
   fileId = AppContext.project.fileId
   body = {'title': newTitle}
   request = gapi.client.drive.files.patch({
