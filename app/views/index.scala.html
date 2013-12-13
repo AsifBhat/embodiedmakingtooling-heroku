@@ -81,12 +81,12 @@
                                     <div>
                                     <div class="row-fluid" ng-repeat="story in stories">
                                        <div class="row" style='margin-top:1%;'>
-                                          <div class="span8 offset1"><textarea class='elementsView' style='width:100%;line-height: 14px;font-size: 12px;resize:none;height:17px;overflow:hidden;color:#808080;border-color: #dbdbdb;' >{{story.description}}</textarea>
+                                          <div class="span8 offset1"><textarea readonly='true' data-elementId='{{story.elementId}}' class='elementsView' style='width:100%;line-height: 14px;font-size: 12px;resize:none;height:17px;overflow:hidden;color:#808080;border-color: #dbdbdb;' >{{story.description}}</textarea>
                                           </div>
                                           <div class="span2 offset1">
                                              <div class='row'>
                                                 <a href="#" class="btn btn-default btn-mini"><i class="icon-remove icon-black"></i></a> 
-                                                <a href="#" class="btn btn-default btn-mini"><i class="icon-pencil icon-black"></i></a>
+                                                <a href="#" class="btn btn-default btn-mini disabled"><i class="icon-pencil  icon-black"></i></a>
                                              </div>
                                           </div>
                                        </div>
@@ -101,12 +101,12 @@
                                     <div>
                                     <div class="row-fluid" ng-repeat="force in forces">
                                        <div class="row" style='margin-top:1%;'>
-                                          <div class="span8 offset1"><textarea class='elementsView' style='width:100%;line-height: 14px;font-size: 12px;resize:none;height:17px;overflow:hidden;color:#808080;border-color: #dbdbdb;' >{{force.description}}</textarea>
+                                          <div class="span8 offset1"><textarea readonly='true' data-elementId='{{force.elementId}}' class='elementsView' style='width:100%;line-height: 14px;font-size: 12px;resize:none;height:17px;overflow:hidden;color:#808080;border-color: #dbdbdb;' >{{force.description}}</textarea>
                                           </div>
                                           <div class="span2 offset1">
                                              <div class='row'>
                                                 <a href="#" class="btn btn-default btn-mini"><i class="icon-remove icon-black"></i></a> 
-                                                <a href="#" class="btn btn-default btn-mini"><i class="icon-pencil icon-black"></i></a>
+                                                <a href="#" class="btn btn-default disabled btn-mini"><i class="icon-pencil  icon-black"></i></a>
                                              </div>
                                           </div>
                                        </div>
@@ -122,12 +122,12 @@
                                     <div>
                                     <div class="row-fluid" ng-repeat="solution in solutions">
                                        <div class="row" style='margin-top:1%;'>
-                                          <div class="span8 offset1"><textarea class='elementsView' style='width:100%;line-height: 14px;font-size: 12px;resize:none;height:17px;overflow:hidden;color:#808080;border-color: #dbdbdb;' >{{solution.description}}</textarea>
+                                          <div class="span8 offset1"><textarea readonly='true' ondblclick="this.readonly=''" data-elementId='{{solution.elementId}}' class='elementsView' style='width:100%;line-height: 14px;font-size: 12px;resize:none;height:17px;overflow:hidden;color:#808080;border-color: #dbdbdb;' >{{solution.description}}</textarea>
                                           </div>
                                           <div class="span2 offset1">
                                              <div class='row'>
                                                 <a href="#" class="btn btn-default btn-mini"><i class="icon-remove icon-black"></i></a> 
-                                                <a href="#" class="btn btn-default btn-mini"><i class="icon-pencil icon-black"></i></a>
+                                                <a href="#" class="btn btn-default btn-mini disabled"><i class="icon-pencil  icon-black"></i></a>
                                              </div>
                                           </div>
                                        </div>
@@ -152,7 +152,22 @@
 <script>
 
    setTimeout(function () {$('.elementsView').autogrow();},12000);
-
+   
+   handleKeyPress = function(e) {
+    //console.log("key pressed")
+    if (!e) e = window.event
+    var keyCode = e.keyCode || e.which
+    if (keyCode == '13') {
+      console.log($('.twitter-typeahead span').text());
+      $('#addFromTypeahead').css("display","");
+      var leftpos = $("#content-search").position().left;
+      var toppos = $("#content-search").position().top - 30;
+      $('#addFromTypeahead').css("left", leftpos + "px");
+      $('#addFromTypeahead').css("top", toppos + "px");
+    }
+      
+    // show btn group on top of content-search
+  }  
          
 </script>
 
@@ -169,6 +184,15 @@
 </div>
 <div id="desctooltip" type="button" data-html="true" data-toggle="tooltip" data-placement="top" data-trigger="focus hover" data-animation="false"></div>
 <div id="hexagonal-grid"></div>
+
+<div class="btn-group" id="addFromTypeahead" data-toggle="buttons-radio"  style='z-index:100;position:absolute;display:none;'>
+  <!--<button type="button" class="btn btn-default btn-small">
+      <span class="glyphicon glyphicon-plus"></span> Story
+  </button> -->
+  <a href="#" class="btn btn-default btn-mini " onClick='addStory()'><i class="icon-plus icon-black"></i> Story</a>
+  <a href="#" class="btn btn-default btn-mini " onClick='addForce()'><i class="icon-plus icon-black"></i> Force</a>
+  <a href="#" class="btn btn-default btn-mini " onClick='addSolution()'><i class="icon-plus icon-black"></i> Solution</a>
+</div>
 <!--div id="content-search">
     <input type="text" name="query">
 </div-->

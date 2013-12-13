@@ -8,6 +8,8 @@ jQuery ($) ->
     engine: Hogan
   }
 
+  
+    
   generateLocalElements = (elementsList) ->
     importedElements = [];
     $.each(elementsList, (idx, element) ->
@@ -21,7 +23,7 @@ jQuery ($) ->
     #$('#content-search').append('<input type="text" name="query">')
 
     
-    $('body').append('<div id="content-search"><input type="text" name="query"></div>'); 
+    $('body').append('<div id="content-search"><input type="text" id="input-elem-search" name="query" onkeypress="handleKeyPress()" ></div>'); 
     $('#content-search input').typeahead(
       $.extend(true, 
         {

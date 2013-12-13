@@ -1,4 +1,6 @@
 jQuery ($) ->
+  gx = 0
+  gy = 0
   AppContext.grid.hoverEventHandler = (e, x, y) ->
       # Highlight the currently hovered cell
       pos = {x:x,y:y}
@@ -11,16 +13,38 @@ jQuery ($) ->
           AppContext.grid.showTooltip(x,y,tooltipInfo)
       AppContext.grid.showHoveredElement(x,y) 
 
+  AppContext.grid.addGridPos = (obj, datum, dataset) ->
+
+    # Update the new element
+           
+    AppContext.grid.newElement.removeClass('new')
+    AppContext.grid.newElement.addClass(dataset)
+
+    # Keep content search reference
+    contentSearch = $("#content-search")
+    
+    # Hide the content search
+    contentSearch.css('display', 'none')
+    AppContext.grid.newElement.text(datum.value) # datum.id later
+    AppContext.grid.newElement.css('z-index','100')
+    # When a content element is selected from the typeahead, it could be
+    # a new entry to the positions list or an update to an already 
+    # existing entry.
+    AppContext.grid.updatePosition(datum.value, gx, gy)      
+
   AppContext.grid.clickEventHandler = (e, x, y) ->
     
     # Place the element on the grid
-    newElement = AppContext.grid.placeNewElement(x,y)
+    AppContext.grid.newElement = AppContext.grid.placeNewElement(x,y)
 
     # Get pixel position based on grid coordinates
     inv = AppContext.grid.grid.screenpos(x, y)
 
     # Keep content search reference
     contentSearch = $("#content-search")
+
+    gx = x
+    gy = y
 
     # Show content search at corrent position
     contentSearch.css({
@@ -31,22 +55,7 @@ jQuery ($) ->
         # Remove existing events
         .off('typeahead:selected')
         # Handle selecting content element
-        .on('typeahead:selected', (obj, datum, dataset) ->
-
-          # Update the new element
-                 
-          newElement.removeClass('new')
-          newElement.addClass(dataset)
-          
-          # Hide the content search
-          contentSearch.css('display', 'none')
-          newElement.text(datum.value) # datum.id later
-          newElement.css('z-index','100')
-          # When a content element is selected from the typeahead, it could be
-          # a new entry to the positions list or an update to an already 
-          # existing entry.
-          AppContext.grid.updatePosition(datum.value, x, y)
-        )
+        .on('typeahead:selected', AppContext.grid.addGridPos)
 
         # Clear the previous query
         .typeahead('setQuery', '')
@@ -56,3 +65,5 @@ jQuery ($) ->
 
   AppContext.grid.hoveroutEventHandler = (e,x,y) ->
     AppContext.grid.hideTooltip()
+
+  

@@ -93,7 +93,10 @@ enableButtons = function(value){
 }
 
 getNewElementdesc = function(){
-  return $('#newElementText').val().trim();
+  if (($('#newElementText').val().trim().length)==0)
+    return $('.twitter-typeahead span').text().trim();
+  else
+    return $('#newElementText').val().trim();
 }
 
 addStory = function() {
@@ -102,6 +105,9 @@ addStory = function() {
   var elemObj = {"elementId": idstr, "description":desc};
   AppContext.vizdata.addElement(elemObj);
   Util.log.console(elemObj);
+  var datum = {"value":idstr}
+  AppContext.grid.addGridPos(null,datum,null);
+  $('#addFromTypeahead').css("display","none");
 };
 
 addForce = function() {
@@ -110,6 +116,9 @@ addForce = function() {
   var elemObj = {"elementId": idstr, "description":desc};
   AppContext.vizdata.addElement(elemObj);
   Util.log.console(elemObj);
+  var datum = {"value":idstr}
+  AppContext.grid.addGridPos(null,datum,null);
+  $('#addFromTypeahead').css("display","none");
 };
 
 
@@ -119,4 +128,11 @@ addSolution = function() {
   var elemObj = {"elementId": idstr, "description":desc};
   AppContext.vizdata.addElement(elemObj);
   Util.log.console(elemObj);
+  var datum = {"value":idstr}
+  AppContext.grid.addGridPos(null,datum,null);
+  $('#addFromTypeahead').css("display","none");
 };
+
+starteditElement = function(){
+
+}
