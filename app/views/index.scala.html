@@ -74,70 +74,7 @@
                         <div >
                            <div style='width: 100%;'>
                               <!-- Tab panes -->
-                              <div class="tab-content" style="height: 250px;overflow-y: scroll;overflow-x: hidden;">
-                                <!-------------------------------- STORIES --------------------- -->
-                                <div class="tab-pane  fade in active" id="stories">
-                                  <div ng-controller="AppContext.controllers.StoriesListCtrl" class='container' style='width: 380px;' id="storiesList">
-                                    <div>
-                                    <div class="row-fluid" ng-repeat="story in stories">
-                                       <div class="row" style='margin-top:1%;'>
-                                          <div class="span8 offset1"><textarea readonly='true' data-elementId='{{story.elementId}}' class='elementsView' style='width:100%;line-height: 14px;font-size: 12px;resize:none;height:17px;overflow:hidden;color:#808080;border-color: #dbdbdb;' >{{story.description}}</textarea>
-                                          </div>
-                                          <div class="span2 offset1">
-                                             <div class='row'>
-                                                <a href="#" class="btn btn-default btn-mini" data-elementid='{{story.elementId}}' onclick='deleteElem($(this).data("elementid"))'><i class="icon-remove icon-black"></i></a> 
-                                                <a href="#" class="btn btn-default btn-mini disabled"><i class="icon-pencil  icon-black"></i></a>
-                                             </div>
-                                          </div>
-                                       </div>
-                                      </div> 
-                                  </div>
-                                  </div>
-                                </div>
-
-                                  <!-------------------------------- FORCES --------------------- -->
-                                <div class="tab-pane  fade  " id="forces">
-                                  <div ng-controller="AppContext.controllers.ForcesListCtrl" class='container' style='width: 380px;' id="forcesList">
-                                    <div>
-                                    <div class="row-fluid" ng-repeat="force in forces">
-                                       <div class="row" style='margin-top:1%;'>
-                                          <div class="span8 offset1"><textarea readonly='true' data-elementid='{{force.elementId}}' class='elementsView' style='width:100%;line-height: 14px;font-size: 12px;resize:none;height:17px;overflow:hidden;color:#808080;border-color: #dbdbdb;' >{{force.description}}</textarea>
-                                          </div>
-                                          <div class="span2 offset1">
-                                             <div class='row'>
-                                                <a href="#" class="btn btn-default btn-mini" data-elementid='{{force.elementId}}' onclick='deleteElem($(this).data("elementid"))'><i class="icon-remove icon-black"></i></a> 
-                                                <a href="#" class="btn btn-default disabled btn-mini"><i class="icon-pencil  icon-black"></i></a>
-                                             </div>
-                                          </div>
-                                       </div>
-                                      </div> 
-                                  </div>
-                                  </div>
-                                </div>
-
-
-                                  <!-------------------------------- SOLUTIONS --------------------- -->
-                                <div class="tab-pane  fade  " id="components">
-                                  <div ng-controller="AppContext.controllers.SolutionsListCtrl" class='container' style='width: 380px;' id="solutionsList">
-                                    <div>
-                                    <div class="row-fluid" ng-repeat="solution in solutions">
-                                       <div class="row" style='margin-top:1%;'>
-                                          <div class="span8 offset1"><textarea readonly='true' ondblclick="this.readonly=''" data-elementid='{{solution.elementId}}' class='elementsView' style='width:100%;line-height: 14px;font-size: 12px;resize:none;height:17px;overflow:hidden;color:#808080;border-color: #dbdbdb;' >{{solution.description}}</textarea>
-                                          </div>
-                                          <div class="span2 offset1">
-                                             <div class='row'>
-                                                <a href="#" class="btn btn-default btn-mini" data-elementid='{{solution.elementId}}' onclick='deleteElem($(this).data("elementid"))'><i class="icon-remove icon-black"></i></a> 
-                                                <a href="#" class="btn btn-default btn-mini disabled"><i class="icon-pencil  icon-black"></i></a>
-                                             </div>
-                                          </div>
-                                       </div>
-                                      </div> 
-                                  </div>
-                                  </div>
-                                </div>
-
-
-                              </div>
+                              
                            </div>
                         </div>
                      </div>
@@ -179,7 +116,7 @@
 <div id='graphView' style='display:none;position:absolute;z-index: 1010;margin-top:100px;margin-left:100px;height:400px;width:400px;'>
   <div id='sig' class="sigma"></div>
 </div>
-<div id="desctooltip" type="button" data-html="true" data-toggle="tooltip" data-placement="top" data-trigger="focus hover" data-animation="false"></div>
+<div id="desctooltip" style="height:10px;width:10px;" type="button" data-html="true" data-toggle="tooltip" data-placement="top" data-trigger="focus hover" data-animation="false"></div>
 <div id="hexagonal-grid"></div>
 
 <div class="btn-group" id="addFromTypeahead" data-toggle="buttons-radio"  style='z-index:100;position:absolute;display:none;'>

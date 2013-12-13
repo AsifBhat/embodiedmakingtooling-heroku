@@ -46,7 +46,7 @@ function doPosValueChanged (){
 function doContentValueChanged(){
   AppContext.grid.reloadTypeahead(AppContext.vizdata.getElements());
   // get the change and update only that category
-  var temp1 =  JSON.parse(JSON.stringify(AppContext.vizdata.getStories()));
+ /* var temp1 =  JSON.parse(JSON.stringify(AppContext.vizdata.getStories()));
   var temp2 =  JSON.parse(JSON.stringify(AppContext.vizdata.getForces()));
   var temp3 =  JSON.parse(JSON.stringify(AppContext.vizdata.getSolutions()));
   var scope1 = angular.element($("#storiesList")).scope();
@@ -60,7 +60,7 @@ function doContentValueChanged(){
   var scope3 = angular.element($("#solutionsList")).scope();
   scope3.$apply(function(){
       scope3.solutions = temp3;
-  });
+  });*/
   AppContext.menu.updateGraph();
 }
 

@@ -20,7 +20,7 @@
 
   VizDataModel.prototype.removePosition = function(position) {
     var toremove = this.positions.indexOf(position, comparator);
-    Util.log.console("To remove index "+toremove);
+    Util.log.console("To remove pos at index "+toremove);
     this.positions.remove(toremove);
   };
 
@@ -97,7 +97,7 @@
 
   VizDataModel.prototype.removeElement = function(element) {
     var toremove = this.elements.indexOf(element, elemcomparator);
-    Util.log.console("To remove index "+toremove);
+    Util.log.console("To remove element at index "+toremove);
     this.elements.remove(toremove);
   };
 

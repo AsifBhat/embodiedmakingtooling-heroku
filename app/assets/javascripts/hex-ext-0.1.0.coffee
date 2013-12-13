@@ -40,18 +40,24 @@ AppContext.grid.placeNewElement = (xc, yc) ->
 
 # Placing tooltip if not an empty cell
 # elementid should be replaced with the content to be displayed in the tooltip.
-AppContext.grid.showTooltip = (x,y,tooltipInfo) ->
+AppContext.grid.showTooltip = (x,y,elemId, tooltipInfo) ->
   inv = AppContext.grid.grid.screenpos(x, y)
   AppContext.grid.idwithtooltip.css({
     "left": (inv.x + AppContext.grid.grid.origin.x) + "px",
     "top": (inv.y + AppContext.grid.grid.origin.y) + "px",
     "z-index" : 10
   })
-  tooltipHTML = tooltipInfo+'<br><button class="deleteButton btn-mini"><span class="icon-remove remove_btn"></span></button>'
+  tooltipHTML = '<textarea id="elemtext" class="elementsView" style="background-color:#555;width:90%;overflow:hidden;color:#FFF;font-size:10px;">' +
+    tooltipInfo + 
+    '</textarea><br><button class="btn-warning btn-mini" style="height: 20px;width: 20px;padding: 0px;" data-elementid="'+elemId+'" onclick="deleteElem($(this))">' +
+    '<span class="icon-remove remove_btn"></span></button>' +
+    '&nbsp;&nbsp;&nbsp;<button class="btn-mini" data-elementid="'+elemId+'" onclick="updateElem($(this))" style="height: 20px;width: 20px;padding: 0px;"><span class="icon-pencil"></span></button>' +
+    '</textarea><hr style="margin-top:4px;margin-bottom:4px; padding:0px;"><button id="delposButton" btn-mini" style="height: 20px;width: 20px;padding: 0px;"><span class="icon-remove"></span></button>'
   AppContext.grid.idwithtooltip.tooltip('show')
   AppContext.grid.idwithtooltip.attr("data-original-title",tooltipHTML)
+  $('.elementsView').autogrow();
   $('.tooltip-inner').html(tooltipHTML)
-  $(".deleteButton").click(() -> 
+  $("#delposButton").click(() -> 
     AppContext.grid.deletePosition(parseInt(x,10),parseInt(y,10))
   )
   AppContext.grid.idwithtooltip

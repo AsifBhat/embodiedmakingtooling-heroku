@@ -10,7 +10,7 @@ jQuery ($) ->
         # could be some rich content.
         tooltipInfo = AppContext.vizdata.getElementDescription(elementUnderMouse)
         if(tooltipInfo != '') 
-          AppContext.grid.showTooltip(x,y,tooltipInfo)
+          AppContext.grid.showTooltip(x,y, elementUnderMouse, tooltipInfo)
       AppContext.grid.showHoveredElement(x,y) 
 
   AppContext.grid.addGridPos = (obj, datum, dataset) ->
@@ -33,9 +33,16 @@ jQuery ($) ->
     AppContext.grid.updatePosition(datum.value, gx, gy)      
 
   AppContext.grid.clickEventHandler = (e, x, y) ->
-    
-    # Place the element on the grid
-    AppContext.grid.newElement = AppContext.grid.placeNewElement(x,y)
+    console.log("here")
+    pos = {x:x,y:y}
+    cellClicked = AppContext.vizdata.getPositionInCell(pos);
+    console.log(cellClicked)
+    if(cellClicked == '')
+      AppContext.grid.newElement = AppContext.grid.placeNewElement(x,y)
+    else
+      AppContext.grid.newElement = $('#'+cellClicked.posId)  
+
+    console.log(AppContext.grid.newElement)  
 
     # Get pixel position based on grid coordinates
     inv = AppContext.grid.grid.screenpos(x, y)
