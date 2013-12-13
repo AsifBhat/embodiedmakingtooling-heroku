@@ -13,11 +13,11 @@ AppContext.grid.loadApplication = function(){
 
 AppContext.grid.loadPicker = function() {
   try{
-    $('body').append('<div id="startupModal" class="modal hide fade app_load_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"><div class="modal-header"><h3 id="myModalLabel">Select one of the following options</h3></div><div class="modal-footer"><button class="btn btn-warning" id="load_prj_button" data-dismiss="modal" aria-hidden="true">Load Previous Work</button><button class="btn btn-primary" id="create_new_button" data-dismiss="modal" aria-hidden="true">Create a new analysis</button><button class="btn btn btn-success" aria-hidden="true" data-dismiss="modal" id="openfile_button">Select from files already saved..</button></div></div>');
+    $('body').append('<div id="startupModal" class="modal hide fade app_load_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"><div class="modal-header text-center"><h4 id="myModalLabel">Select one of the following options</h4></div><div class="modal-footer"><!--button class="btn btn-warning" id="load_prj_button" data-dismiss="modal" aria-hidden="true">Load Previous Work</button--><button class="btn btn-success" id="create_new_button" data-dismiss="modal" aria-hidden="true">Create a new analysis</button><button class="btn btn btn-warning" aria-hidden="true" data-dismiss="modal" id="openfile_button">Select from files already saved..</button></div></div>');
 
-    $('#load_prj_button').click(function(){
+    /*$('#load_prj_button').click(function(){
       AppContext.grid.loadApplication();
-    });
+    });*/
 
     $('#create_new_button').click(function(){
       //AppContext.grid.initApp();
