@@ -16,8 +16,8 @@ AppContext.grid.initialize = () ->
   AppContext.grid.hoveredElement = AppContext.grid.createHex('current')
   $(AppContext.grid.grid.root).append(AppContext.grid.hoveredElement)
   AppContext.grid.idwithtooltip =  $('#desctooltip')
-  AppContext.grid.idwithtooltip.css("width", AppContext.grid.grid.tileWidth + "px")
-  AppContext.grid.idwithtooltip.css("height", AppContext.grid.grid.tileHeight + "px")   
+  #AppContext.grid.idwithtooltip.css("width", AppContext.grid.grid.tileWidth + "px")
+  #AppContext.grid.idwithtooltip.css("height", AppContext.grid.grid.tileHeight + "px")   
   AppContext.grid 
   # Should we somehow move content assisst here? 
 
@@ -43,7 +43,7 @@ AppContext.grid.placeNewElement = (xc, yc) ->
 AppContext.grid.showTooltip = (x,y,elemId, tooltipInfo) ->
   inv = AppContext.grid.grid.screenpos(x, y)
   AppContext.grid.idwithtooltip.css({
-    "left": (inv.x + AppContext.grid.grid.origin.x) + "px",
+    "left": ((inv.x + AppContext.grid.grid.origin.x) + 10) + "px",
     "top": (inv.y + AppContext.grid.grid.origin.y) + "px",
     "z-index" : 10
   })
