@@ -61,6 +61,7 @@ function doContentValueChanged(){
   scope3.$apply(function(){
       scope3.solutions = temp3;
   });
+  AppContext.menu.updateGraph();
 }
 
 function doRelValueChanged (){
@@ -136,8 +137,8 @@ function onFileLoaded(doc) {
   AppContext.vizdata.positions.addEventListener(gapi.drive.realtime.EventType.VALUES_ADDED, doPosValueChanged);
   AppContext.vizdata.positions.addEventListener(gapi.drive.realtime.EventType.VALUES_REMOVED, doPosValueChanged);
   AppContext.vizdata.elements.addEventListener(gapi.drive.realtime.EventType.VALUES_ADDED, doContentValueChanged);
-  /*AppContext.vizdata.elements.addEventListener(gapi.drive.realtime.EventType.VALUES_REMOVED, doContentValueChanged);
-  AppContext.vizdata.elements.addEventListener(gapi.drive.realtime.EventType.VALUES_CHANGED, doContentValueChanged);*/
+  AppContext.vizdata.elements.addEventListener(gapi.drive.realtime.EventType.VALUES_REMOVED, doContentValueChanged);
+  /*AppContext.vizdata.elements.addEventListener(gapi.drive.realtime.EventType.VALUES_CHANGED, doContentValueChanged);*/
   AppContext.vizdata.relations.addEventListener(gapi.drive.realtime.EventType.VALUES_ADDED, doRelValueChanged);
   AppContext.vizdata.relations.addEventListener(gapi.drive.realtime.EventType.VALUES_REMOVED, doRelValueChanged);
   Util.log.console("On file loaded...");

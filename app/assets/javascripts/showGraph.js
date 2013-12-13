@@ -1,7 +1,7 @@
 addnode = function(elem, i){
   var elemId = elem.elementId;
   var etype = elemId.substr(0,1);
-  var color = 'r';
+  var nodeColor = '8C3E1C';
   switch(etype)
   {
     case 'F':

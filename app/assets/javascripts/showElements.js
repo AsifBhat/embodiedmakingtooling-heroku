@@ -90,14 +90,14 @@ enableButtons = function(value){
       $('#addElementsbtn .btn').addClass('disabled');
     }
     
-}
+};
 
 getNewElementdesc = function(){
-  if (($('#newElementText').val().trim().length)==0)
+  if (($('#newElementText').val().trim().length)===0)
     return $('.twitter-typeahead span').text().trim();
   else
     return $('#newElementText').val().trim();
-}
+};
 
 addStory = function() {
   var desc = getNewElementdesc();
@@ -105,7 +105,7 @@ addStory = function() {
   var elemObj = {"elementId": idstr, "description":desc};
   AppContext.vizdata.addElement(elemObj);
   Util.log.console(elemObj);
-  var datum = {"value":idstr}
+  var datum = {"value":idstr};
   AppContext.grid.addGridPos(null,datum,null);
   $('#addFromTypeahead').css("display","none");
 };
@@ -116,7 +116,7 @@ addForce = function() {
   var elemObj = {"elementId": idstr, "description":desc};
   AppContext.vizdata.addElement(elemObj);
   Util.log.console(elemObj);
-  var datum = {"value":idstr}
+  var datum = {"value":idstr};
   AppContext.grid.addGridPos(null,datum,null);
   $('#addFromTypeahead').css("display","none");
 };
@@ -128,11 +128,22 @@ addSolution = function() {
   var elemObj = {"elementId": idstr, "description":desc};
   AppContext.vizdata.addElement(elemObj);
   Util.log.console(elemObj);
-  var datum = {"value":idstr}
+  var datum = {"value":idstr};
   AppContext.grid.addGridPos(null,datum,null);
   $('#addFromTypeahead').css("display","none");
 };
 
+
+deleteElem = function(idtodel){
+  allElems = AppContext.vizdata.getElements();
+  elemtodel = '';
+  $.each(allElems, function(i) {
+    if (this.elementId == idtodel)
+      elemtodel = this;
+  });
+  AppContext.vizdata.removeElement(elemtodel);
+};
+
 starteditElement = function(){
 
-}
+};
