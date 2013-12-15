@@ -23,7 +23,6 @@ AppContext.project.editProjectTitle = () ->
     title = $('#proj_name').val()
     $('.proj_title').text(title)
     AppContext.project.sendChangeTitleRequest(title)
-    # here do a patch call to google drive api to change the title on the google drive.
   )
 
   $('#edit_title_modal').modal({
@@ -33,6 +32,31 @@ AppContext.project.editProjectTitle = () ->
 
 AppContext.project.updateTitleText = () ->
   $('.proj_title').text(AppContext.project.projectTitle.split('\.')[0])
+  $('.proj_title').mouseover( () ->
+    handleTooltip = () ->
+      $('.proj_title').popover('show')
+      $('#edit_project_name').click( () ->
+        AppContext.project.editProjectTitle()
+        $('.proj_title').popover('hide')
+      )
+
+      $('#cl_edit_project_name').click( () ->
+        $('.proj_title').popover('hide')
+      )
+      
+      popoverDOM = $('.title_holder').find('.popover')
+      popoverTop = popoverDOM.css('top').slice(0, popoverDOM.css('top').indexOf('p'))
+      popoverLeft = popoverDOM.css('left').slice(0, popoverDOM.css('top').indexOf('p'))
+      popoverDOM.css('top', (parseInt(popoverTop, 10)+30)+'px')
+      popoverDOM.find('.arrow').css('top', '25%')
+
+    handleTooltip()
+  )
+
+  $('#edit_project_name').click( () ->
+    AppContext.project.editProjectTitle()
+    $('.proj_title').popover('hide')
+  )
 
 AppContext.project.sendChangeTitleRequest = (newTitle) ->
   newTitle = newTitle + '.ema'
