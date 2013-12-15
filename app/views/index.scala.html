@@ -1,6 +1,9 @@
 @main("The Embodied Making Tool") {
 <div class="row page-header">
-  <div class="row title_holder"><div class="proj_title span6"></div><div class="title_edit span3"><button id="edit_project_name" class="btn-mini"><span class="icon-edit"></span></button></div></div>
+  <div class="row title_holder">
+    <div class="proj_title span4" data-placement="right" data-html= true data-toggle="popover" title="" data-content="" data-original-title="<b>Edit Project Title</b>" data-trigger="manual" data-animation="false">
+    </div>
+  </div>
   <div id="menubar">
     <button id="authorizeButton" disabled>Authorize</button>
     <button id='exportToGexf' onclick='AppContext.menu.exportToGexf()'>Download as GEXF</button>
