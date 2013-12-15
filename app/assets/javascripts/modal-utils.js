@@ -105,5 +105,5 @@ $(document).ready(function(){
     AppContext.grid.loadPicker();
   else
     window.onload = AppContext.grid.loadApplication();
-  $('.proj_title').attr('data-content', '<div class="title_edit"><button id="edit_project_name" class="btn btn-mini"> Edit Project Title <span class="icon-edit"></span></button><button id="cl_edit_project_name" class="btn btn-mini"> Cancel <span class="icon-edit"></span></button></div>');
+  $('.proj_title').attr('data-content', '<div class="title_edit"><button id="edit_project_name" class="btn btn-mini"> Edit <span class="icon-edit"></span></button>&nbsp;<button id="cl_edit_project_name" class="btn btn-mini"> Cancel <span class="icon-remove-sign"></span></button></div>');
 });
