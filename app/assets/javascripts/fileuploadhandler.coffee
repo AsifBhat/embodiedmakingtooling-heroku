@@ -25,7 +25,7 @@ jQuery ($) ->
         AppContext.vizdata.addElement(createElementJSON(tokens))
         true
     )
-    AppContext.grid.reloadTypeahead()
+    AppContext.grid.reloadTypeahead(AppContext.vizdata.getElements())
 
   readFile = (file) ->
     fileReader = new FileReader()
