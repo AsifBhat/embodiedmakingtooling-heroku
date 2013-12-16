@@ -55,7 +55,7 @@
             $self.change(update).keyup(update).keydown({event:'keydown'},update).focus(update);
             $(window).resize(update);
 
-            //update();
+            update();
         });
     };
 })(jQuery);

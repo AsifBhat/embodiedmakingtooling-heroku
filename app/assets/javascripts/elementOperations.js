@@ -1,15 +1,31 @@
 handleKeyPress = function(e) {
   //console.log("key pressed")
   if (!e) e = window.event
-  var keyCode = e.keyCode || e.which
+  var keyCode = e.keyCode || e.which;
   if (keyCode == '13') {
-    $('#addFromTypeahead').css("display","");
-    var leftpos = $("#content-search").position().left;
-    var toppos = $("#content-search").position().top - 30;
-    $('#addFromTypeahead').css("left", leftpos + "px");
-    $('#addFromTypeahead').css("top", toppos + "px");
-  }      
+    var etype = getNewElementdesc().substr(0,1);
+    var secondchar = getNewElementdesc().substr(1,1);
+    if(secondchar == ' '){
+      if((etype == 's')||(etype == 'S'))
+        AppContext.cluster.addStory();
+      else if ((etype == 'f')||(etype == 'F'))
+        AppContext.cluster.addForce();
+      else if ((etype == 'c')||(etype == 'C'))
+        AppContext.cluster.addSolution();
+      else
+        displayOptions();
+    } else 
+      displayOptions();
+  }        
 }  
+
+displayOptions = function (){
+  $('#addFromTypeahead').css("display","");
+  var leftpos = $("#content-search").position().left;
+  var toppos = $("#content-search").position().top - 30;
+  $('#addFromTypeahead').css("left", leftpos + "px");
+  $('#addFromTypeahead').css("top", toppos + "px");
+}
 
 getNextElemId = function(allElem) {
   var nextId = 1;
@@ -42,7 +58,7 @@ getNewElementdesc = function(){
   return $('.twitter-typeahead span').text().trim();
 };
 
-addStory = function() {
+AppContext.cluster.addStory = function() {
   var desc = getNewElementdesc();
   var idstr = "S"+getNextStoryId();
   var elemObj = {"elementId": idstr, "description":desc};
@@ -53,7 +69,7 @@ addStory = function() {
   $('#addFromTypeahead').css("display","none");
 };
 
-addForce = function() {
+AppContext.cluster.addForce = function() {
   var desc = getNewElementdesc();
   var idstr = "F"+getNextForceId();
   var elemObj = {"elementId": idstr, "description":desc};
@@ -65,7 +81,7 @@ addForce = function() {
 };
 
 
-addSolution = function() {
+AppContext.cluster.addSolution = function() {
   var desc = getNewElementdesc();
   var idstr = "C"+getNextSolutionId();
   var elemObj = {"elementId": idstr, "description":desc};
@@ -86,7 +102,7 @@ getElement = function(id){
   return elem;
 }
 
-deleteElem = function(domelem){
+AppContext.cluster.deleteElem = function(domelem){
   var idtodel = $(domelem).data('elementid');
   Util.log.console("To delete elem:"+idtodel);
   var elemtodel = getElement(idtodel);
@@ -116,7 +132,7 @@ deleteElem = function(domelem){
   });
 };
   
-updateElem = function(domelem)  {
+AppContext.cluster.updateElem = function(domelem)  {
   var idToEdit = domelem.data('elementid');
   var newDesc = $('#elemtext').val().trim();
   var newElem = {"elementId":idToEdit,"description":newDesc};

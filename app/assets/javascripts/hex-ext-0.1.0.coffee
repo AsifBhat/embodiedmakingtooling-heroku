@@ -32,7 +32,8 @@ AppContext.grid.showHoveredElement = (xc, yc) ->
   AppContext.grid.hoveredElement
 
 AppContext.grid.placeNewElement = (xc, yc) ->
-  AppContext.grid.newElement = AppContext.grid.createHex('new') 
+  if(AppContext.grid.newElement == '')
+    AppContext.grid.newElement = AppContext.grid.createHex('new') 
   AppContext.grid.placeHex(AppContext.grid.newElement,xc,yc)
   # Show the new element on the grid
   $(AppContext.grid.grid.root).append(AppContext.grid.newElement)
@@ -47,18 +48,18 @@ AppContext.grid.showTooltip = (x,y,elemId, tooltipInfo) ->
     "top": (inv.y + AppContext.grid.grid.origin.y) + "px",
     "z-index" : 10
   })
-  tooltipHTML = '<textarea id="elemtext" class="elementsView" style="background-color:#555;width:90%;overflow:hidden;color:#FFF;font-size:10px;">' +
+  tooltipHTML = '<textarea id="elemtext" class="elementsView" style="background-color:#555;width:90%;overflow:hidden;color:#FFF;font-size:10px;" onclick="$(this).autogrow()">' +
     tooltipInfo + 
-    '</textarea><br><button class="btn-warning btn-mini" style="height: 20px;width: 20px;padding: 0px;" data-elementid="'+elemId+'" onclick="deleteElem($(this))">' +
+    '</textarea><br><button class="btn-warning btn-mini" style="height: 20px;width: 20px;padding: 0px;" data-elementid="'+elemId+'" onclick="AppContext.cluster.deleteElem($(this))">' +
     '<span class="icon-remove remove_btn"></span></button>' +
-    '&nbsp;&nbsp;&nbsp;<button class="btn-mini" data-elementid="'+elemId+'" onclick="updateElem($(this))" style="height: 20px;width: 20px;padding: 0px;"><span class="icon-pencil"></span></button>' +
+    '&nbsp;&nbsp;&nbsp;<button class="btn-mini" data-elementid="'+elemId+'" onclick="AppContext.cluster.updateElem($(this))" style="height: 20px;width: 20px;padding: 0px;"><span class="icon-pencil"></span></button>' +
     '</textarea><hr style="margin-top:4px;margin-bottom:4px; padding:0px;"><button id="delposButton" btn-mini" style="height: 20px;width: 20px;padding: 0px;"><span class="icon-remove"></span></button>'
   AppContext.grid.idwithtooltip.tooltip('show')
   AppContext.grid.idwithtooltip.attr("data-original-title",tooltipHTML)
   $('.elementsView').autogrow();
   $('.tooltip-inner').html(tooltipHTML)
   $("#delposButton").click(() -> 
-    AppContext.grid.deletePosition(parseInt(x,10),parseInt(y,10))
+    AppContext.cluster.deletePosition(parseInt(x,10),parseInt(y,10))
   )
   AppContext.grid.idwithtooltip
 

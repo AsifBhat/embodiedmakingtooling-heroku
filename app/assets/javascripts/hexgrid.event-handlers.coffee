@@ -25,12 +25,13 @@ jQuery ($) ->
     
     # Hide the content search
     contentSearch.css('display', 'none')
+    $('#addFromTypeahead').css("display","none");
     AppContext.grid.newElement.text(datum.value) # datum.id later
     AppContext.grid.newElement.css('z-index','100')
     # When a content element is selected from the typeahead, it could be
     # a new entry to the positions list or an update to an already 
     # existing entry.
-    AppContext.grid.updatePosition(datum.value, gx, gy)      
+    AppContext.cluster.updatePosition(datum.value, gx, gy)      
 
   AppContext.grid.clickEventHandler = (e, x, y) ->
     console.log("here")
@@ -54,6 +55,7 @@ jQuery ($) ->
     gy = y
 
     # Show content search at corrent position
+    $('#addFromTypeahead').css("display","none");
     contentSearch.css({
       "display": "",
       "left": (inv.x + AppContext.grid.grid.origin.x) + "px",

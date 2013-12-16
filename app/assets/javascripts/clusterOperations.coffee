@@ -9,7 +9,7 @@ getNextPosId = () ->
 
 
 
-AppContext.grid.updatePosition = (datum,posx,posy) ->
+AppContext.cluster.updatePosition = (datum,posx,posy) ->
   posid = getNextPosId();
   pos = {x: posx, y:posy}
   existingPosition = AppContext.vizdata.getPositionInCell(pos)
@@ -56,7 +56,7 @@ AppContext.grid.updatePosition = (datum,posx,posy) ->
     # else if targetPosId replace targetElementId with this elementId
     
 #----------------------------------------------------
-AppContext.grid.deletePosition = (posx, posy) ->
+AppContext.cluster.deletePosition = (posx, posy) ->
   Util.log.console("To delete"+posx+","+posy)
   todel = AppContext.vizdata.getPositionInCell({x:posx,y:posy})
   Util.log.console(todel)

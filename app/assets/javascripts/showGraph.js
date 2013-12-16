@@ -105,6 +105,7 @@ AppContext.graph.updateGraph = function(){
       $.map(relations, addedge);
       AppContext.graph.sigInst.randomLayout();
       AppContext.graph.sigInst.draw();
+      AppContext.graph.sigInst.refresh();
     } else {
       AppContext.graph.sigInst.emptyGraph();
       var elems = AppContext.vizdata.getElements();
@@ -113,6 +114,7 @@ AppContext.graph.updateGraph = function(){
       $.map(relations, addedge);
       AppContext.graph.sigInst.randomLayout();
       AppContext.graph.sigInst.draw();
+      AppContext.graph.sigInst.refresh();
       Util.log.console("sigInst is defined");
     }
 };
