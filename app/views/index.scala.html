@@ -14,99 +14,15 @@
         </div>
       </div>
     <button id='showGraph' value='show' onclick='AppContext.menu.showGraph()'>Show Graph</button>
-    <button id='showElements' value='show' onclick='AppContext.menu.showElements()'>Show Elements</button>
   </div>
 </div>
 
-<!-- Elements - need to move the below section to a tag -->
-<div id='elementsContainer' style='margin-top:100px;position:absolute;margin-left:100px;z-index:1010;display:none;background-color:#ccc;'>
-         <div id='newElementContainer'  style='width:400px; margin-left:5%;'>
-            <div class="panel-group" id="accordion">
-               <div class="panel panel-default">
-                  <div class="panel-heading">
-                     <h4 class="panel-title">
-                        <a data-toggle="collapse" data-parent="" href="#collapseThree">
-                          <div class="row">
-                            <span class="badge" style='margin-left:5%;'>New</span>
-                          </div>  
-                        </a>
-                     </h4>
-                  </div>
-                  <div id="collapseThree" class="panel-collapse collapse">
-                     <div class="panel-body" >
-                        <div class="row">
-                          
-                          <div class="span5"><!--<textarea  id="elemtextarea" rows='1' style="overflow:hidden;width:90%;margin-left:5%;margin-bottom:1%;color:#808080;border-color: #dbdbdb;line-height: 14px;
-                                           font-size: 12px;resize:none;height:33px;"></textarea></div> -->
-                                           <textarea class='elementsView' style='width:90%;margin-bottom:1%;line-height: 14px;font-size:12px;resize:none;height:33px; overflow:hidden;color:#808080;border-color: #dbdbdb;' autofocus oninput='enableButtons(this.value)' id='newElementText'></textarea></div>
-                        </div>
-                        <div class="row">
-                          
-                          <div  class="span5">
-                            <div class="btn-group" id="addElementsbtn" data-toggle="buttons-radio">
-                              <!--<button type="button" class="btn btn-default btn-small">
-                                  <span class="glyphicon glyphicon-plus"></span> Story
-                              </button> -->
-                              <a href="#" class="btn btn-default btn-mini disabled" onClick='addStory()'><i class="icon-plus icon-black"></i> Story</a>
-                              <a href="#" class="btn btn-default btn-mini disabled" onClick='addForce()'><i class="icon-plus icon-black"></i> Force</a>
-                              <a href="#" class="btn btn-default btn-mini disabled" onClick='addSolution()'><i class="icon-plus icon-black"></i> Solution</a>
-                            </div>
-                          </div>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-
-               <div class="panel panel-default">
-                  <div class="panel-heading">
-                     <h4 class="panel-title">
-                        <a data-toggle="collapse" data-parent="" href="#collapsetwo">
-                          <div class="row">
-                            <span class="badge" style='margin-left:5%;'>Edit</span>
-                          </div> 
-                        </a>  
-                          
-                     </h4>
-                  </div>
-                  <div id="collapsetwo" class="panel-collapse collapse">
-
-                     <div class="panel-body" style='width:95%;'>
-                        <ul class="nav nav-tabs">
-                          <li class='active' ><a href="#stories" data-toggle="tab">Stories</a></li>
-                          <li><a href="#forces" data-toggle="tab">Forces</a></li>
-                          <li><a href="#components" data-toggle="tab">Sol... Comp...</a></li>
-                        </ul>                          
-                        <div >
-                           <div style='width: 100%;'>
-                              <!-- Tab panes -->
-                              
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-
-            </div>
-            <!-- end accordion -->
-         </div> <!-- end newElementContainer-->
-    </div><!-- End - Elements -->
 
 <script>
 
    setTimeout(function () {$('.elementsView').autogrow();},12000);
    
-   handleKeyPress = function(e) {
-    //console.log("key pressed")
-    if (!e) e = window.event
-    var keyCode = e.keyCode || e.which
-    if (keyCode == '13') {
-      $('#addFromTypeahead').css("display","");
-      var leftpos = $("#content-search").position().left;
-      var toppos = $("#content-search").position().top - 30;
-      $('#addFromTypeahead').css("left", leftpos + "px");
-      $('#addFromTypeahead').css("top", toppos + "px");
-    }      
-  }  
+   
          
 </script>
 
@@ -125,14 +41,10 @@
 <div id="hexagonal-grid"></div>
 
 <div class="btn-group" id="addFromTypeahead" data-toggle="buttons-radio"  style='z-index:100;position:absolute;display:none;'>
-  <!--<button type="button" class="btn btn-default btn-small">
-      <span class="glyphicon glyphicon-plus"></span> Story
-  </button> -->
+ 
   <a href="#" class="btn btn-default btn-mini " onClick='addStory()'><i class="icon-plus icon-black"></i> Story</a>
   <a href="#" class="btn btn-default btn-mini " onClick='addForce()'><i class="icon-plus icon-black"></i> Force</a>
   <a href="#" class="btn btn-default btn-mini " onClick='addSolution()'><i class="icon-plus icon-black"></i> Solution</a>
 </div>
-<!--div id="content-search">
-    <input type="text" name="query">
-</div-->
+
 }

@@ -11,7 +11,7 @@ var realtimeOptions = {
    
    // for heroku-staging 
    // Changed to match the Client ID for Heroku App
-   clientId: '883917966367-h1np3jeqi9v00aku4ugphoh1f5939jnk.apps.googleusercontent.com',
+  clientId: '883917966367-h1np3jeqi9v00aku4ugphoh1f5939jnk.apps.googleusercontent.com',
 
 
   /**

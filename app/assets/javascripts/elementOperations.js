@@ -1,61 +1,15 @@
-var to1, to2, to3;
-
-AppContext.controllers.StoriesListCtrl = function ($scope) {
-    to1 = setInterval(function () {
-        $scope.$apply(function () {
-            if(AppContext.vizdata!==undefined){
-              var temp =  JSON.stringify(AppContext.vizdata.getStories());
-              $scope.stories = JSON.parse(temp);
-              Util.log.console($scope.stories);
-              clearInterval(to1);
-            }
-        });
-    }, 3000);
-};
-
-AppContext.controllers.ForcesListCtrl = function ($scope) {
-  to2 = setInterval(function () {
-        $scope.$apply(function () {
-            if(AppContext.vizdata!==undefined){
-              var temp =  JSON.stringify(AppContext.vizdata.getForces());
-              $scope.forces = JSON.parse(temp);
-              clearInterval(to2);
-            }
-        });
-    }, 3000);
-};
-
-AppContext.controllers.SolutionsListCtrl = function ($scope) {
-  to3 = setInterval(function () {
-        $scope.$apply(function () {
-            if(AppContext.vizdata!==undefined){
-              var temp =  JSON.stringify(AppContext.vizdata.getSolutions());
-              $scope.solutions = JSON.parse(temp);
-              clearInterval(to3);
-            }
-        });
-    }, 3000);
-};
-
-AppContext.menu.showElements = function (){
-  
-  $(elementsContainer).css("display", "");
-  var ebtn = $('#showElements')[0];
-  var action = $(ebtn).attr("value");
-  var elementsContainer = $('#elementsContainer')[0];
-  
-  if(action == 'show'){
-    $(elementsContainer).css("display", "");
-    $(ebtn).html("Hide Elements");
-    $(ebtn).attr("value","hide");
-    AppContext.menu.updateGraph();
-    
-  } else {
-    $(elementsContainer).css("display", "none");
-    $(ebtn).html("Show Elements");
-    $(ebtn).attr("value","show");
-  }
-};
+handleKeyPress = function(e) {
+  //console.log("key pressed")
+  if (!e) e = window.event
+  var keyCode = e.keyCode || e.which
+  if (keyCode == '13') {
+    $('#addFromTypeahead').css("display","");
+    var leftpos = $("#content-search").position().left;
+    var toppos = $("#content-search").position().top - 30;
+    $('#addFromTypeahead').css("left", leftpos + "px");
+    $('#addFromTypeahead').css("top", toppos + "px");
+  }      
+}  
 
 getNextElemId = function(allElem) {
   var nextId = 1;
@@ -83,20 +37,9 @@ getNextSolutionId =  function() {
   return getNextElemId(AppContext.vizdata.getSolutions());
 };
 
-enableButtons = function(value){
-    if(value.trim().length>0){
-      $('#addElementsbtn .btn').removeClass('disabled');
-    } else {
-      $('#addElementsbtn .btn').addClass('disabled');
-    }
-    
-};
 
 getNewElementdesc = function(){
-  if (($('#newElementText').val().trim().length)===0)
-    return $('.twitter-typeahead span').text().trim();
-  else
-    return $('#newElementText').val().trim();
+  return $('.twitter-typeahead span').text().trim();
 };
 
 addStory = function() {
