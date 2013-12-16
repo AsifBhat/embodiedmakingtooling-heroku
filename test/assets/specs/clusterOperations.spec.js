@@ -11,7 +11,7 @@ xdescribe("Cluster operations - add in empty cell", function() {
     spyOn(AppContext.vizdata, 'addPosition').andCallFake(function(pos) {
       return null;
     });
-    AppContext.grid.updatePosition(null,"F01", 0, 0);
+    AppContext.cluster.updatePosition(null,"F01", 0, 0);
   });
 
   afterEach(function() {
@@ -39,7 +39,7 @@ xdescribe("Cluster operations - add in non-empty cell", function() {
     spyOn(AppContext.vizdata, 'removePosition').andCallFake(function(pos) {
       return null;
     });
-    AppContext.grid.updatePosition(null,"F01", 0, 0);
+    AppContext.cluster.updatePosition(null,"F01", 0, 0);
   });
 
   afterEach(function() {
@@ -118,7 +118,7 @@ describe('Testing Cluster Operations: ', function() {
   });
 
   it('testing updatePosition on the cluster by adding a new cell on 0,0 : Position added? ', function() {
-    AppContext.grid.updatePosition(elementId, positions.x, positions.y);
+    AppContext.cluster.updatePosition(elementId, positions.x, positions.y);
     isPositionPresent = false;
     $.each(VizDataModel.prototype.positions, function(idx, position){
       if(position.elementId == elementId && position.x == positions.x && position.y == positions.y){
