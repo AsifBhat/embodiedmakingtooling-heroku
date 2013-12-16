@@ -12,7 +12,7 @@ addnode = function(elem, i){
       break;
   }
   try {
-  AppContext.menu.sigInst.addNode(elem.elementId,{
+  AppContext.graph.sigInst.addNode(elem.elementId,{
       label: elem.elementId,
       color: nodeColor,
       x: i+(Math.random()*0.7),
@@ -48,15 +48,17 @@ sigma.publicPrototype.randomLayout = function() {
 
 addedge = function(rel, i){
   try {
-    AppContext.menu.sigInst.addEdge(i,rel.srcElementId,rel.targetElementId);
+    AppContext.graph.sigInst.addEdge(rel.srcElementId+rel.targetElementId,rel.srcElementId,rel.targetElementId);
   } catch (msg) {
-    Util.log.console("Edge Already present");
+    console.log(msg);
   }
+  AppContext.graph.sigInst.draw();
 };
 
-AppContext.menu.updateGraph = function(){
-  if(AppContext.menu.sigInst===undefined){
-      AppContext.menu.sigInst = sigma.init($('#sig')[0]).drawingProperties({
+
+AppContext.graph.updateGraph = function(){
+  if(AppContext.graph.sigInst===undefined){
+      AppContext.graph.sigInst = sigma.init($('#sig')[0]).drawingProperties({
         defaultLabelColor: '#ccc',
         font: 'Arial',
         edgeColor: 'source',
@@ -67,11 +69,11 @@ AppContext.menu.updateGraph = function(){
       });
       
         // Bind events :
-      AppContext.menu.sigInst.bind('overnodes',function(event){
+      AppContext.graph.sigInst.bind('overnodes',function(event){
         var nodes = event.content;
         var neighbors = {};
         var empty = true;
-        AppContext.menu.sigInst.iterEdges(function(e){
+        AppContext.graph.sigInst.iterEdges(function(e){
           if(nodes.indexOf(e.source)>=0 || nodes.indexOf(e.target)>=0){
             neighbors[e.source] = 1;
             neighbors[e.target] = 1;
@@ -80,7 +82,7 @@ AppContext.menu.updateGraph = function(){
         });
         if(empty){
         } else {
-          AppContext.menu.sigInst.iterNodes(function(n){
+          AppContext.graph.sigInst.iterNodes(function(n){
             if(!neighbors[n.id]){
               n.hidden = 1;
             }else{
@@ -88,9 +90,9 @@ AppContext.menu.updateGraph = function(){
             }
           });
         }
-        AppContext.menu.sigInst.draw();
+        AppContext.graph.sigInst.draw();
       }).bind('outnodes',function(){
-        AppContext.menu.sigInst.iterEdges(function(e){
+        AppContext.graph.sigInst.iterEdges(function(e){
           e.hidden = 0;
         }).iterNodes(function(n){
           n.hidden = 0;
@@ -101,19 +103,36 @@ AppContext.menu.updateGraph = function(){
       $.map(elems, addnode);
       relations = AppContext.vizdata.getRelations();
       $.map(relations, addedge);
-      AppContext.menu.sigInst.randomLayout();
-      AppContext.menu.sigInst.draw();
+      AppContext.graph.sigInst.randomLayout();
+      AppContext.graph.sigInst.draw();
     } else {
-      Util.log.console("sigInst is defined");
-      AppContext.menu.sigInst.emptyGraph();
-      var elems1 = AppContext.vizdata.getElements();
-      $.map(elems1, addnode);
+      AppContext.graph.sigInst.emptyGraph();
+      var elems = AppContext.vizdata.getElements();
+      $.map(elems, addnode);
       relations = AppContext.vizdata.getRelations();
       $.map(relations, addedge);
-      AppContext.menu.sigInst.randomLayout();
-      AppContext.menu.sigInst.draw();
-      Util.log.console("Refreshed graph");
+      AppContext.graph.sigInst.randomLayout();
+      AppContext.graph.sigInst.draw();
+      Util.log.console("sigInst is defined");
     }
+};
+
+AppContext.graph.addElement = function(newElems){
+  if(AppContext.graph.sigInst !== undefined)
+    $.map(newElems, addnode);
+};
+
+AppContext.graph.addRelation = function(newRelations) {
+  if(AppContext.graph.sigInst !== undefined)
+    $.map(newRelations, addedge);
+};
+
+AppContext.graph.removeElement = function(removedElems){
+  AppContext.graph.updateGraph();
+};
+
+AppContext.graph.removeRelation = function(removedRelations){
+  AppContext.graph.updateGraph();
 };
 
 AppContext.menu.showGraph = function() {
@@ -125,7 +144,7 @@ AppContext.menu.showGraph = function() {
     $(sigContainer).css("display", "");
     $(gbtn).html("Hide Graph");
     $(gbtn).attr("value","hide");
-    AppContext.menu.updateGraph();
+    AppContext.graph.updateGraph();
     
   } else {
     $(sigContainer).css("display", "none");

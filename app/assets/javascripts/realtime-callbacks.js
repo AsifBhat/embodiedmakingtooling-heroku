@@ -43,31 +43,22 @@ function doPosValueChanged (){
   
 }
 
-function doContentValueChanged(){
+function doContentValueChanged(event){
   AppContext.grid.reloadTypeahead(AppContext.vizdata.getElements());
-  // get the change and update only that category
- /* var temp1 =  JSON.parse(JSON.stringify(AppContext.vizdata.getStories()));
-  var temp2 =  JSON.parse(JSON.stringify(AppContext.vizdata.getForces()));
-  var temp3 =  JSON.parse(JSON.stringify(AppContext.vizdata.getSolutions()));
-  var scope1 = angular.element($("#storiesList")).scope();
-  scope1.$apply(function(){
-      scope1.stories = temp1;
-  });
-  var scope2 = angular.element($("#forcesList")).scope();
-  scope2.$apply(function(){
-      scope2.forces = temp2;
-  });
-  var scope3 = angular.element($("#solutionsList")).scope();
-  scope3.$apply(function(){
-      scope3.solutions = temp3;
-  });*/
-  AppContext.menu.updateGraph();
+  if(event.type == gapi.drive.realtime.EventType.VALUES_ADDED)
+    AppContext.graph.addElement(event.values);
+  else if (event.type == gapi.drive.realtime.EventType.VALUES_REMOVED)
+    AppContext.graph.removeElement(event.values);
+
 }
 
-function doRelValueChanged (){
+function doRelValueChanged (event){
   var model = gapi.drive.realtime.custom.getModel(this);
   Util.log.console("Relations value changed...");
-  AppContext.menu.updateGraph();
+  if(event.type == gapi.drive.realtime.EventType.VALUES_ADDED)
+    AppContext.graph.addRelation(event.values);
+  else if (event.type == gapi.drive.realtime.EventType.VALUES_REMOVED)
+    AppContext.graph.removeRelation(event.values);
 }
 
 /**
