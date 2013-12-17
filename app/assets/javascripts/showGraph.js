@@ -23,24 +23,35 @@ addnode = function(elem, i){
   }
 };
 
+adjustDisplaySize = function(nodeCount) {
+  var ratio = Math.round(nodeCount / 20);
+  var pixels = ratio * 40;
+  var height = 300 + pixels;
+  var width = 600 + pixels;
+  var sigContainer = $('#graphView')[0];
+  $(sigContainer).css("height", height+"px");
+  $(sigContainer).css("width", width+"px");
+
+};
+
 sigma.publicPrototype.randomLayout = function() {
-    /*var R = 100,
+  /*  var R = 1000,
         i = 0,
-        L = this.getNodesCount();
+        L = this.getNodesCount();*/
  
-    this.iterNodes(function(n){
+    /*this.iterNodes(function(n){
       n.x = Math.cos(Math.PI*(i++)/L)*R;
       n.y = Math.sin(Math.PI*(i++)/L)*R;
-    });
+    });*/
  
-    return this.position(0,0,1).draw();*/
+   // return this.position(0,0,1).draw();*/
 
     var W = 100,
-        H = 100;
+        H = 50;
     
     this.iterNodes(function(n){
-      n.x = W*Math.random();
-      n.y = H*Math.random();
+      n.x = W*Math.random() ;
+      n.y = H*Math.random() ;
     });
  
     return this.position(0,0,1).draw();
@@ -100,28 +111,38 @@ AppContext.graph.updateGraph = function(){
       });
 
       var elems = AppContext.vizdata.getElements();
+      adjustDisplaySize(elems.length);
       $.map(elems, addnode);
       relations = AppContext.vizdata.getRelations();
       $.map(relations, addedge);
       AppContext.graph.sigInst.randomLayout();
       AppContext.graph.sigInst.draw();
-      AppContext.graph.sigInst.refresh();
+      /*var sigContainer = $('#graphView')[0];
+      var ht = $(sigContainer).css("height");
+      $(sigContainer).css("height",ht+"px");*/
     } else {
       AppContext.graph.sigInst.emptyGraph();
-      var elems = AppContext.vizdata.getElements();
-      $.map(elems, addnode);
+      var elems1 = AppContext.vizdata.getElements();
+      adjustDisplaySize(elems1.length);
+      $.map(elems1, addnode);
       relations = AppContext.vizdata.getRelations();
       $.map(relations, addedge);
       AppContext.graph.sigInst.randomLayout();
       AppContext.graph.sigInst.draw();
-      AppContext.graph.sigInst.refresh();
+      /*var sigContainer = $('#graphView')[0];
+       $(sigContainer).css("height","661px");
+       var ht = $(sigContainer).css("height");
+      console.log(ht)*/
       Util.log.console("sigInst is defined");
     }
 };
 
 AppContext.graph.addElement = function(newElems){
-  if(AppContext.graph.sigInst !== undefined)
+  if(AppContext.graph.sigInst !== undefined) {
     $.map(newElems, addnode);
+    
+  }
+    
 };
 
 AppContext.graph.addRelation = function(newRelations) {
@@ -143,12 +164,16 @@ AppContext.menu.showGraph = function() {
   var sigContainer = $('#graphView')[0];
   
   if(action == 'show'){
+    /*$(sigContainer).css("height", "400px");
+    $(sigContainer).css("width", "400px");*/
     $(sigContainer).css("display", "");
     $(gbtn).html("Hide Graph");
     $(gbtn).attr("value","hide");
     AppContext.graph.updateGraph();
     
   } else {
+    /*$(sigContainer).css("height", "1000px");
+    $(sigContainer).css("width", "1000px");*/
     $(sigContainer).css("display", "none");
     $(gbtn).html("Show Graph");
     $(gbtn).attr("value","show");

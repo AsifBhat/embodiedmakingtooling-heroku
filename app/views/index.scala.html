@@ -34,9 +34,11 @@
 <div id="message_board" class="flash_board">
   <div id="message"></div>
 </div>
-<div id='graphView' style='display:none;position:absolute;z-index: 1010;margin-top:100px;margin-left:100px;height:400px;width:400px;'>
-  <div id='sig' class="sigma"></div>
-</div>
+<div style='overflow:hidden;width:600px;height:300px;position:absolute;z-index:1010;margin-top:100px;margin-left:100px;'>
+  <div id='graphView' style='display:none;position:absolute;z-index: 1010;height:300px;width:600px;margin-right: 10px;margin-bottom: 10px;'>
+    <div id='sig' class="sigma" style="height:100%;width:100%;"></div>
+  </div>
+ </div> 
 <div id="desctooltip" style="height:10px;width:10px;" type="button" data-html="true" data-toggle="tooltip" data-placement="top" data-trigger="focus hover" data-animation="false"></div>
 <div id="hexagonal-grid"></div>
 
