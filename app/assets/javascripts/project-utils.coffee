@@ -70,5 +70,6 @@ AppContext.project.sendChangeTitleRequest = (newTitle) ->
   request.execute( (resp) ->
     AppContext.project.projectTitle = newTitle
     AppContext.project.updateTitleText()
+    AppContext.vizdata.updateTitle(newTitle)
     Util.log.console 'Project Title Changed'
   )

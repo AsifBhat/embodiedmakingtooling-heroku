@@ -23,7 +23,10 @@ jQuery ($) ->
     #$('#content-search').append('<input type="text" name="query">')
 
     
-    $('body').append('<div id="content-search"><input type="text" id="input-elem-search" name="query" onkeypress="handleKeyPress()" ></div>'); 
+    $('body').append('<div id="content-search"><input type="text" id="input-elem-search" name="query"></div>');
+    $('#content-search').keypress((evt) ->
+      handleKeyPress(evt)
+    ) 
     $('#content-search input').typeahead(
       $.extend(true, 
         {

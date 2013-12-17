@@ -10,6 +10,7 @@ function registerTypes() {
   VizDataModel.prototype.positions = gapi.drive.realtime.custom.collaborativeField('positions');
   VizDataModel.prototype.relations = gapi.drive.realtime.custom.collaborativeField('relations');
   VizDataModel.prototype.elements = gapi.drive.realtime.custom.collaborativeField('elements');
+  VizDataModel.prototype.meta = gapi.drive.realtime.custom.collaborativeField('meta');
   gapi.drive.realtime.custom.registerType(VizDataModel, 'VizDataModel');
   gapi.drive.realtime.custom.setInitializer(VizDataModel, doInitialize);
   //gapi.drive.realtime.custom.setOnLoaded(VizDataModel, onLoaded);
@@ -61,6 +62,12 @@ function doRelValueChanged (event){
     AppContext.graph.removeRelation(event.values);
 }
 
+function doMetaValueChanged (evt){
+  AppContext.project.projectTitle = AppContext.vizdata.getTitle();
+  Util.log.console('Project Title');
+  Util.log.console(AppContext.project.projectTitle);
+  AppContext.project.updateTitleText();
+}
 /**
  * The initializer is called exactly once in the lifetime of an object, 
  * immediately after the object is first created. When that object is reloaded
@@ -73,6 +80,7 @@ function doRelValueChanged (event){
   this.positions = model.createList();
   this.elements = model.createList();
   this.relations = model.createList();
+  this.meta = model.createList();
   var temp;
   // This should be populated by data from a flat file
   $.ajax ({
@@ -86,7 +94,9 @@ function doRelValueChanged (event){
            Util.log.console ("AJAX error: "+errorThrown);}
          });
   Util.log.console("Initialize object the first time it is created");
+  AppContext.project.getFileDetails();
   model.beginCompoundOperation();
+  this.updateTitle(AppContext.project.projectTitle);
   for (var i=0;i<temp.length;i++){
     this.addElement(temp[i]);
   }
@@ -127,10 +137,12 @@ function onFileLoaded(doc) {
   AppContext.vizdata.positions.addEventListener(gapi.drive.realtime.EventType.VALUES_REMOVED, doPosValueChanged);
   AppContext.vizdata.elements.addEventListener(gapi.drive.realtime.EventType.VALUES_ADDED, doContentValueChanged);
   AppContext.vizdata.elements.addEventListener(gapi.drive.realtime.EventType.VALUES_REMOVED, doContentValueChanged);
-  /*AppContext.vizdata.elements.addEventListener(gapi.drive.realtime.EventType.VALUES_CHANGED, doContentValueChanged);*/
-
+  
   AppContext.vizdata.relations.addEventListener(gapi.drive.realtime.EventType.VALUES_ADDED, doRelValueChanged);
   AppContext.vizdata.relations.addEventListener(gapi.drive.realtime.EventType.VALUES_REMOVED, doRelValueChanged);
+  
+  AppContext.vizdata.meta.addEventListener(gapi.drive.realtime.EventType.VALUES_ADDED, doMetaValueChanged);
+  AppContext.vizdata.meta.addEventListener(gapi.drive.realtime.EventType.VALUES_REMOVED, doMetaValueChanged);
 
   AppContext.grid.displayAllPositions(AppContext.vizdata.getPositions());
   

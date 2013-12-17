@@ -148,3 +148,22 @@
     this.relations.remove(toremove);
   };
   
+  VizDataModel.prototype.getTitle = function(){
+    var title = "";
+    $(this.meta.asArray()).each(function(idx){
+      if(this.title != undefined)
+        return title = this.title;
+    });
+    return title;
+  }
+
+  VizDataModel.prototype.updateTitle = function(newTitle){
+    var removedElem = null;
+    $(this.meta.asArray()).each(function(idx){
+      if(this.title != undefined){
+        removedElem = this;
+        return;
+      }
+    });
+    this.meta.push({"title" : newTitle});
+  }
