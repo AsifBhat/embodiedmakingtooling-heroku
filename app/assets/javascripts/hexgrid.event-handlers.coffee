@@ -38,10 +38,10 @@ jQuery ($) ->
     pos = {x:x,y:y}
     cellClicked = AppContext.vizdata.getPositionInCell(pos);
     console.log(cellClicked)
-    if(cellClicked == '')
-      AppContext.grid.newElement = AppContext.grid.placeNewElement(x,y)
-    else
-      AppContext.grid.newElement = $('#'+cellClicked.posId)  
+    #if(cellClicked == '')
+    AppContext.grid.newElement = AppContext.grid.placeNewElement(x,y)
+    #else
+     # AppContext.grid.newElement = $('#'+cellClicked.posId)  
 
     console.log(AppContext.grid.newElement)  
 
