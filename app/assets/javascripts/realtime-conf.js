@@ -61,7 +61,8 @@ var realtimeOptions = {
 /**
  * Start the Realtime loader with the options.
  */
+var realtimeLoader = new rtclient.RealtimeLoader(realtimeOptions);
+
 function startRealtime() {
-  var realtimeLoader = new rtclient.RealtimeLoader(realtimeOptions);
   realtimeLoader.start();
 }

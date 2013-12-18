@@ -91,19 +91,33 @@ function createPicker() {
   // A simple callback implementation.
   function pickerCallback(data) {
     console.log('Calling picker callback');
-    var url = 'nothing';
+    var fileId = '';
     if (data[google.picker.Response.ACTION] == google.picker.Action.PICKED) {
       var doc = data[google.picker.Response.DOCUMENTS][0];
-      url = doc[google.picker.Document.URL];
+      fileId = doc.id
     }
-    if(url != 'nothing')
-      window.location.replace(url);
+    if(fileId != ''){
+      rtclient.params['fileIds'] = fileId+'';
+      rtclient.params['userId'] = AppContext.making.userId;
+      realtimeLoader.start();
+    }
+      
   }
 
+var loadAuthModal = function(){
+  var modalHTML = '<div id="authModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"><div class="modal-header"><h5 id="myModalLabel">You need to authorize The Embodied Making Tool to store your data on your Google Drive Account</h5></div><div class="modal-body"><button class="btn btn-danger button1" id="authBtn" data-dismiss="modal" aria-hidden="true">Authorize</button></div></div>';
+  $('body').append(modalHTML);
+
+  $('#authBtn').click(function() {
+    handleClientLoad();  
+  });
+
+  $('#authModal').modal({
+    show: true,
+    keyboard: false
+  });
+}
+
 $(document).ready(function(){
-  if(window.location.hash.length == 0 && window.location.search.length == 0)
-    AppContext.grid.loadPicker();
-  else
-    window.onload = AppContext.grid.loadApplication();
-  $('.proj_title').attr('data-content', '<div class="title_edit"><button id="edit_project_name" class="btn btn-mini"> Edit <span class="icon-edit"></span></button>&nbsp;<button id="cl_edit_project_name" class="btn btn-mini"> Cancel <span class="icon-remove-sign"></span></button></div>');
+  loadAuthModal();
 });
