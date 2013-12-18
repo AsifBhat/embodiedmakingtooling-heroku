@@ -66,6 +66,26 @@ addedge = function(rel, i){
   AppContext.graph.sigInst.draw();
 };
 
+removeEdge = function(rel, i){
+	  AppContext.graph.sigInst.iterEdges(function(e){
+	    if((e.source == rel.srcElementId) && (e.target == rel.targetElementId)){
+	      AppContext.graph.sigInst.dropEdge(e.id);
+	      Util.log.console("edge dropped");
+	    }
+	  });
+	  AppContext.graph.sigInst.draw();
+	};
+
+removeNode = function(elem, i){
+	AppContext.graph.sigInst.iterNodes(function(n){
+	    if((n.id == elem.elementId)){
+	      AppContext.graph.sigInst.dropNode(n.id);
+	      Util.log.console("node dropped");
+	      Util.log.console(n)
+	    }
+	  });
+	  AppContext.graph.sigInst.draw();
+}
 
 AppContext.graph.updateGraph = function(){
   if(AppContext.graph.sigInst===undefined){
@@ -159,19 +179,10 @@ AppContext.graph.addRelation = function(newRelations) {
 };
 
 AppContext.graph.removeElement = function(removedElems){
-  AppContext.graph.updateGraph();
+	/*if(AppContext.graph.sigInst !== undefined)
+	    $.map(removedElems, removeNode);*/
+	AppContext.graph.updateGraph();
 };
-
-removeEdge = function(rel, i){
-  AppContext.graph.sigInst.iterEdges(function(e){
-    if((e.source == rel.srcElementId) && (e.target == rel.targetElementId)){
-      AppContext.graph.sigInst.dropEdge(e);
-      Util.log.console("edge dropped");
-    }
-  });
-  AppContext.graph.sigInst.draw();
-};
-
 
 AppContext.graph.removeRelation = function(removedRelations){
   //AppContext.graph.updateGraph();

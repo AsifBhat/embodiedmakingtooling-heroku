@@ -40,7 +40,7 @@ html, body {
 
 .hex.stories {
   background-image: url('/assets/images/sprite.png');
-  background-position: (3 * @hex-sprite-width) (2 * @hex-sprite-height);
+  background-position: (8 * @hex-sprite-width) (1 * @hex-sprite-height);
 }
 
 .hex.forces {
@@ -52,6 +52,22 @@ html, body {
   background-image: url('/assets/images/sprite.png');
   background-position: (0 * @hex-sprite-width) (2 * @hex-sprite-height);
 }
+
+.hex.forces.dragged {
+  background-image: url('/assets/images/sprite.png');
+  background-position: (8 * @hex-sprite-width) (0 * @hex-sprite-height);
+}
+
+.hex.stories.dragged {
+  background-image: url('/assets/images/sprite.png');
+  background-position: (3 * @hex-sprite-width) (2 * @hex-sprite-height);
+}
+
+.hex.solutionComponents {
+  background-image: url('/assets/images/sprite.png');
+  background-position: (1 * @hex-sprite-width) (1 * @hex-sprite-height);
+}
+
 
 #menubar {
   padding: 4px;

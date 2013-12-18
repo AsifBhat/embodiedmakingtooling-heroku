@@ -2,6 +2,14 @@ jQuery ($) ->
   gx = 0
   gy = 0
   AppContext.grid.hoverEventHandler = (e, x, y) ->
+    Util.log.console("hovering")
+    if(AppContext.grid.downtile != '')
+      Util.log.console("dragging")
+      domelem = $('#'+AppContext.grid.downtile.posId)
+      inv = AppContext.grid.grid.screenpos(x, y)
+      domelem.css("left",inv.x)
+      domelem.css("top",inv.y)
+    else  
       # Highlight the currently hovered cell
       pos = {x:x,y:y}
       elementUnderMouse = AppContext.vizdata.getElementInCell(pos)
@@ -11,7 +19,7 @@ jQuery ($) ->
         tooltipInfo = AppContext.vizdata.getElementDescription(elementUnderMouse)
         if(tooltipInfo != '') 
           AppContext.grid.showTooltip(x,y, elementUnderMouse, tooltipInfo)
-      AppContext.grid.showHoveredElement(x,y) 
+    AppContext.grid.showHoveredElement(x,y) 
 
   AppContext.grid.addGridPos = (obj, datum, dataset) ->
 
