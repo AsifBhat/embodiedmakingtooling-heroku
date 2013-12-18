@@ -112,6 +112,24 @@ AppContext.grid.activateListeners = () ->
   AppContext.grid.grid.addEvent("tileout", (e, x, y) ->
     AppContext.grid.hoveroutEventHandler(e, x, y)
   )
+  
+  AppContext.grid.grid.addEvent("tiledown", (e, x, y) ->
+    Util.log.console("tiledown")    
+    pos = {x:x,y:y}
+    #e.preventDefault()
+    downtile = AppContext.vizdata.getPositionInCell(pos);
+    if(downtile != '')
+      e.preventDefault()
+  )
+  
+  AppContext.grid.grid.addEvent("tileup", (e, x, y) ->
+  Util.log.console("tileup")
+  )
+  
+  AppContext.grid.grid.addEvent("tileclick", (e, x, y) ->
+    Util.log.console("tileclick")
+    e.preventDefault()
+  )
 
 jQuery ($) ->
   #root = ''
