@@ -72,7 +72,7 @@ AppContext.graph.updateGraph = function(){
       AppContext.graph.sigInst = sigma.init($('#sig')[0]).drawingProperties({
         defaultLabelColor: '#ccc',
         font: 'Arial',
-        edgeColor: 'source',
+        edgeColor: '#000',
         defaultEdgeType: 'curve'
       }).graphProperties({
         minNodeSize: 1,
@@ -117,9 +117,13 @@ AppContext.graph.updateGraph = function(){
       $.map(relations, addedge);
       AppContext.graph.sigInst.randomLayout();
       AppContext.graph.sigInst.draw();
-      /*var sigContainer = $('#graphView')[0];
-      var ht = $(sigContainer).css("height");
-      $(sigContainer).css("height",ht+"px");*/
+      if (document.createEvent) { // W3C
+      var ev = document.createEvent('Event');
+      ev.initEvent('resize', true, true);
+      window.dispatchEvent(ev);
+      } else { // IE
+          document.fireEvent('onresize');
+      }
     } else {
       AppContext.graph.sigInst.emptyGraph();
       var elems1 = AppContext.vizdata.getElements();
@@ -129,10 +133,13 @@ AppContext.graph.updateGraph = function(){
       $.map(relations, addedge);
       AppContext.graph.sigInst.randomLayout();
       AppContext.graph.sigInst.draw();
-      /*var sigContainer = $('#graphView')[0];
-       $(sigContainer).css("height","661px");
-       var ht = $(sigContainer).css("height");
-      console.log(ht)*/
+      if (document.createEvent) { // W3C
+      var ev = document.createEvent('Event');
+      ev.initEvent('resize', true, true);
+      window.dispatchEvent(ev);
+      } else { // IE
+          document.fireEvent('onresize');
+      }
       Util.log.console("sigInst is defined");
     }
 };
@@ -162,19 +169,18 @@ AppContext.menu.showGraph = function() {
   var gbtn = $('#showGraph')[0];
   var action = $(gbtn).attr("value");
   var sigContainer = $('#graphView')[0];
+  var graphContainer = $('#graphContainer')[0];
   
   if(action == 'show'){
-    /*$(sigContainer).css("height", "400px");
-    $(sigContainer).css("width", "400px");*/
     $(sigContainer).css("display", "");
+    $(graphContainer).css("display", "");
     $(gbtn).html("Hide Graph");
     $(gbtn).attr("value","hide");
     AppContext.graph.updateGraph();
     
   } else {
-    /*$(sigContainer).css("height", "1000px");
-    $(sigContainer).css("width", "1000px");*/
     $(sigContainer).css("display", "none");
+    $(graphContainer).css("display", "none");
     $(gbtn).html("Show Graph");
     $(gbtn).attr("value","show");
   }
