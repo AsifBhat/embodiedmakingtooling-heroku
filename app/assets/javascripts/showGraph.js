@@ -72,7 +72,8 @@ AppContext.graph.updateGraph = function(){
       AppContext.graph.sigInst = sigma.init($('#sig')[0]).drawingProperties({
         defaultLabelColor: '#ccc',
         font: 'Arial',
-        edgeColor: '#000',
+        edgeColor: 'default',
+        defaultEdgeColor: '#000',
         defaultEdgeType: 'curve'
       }).graphProperties({
         minNodeSize: 1,
@@ -161,8 +162,21 @@ AppContext.graph.removeElement = function(removedElems){
   AppContext.graph.updateGraph();
 };
 
+removeEdge = function(rel, i){
+  AppContext.graph.sigInst.iterEdges(function(e){
+    if((e.source == rel.srcElementId) && (e.target == rel.targetElementId)){
+      AppContext.graph.sigInst.dropEdge(e);
+      Util.log.console("edge dropped");
+    }
+  });
+  AppContext.graph.sigInst.draw();
+};
+
+
 AppContext.graph.removeRelation = function(removedRelations){
-  AppContext.graph.updateGraph();
+  //AppContext.graph.updateGraph();
+  if(AppContext.graph.sigInst !== undefined)
+    $.map(removedRelations, removeEdge);
 };
 
 AppContext.menu.showGraph = function() {
