@@ -79,9 +79,8 @@ AppContext.grid.placeOnGrid = (elemwithpos) ->
   $(cellToPlace).attr("id",elemwithpos.posId)
   $(AppContext.grid.grid.root).append(cellToPlace)
   AppContext.grid.placeHex(cellToPlace,elemwithpos.x,elemwithpos.y)
-  $(cellToPlace).draggable();
-  
 
+  
 AppContext.grid.displayAllPositions = (positions) ->
   $('.forces, .solutionComponents, .stories').remove()
   $("#desctooltip").tooltip('hide')

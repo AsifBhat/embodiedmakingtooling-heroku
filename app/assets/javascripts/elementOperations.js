@@ -1,3 +1,5 @@
+removeetype = false;
+
 handleKeyPress = function(e) {
   //console.log("key pressed")
   if (!e) e = window.event
@@ -6,14 +8,20 @@ handleKeyPress = function(e) {
     var etype = getNewElementdesc().substr(0,1);
     var secondchar = getNewElementdesc().substr(1,1);
     if(secondchar == ' '){
-      if((etype == 's')||(etype == 'S'))
+      if((etype == 's')||(etype == 'S')){
         AppContext.cluster.addStory();
-      else if ((etype == 'f')||(etype == 'F'))
+        removeetype = true;
+      }  
+      else if ((etype == 'f')||(etype == 'F')){
         AppContext.cluster.addForce();
-      else if ((etype == 'c')||(etype == 'C'))
+        removeetype = true;
+      }
+      else if ((etype == 'c')||(etype == 'C')){
         AppContext.cluster.addSolution();
-      else
-        displayOptions();
+        removeetype = true;
+      }  
+      else 
+    	displayOptions();
     } else 
       displayOptions();
   }        
@@ -55,7 +63,10 @@ getNextSolutionId =  function() {
 
 
 getNewElementdesc = function(){
-  return $('.twitter-typeahead span').text().trim();
+  var textdesc = $('.twitter-typeahead span').text().trim();
+  if(removeetype)
+    textdesc = fullText.substr(2,fullText.length-2)
+  return textdesc;  
 };
 
 AppContext.cluster.addStory = function() {
