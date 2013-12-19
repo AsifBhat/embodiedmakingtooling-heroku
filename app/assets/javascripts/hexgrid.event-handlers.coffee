@@ -2,9 +2,7 @@ jQuery ($) ->
   gx = 0
   gy = 0
   AppContext.grid.hoverEventHandler = (e, x, y) ->
-    Util.log.console("hovering")
     if(AppContext.grid.downtile != '')
-      Util.log.console("dragging")
       domelem = $('#'+AppContext.grid.downtile.posId)
       inv = AppContext.grid.grid.screenpos(x, y)
       domelem.css("left",inv.x)
@@ -42,16 +40,12 @@ jQuery ($) ->
     AppContext.cluster.updatePosition(datum.value, gx, gy)      
 
   AppContext.grid.clickEventHandler = (e, x, y) ->
-    console.log("here")
     pos = {x:x,y:y}
     cellClicked = AppContext.vizdata.getPositionInCell(pos);
-    console.log(cellClicked)
     #if(cellClicked == '')
     AppContext.grid.newElement = AppContext.grid.placeNewElement(x,y)
     #else
      # AppContext.grid.newElement = $('#'+cellClicked.posId)  
-
-    console.log(AppContext.grid.newElement)  
 
     # Get pixel position based on grid coordinates
     inv = AppContext.grid.grid.screenpos(x, y)
@@ -85,4 +79,18 @@ jQuery ($) ->
   
   AppContext.project.handleNameChange = () ->
     $('.proj_title').text(AppContext.vizdata.getProjectTitle());
+    
+    
+  $( "#hexagonal-grid" ).mousemove( (event) -> 
+    if(AppContext.grid.downtile!='')
+      if(AppContext.grid.clonedelem == '')
+        domelem = $('#'+AppContext.grid.downtile.posId)
+        AppContext.grid.clonedelem = $(domelem).clone()
+        $(AppContext.grid.clonedelem).prependTo($(domelem))
+        $(AppContext.grid.clonedelem).css("position","fixed")
+        $(AppContext.grid.clonedelem).css("z-index","1010")
+        $(AppContext.grid.clonedelem).css("opacity","0.3")
+      $(AppContext.grid.clonedelem).css("left",event.pageX-20)
+      $(AppContext.grid.clonedelem).css("top",event.pageY-20)      
+  );  
 

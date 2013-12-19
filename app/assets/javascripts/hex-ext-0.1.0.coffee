@@ -79,6 +79,7 @@ AppContext.grid.placeOnGrid = (elemwithpos) ->
   $(cellToPlace).attr("id",elemwithpos.posId)
   $(AppContext.grid.grid.root).append(cellToPlace)
   AppContext.grid.placeHex(cellToPlace,elemwithpos.x,elemwithpos.y)
+  $(cellToPlace).draggable();
   
 
 AppContext.grid.displayAllPositions = (positions) ->
@@ -114,7 +115,6 @@ AppContext.grid.activateListeners = () ->
   )
   
   AppContext.grid.grid.addEvent("tiledown", (e, x, y) ->
-    Util.log.console("tiledown")    
     pos = {x:x,y:y}
     #e.preventDefault()
     AppContext.grid.downtile = AppContext.vizdata.getPositionInCell(pos);
@@ -125,19 +125,19 @@ AppContext.grid.activateListeners = () ->
   )
   
   AppContext.grid.grid.addEvent("tileup", (e, x, y) ->
-    Util.log.console("tileup")
     if(AppContext.grid.downtile!='')
       domelem = $('#'+AppContext.grid.downtile.posId)
       $(domelem).removeClass("dragged")    
       AppContext.cluster.deletePosition(AppContext.grid.downtile.x,AppContext.grid.downtile.y)
       AppContext.cluster.updatePosition(AppContext.grid.downtile.elementId, x, y)
       AppContext.grid.downtile = ''
+      AppContext.grid.clonedelem = ''	
   )
   
   AppContext.grid.grid.addEvent("tileclick", (e, x, y) ->
-    Util.log.console("tileclick")
     e.preventDefault()
   )
+  
 
 jQuery ($) ->
   #root = ''
@@ -145,7 +145,8 @@ jQuery ($) ->
   AppContext.grid.hoveredElement = ''
   AppContext.grid.idwithtooltip = ''
   AppContext.grid.newElement = ''
-  AppContext.grid.downtile = ''	  
+  AppContext.grid.downtile = ''
+  AppContext.grid.clonedelem = ''	
   AppContext.grid.initApp = () ->
     if($('#hexagonal-grid')[0]!=undefined)     
       AppContext.grid.createGrid($('#hexagonal-grid')[0])
