@@ -126,11 +126,12 @@ AppContext.grid.activateListeners = () ->
   
   AppContext.grid.grid.addEvent("tileup", (e, x, y) ->
     Util.log.console("tileup")
-    domelem = $('#'+AppContext.grid.downtile.posId)
-    $(domelem).removeClass("dragged")    
-    AppContext.cluster.deletePosition(AppContext.grid.downtile.x,AppContext.grid.downtile.y)
-    AppContext.cluster.updatePosition(AppContext.grid.downtile.elementId, x, y)
-    AppContext.grid.downtile = ''
+    if(AppContext.grid.downtile!='')
+      domelem = $('#'+AppContext.grid.downtile.posId)
+      $(domelem).removeClass("dragged")    
+      AppContext.cluster.deletePosition(AppContext.grid.downtile.x,AppContext.grid.downtile.y)
+      AppContext.cluster.updatePosition(AppContext.grid.downtile.elementId, x, y)
+      AppContext.grid.downtile = ''
   )
   
   AppContext.grid.grid.addEvent("tileclick", (e, x, y) ->

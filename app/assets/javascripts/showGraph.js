@@ -70,7 +70,6 @@ removeEdge = function(rel, i){
 	  AppContext.graph.sigInst.iterEdges(function(e){
 	    if((e.source == rel.srcElementId) && (e.target == rel.targetElementId)){
 	      AppContext.graph.sigInst.dropEdge(e.id);
-	      Util.log.console("edge dropped");
 	    }
 	  });
 	  AppContext.graph.sigInst.draw();
@@ -79,9 +78,7 @@ removeEdge = function(rel, i){
 removeNode = function(elem, i){
 	AppContext.graph.sigInst.iterNodes(function(n){
 	    if((n.id == elem.elementId)){
-	      AppContext.graph.sigInst.dropNode(n.id);
-	      Util.log.console("node dropped");
-	      Util.log.console(n)
+	      AppContext.graph.sigInst.dropNode(n.id);	      
 	    }
 	  });
 	  AppContext.graph.sigInst.draw();
@@ -138,11 +135,11 @@ AppContext.graph.updateGraph = function(){
       $.map(relations, addedge);
       AppContext.graph.sigInst.randomLayout();
       AppContext.graph.sigInst.draw();
-      if (document.createEvent) { // W3C
+      if (document.createEvent) { 
       var ev = document.createEvent('Event');
       ev.initEvent('resize', true, true);
       window.dispatchEvent(ev);
-      } else { // IE
+      } else { 
           document.fireEvent('onresize');
       }
     } else {
@@ -168,9 +165,7 @@ AppContext.graph.updateGraph = function(){
 AppContext.graph.addElement = function(newElems){
   if(AppContext.graph.sigInst !== undefined) {
     $.map(newElems, addnode);
-    
   }
-    
 };
 
 AppContext.graph.addRelation = function(newRelations) {
@@ -179,13 +174,11 @@ AppContext.graph.addRelation = function(newRelations) {
 };
 
 AppContext.graph.removeElement = function(removedElems){
-	/*if(AppContext.graph.sigInst !== undefined)
-	    $.map(removedElems, removeNode);*/
-	AppContext.graph.updateGraph();
+	if(AppContext.graph.sigInst !== undefined)
+	    $.map(removedElems, removeNode);
 };
 
 AppContext.graph.removeRelation = function(removedRelations){
-  //AppContext.graph.updateGraph();
   if(AppContext.graph.sigInst !== undefined)
     $.map(removedRelations, removeEdge);
 };
