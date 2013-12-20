@@ -1051,6 +1051,15 @@ hex.grid.hexagonal = {
   tileHeight: 42,
   tileWidth: 48,
   
+  /*
+    to zoom in and out, just hand out a multiple, so that the height and width
+    can be changed by that amount keeping the ratio fixed
+  */
+  setHexagaonTileSize: function(height, width){
+    this.tileHeight = height;
+    this.tileWidth = width;
+  },
+
   /**
    * Translate a pair of x/y screen coordinates into the geometry appropriate coordinates of this grid.
    * @param posx The horizontal screen coordinate.
@@ -1619,12 +1628,13 @@ var SpriteMap = {
    * @return A sprite object.
    */
   sprite: function sprite( /* layers */ ) {
+    Util.log.console('Logging the sprite creation');
     
     // Create the sprite
     var s = hex.create(Sprite, {
       spritemap: this
     });
-    
+
     // Setup the base element
     var base = s.base = document.createElement('div');
     base.className = "sprite";
@@ -1634,7 +1644,7 @@ var SpriteMap = {
       width: this.width + "px",
       height: this.height + "px"
     });
-    
+
     // Setup layers
     var layers = s.layers = [];
     for (var i=0, l=arguments.length; i<l; i++) {
