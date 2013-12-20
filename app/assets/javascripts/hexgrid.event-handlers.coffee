@@ -83,13 +83,14 @@ jQuery ($) ->
     
   $( "#hexagonal-grid" ).mousemove( (event) -> 
     if(AppContext.grid.downtile!='')
+      AppContext.grid.hideTooltip()
       if(AppContext.grid.clonedelem == '')
         domelem = $('#'+AppContext.grid.downtile.posId)
         AppContext.grid.clonedelem = $(domelem).clone()
         $(AppContext.grid.clonedelem).prependTo($(domelem))
         $(AppContext.grid.clonedelem).css("position","fixed")
         $(AppContext.grid.clonedelem).css("z-index","1010")
-        $(AppContext.grid.clonedelem).css("opacity","0.3")
+        $(AppContext.grid.clonedelem).css("opacity","0.9")
       $(AppContext.grid.clonedelem).css("left",event.pageX-20)
       $(AppContext.grid.clonedelem).css("top",event.pageY-20)      
   );  

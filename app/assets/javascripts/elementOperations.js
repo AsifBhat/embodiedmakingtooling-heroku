@@ -9,16 +9,16 @@ handleKeyPress = function(e) {
     var secondchar = getNewElementdesc().substr(1,1);
     if(secondchar == ' '){
       if((etype == 's')||(etype == 'S')){
+    	removeetype = true;
         AppContext.cluster.addStory();
-        removeetype = true;
       }  
       else if ((etype == 'f')||(etype == 'F')){
-        AppContext.cluster.addForce();
         removeetype = true;
+        AppContext.cluster.addForce();
       }
       else if ((etype == 'c')||(etype == 'C')){
-        AppContext.cluster.addSolution();
         removeetype = true;
+        AppContext.cluster.addSolution();
       }  
       else 
     	displayOptions();
@@ -64,8 +64,11 @@ getNextSolutionId =  function() {
 
 getNewElementdesc = function(){
   var textdesc = $('.twitter-typeahead span').text().trim();
-  if(removeetype)
-    textdesc = fullText.substr(2,fullText.length-2)
+  if(removeetype){
+	  textdesc = textdesc.substr(2,textdesc.length-2);
+	  removeetype = false;
+  }
+  console.log(textdesc)
   return textdesc;  
 };
 
@@ -117,7 +120,7 @@ AppContext.cluster.deleteElem = function(domelem){
   var idtodel = $(domelem).data('elementid');
   Util.log.console("To delete elem:"+idtodel);
   var elemtodel = getElement(idtodel);
-  AppContext.vizdata.removeElement(elemtodel);
+  
   // get all positions
   // remove any pos that has elemtodel in src or target
   // get all relations
@@ -141,6 +144,7 @@ AppContext.cluster.deleteElem = function(domelem){
     }
       
   });
+  AppContext.vizdata.removeElement(elemtodel);
 };
   
 AppContext.cluster.updateElem = function(domelem)  {
