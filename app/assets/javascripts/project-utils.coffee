@@ -48,10 +48,10 @@ AppContext.project.updateTitleText = () ->
       popoverDOM = $('.title_holder').find('.popover')
       popoverTop = popoverDOM.css('top').slice(0, popoverDOM.css('top').indexOf('p'))
       popoverLeft = popoverDOM.css('left').slice(0, popoverDOM.css('top').indexOf('p'))
-      popoverDOM.css('top', (parseInt(popoverTop, 10)+30)+'px')
+      #popoverDOM.css('top', (parseInt(popoverTop, 10)+30)+'px')
       popoverDOM.css('left', (parseInt(popoverLeft, 10)/2)+'px')
 
-      popoverDOM.find('.arrow').css('top', '25%')
+      #popoverDOM.find('.arrow').css('top', '25%')
 
     handleTooltip()
   )
