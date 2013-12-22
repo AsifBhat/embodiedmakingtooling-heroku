@@ -46,4 +46,5 @@ jQuery ($) ->
   AppContext.project.bindFileUpload = () ->
     if(document.getElementById('import_file_input')!=null)
       document.getElementById('import_file_input').addEventListener('change', handleFileSelect, false)
+      $('#import_popover').popover('hide')
 
