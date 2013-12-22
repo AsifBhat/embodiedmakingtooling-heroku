@@ -75,3 +75,27 @@ AppContext.project.sendChangeTitleRequest = (newTitle) ->
     AppContext.vizdata.updateTitle(newTitle)
     Util.log.console 'Project Title Changed'
   )
+
+AppContext.project.getUserInfo = () ->
+  ###
+  * Get information about the current user 
+  ###
+  Util.log.console('Fetching User Info..')
+  try 
+    request = gapi.client.drive.about.get()
+    request.execute( (resp) ->
+      try 
+        $('#authorizeButton').html(resp.name)
+        console.log('Current user name: ' + resp.name)
+        ###
+          console.log('Root folder ID: ' + resp.rootFolderId)
+          console.log('Total quota (bytes): ' + resp.quotaBytesTotal)
+          console.log('Used quota (bytes): ' + resp.quotaBytesUsed)
+        ###
+      catch err
+        console.log 'Error while fetching user information'
+        console.log err
+    )
+  catch err
+    console.log 'Error Occured while fetching user info'
+    console.log err

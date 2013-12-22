@@ -106,4 +106,6 @@ $(document).ready(function(){
   else
     window.onload = AppContext.grid.loadApplication();
   $('.proj_title').attr('data-content', '<div class="title_edit"><button id="edit_project_name" class="btn btn-mini"> Edit <span class="icon-edit"></span></button>&nbsp;<button id="cl_edit_project_name" class="btn btn-mini"> Cancel <span class="icon-remove-sign"></span></button></div>');
+
+  handleClientLoad(getUserName);
 });

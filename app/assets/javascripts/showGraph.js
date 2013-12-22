@@ -155,7 +155,7 @@ AppContext.menu.showGraph = function() {
 	} else {
 		$(sigContainer).css("display", "none");
 		$(graphContainer).css("display", "none");
-		$(gbtn).html("Show Graph");
+		$(gbtn).html('<span class="icon-eye-open"></span>Show Graph');
 		$(gbtn).attr("value","show");
 	}
 };
