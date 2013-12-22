@@ -148,7 +148,7 @@ AppContext.menu.showGraph = function() {
 	if(action == 'show'){
 		$(sigContainer).css("display", "");
 		$(graphContainer).css("display", "");
-		$(gbtn).html("Hide Graph");
+		$(gbtn).html('<span class="icon-eye-close"></span> &nbsp; Hide Graph');
 		$(gbtn).attr("value","hide");
 		AppContext.graph.updateGraph();
 
