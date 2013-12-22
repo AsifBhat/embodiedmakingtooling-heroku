@@ -106,6 +106,17 @@ $(document).ready(function(){
   else
     window.onload = AppContext.grid.loadApplication();
   $('.proj_title').attr('data-content', '<div class="title_edit"><button id="edit_project_name" class="btn btn-mini"> Edit <span class="icon-edit"></span></button>&nbsp;<button id="cl_edit_project_name" class="btn btn-mini"> Cancel <span class="icon-remove-sign"></span></button></div>');
-
-  handleClientLoad(getUserName);
+  $('#import_popover').click(function(evt){
+    try {
+      $('#import_popover').popover('show');
+      $('#import_close').click(function(evt){
+        $('#import_popover').popover('hide');
+      });
+      AppContext.project.bindFileUpload();
+    }
+    catch (err){
+      console.log(err);
+    }
+  });
+  fetchClientDetails(getUserName);
 });

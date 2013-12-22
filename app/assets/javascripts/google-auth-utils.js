@@ -11,7 +11,7 @@ var SCOPES = [
 /**
  * Called when the client library is loaded.
  */
-function handleClientLoad(callback) {
+function fetchClientDetails(callback) {
   console.log('Handle Client Load');
   checkAuth(callback);
 }

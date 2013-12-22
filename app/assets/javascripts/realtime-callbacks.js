@@ -150,4 +150,5 @@ function onFileLoaded(doc) {
   AppContext.grid.activateTypeahead(AppContext.vizdata.getElements());
 
   AppContext.project.getFileDetails();
+  fetchClientDetails(getUserName);
 }
