@@ -2,6 +2,7 @@ jQuery ($) ->
   gx = 0
   gy = 0
   AppContext.grid.hoverEventHandler = (e, x, y) ->
+    Util.log.console('X - ' +x+'Y - '+y)
     if(AppContext.grid.downtile != '')
       domelem = $('#'+AppContext.grid.downtile.posId)
       inv = AppContext.grid.grid.screenpos(x, y)
@@ -78,8 +79,32 @@ jQuery ($) ->
     AppContext.grid.hideTooltip()
   
   AppContext.project.handleNameChange = () ->
-    $('.proj_title').text(AppContext.vizdata.getProjectTitle());
-    
+    $('.proj_title').text(AppContext.vizdata.getProjectTitle())
+
+  AppContext.grid.zoomHandler = (e, x, y) ->
+    Util.log.console ('Zoom Event Called')
+    # here we have event handlers to the HTML components and other CSS changes
+  
+  AppContext.grid.tileUpHandler = (e, x, y) ->
+    if(AppContext.grid.downtile!='')
+      domelem = $('#'+AppContext.grid.downtile.posId)
+      $(domelem).removeClass("dragged")    
+      AppContext.cluster.deletePosition(AppContext.grid.downtile.x,AppContext.grid.downtile.y)
+      AppContext.cluster.updatePosition(AppContext.grid.downtile.elementId, x, y)
+      AppContext.grid.downtile = ''
+      AppContext.grid.clonedelem = '' 
+
+  AppContext.grid.tileClickHandler = (e, x, y) ->
+    e.preventDefault()
+
+  AppContext.grid.tileDownHandler = (e, x, y) ->
+    pos = {x:x,y:y}
+    #e.preventDefault()
+    AppContext.grid.downtile = AppContext.vizdata.getPositionInCell(pos);
+    if(AppContext.grid.downtile != '')
+      e.preventDefault()
+      domelem = $('#'+AppContext.grid.downtile.posId)
+      $(domelem).addClass("dragged")
     
   $( "#hexagonal-grid" ).mousemove( (event) -> 
     if(AppContext.grid.downtile!='')

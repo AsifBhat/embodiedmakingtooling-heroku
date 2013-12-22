@@ -1050,15 +1050,6 @@ hex.grid.hexagonal = {
    */
   tileHeight: 42,
   tileWidth: 48,
-  
-  /*
-    to zoom in and out, just hand out a multiple, so that the height and width
-    can be changed by that amount keeping the ratio fixed
-  */
-  setHexagaonTileSize: function(height, width){
-    this.tileHeight = height;
-    this.tileWidth = width;
-  },
 
   /**
    * Translate a pair of x/y screen coordinates into the geometry appropriate coordinates of this grid.

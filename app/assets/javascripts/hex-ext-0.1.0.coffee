@@ -1,9 +1,23 @@
+AppContext.grid.ZOOM_OUT = -1
+AppContext.grid.ZOOM_IN = 1
+AppContext.grid.ZOOM_RESET = 0
+AppContext.grid.defaultSize = {
+  width : hex.grid.hexagonal.tileWidth,
+  height : hex.grid.hexagonal.tileHeight,
+  backgroundWidth : hex.grid.hexagonal.tileWidth*1.5,
+  backgroundHeight : hex.grid.hexagonal.tileHeight,
+  spriteWidth: hex.grid.hexagonal.tileWidth * 9,
+  spriteHeight : hex.grid.hexagonal.tileHeight*3
+}
+
 # Creating a grid
 AppContext.grid.createGrid = (domelem) ->
+  Util.log.console('Grid DOM Element')
+  Util.log.console domelem
   AppContext.grid.grid = hex.grid(domelem, {})
   AppContext.grid.size = hex.size(AppContext.grid.grid.elem)
   AppContext.grid.grid.reorient(AppContext.grid.size.x * 0.5, AppContext.grid.size.y * 0.5)
-  AppContext.grid.grid.size
+  Util.log.console AppContext.grid.grid.size
 
 AppContext.grid.createHex = (styleClass, text = "") ->
   $("<div class='hex' >"+text+"</div>").css({
@@ -88,6 +102,14 @@ AppContext.grid.displayAllPositions = (positions) ->
     AppContext.grid.placeOnGrid (value)
   )
 
+AppContext.grid.clearGridCache = () ->
+  AppContext.grid.size = ''
+  AppContext.grid.hoveredElement = ''
+  AppContext.grid.idwithtooltip = ''
+  AppContext.grid.newElement = ''
+  AppContext.grid.downtile = ''
+  AppContext.grid.clonedelem = '' 
+
 AppContext.grid.getAllNeighbourCells =  (pos) ->
   allNeighbourCells = [] 
   allNeighbourCells[0] = {x:pos.x-1 , y:pos.y }
@@ -97,6 +119,11 @@ AppContext.grid.getAllNeighbourCells =  (pos) ->
   allNeighbourCells[4] = {x:pos.x , y:pos.y+1 }
   allNeighbourCells[5] = {x:pos.x+1 , y:pos.y-1 }
   allNeighbourCells  
+
+AppContext.grid.initApp = () ->
+  if($('#hexagonal-grid')[0]!=undefined)     
+    AppContext.grid.createGrid($('#hexagonal-grid')[0])
+    AppContext.grid.initialize()
 
 AppContext.grid.activateListeners = () ->
   # Setting mouse movement related tile events
@@ -114,39 +141,70 @@ AppContext.grid.activateListeners = () ->
   )
   
   AppContext.grid.grid.addEvent("tiledown", (e, x, y) ->
-    pos = {x:x,y:y}
-    #e.preventDefault()
-    AppContext.grid.downtile = AppContext.vizdata.getPositionInCell(pos);
-    if(AppContext.grid.downtile != '')
-      e.preventDefault()
-      domelem = $('#'+AppContext.grid.downtile.posId)
-      $(domelem).addClass("dragged")
+    AppContext.grid.tileDownHandler(e, x, y)
   )
   
   AppContext.grid.grid.addEvent("tileup", (e, x, y) ->
-    if(AppContext.grid.downtile!='')
-      domelem = $('#'+AppContext.grid.downtile.posId)
-      $(domelem).removeClass("dragged")    
-      AppContext.cluster.deletePosition(AppContext.grid.downtile.x,AppContext.grid.downtile.y)
-      AppContext.cluster.updatePosition(AppContext.grid.downtile.elementId, x, y)
-      AppContext.grid.downtile = ''
-      AppContext.grid.clonedelem = ''	
+    AppContext.grid.tileUpHandler(e, x, y)
   )
   
   AppContext.grid.grid.addEvent("tileclick", (e, x, y) ->
-    e.preventDefault()
+    AppContext.grid.tileClickHandler(e, x, y)
   )
-  
 
+AppContext.grid.deactivateListeners = (elem) ->
+  elem.removeEventListener('tileover', AppContext.grid.hoverEventHandler)
+  elem.removeEventListener('tiletap', AppContext.grid.clickEventHandler)
+  elem.removeEventListener('tileout', AppContext.grid.hoveroutEventHandler)
+  elem.removeEventListener('tiledown', AppContext.grid.tileDownHandler)
+  elem.removeEventListener('tileup', AppContext.grid.tileUpHandler)
+  elem.removeEventListener('tileclick', AppContext.grid.tileClickHandler)
+
+AppContext.grid.zoomOperation = (elem, zoomFactor, zoomDir) ->
+  AppContext.grid.deactivateListeners(elem[0])
+  elem.children().remove()
+  AppContext.grid.clearGridCache()
+  
+  currentSize = {
+    width : hex.grid.hexagonal.tileWidth,
+    height : hex.grid.hexagonal.tileHeight
+  }
+
+  zoomDiff = {
+    dWidth : hex.grid.hexagonal.tileWidth * zoomFactor, 
+    dHeight : hex.grid.hexagonal.tileHeight* zoomFactor
+  }
+
+  # function to reset background sizes for the background images for grid and sprites
+  resetBackGrndSizes = (element, width, height) ->
+    element.css('background-size', width + 'px '+ height + 'px')
+
+  if(zoomDir != AppContext.grid.ZOOM_RESET)
+    # Zoom Direction shall automatically decide what needs to be done
+    Util.log.console('Zooming In')
+    hex.grid.hexagonal.tileWidth = currentSize.width + (zoomDiff.dWidth * zoomDir)
+    hex.grid.hexagonal.tileHeight = currentSize.height + (zoomDiff.dHeight * zoomDir)
+
+    #resetting hexgrid div background image size
+    resetBackGrndSizes(elem,  (hex.grid.hexagonal.tileWidth*1.5), hex.grid.hexagonal.tileHeight)
+
+    # reset the sprite size
+    resetBackGrndSizes($('.hex'), (hex.grid.hexagonal.tileWidth* 9), (hex.grid.hexagonal.tileHeight * 3))
+
+  ###
+    Need to figure out some way to remove all those events on the grid before the whole re-init phase
+  ###
+  # re-initiate the grid 
+  AppContext.grid.initApp()
+  AppContext.grid.activateListeners()
+  AppContext.grid.displayAllPositions(AppContext.vizdata.getPositions());
+  #else
+  # Zoom Reset 
+  ###    hex.grid.hexagonal.tileWidth = AppContext.grid.defaultSize.width
+      hex.grid.hexagonal.tileHeight = AppContext.grid.defaultSize.height
+      hex.grid.hexagonal.     
+  ###
 jQuery ($) ->
   #root = ''
-  AppContext.grid.size = ''
-  AppContext.grid.hoveredElement = ''
-  AppContext.grid.idwithtooltip = ''
-  AppContext.grid.newElement = ''
-  AppContext.grid.downtile = ''
-  AppContext.grid.clonedelem = ''	
-  AppContext.grid.initApp = () ->
-    if($('#hexagonal-grid')[0]!=undefined)     
-      AppContext.grid.createGrid($('#hexagonal-grid')[0])
-      AppContext.grid.initialize()
+  AppContext.grid.clearGridCache()
+  AppContext.grid.initApp()
