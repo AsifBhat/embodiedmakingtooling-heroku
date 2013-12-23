@@ -116,10 +116,14 @@ getElement = function(id){
   return elem;
 }
 
-AppContext.cluster.deleteElem = function(domelem){
-  var idtodel = $(domelem).data('elementid');
-  Util.log.console("To delete elem:"+idtodel);
-  var elemtodel = getElement(idtodel);
+/* 
+  Deletes all occurrances of a given element with the given element-ID
+  And also remove the element from the realtime data
+*/
+AppContext.cluster.deleteElem = function(idToDel){
+  /*var idtodel = $(domelem).data('elementid');*/
+  Util.log.console("To delete elem:"+idToDel);
+  var elemtodel = getElement(idToDel);
   
   // get all positions
   // remove any pos that has elemtodel in src or target

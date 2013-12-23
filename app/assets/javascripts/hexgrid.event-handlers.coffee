@@ -11,12 +11,12 @@ jQuery ($) ->
       # Highlight the currently hovered cell
       pos = {x:x,y:y}
       elementUnderMouse = AppContext.vizdata.getElementInCell(pos)
-      if(elementUnderMouse != '')
-        # The tooltip info at this stage is just the description.  Later this
-        # could be some rich content.
-        tooltipInfo = AppContext.vizdata.getElementDescription(elementUnderMouse)
-        if(tooltipInfo != '') 
-          AppContext.grid.showTooltip(x,y, elementUnderMouse, tooltipInfo)
+      #if(elementUnderMouse != '')
+      # The tooltip info at this stage is just the description.  Later this
+      # could be some rich content.
+      #tooltipInfo = AppContext.vizdata.getElementDescription(elementUnderMouse)
+      #if(tooltipInfo != '') 
+      #  AppContext.grid.showTooltip(x,y, elementUnderMouse, tooltipInfo)
     AppContext.grid.showHoveredElement(x,y) 
 
   AppContext.grid.addGridPos = (obj, datum, dataset) ->
@@ -59,7 +59,7 @@ jQuery ($) ->
       tooltipInfo = ''
       $('.cellControls > button').attr('disabled', '')
 
-    AppContext.grid.drawTipDesc(elementUnderMouse, tooltipInfo)
+    AppContext.grid.drawTipDesc(elementUnderMouse, tooltipInfo, pos)
 
     # Keep content search reference
     contentSearch = $("#content-search")

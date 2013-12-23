@@ -63,9 +63,11 @@ AppContext.grid.showTooltip = (x,y,elemId, tooltipInfo) ->
   AppContext.grid.idwithtooltip.attr("data-original-title",tooltipHTML)
   $('.elementsView').autogrow();
   $('.tooltip-inner').html(tooltipHTML)
+  ###
   $("#delposButton").click(() -> 
     AppContext.cluster.deletePosition(parseInt(x,10),parseInt(y,10))
   )
+  ###
   AppContext.grid.idwithtooltip
 
 AppContext.grid.hideTooltip = () ->  
@@ -142,11 +144,13 @@ AppContext.grid.activateListeners = () ->
     e.preventDefault()
   )
   
-  AppContext.grid.drawTipDesc = (elementUnderMouse, description) ->
+  AppContext.grid.drawTipDesc = (elementUnderMouse, description, pos) ->
     $('.cellTitle').html(elementUnderMouse)
     $('.cellDesc').html(description)
+    $('#clickedLocation').text(pos.x + ',' + pos.y)
     Util.log.console elementUnderMouse
     Util.log.console description
+    Util.log.console pos.x + ',' + pos.y
 
 jQuery ($) ->
   #root = ''
