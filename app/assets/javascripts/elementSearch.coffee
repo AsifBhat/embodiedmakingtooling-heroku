@@ -47,6 +47,7 @@ jQuery ($) ->
     $('.deleteAllElements').click(() ->
       idToDelete = $('.cellTitle').text().trim()
       AppContext.cluster.deleteElem(idToDelete)
+      $('.cellTitle').text('');
       $('.cellDesc').text('');
     )
     
@@ -55,6 +56,7 @@ jQuery ($) ->
       Util.log.console pos
       posArr = pos.split(',')
       AppContext.cluster.deletePosition(posArr[0], posArr[1])
+      $('.cellTitle').text('');
       $('.cellDesc').text('');
     )
 
