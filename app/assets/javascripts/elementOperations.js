@@ -131,7 +131,7 @@ AppContext.cluster.deleteElem = function(idToDel){
   // 
   var allpositions = AppContext.vizdata.getPositions();
   $.each(allpositions, function(i, pos) {
-    if(pos.elementId == idtodel) {
+    if(pos.elementId == idToDel) {
       Util.log.console("Must del pos:"+pos.posId);
       AppContext.vizdata.removePosition(pos);
       var relations = AppContext.vizdata.getRelations();
