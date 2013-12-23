@@ -16,11 +16,6 @@ html, body {
   background-position: 0px 0px;
 }
 
-#content-search {
-  position: absolute;
-  z-index: 1000;
-}
-
 .hex {
   color: white;
   text-align: center;
@@ -198,4 +193,35 @@ html, body {
 .login_button{
   margin-right: 2em;
   /*margin-top: .5em;*/
+}
+
+#element_edit{
+  top: 100px;
+  left: 25px;
+  position: fixed;
+  height: 70%;
+  background-color : #FFFFFF;
+  color: #090909;
+  display: none;
+  opacity: 1;
+  box-shadow: 0 0 20px black;
+  z-index: 1000;
+}
+
+#content-search {
+  position: fixed;
+  z-index: 100;
+  opacity: 1;
+  margin-left: 20px;
+  margin-top : 20px;
+}
+
+#element_edit div{
+  position: relative;
+  margin: 1em;
+}
+
+.cellDesc{
+  height: 200px;
+  overflow-y: scroll;
 }

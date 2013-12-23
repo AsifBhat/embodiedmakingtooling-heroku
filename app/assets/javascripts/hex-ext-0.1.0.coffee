@@ -1,3 +1,8 @@
+AppContext.grid.descWindow = {
+  left: '25px' ,
+  top: '100px'
+}
+
 # Creating a grid
 AppContext.grid.createGrid = (domelem) ->
   AppContext.grid.grid = hex.grid(domelem, {})
@@ -6,10 +11,10 @@ AppContext.grid.createGrid = (domelem) ->
   AppContext.grid.grid.size
 
 AppContext.grid.createHex = (styleClass, text = "") ->
-  $("<div class='hex' >"+text+"</div>").css({
-    "width": AppContext.grid.grid.tileWidth + "px",
-    "height": AppContext.grid.grid.tileHeight + "px",
-    "line-height": AppContext.grid.grid.tileHeight + "px",
+  $('<div class="hex '+ styleClass+'" >'+text+'</div>').css({
+    'width': AppContext.grid.grid.tileWidth + 'px',
+    'height': AppContext.grid.grid.tileHeight + 'px',
+    'line-height': AppContext.grid.grid.tileHeight + 'px',
   }).addClass(styleClass)
 
 AppContext.grid.initialize = () ->
@@ -137,6 +142,11 @@ AppContext.grid.activateListeners = () ->
     e.preventDefault()
   )
   
+  AppContext.grid.drawTipDesc = (elementUnderMouse, description) ->
+    $('.cellTitle').html(elementUnderMouse)
+    $('.cellDesc').html(description)
+    Util.log.console elementUnderMouse
+    Util.log.console description
 
 jQuery ($) ->
   #root = ''

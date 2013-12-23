@@ -20,9 +20,7 @@ jQuery ($) ->
     AppContext.grid.showHoveredElement(x,y) 
 
   AppContext.grid.addGridPos = (obj, datum, dataset) ->
-
     # Update the new element
-           
     AppContext.grid.newElement.removeClass('new')
     AppContext.grid.newElement.addClass(dataset)
 
@@ -40,15 +38,28 @@ jQuery ($) ->
     AppContext.cluster.updatePosition(datum.value, gx, gy)      
 
   AppContext.grid.clickEventHandler = (e, x, y) ->
+    $('#element_edit').css('display', 'block')
     pos = {x:x,y:y}
     cellClicked = AppContext.vizdata.getPositionInCell(pos);
-    #if(cellClicked == '')
-    AppContext.grid.newElement = AppContext.grid.placeNewElement(x,y)
+    if(cellClicked == '')
+      AppContext.grid.newElement = AppContext.grid.placeNewElement(x,y)
     #else
      # AppContext.grid.newElement = $('#'+cellClicked.posId)  
 
     # Get pixel position based on grid coordinates
     inv = AppContext.grid.grid.screenpos(x, y)
+
+    elementUnderMouse = AppContext.vizdata.getElementInCell(pos)
+    if(elementUnderMouse != '')
+      # The tooltip info at this stage is just the description.  Later this
+      # could be some rich content.
+      tooltipInfo = AppContext.vizdata.getElementDescription(elementUnderMouse)
+      $('.cellControls > button').removeAttr('disabled')
+    else
+      tooltipInfo = ''
+      $('.cellControls > button').attr('disabled', '')
+
+    AppContext.grid.drawTipDesc(elementUnderMouse, tooltipInfo)
 
     # Keep content search reference
     contentSearch = $("#content-search")
@@ -58,11 +69,14 @@ jQuery ($) ->
 
     # Show content search at corrent position
     $('#addFromTypeahead').css("display","none");
-    contentSearch.css({
-      "display": "",
-      "left": (inv.x + AppContext.grid.grid.origin.x) + "px",
-      "top": (inv.y + AppContext.grid.grid.origin.y) + "px"
-    }).find("input")
+    ###
+      contentSearch.css({
+        "display": "",
+        "left": (inv.x + AppContext.grid.grid.origin.x) + "px",
+        "top": (inv.y + AppContext.grid.grid.origin.y) + "px"
+      })
+    ###
+    contentSearch.css({"display": "", 'opacity': 1}).find("input")
         # Remove existing events
         .off('typeahead:selected')
         # Handle selecting content element

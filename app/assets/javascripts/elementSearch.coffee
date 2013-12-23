@@ -22,8 +22,8 @@ jQuery ($) ->
     #<input type="text" name="query">
     #$('#content-search').append('<input type="text" name="query">')
 
-    
-    $('body').append('<div id="content-search"><input type="text" id="input-elem-search" name="query"></div>');
+    $('body').append('<div id="element_edit" class=" row span4"><div class="row"><div class="row cellTitle"></div><div class"row cellHeader"><h5>Description</h5></div><div class="row cellDesc"></div><hr><div class="row cellControls">&nbsp;<button class="btn btn-mini" disabled  onclick="AppContext.cluster.updateElem($(this))"><span class="icon-pencil"></span>&nbsp;Edit</button>&nbsp;<button class="btn btn-mini"  id="delposButton" disabled><span class="icon-remove remove_btn"></span>&nbsp;Delete</button>&nbsp;<button class="btn btn-mini" disabled  onclick="AppContext.cluster.deleteElem($(this))"><span class="icon-remove"></span>&nbsp;Delete</button></div></div></div>')
+    $('#element_edit').prepend('<div id="content-search"><input type="text" id="input-elem-search" name="query"></div>')
     $('#content-search').keypress((evt) ->
       handleKeyPress(evt)
     ) 
