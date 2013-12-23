@@ -151,15 +151,14 @@ AppContext.cluster.deleteElem = function(idToDel){
   AppContext.vizdata.removeElement(elemtodel);
 };
   
-AppContext.cluster.updateElem = function(domelem)  {
-  var idToEdit = domelem.data('elementid');
-  var newDesc = $('#elemtext').val().trim();
+AppContext.cluster.updateElem = function(idToEdit)  {
+  idToEdit = idToEdit.trim();
+  var newDesc = $('.element_desc').val().trim();
   var newElem = {"elementId":idToEdit,"description":newDesc};
   Util.log.console("new element:");
   Util.log.console(newElem);
   var elemtodel = getElement(idToEdit);
   AppContext.vizdata.removeElement(elemtodel);
   AppContext.vizdata.addElement(newElem);
+  $('.cellDesc').text(newDesc);
 };
-  
-
