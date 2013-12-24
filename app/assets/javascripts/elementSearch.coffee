@@ -22,7 +22,7 @@ jQuery ($) ->
     #<input type="text" name="query">
     #$('#content-search').append('<input type="text" name="query">')
 
-    $('body').append('<div id="element_edit" class=" row span4"><div class="row"><div class="row cellTitle"></div><div class"row cellHeader"></div><div class="row cellDesc"></div><hr><div class="row cellControls"><button class="btn btn-mini elementEditBtn" disabled><span class="icon-pencil"></span>&nbsp;Edit</button><button class="btn btn-mini" id="delposButton" disabled><span class="icon-remove remove_btn"></span>Delete Position</button><button class="btn btn-mini deleteAllElements" disabled><span class="icon-remove"></span>Delete Element</button><span id="clickedLocation" style="display: none"></span></div></div></div>')
+    $('body').append('<div id="element_edit" class=" row span4"><div class="row"><div class="row cellTitle"></div><div class"row cellHeader"></div><div class="row cellDesc" contenteditable="true"></div><hr><div class="row cellControls"><button class="btn btn-mini elementEditBtn" disabled><span class="icon-pencil"></span>&nbsp;Edit</button><button class="btn btn-mini" id="delposButton" disabled><span class="icon-remove remove_btn"></span>Delete Position</button><button class="btn btn-mini deleteAllElements" disabled><span class="icon-remove"></span>Delete Element</button><span id="clickedLocation" style="display: none"></span></div></div></div>')
     
     $('#element_edit').prepend('<div id="content-search"><input type="text" id="input-elem-search" name="query"></div>')
     
