@@ -44,7 +44,7 @@ jQuery ($) ->
     #remove the style 'new' from the previous element so it can be added to the newly clicked element
     $('.new').removeClass('new')
     if(cellClicked == '')
-      AppContext.grid.newElement = AppContext.grid.placeNewElement(x,y, true)
+      AppContext.grid.newElement = AppContext.grid.placeNewElement(x,y)
     else
      # AppContext.grid.newElement = $('#'+cellClicked.posId)  
 

@@ -36,9 +36,8 @@ AppContext.grid.showHoveredElement = (xc, yc) ->
   AppContext.grid.placeHex(AppContext.grid.hoveredElement,xc,yc)  
   AppContext.grid.hoveredElement
 
-AppContext.grid.placeNewElement = (xc, yc , isEmpty) ->
-  if(isEmpty)
-    AppContext.grid.newElement = AppContext.grid.createHex('new') 
+AppContext.grid.placeNewElement = (xc, yc) ->
+  AppContext.grid.newElement = AppContext.grid.createHex('new') 
   AppContext.grid.placeHex(AppContext.grid.newElement,xc,yc)
   # Show the new element on the grid
   $(AppContext.grid.grid.root).append(AppContext.grid.newElement)
