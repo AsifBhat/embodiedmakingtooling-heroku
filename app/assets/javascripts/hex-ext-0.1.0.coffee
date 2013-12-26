@@ -38,7 +38,6 @@ AppContext.grid.showHoveredElement = (xc, yc) ->
 
 AppContext.grid.placeNewElement = (xc, yc , isEmpty) ->
   if(isEmpty)
-    $('.new').removeClass('new')
     AppContext.grid.newElement = AppContext.grid.createHex('new') 
   AppContext.grid.placeHex(AppContext.grid.newElement,xc,yc)
   # Show the new element on the grid

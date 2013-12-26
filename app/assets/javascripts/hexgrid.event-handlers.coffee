@@ -41,6 +41,8 @@ jQuery ($) ->
     $('#element_edit').css('display', 'block')
     pos = {x:x,y:y}
     cellClicked = AppContext.vizdata.getPositionInCell(pos);
+    #remove the style 'new' from the previous element so it can be added to the newly clicked element
+    $('.new').removeClass('new')
     if(cellClicked == '')
       AppContext.grid.newElement = AppContext.grid.placeNewElement(x,y, true)
     else
