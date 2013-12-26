@@ -21,7 +21,7 @@ jQuery ($) ->
 
   AppContext.grid.addGridPos = (obj, datum, dataset) ->
     # Update the new element
-    AppContext.grid.newElement.removeClass('new')
+    # AppContext.grid.newElement.removeClass('new')
     AppContext.grid.newElement.addClass(dataset)
 
     # Keep content search reference
@@ -38,7 +38,11 @@ jQuery ($) ->
     AppContext.cluster.updatePosition(datum.value, gx, gy)      
 
   AppContext.grid.clickEventHandler = (e, x, y) ->
-    $('#element_edit').css('display', 'block')
+    $('#element_edit').css({
+        display: 'block',
+        height: ''
+      }
+    )
     pos = {x:x,y:y}
     cellClicked = AppContext.vizdata.getPositionInCell(pos);
     #remove the style 'new' from the previous element so it can be added to the newly clicked element
@@ -46,7 +50,7 @@ jQuery ($) ->
     if(cellClicked == '')
       AppContext.grid.newElement = AppContext.grid.placeNewElement(x,y)
     else
-     # AppContext.grid.newElement = $('#'+cellClicked.posId)  
+      AppContext.grid.newElement = $('#'+cellClicked.posId)  
 
     # Get pixel position based on grid coordinates
     inv = AppContext.grid.grid.screenpos(x, y)
