@@ -42,8 +42,8 @@ jQuery ($) ->
     pos = {x:x,y:y}
     cellClicked = AppContext.vizdata.getPositionInCell(pos);
     if(cellClicked == '')
-      AppContext.grid.newElement = AppContext.grid.placeNewElement(x,y)
-    #else
+      AppContext.grid.newElement = AppContext.grid.placeNewElement(x,y, true)
+    else
      # AppContext.grid.newElement = $('#'+cellClicked.posId)  
 
     # Get pixel position based on grid coordinates

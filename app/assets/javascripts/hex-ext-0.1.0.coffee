@@ -36,8 +36,9 @@ AppContext.grid.showHoveredElement = (xc, yc) ->
   AppContext.grid.placeHex(AppContext.grid.hoveredElement,xc,yc)  
   AppContext.grid.hoveredElement
 
-AppContext.grid.placeNewElement = (xc, yc) ->
-  if(AppContext.grid.newElement == '')
+AppContext.grid.placeNewElement = (xc, yc , isEmpty) ->
+  if(isEmpty)
+    $('.new').removeClass('new')
     AppContext.grid.newElement = AppContext.grid.createHex('new') 
   AppContext.grid.placeHex(AppContext.grid.newElement,xc,yc)
   # Show the new element on the grid
@@ -148,9 +149,6 @@ AppContext.grid.activateListeners = () ->
     $('.cellTitle').html(elementUnderMouse)
     $('.cellDesc').html(description)
     $('#clickedLocation').text(pos.x + ',' + pos.y)
-    Util.log.console elementUnderMouse
-    Util.log.console description
-    Util.log.console pos.x + ',' + pos.y
 
 jQuery ($) ->
   #root = ''
