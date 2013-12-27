@@ -147,14 +147,24 @@ AppContext.grid.drawTipDesc = (elementUnderMouse, description, pos) ->
   $('.cellTitle').text(elementUnderMouse)
   $('.cellDesc').text(description)
   $('#clickedLocation').text(pos.x + ',' + pos.y)
-  AppContext.grid.drawTipHeader()
+  AppContext.grid.drawTipHeader(elementUnderMouse)
 
-AppContext.grid.drawTipHeader = () ->
-  cellTitleTxt = $('.cellTitle').text().trim()
-  elemType = AppContext.vizdata.getContentElementType(cellTitleTxt)
-  currentElementType = elemType
-  $('.cellHeader').text(currentElementType + ': '+ cellTitleTxt)
 
+AppContext.grid.drawTipHeader = (elementId) ->
+  cellTitleTxt = elementId
+  if(elementId != '' && elementId != undefined)
+    elemType = AppContext.vizdata.getContentElementType(cellTitleTxt)
+    currentElementType = elemType
+    cellTitleTxt = currentElementType + ': '+ cellTitleTxt
+    $('.cellHeader').text(cellTitleTxt)
+  else 
+    AppContext.grid.drawMakingSummary()
+
+AppContext.grid.drawMakingSummary = () ->
+  nStories = AppContext.vizdata.getStories().length
+  nForces = AppContext.vizdata.getForces().length
+  nSolutions = AppContext.vizdata.getSolutions().length
+  $('.cellHeader').text('Stories: ' + nStories + ' Forces: '+ nForces + ' Solutions: ' + nSolutions)
 
 jQuery ($) ->
   #root = ''
