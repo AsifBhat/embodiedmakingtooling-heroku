@@ -29,7 +29,8 @@ jQuery ($) ->
     $('#element_edit').collapse('show')
 
     $('#element_edit').on('hidden', () ->
-      Util.log.console 'Edit collapsed'
+      $('#element_edit').css('overflow', 'hidden')
+      $('#collapseOne').css('overflow', 'hidden')
       nStories = AppContext.vizdata.getStories().length
       nForces = AppContext.vizdata.getForces().length
       nSolutions = AppContext.vizdata.getSolutions().length
@@ -38,6 +39,8 @@ jQuery ($) ->
     )
 
     $('#element_edit').on('shown', () ->
+      $('#element_edit').css('overflow', 'visible')
+      $('#collapseOne').css('overflow', 'visible')
       AppContext.grid.drawTipHeader()
       # display the ID of the current element being edited
     )
