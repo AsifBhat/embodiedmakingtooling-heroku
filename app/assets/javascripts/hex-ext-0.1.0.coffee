@@ -143,10 +143,18 @@ AppContext.grid.activateListeners = () ->
     e.preventDefault()
   )
   
-  AppContext.grid.drawTipDesc = (elementUnderMouse, description, pos) ->
-    $('.cellTitle').html(elementUnderMouse)
-    $('.cellDesc').html(description)
-    $('#clickedLocation').text(pos.x + ',' + pos.y)
+AppContext.grid.drawTipDesc = (elementUnderMouse, description, pos) ->
+  $('.cellTitle').text(elementUnderMouse)
+  $('.cellDesc').text(description)
+  $('#clickedLocation').text(pos.x + ',' + pos.y)
+  AppContext.grid.drawTipHeader()
+
+AppContext.grid.drawTipHeader = () ->
+  cellTitleTxt = $('.cellTitle').text().trim()
+  elemType = AppContext.vizdata.getContentElementType(cellTitleTxt)
+  currentElementType = elemType
+  $('.cellHeader').text(currentElementType + ': '+ cellTitleTxt)
+
 
 jQuery ($) ->
   #root = ''

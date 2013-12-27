@@ -21,7 +21,7 @@ jQuery ($) ->
 
   AppContext.grid.addGridPos = (obj, datum, dataset) ->
     # Update the new element
-    # AppContext.grid.newElement.removeClass('new')
+    AppContext.grid.newElement.removeClass('new')
     AppContext.grid.newElement.addClass(dataset)
 
     # Keep content search reference
@@ -65,7 +65,7 @@ jQuery ($) ->
       tooltipInfo = ''
       $('.cellControls > button').attr('disabled', '')
 
-    AppContext.grid.drawTipDesc(elementUnderMouse, tooltipInfo, pos)
+    AppContext.grid.drawTipDesc(elementUnderMouse , tooltipInfo, pos)
 
     # Keep content search reference
     contentSearch = $("#content-search")

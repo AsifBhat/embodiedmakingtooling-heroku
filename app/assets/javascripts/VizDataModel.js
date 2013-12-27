@@ -60,31 +60,31 @@
     return this.elements.asArray();
   };
 
-  isStory = function(elem){
+  VizDataModel.prototype.isStory = function(elem){
     return (elem.elementId.substr(0,1)=='S');
   };
 
-  isForce = function(elem){
+  VizDataModel.prototype.isForce = function(elem){
     return (elem.elementId.substr(0,1)=='F');
   };
 
-  isSolution = function(elem){
+  VizDataModel.prototype.isSolution = function(elem){
     return (elem.elementId.substr(0,1)=='C');
   };
 
   VizDataModel.prototype.getStories = function() {
     var temp = this.elements.asArray();
-    return temp.filter(isStory);
+    return temp.filter(this.isStory);
   };
 
   VizDataModel.prototype.getForces = function() {
     var temp = this.elements.asArray();
-    return temp.filter(isForce);
+    return temp.filter(this.isForce);
   };
 
   VizDataModel.prototype.getSolutions = function() {
     var temp = this.elements.asArray();
-    return temp.filter(isSolution);
+    return temp.filter(this.isSolution);
   };
 
   VizDataModel.prototype.addElement = function(element) {
@@ -110,6 +110,35 @@
     });
     return desc;
   };
+
+  VizDataModel.prototype.getElementObj = function(elementId) {
+    var element = '';
+    var temp = AppContext.vizdata.getElements();
+    $(temp).each(function(i){
+      if (this.elementId == elementId)
+        element = this;
+    });
+    return element;
+  };
+
+  VizDataModel.prototype.getContentElementType = function(elementId){
+    // if this is returned then the element concerned does not exist anymore 
+    var elementObj = this.getElementObj(elementId)
+    if(elementObj == '')
+      return '';
+
+    if(this.isForce(elementObj)){
+      return 'FORCE';
+    }
+    else if (this.isStory(elementObj)) {
+      return 'STORY';
+    }
+    else if(this.isSolution(elementObj)){
+      return 'SOLUTION';
+    }
+    else 
+      return '';
+  }
 
   //generic method to remove all the elements from the given instance -- used for import
   VizDataModel.prototype.removeAllElements = function(){
