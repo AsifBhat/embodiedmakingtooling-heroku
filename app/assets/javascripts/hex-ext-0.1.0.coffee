@@ -142,14 +142,15 @@ AppContext.grid.activateListeners = () ->
   AppContext.grid.grid.addEvent("tileclick", (e, x, y) ->
     e.preventDefault()
   )
-  
+
+# draw the details about the element represented by the clicked element
 AppContext.grid.drawTipDesc = (elementUnderMouse, description, pos) ->
   $('.cellTitle').text(elementUnderMouse)
   $('.cellDesc').text(description)
   $('#clickedLocation').text(pos.x + ',' + pos.y)
   AppContext.grid.drawTipHeader(elementUnderMouse)
 
-
+# Draw the header for the edit section in case the clicked element is empty just render the overall summary
 AppContext.grid.drawTipHeader = (elementId) ->
   cellTitleTxt = elementId
   if(elementId != '' && elementId != undefined)

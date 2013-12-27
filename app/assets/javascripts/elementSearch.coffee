@@ -22,24 +22,22 @@ jQuery ($) ->
     #<input type="text" name="query">
     #$('#content-search').append('<input type="text" name="query">')
 
-    #$('body').append('<div id="element_edit" class=" row span4"><div class="row"><div class="row cellTitle"></div><div class"row cellHeader"></div><div class="row cellDesc" contenteditable="true"></div><hr><div class="row cellControls"><button class="btn btn-mini" id="delposButton" disabled><span class="icon-remove remove_btn"></span>Delete Position</button><button class="btn btn-mini deleteAllElements" disabled><span class="icon-remove"></span>Delete Element</button><span id="clickedLocation" style="display: none"></span></div></div></div>')
-
     $('body').append('<div class="accordion span4" id="element_edit"><div class="accordion-group"><div class="accordion-heading text-center"><h5 class="accordion-toggle cellHeader" data-toggle="collapse" data-parent="#element_edit" href="#collapseOne"></h5></div><div id="collapseOne" class="accordion-body collapse in" style="overflow : visible;"><div class="accordion-inner"><div id="element_edit_container" class="row"><div class="row edit_inner"><span class="cellTitle" style="display: none"></span><div class="row cellDesc" contenteditable="true"></div><hr><div class="row cellControls"><button class="btn btn-mini" id="delposButton" disabled><span class="icon-remove remove_btn"></span>Delete Position</button>&nbsp; <button class="btn btn-mini deleteAllElements" disabled><span class="icon-remove"></span>Delete Element</button><span id="clickedLocation" style="display: none"></span></div></div></div></div></div></div></div>')
     
     $('#element_edit').collapse('show')
 
     $('#element_edit').on('hidden', () ->
+      # count all individual stories etc and show the count on the header
       $('#element_edit').css('overflow', 'hidden')
       $('#collapseOne').css('overflow', 'hidden')
       AppContext.grid.drawMakingSummary()
-      # count all individual stories etc and show the count on the header
     )
 
     $('#element_edit').on('shown', () ->
       $('#element_edit').css('overflow', 'visible')
       $('#collapseOne').css('overflow', 'visible')
-      AppContext.grid.drawTipHeader($('.cellTitle').text())
       # display the ID of the current element being edited
+      AppContext.grid.drawTipHeader($('.cellTitle').text())
     )
 
     $('#element_edit_container').prepend('<div id="content-search"><input type="text" id="input-elem-search" name="query"></div>')

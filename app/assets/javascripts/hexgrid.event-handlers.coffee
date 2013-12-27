@@ -35,7 +35,11 @@ jQuery ($) ->
     # When a content element is selected from the typeahead, it could be
     # a new entry to the positions list or an update to an already 
     # existing entry.
-    AppContext.cluster.updatePosition(datum.value, gx, gy)      
+    AppContext.cluster.updatePosition(datum.value, gx, gy)
+
+    # when new cell is added, update the edit section
+    tooltipInfo = AppContext.vizdata.getElementDescription(datum.value)
+    AppContext.grid.drawTipDesc(datum.value , tooltipInfo, {x: gx, y:gy})
 
   AppContext.grid.clickEventHandler = (e, x, y) ->
     $('#element_edit').css({
