@@ -22,9 +22,19 @@ jQuery ($) ->
   AppContext.grid.addGridPos = (obj, datum, dataset) ->
     # Update the new element
     AppContext.grid.newElement.removeClass('new')
-    AppContext.grid.newElement.removeClass('story')
-    AppContext.grid.newElement.removeClass('force')
-    AppContext.grid.newElement.removeClass('solution')
+    
+    #get the position object for the current location
+    cellClicked = AppContext.vizdata.getPositionInCell({x: gx, y: gy});
+
+    if(cellClicked != '')
+      AppContext.grid.newElement = $('#'+cellClicked.posId)
+      AppContext.grid.newElement.removeClass('stories')
+      AppContext.grid.newElement.removeClass('forces')
+      AppContext.grid.newElement.removeClass('solutionComponents')
+  
+      # Clear any previous text associated with the current hex-cell
+      AppContext.grid.newElement.text('')
+
     AppContext.grid.newElement.addClass(dataset)
 
     # Keep content search reference
@@ -34,8 +44,6 @@ jQuery ($) ->
     contentSearch.css('display', 'none')
     $('#addFromTypeahead').css("display","none");
     
-    # Clear any previous text associated with the current hex-cell
-    AppContext.grid.newElement.text('')
     # Add the corresponding text to the given element
     AppContext.grid.newElement.text(datum.value) # datum.id later
     AppContext.grid.newElement.css('z-index','100')

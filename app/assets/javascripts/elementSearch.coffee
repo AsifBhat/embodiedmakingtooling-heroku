@@ -45,9 +45,6 @@ jQuery ($) ->
     $('.cellDesc').keypress((e) ->
       if (e.which == 13)
         e.preventDefault()
-        Util.log.console 'Printing element discription'
-        Util.log.console($(this).text())
-        Util.log.console('Entery pressed')
         AppContext.cluster.updateElem($('.cellTitle').text(), $('.cellDesc').text())
     )
 
@@ -60,7 +57,6 @@ jQuery ($) ->
     
     $("#delposButton").click(() -> 
       pos = $('#clickedLocation').text()
-      Util.log.console pos
       posArr = pos.split(',')
       AppContext.cluster.deletePosition(posArr[0], posArr[1])
       $('.cellTitle').text('');
@@ -91,5 +87,3 @@ jQuery ($) ->
         datasetDefaults
       )
     )
-    Util.log.console("Reloaded")
-    Util.log.console(elementList)
