@@ -22,8 +22,8 @@ jQuery ($) ->
     #<input type="text" name="query">
     #$('#content-search').append('<input type="text" name="query">')
 
-    $('body').append('<div class="accordion span4" id="element_edit"><div class="accordion-group"><div class="accordion-heading text-center"><h5 class="accordion-toggle cellHeader" data-toggle="collapse" data-parent="#element_edit" href="#collapseOne"></h5></div><div id="collapseOne" class="accordion-body collapse in" style="overflow : visible;"><div class="accordion-inner"><div id="element_edit_container" class="row"><div class="row edit_inner"><span class="cellTitle" style="display: none"></span><div class="row cellDesc" contenteditable="true"></div><hr><div class="row cellControls span2" style="float: right"><button class="btn btn-mini" id="delposButton" disabled><span class=" icon-remove-circle remove_btn"></span></button>&nbsp; <button class="btn btn-mini deleteAllElements" disabled><span class="icon-trash"></span></button><span id="clickedLocation" style="display: none"></span></div></div></div></div></div></div></div>')
-    
+    $('body').append('<div class="accordion span4" id="element_edit"><div class="accordion-group"><div class="accordion-heading text-center"><h5 class="accordion-toggle cellHeader" data-toggle="collapse" data-parent="#element_edit" href="#collapseOne"></h5></div><div id="collapseOne" class="accordion-body collapse in" style="overflow : visible;"><div class="accordion-inner"><div class="row"><ul id="elementsTab" class="nav nav-tabs"><li class=""><a href="#" data-toggle="tab"><h6>Stories</h6></a></li><li class=""><a href="#" data-toggle="tab"><h6>Forces</h6></a></li><li class=""><a href="#" data-toggle="tab"><h6>Solutions</h6></a></li></ul><div class="row edit_inner" id="edit_input_container"><textarea row="3" id="newElementText" style="display: none;"></textarea></div><div class="row edit_inner"><span class="cellTitle" style="display: none"></span><div class="row cellDesc" contenteditable="true"></div><hr><div class="row cellControls span2" style="float: right"><button class="btn btn-mini" id="delposButton" disabled><span class=" icon-remove-circle remove_btn"></span></button>&nbsp; <button class="btn btn-mini deleteAllElements" disabled><span class="icon-trash"></span></button><span id="clickedLocation" style="display: none"></span></div></div></div></div></div></div></div>')
+
     $('#element_edit').collapse('show')
 
     $('#element_edit').on('hidden', () ->
@@ -40,7 +40,7 @@ jQuery ($) ->
       AppContext.grid.drawTipHeader($('.cellTitle').text())
     )
 
-    $('#element_edit_container').prepend('<div id="content-search"><input type="text" id="input-elem-search" name="query"></div>')
+    $('#edit_input_container').append('<div id="content-search"><input type="text" id="input-elem-search" name="query"></div>')
     
     $('.cellDesc').keypress((e) ->
       if (e.which == 13)

@@ -1,27 +1,58 @@
 removeetype = false;
 
 handleKeyPress = function(e) {
-  //console.log("key pressed")
   if (!e) e = window.event
   var keyCode = e.keyCode || e.which;
-  if (keyCode == '13') {
-    var etype = getNewElementdesc().substr(0,1);
-    var secondchar = getNewElementdesc().substr(1,1);
-    if(secondchar == ' '){
-      if((etype == 's')||(etype == 'S')){
-    	removeetype = true;
-        AppContext.cluster.addStory();
+  
+  Util.log.console(keyCode);
+  
+  // see if the key entered is a space key or not
+  if (keyCode === 32) {
+    //get the text in the typeahead input, convert it to lower case and split it by space
+    var textContent = getNewElementdesc().toLowerCase().split(' '); 
+    var callbackAction = '';
+    // Below we get the first key and check if the second key is a space key (' ')
+    var etype = getNewElementdesc().substr(0,1).toLowerCase();
+
+    // check if the first element of the array is of a length less then 2 characters
+    if(textContent[0].length < 2){
+      if(etype == 's'){
+        callbackAction =  AppContext.cluster.addStory;
+        $('#elementsTab li:eq(0) a').tab('show');
+
       }  
-      else if ((etype == 'f')||(etype == 'F')){
-        removeetype = true;
-        AppContext.cluster.addForce();
+      else if (etype == 'f'){
+        callbackAction = AppContext.cluster.addForce;
+        $('#myTab li:eq(1) a').tab('show');
       }
-      else if ((etype == 'c')||(etype == 'C')){
-        removeetype = true;
-        AppContext.cluster.addSolution();
-      }  
-      else 
-    	displayOptions();
+      else if (etype == 'c'){
+        callbackAction = AppContext.cluster.addSolution;
+        $('#myTab li:eq(2) a').tab('show');
+      }
+      //if any of the above is possible, then hide the input field 
+      // and show a text area to allow a more detailed story
+      $('#input-elem-search').fadeOut(2000);
+      $('#newElementText').fadeIn(1000);
+      $('#newElementText').focus();
+      $('#newElementText').keypress(function(e){
+        //if enter key is pressed, then remove the textarea and save the corresponding element
+        if(e.which === 13){
+          var newElementDesc = $('#newElementText').val();
+          //clean up input dom and hide the text area and show the input box again
+          $('#input-elem-search').val('');
+          $('#newElementText').fadeOut(2000);
+          $('#newElementText').val('');
+          $('#input-elem-search').fadeIn(1000);
+          $('#input-elem-search').focus();
+          if(callbackAction != ''){
+            callbackAction(newElementDesc);
+          }
+          //save the text that is handed by the textarea
+          //finish by removing the textarea
+        }
+      });
+
+
     } else 
       displayOptions();
   }        
@@ -54,6 +85,8 @@ getNextStoryId =  function() {
 };
 
 getNextForceId =  function() {
+  Util.log.console('Number of forces: ');
+  Util.log.console(AppContext.vizdata.getForces());
   return getNextElemId(AppContext.vizdata.getForces());
 };
 
@@ -63,17 +96,16 @@ getNextSolutionId =  function() {
 
 
 getNewElementdesc = function(){
-  var textdesc = $('.twitter-typeahead span').text().trim();
+  var textdesc = $('#input-elem-search').val();
   if(removeetype){
 	  textdesc = textdesc.substr(2,textdesc.length-2);
 	  removeetype = false;
   }
-  console.log(textdesc)
   return textdesc;  
 };
 
-AppContext.cluster.addStory = function() {
-  var desc = getNewElementdesc();
+AppContext.cluster.addStory = function(desc) {
+  //var desc = getNewElementdesc();
   var idstr = "S"+getNextStoryId();
   var elemObj = {"elementId": idstr, "description":desc};
   AppContext.vizdata.addElement(elemObj);
@@ -83,20 +115,19 @@ AppContext.cluster.addStory = function() {
   $('#addFromTypeahead').css("display","none");
 };
 
-AppContext.cluster.addForce = function() {
-  var desc = getNewElementdesc();
+AppContext.cluster.addForce = function(desc) {
+  //var desc = getNewElementdesc();
   var idstr = "F"+getNextForceId();
   var elemObj = {"elementId": idstr, "description":desc};
   AppContext.vizdata.addElement(elemObj);
-  Util.log.console(elemObj);
   var datum = {"value":idstr};
   AppContext.grid.addGridPos(null,datum,'force');
   $('#addFromTypeahead').css("display","none");
 };
 
 
-AppContext.cluster.addSolution = function() {
-  var desc = getNewElementdesc();
+AppContext.cluster.addSolution = function(desc) {
+  //var desc = getNewElementdesc();
   var idstr = "C"+getNextSolutionId();
   var elemObj = {"elementId": idstr, "description":desc};
   AppContext.vizdata.addElement(elemObj);

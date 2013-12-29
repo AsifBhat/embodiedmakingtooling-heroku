@@ -22,6 +22,9 @@ jQuery ($) ->
   AppContext.grid.addGridPos = (obj, datum, dataset) ->
     # Update the new element
     AppContext.grid.newElement.removeClass('new')
+    AppContext.grid.newElement.removeClass('story')
+    AppContext.grid.newElement.removeClass('force')
+    AppContext.grid.newElement.removeClass('solution')
     AppContext.grid.newElement.addClass(dataset)
 
     # Keep content search reference
@@ -30,6 +33,10 @@ jQuery ($) ->
     # Hide the content search
     contentSearch.css('display', 'none')
     $('#addFromTypeahead').css("display","none");
+    
+    # Clear any previous text associated with the current hex-cell
+    AppContext.grid.newElement.text('')
+    # Add the corresponding text to the given element
     AppContext.grid.newElement.text(datum.value) # datum.id later
     AppContext.grid.newElement.css('z-index','100')
     # When a content element is selected from the typeahead, it could be
