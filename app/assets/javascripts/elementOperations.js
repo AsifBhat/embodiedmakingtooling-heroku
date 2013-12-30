@@ -116,6 +116,12 @@ handleKeyPress = function(e) {
     //If the user is adding a new element then hide the input field 
     // and insert a text area to allow a more detailed input
     function handleAddNewElement(){
+      $('#input-elem-search').val('');
+      $('#input-elem-search').fadeOut(2000);
+      $('#edit_input_container').prepend('<textarea row="3" id="newElementText" style="display: none;"></textarea>');
+      $('#newElementText').fadeIn(1000);
+      $('#newElementText').focus();
+
       $('#newElementText').keypress(function(e){
         //if enter key is pressed, then remove the textarea and save the corresponding element
         if(e.which === 13){
@@ -137,11 +143,6 @@ handleKeyPress = function(e) {
     var textContent = getNewElementdesc().toLowerCase().split(' '); 
     // check if the first element of the array is of a length less then 2 characters
     if(textContent[0].length < 2){
-      $('#input-elem-search').val('');
-      $('#input-elem-search').fadeOut(2000);
-      $('#edit_input_container').prepend('<textarea row="3" id="newElementText" style="display: none;"></textarea>');
-      $('#newElementText').fadeIn(1000);
-      $('#newElementText').focus();
 
       if(textContent[0] == 's'){
         $('#elementsTab li:eq(0) a').tab('show');
