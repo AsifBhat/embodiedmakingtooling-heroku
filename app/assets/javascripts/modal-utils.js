@@ -13,16 +13,23 @@ AppContext.grid.loadApplication = function(){
 
 AppContext.grid.loadPicker = function() {
   try{
-    $('body').append('<div id="startupModal" class="modal hide fade app_load_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"><div class="modal-header text-center"><h4 id="myModalLabel">Select one of the following options</h4></div><div class="modal-footer"><!--button class="btn btn-warning" id="load_prj_button" data-dismiss="modal" aria-hidden="true">Load Previous Work</button--><button class="btn btn-success" id="create_new_button" data-dismiss="modal" aria-hidden="true">Create a new analysis</button><button class="btn btn btn-warning" aria-hidden="true" data-dismiss="modal" id="openfile_button">Select from files already saved..</button></div></div>');
+    $('body').append('<div id="startupModal" class="modal hide fade app_load_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"><div class="modal-header text-center"><h4 id="myModalLabel">Select one of the following options</h4></div><div class="modal-body"><label>Create a New Making: </label><input type="text" id="proj_name" placeholder="Enter Making Title"></div><div class="modal-footer"><button class="btn btn-primary" aria-hidden="true" data-dismiss="modal" id="create_named_making_btn">Create</button><button class="btn btn btn-warning" aria-hidden="true" data-dismiss="modal" id="openfile_button">Select a file from Google Drive</button><button class="btn load_new_making_btn" data-dismiss="modal" aria-hidden="true">Load Current File</button></div></div>');
 
-    /*$('#load_prj_button').click(function(){
+    $('#create_named_making_btn').click(function(){
+      try {
+        realtimeOptions.defaultTitle = $('#proj_name').val()+'.ema';
+        Util.log.console('Going in with file name: ' + realtimeOptions.defaultTitle);
+        AppContext.grid.loadApplication();
+        //$('#project_name').text(realtimeOptions.defaultTitle);
+      }
+      catch(err){
+        console.log(err);
+      }
+    });
+
+    $('.load_new_making_btn').click(function(){
+      Util.log.console('File Name not specified. Using default Project name');
       AppContext.grid.loadApplication();
-    });*/
-
-    $('#create_new_button').click(function(){
-      //AppContext.grid.initApp();
-      createModal('modalID', 'optn1ID', 'optn2ID');
-      //startRealtime();
     });
 
     $('#openfile_button').click(function(){
@@ -41,39 +48,6 @@ AppContext.grid.loadPicker = function() {
     console.log(err);
   }
 }
-
-var createModal = function(modalWindowID, button1, button2_id){
-  try{
-    var modalHTML = '<div id="'+modalWindowID+'" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"><div class="modal-header"><button type="button" class="close '+button1+'" data-dismiss="modal" aria-hidden="true">&times;</button><h5 id="myModalLabel">Name the file you wish to create</h5></div><div class="modal-body"><label>Enter the name of Project: </label><input type="text" id="proj_name" placeholder="Enter Project Name"></div><div class="modal-footer"><button class="btn '+button1+'" data-dismiss="modal" aria-hidden="true">Load Current File</button><button class="btn btn-primary" aria-hidden="true" data-dismiss="modal" id="'+button2_id+'">Create</button></div></div>';
-
-    $('body').append(modalHTML);
-
-    $('.'+button1).click(function(){
-      console.log('File Name not specified. Using default Project name');
-      AppContext.grid.loadApplication();
-    });
-
-    $('#'+button2_id+'').click(function(){
-      try {
-        realtimeOptions.defaultTitle = $('#proj_name').val()+'.ema';
-        console.log('Going in with file name: ' + realtimeOptions.defaultTitle);
-        AppContext.grid.loadApplication();
-        //$('#project_name').text(realtimeOptions.defaultTitle);
-      }
-      catch(err){
-        console.log(err);
-      }
-    });
-
-    $('#'+modalWindowID+'').modal({
-      show: true,
-      keyboard: true
-    });
-  }
-  catch(err){
-    console.log(err);
-  }
-};
 
 var picker = null;
   // Create and render a Picker object for searching images.
@@ -106,25 +80,14 @@ $(document).ready(function(){
   else
     window.onload = AppContext.grid.loadApplication();
 
-  $('#import_popover').click(function(evt){
-    try {
-      $('#import_popover').popover('show');
-      $('#import_close').click(function(evt){
-        $('#import_popover').popover('hide');
-      });
-      AppContext.project.bindFileUpload();
-    }
-    catch (err){
-      console.log(err);
-    }
-  });
   fetchClientDetails(getUserName);
   
   $('.proj_title').keypress(function(e){
     if (e.which === 13){
       e.preventDefault();
-      console.log($(this).text());
-      console.log('Entery pressed');
+      Util.log.console('Title Updated to: ');
+      Util.log.console($(this).text());
+      Util.log.console('Entery pressed');
       AppContext.project.sendChangeTitleRequest($(this).text())
     }
   });
