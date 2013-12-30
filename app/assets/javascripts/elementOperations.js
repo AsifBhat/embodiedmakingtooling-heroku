@@ -1,59 +1,5 @@
 removeetype = false;
 
-//if any of the above is possible, then hide the input field 
-// and show a text area to allow a more detailed story
-var handleAddNewElement = function(addElement){
-  $('#input-elem-search').fadeOut(2000);
-  $('#newElementText').fadeIn(1000);
-  $('#newElementText').focus();
-  $('#newElementText').keypress(function(e){
-    //if enter key is pressed, then remove the textarea and save the corresponding element
-    if(e.which === 13){
-      var newElementDesc = $('#newElementText').val();
-      //clean up input dom and hide the text area and show the input box again
-      $('#input-elem-search').val('');
-      $('#newElementText').fadeOut(2000);
-      $('#newElementText').val('');
-      $('#input-elem-search').fadeIn(1000);
-      $('#input-elem-search').focus();
-      if(addElement != '' && addElement!= '' ){
-        addElement(newElementDesc);
-        return;
-      }
-    }
-  });
-}
-
-handleKeyPress = function(e) {
-  if (!e) e = window.event
-  var keyCode = e.keyCode || e.which;
-  
-  // see if the key entered is a space key or not
-  if (keyCode === 32) {
-    //get the text in the typeahead input, convert it to lower case and split it by space
-    var textContent = getNewElementdesc().toLowerCase().split(' '); 
-    var callbackAction = '';
-
-    // check if the first element of the array is of a length less then 2 characters
-    if(textContent[0].length < 2){
-      if(textContent[0] == 's'){
-        $('#elementsTab li:eq(0) a').tab('show');
-        handleAddNewElement(AppContext.cluster.addStory);
-      }  
-      else if (textContent[0] == 'f'){
-        $('#elementsTab li:eq(1) a').tab('show');
-        handleAddNewElement (AppContext.cluster.addForce);
-      }
-      else if (textContent[0] == 'c'){
-        $('#elementsTab li:eq(2) a').tab('show');
-        handleAddNewElement(AppContext.cluster.addSolution);
-      }
-      else return;
-    } else 
-      displayOptions();
-  }        
-}  
-
 displayOptions = function (){
   $('#addFromTypeahead').css("display","");
   var leftpos = $("#content-search").position().left;
@@ -72,6 +18,7 @@ getNextElemId = function(allElem) {
       nextId = num+1;
     }
   });
+  Util.log.console('Next Element Id ' + nextId);
   return nextId;
 };
 
@@ -97,34 +44,11 @@ getNewElementdesc = function(){
   return textdesc;  
 };
 
-AppContext.cluster.addStory = function(desc) {
-  var nextStoryId = getNextStoryId();
-  var idstr = "S"+ nextStoryId;
-  var elemObj = {"elementId": idstr, "description":desc};
+AppContext.cluster.addNewElement = function(elemId, desc, type) {
+  var elemObj = {"elementId": elemId, "description":desc};
   AppContext.vizdata.addElement(elemObj);
-  var datum = {"value":idstr};
-  AppContext.grid.addGridPos(null,datum,'stories');
-  $('#addFromTypeahead').css("display","none");
-};
-
-AppContext.cluster.addForce = function(desc) {
-  var nextForceId = getNextForceId();
-  var idstr = "F"+nextForceId;
-  var elemObj = {"elementId": idstr, "description":desc};
-  AppContext.vizdata.addElement(elemObj);
-  var datum = {"value":idstr};
-  AppContext.grid.addGridPos(null,datum,'forces');
-  $('#addFromTypeahead').css("display","none");
-};
-
-
-AppContext.cluster.addSolution = function(desc) {
-  var nextSoltnId = getNextSolutionId();
-  var idstr = "C"+nextSoltnId;
-  var elemObj = {"elementId": idstr, "description":desc};
-  AppContext.vizdata.addElement(elemObj);
-  var datum = {"value":idstr};
-  AppContext.grid.addGridPos(null,datum,'solutionComponents');
+  var datum = {"value":elemId};
+  AppContext.grid.addGridPos(null,datum,type);
   $('#addFromTypeahead').css("display","none");
 };
 
@@ -178,3 +102,73 @@ AppContext.cluster.updateElem = function(idToEdit, newDesc)  {
   AppContext.vizdata.removeElement(elemtodel);
   AppContext.vizdata.addElement(newElem);
 };
+
+// handle the key pressed events on the input text box
+handleKeyPress = function(e) {
+  if (!e) e = window.event
+  var keyCode = e.keyCode || e.which;
+  
+  // see if the key entered is a space key or not
+  if (keyCode === 32) {
+    var currentElementId = '';
+    var currentType = '';
+
+    //If the user is adding a new element then hide the input field 
+    // and insert a text area to allow a more detailed input
+    function handleAddNewElement(){
+      $('#newElementText').keypress(function(e){
+        //if enter key is pressed, then remove the textarea and save the corresponding element
+        if(e.which === 13){
+          var newElementDesc = $('#newElementText').val();
+          //clean up input dom and hide the text area and show the input box again
+          $('#newElementText').fadeOut(2000);
+          $('#newElementText').remove();
+          $('#newElementText').val('');
+          $('#input-elem-search').fadeIn(1000);
+          $('#input-elem-search').focus();
+          if(AppContext.cluster.addNewElement != '' && newElementDesc!= '' ){
+            AppContext.cluster.addNewElement(currentElementId, newElementDesc, currentType);
+            return;
+          }
+        }
+      });
+    }
+    //get the text in the typeahead input, convert it to lower case and split it by space
+    var textContent = getNewElementdesc().toLowerCase().split(' '); 
+    // check if the first element of the array is of a length less then 2 characters
+    if(textContent[0].length < 2){
+      $('#input-elem-search').val('');
+      $('#input-elem-search').fadeOut(2000);
+      $('#edit_input_container').prepend('<textarea row="3" id="newElementText" style="display: none;"></textarea>');
+      $('#newElementText').fadeIn(1000);
+      $('#newElementText').focus();
+
+      if(textContent[0] == 's'){
+        $('#elementsTab li:eq(0) a').tab('show');
+        var idstr = "S"+  getNextStoryId();
+        currentType = 'stories';
+        currentElementId = idstr;
+        handleAddNewElement();
+        return;
+      }  
+      else if (textContent[0] == 'f'){
+        $('#elementsTab li:eq(1) a').tab('show');
+        var idstr = "F"+ getNextForceId();
+        currentType = 'forces';
+        currentElementId = idstr;
+        handleAddNewElement();
+        return;
+      }
+      else if (textContent[0] == 'c'){
+        $('#elementsTab li:eq(2) a').tab('show');
+        var idstr = "C"+ getNextSolutionId();
+        currentType = 'solutionComponents';
+        currentElementId = idstr;
+        handleAddNewElement();
+        return;
+      }
+      else return;
+    } else 
+      displayOptions();
+  }
+}  
