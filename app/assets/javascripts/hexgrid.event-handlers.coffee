@@ -21,6 +21,9 @@ jQuery ($) ->
 
   AppContext.grid.addGridPos = (obj, datum, dataset) ->
     # Update the new element
+    if( dataset.indexOf('Elements') != -1 )
+      dataset = AppContext.vizdata.getContentElementType(datum.value)
+
     AppContext.grid.newElement.removeClass('new')
     
     #get the position object for the current location
@@ -92,7 +95,7 @@ jQuery ($) ->
     gx = x
     gy = y
 
-    # Show content search at corrent position
+    # Show content search at current position
     $('#addFromTypeahead').css("display","none");
     ###
       contentSearch.css({

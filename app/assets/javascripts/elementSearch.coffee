@@ -51,39 +51,36 @@ jQuery ($) ->
     $('.deleteAllElements').click(() ->
       idToDelete = $('.cellTitle').text().trim()
       AppContext.cluster.deleteElem(idToDelete)
-      $('.cellTitle').text('');
-      $('.cellDesc').text('');
+      $('.cellTitle').text('')
+      $('.cellDesc').text('')
     )
     
     $("#delposButton").click(() -> 
       pos = $('#clickedLocation').text()
       posArr = pos.split(',')
       AppContext.cluster.deletePosition(posArr[0], posArr[1])
-      $('.cellTitle').text('');
-      $('.cellDesc').text('');
+      $('.cellTitle').text('')
+      $('.cellDesc').text('')
     )
 
     $('#content-search').keypress((evt) ->
       handleKeyPress(evt)
     ) 
-    $('#content-search input').typeahead(
-      $.extend(true, 
-        {
-          name: 'stories', 
-          local: generateLocalElements(elementList)
-        },
-        datasetDefaults
-      )
-    )
+    AppContext.grid.initTypeahead(elementList)
 
-  AppContext.grid.reloadTypeahead = (elementList)  ->
-    $('#content-search input').typeahead('destroy');
+  AppContext.grid.initTypeahead = (elementList) ->
+    Util.log.console('Re-intializing typeahead')
     $('#content-search input').typeahead(
       $.extend(true, 
         {
-          name: 'stories'+Math.random(), 
+          name: 'Elements'+Math.random(), 
           local: generateLocalElements(elementList)
         },
         datasetDefaults
       )
     )
+  
+  AppContext.grid.reloadTypeahead = (elementList)  ->
+    $('#content-search input').typeahead('destroy')
+    AppContext.grid.initTypeahead(elementList)
+    

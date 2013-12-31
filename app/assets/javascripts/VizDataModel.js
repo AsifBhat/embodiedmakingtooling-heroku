@@ -128,13 +128,13 @@
       return '';
 
     if(this.isForce(elementObj)){
-      return 'FORCE';
+      return 'forces';
     }
     else if (this.isStory(elementObj)) {
-      return 'STORY';
+      return 'stories';
     }
     else if(this.isSolution(elementObj)){
-      return 'SOLUTION';
+      return 'solutionComponents';
     }
     else 
       return '';
