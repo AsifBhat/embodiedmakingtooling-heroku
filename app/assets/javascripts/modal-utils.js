@@ -80,6 +80,18 @@ $(document).ready(function(){
   else
     window.onload = AppContext.grid.loadApplication();
 
+  $('#import_popover').click(function(evt){
+    try {
+      $('#import_popover').popover('show');
+      $('#import_close').click(function(evt){
+        $('#import_popover').popover('hide');
+      });
+      AppContext.project.bindFileUpload();
+    }
+    catch (err){
+      console.log(err);
+    }
+  });
   fetchClientDetails(getUserName);
   
   $('.proj_title').keypress(function(e){
