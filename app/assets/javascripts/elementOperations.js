@@ -90,7 +90,6 @@ AppContext.cluster.deleteElem = function(idToDel){
       domElemToDel.removeClass('solutionComponents');
       domElemToDel.removeClass('new');
     }
-      
   });
   AppContext.vizdata.removeElement(elemtodel);
 };
@@ -145,15 +144,16 @@ handleKeyPress = function(e) {
     if(textContent[0].length < 2){
 
       if(textContent[0] == 's'){
-        $('#elementsTab li:eq(0) a').tab('show');
+        $('#elementsTab li:eq(0) a').tab('show').css('text-decoration', 'underline');
         var idstr = "S"+  getNextStoryId();
         currentType = 'stories';
         currentElementId = idstr;
         handleAddNewElement();
+        $('#elementsTab li:eq(0) a').tab('hide');
         return;
       }  
       else if (textContent[0] == 'f'){
-        $('#elementsTab li:eq(1) a').tab('show');
+        $('#elementsTab li:eq(1) a').tab('show').css('text-decoration', 'underline');
         var idstr = "F"+ getNextForceId();
         currentType = 'forces';
         currentElementId = idstr;
@@ -161,7 +161,7 @@ handleKeyPress = function(e) {
         return;
       }
       else if (textContent[0] == 'c'){
-        $('#elementsTab li:eq(2) a').tab('show');
+        $('#elementsTab li:eq(2) a').tab('show').css('text-decoration', 'underline');
         var idstr = "C"+ getNextSolutionId();
         currentType = 'solutionComponents';
         currentElementId = idstr;
