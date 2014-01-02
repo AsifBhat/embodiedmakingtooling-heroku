@@ -179,3 +179,48 @@ describe("Vizdata Position non-CRUD API", function() {
   });
 
 });
+
+describe("Vizdata Element non-CRUD API", function() {
+  var vizdata;
+  var element = {"elementId":"F01", "description":"This is a sample force element."};
+ 
+  beforeEach(function() {
+    VizDataModel.prototype.elements = [];
+    vizdata = new VizDataModel();
+    // dummy functions added for testing purposes
+    vizdata.elements.asArray = vizdata.elements;
+    vizdata.elements.remove = function(obj){};
+    spyOn(vizdata.elements, 'asArray').andReturn();
+    spyOn(vizdata.elements, 'indexOf').andReturn();
+    spyOn(vizdata.elements, 'remove').andReturn();
+    
+  });
+ 
+  afterEach(function() {
+  });
+
+  it("Should find type of element", function() {
+    var bool = vizdata.isStory({"elementId":"S0001"});
+    expect(bool).toEqual(true);
+    bool = vizdata.isStory({"elementId":"F0001"});
+    expect(bool).toEqual(false);
+
+    bool = vizdata.isForce({"elementId":"F0001"});
+    expect(bool).toEqual(true);
+    bool = vizdata.isForce({"elementId":"C0001"});
+    expect(bool).toEqual(false);
+
+    bool = vizdata.isSolution({"elementId":"C0001"});
+    expect(bool).toEqual(true);
+    bool = vizdata.isSolution({"elementId":"F0001"});
+    expect(bool).toEqual(false);
+  });
+
+  /*it("Should get elements of a particular type", function() {
+    var stories = vizdata.getStories()
+    expect()
+
+  });*/
+
+
+});
