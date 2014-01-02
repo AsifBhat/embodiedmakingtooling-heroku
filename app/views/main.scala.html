@@ -25,23 +25,24 @@
         <script src="@routes.Assets.at("javascripts/typeahead-0.9.3.js")" type="text/javascript"></script>
         <script src="@routes.Assets.at("javascripts/bootstrap-tooltip-v2.2.2.js")" type="text/javascript"></script>
         <script src="@routes.Assets.at("javascripts/bootstrap-transition-v2.2.1.js")" type="text/javascript"></script>
+        <script src="@routes.Assets.at("javascripts/bootstrap-collapse-v2.3.2.js")" type="text/javascript"></script>
         <script src="@routes.Assets.at("javascripts/autogrow.js")" type="text/javascript"></script>
         <script src="@routes.Assets.at("javascripts/bootstrap-popover-v2.3.2.js")" type="text/javascript"></script>
         <script src="@routes.Assets.at("javascripts/Util.js")"></script>
         <script src="@routes.Assets.at("javascripts/AppContext.js")"></script>
-        <script type="text/javascript" src="https://apis.google.com/js/api.js?onload=loadPicker"></script> 
+        <!-- Load the Realtime libraries. -->
+        <script type="text/javascript" src="https://apis.google.com/js/api.js"></script> 
+        <script src="https://apis.google.com/js/client.js"></script>
         <!-- Load extended hex library -->
         <script src="@routes.Assets.at("javascripts/hex-ext-0.1.0.js")" type="text/javascript"></script>
         <!-- Load the utility library. -->
         <script type="text/javascript" src="@routes.Assets.at("javascripts/realtime-client-utils.js")"></script> 
-        <!-- Load the Realtime libraries. -->
-        <script type="text/javascript"
-              src="https://apis.google.com/js/api.js"></script>
         <script src="@routes.Assets.at("javascripts/VizDataModel.js")"></script>      
         <script src="@routes.Assets.at("javascripts/fileuploadhandler.js")"></script>     
         <script src="@routes.Assets.at("javascripts/elementSearch.js")"></script>
         <script src="@routes.Assets.at("javascripts/progressBar.js")"></script>
         <!-- Load the callbacks required for configuring realtime -->
+        <script src="@routes.Assets.at("javascripts/google-auth-utils.js")"></script>
         <script type="text/javascript" 
               src="@routes.Assets.at("javascripts/realtime-callbacks.js")"></script>   
         <!-- Load the configuration options that activates realtime -->

@@ -81,25 +81,10 @@ function doMetaValueChanged (evt){
   this.elements = model.createList();
   this.relations = model.createList();
   this.meta = model.createList();
-  var temp;
-  // This should be populated by data from a flat file
-  $.ajax ({
-         url: '/assets/javascripts/sampleElements.json',
-         type: 'GET',
-         async: false,
-         contentType: "application/json",
-         success: function(data, status, response) {
-          temp = data;},
-         error: function (jqXHR, textStatus, errorThrown) {
-           Util.log.console ("AJAX error: "+errorThrown);}
-         });
   Util.log.console("Initialize object the first time it is created");
   AppContext.project.getFileDetails();
   model.beginCompoundOperation();
   this.updateTitle(AppContext.project.projectTitle);
-  for (var i=0;i<temp.length;i++){
-    this.addElement(temp[i]);
-  }
   model.endCompoundOperation();
  }
 
@@ -150,4 +135,5 @@ function onFileLoaded(doc) {
   AppContext.grid.activateTypeahead(AppContext.vizdata.getElements());
 
   AppContext.project.getFileDetails();
+  fetchClientDetails(getUserName);
 }

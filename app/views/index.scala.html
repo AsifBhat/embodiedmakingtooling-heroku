@@ -1,29 +1,19 @@
 @main("The Embodied Making Tool") {
 <div class="row page-header">
   <div class="row title_holder">
-    <div class="proj_title span4" data-placement="right" data-html= true data-toggle="popover" title="" data-content="" data-original-title="<b>Edit Project Title</b>" data-trigger="manual" data-animation="false">
-    </div>
+    <div class="proj_title" contenteditable="true"></div>
   </div>
   <div id="menubar">
-    <button id="authorizeButton" disabled>Authorize</button>
-    <button id='exportToGexf' onclick='AppContext.menu.exportToGexf()'>Download as GEXF</button>
-      <div id="import_file">
-      <span class="label label-info import_label">Select a File to Import</span>
-        <div class="import_btn">
-           <input type="file" name="importedFile" id="import_file_input">
-        </div>
-      </div>
-    <button id='showGraph' value='show' onclick='AppContext.menu.showGraph()'>Show Graph</button>
+    <button id='exportToGexf' onclick='AppContext.menu.exportToGexf()' class="btn btn-mini btn-warning"><span class="icon-download"></span>&nbsp;Export GEXF</button>
+      <button id="import_popover" data-placement="bottom" data-html= true data-toggle="popover" title="" data-original-title='<span class="icon-upload"></span><b>&nbsp;Import File</b> <span id="import_close" class="pull-right"><span class="icon-remove-circle"></span></span>' data-content='<div id="import_container"><div id="import_file"><div class="import_btn"><input type="file" name="importedFile" id="import_file_input"></div></div></div>' data-trigger="manual" data-animation="false" class="btn btn-mini btn-warning import_label"><span class="icon-upload"></span>&nbsp;Import</button>
+    <button id='showGraph' class="btn btn-mini btn-warning" value='show' onclick='AppContext.menu.showGraph()'><span class="icon-eye-open"></span>&nbsp;Show Graph</button>
+    <button id="authorizeButton" disabled class="login_button pull-right btn btn-primary btn-mini"><span class="icon-lock"></span>&nbsp;Login</button>
   </div>
 </div>
 
 
 <script>
-
-   setTimeout(function () {$('.elementsView').autogrow();},12000);
-   
-   
-         
+  setTimeout(function () {$('.elementsView').autogrow();},12000);
 </script>
 
 <div class="progress flash_board" id="progress_container">
@@ -41,6 +31,10 @@
  </div> 
 <div id="desctooltip" style="height:10px;width:10px;" type="button" data-html="true" data-toggle="tooltip" data-placement="top" data-trigger="focus hover" data-animation="false"></div>
 <div id="hexagonal-grid"></div>
+<div id="hex-controller">
+  <span id="zoomin-controller" class="zoom_controller icon-zoom-in"></span>
+  <span id="zoomout-controller" class="zoom_controller icon-zoom-out"></span>
+</div>
 
 <div class="btn-group" id="addFromTypeahead" data-toggle="buttons-radio"  style='z-index:100;position:absolute;display:none;'>
  

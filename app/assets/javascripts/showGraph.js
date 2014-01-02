@@ -148,14 +148,14 @@ AppContext.menu.showGraph = function() {
 	if(action == 'show'){
 		$(sigContainer).css("display", "");
 		$(graphContainer).css("display", "");
-		$(gbtn).html("Hide Graph");
+		$(gbtn).html('<span class="icon-eye-close"></span> &nbsp; Hide Graph');
 		$(gbtn).attr("value","hide");
 		AppContext.graph.updateGraph();
 
 	} else {
 		$(sigContainer).css("display", "none");
 		$(graphContainer).css("display", "none");
-		$(gbtn).html("Show Graph");
+		$(gbtn).html('<span class="icon-eye-open"></span>Show Graph');
 		$(gbtn).attr("value","show");
 	}
 };

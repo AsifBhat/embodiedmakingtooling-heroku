@@ -1,6 +1,14 @@
+#from hex-grid-zoom branch
 AppContext.grid.ZOOM_OUT = -1
 AppContext.grid.ZOOM_IN = 1
 AppContext.grid.ZOOM_RESET = 0
+
+# From master
+AppContext.grid.ZOOM_FACTOR = 10
+AppContext.grid.zoomValue = 100
+AppContext.grid.MAX_ZOOM_LEVEL = 250
+AppContext.grid.MIN_ZOOM_LEVEL = 50
+
 AppContext.grid.defaultSize = {
   width : hex.grid.hexagonal.tileWidth,
   height : hex.grid.hexagonal.tileHeight,
@@ -8,6 +16,10 @@ AppContext.grid.defaultSize = {
   backgroundHeight : hex.grid.hexagonal.tileHeight,
   spriteWidth: hex.grid.hexagonal.tileWidth * 9,
   spriteHeight : hex.grid.hexagonal.tileHeight*3
+}
+AppContext.grid.descWindow = {
+  left: '25px' ,
+  top: '100px'
 }
 
 # Creating a grid
@@ -20,10 +32,10 @@ AppContext.grid.createGrid = (domelem) ->
   Util.log.console AppContext.grid.grid.size
 
 AppContext.grid.createHex = (styleClass, text = "") ->
-  $("<div class='hex' >"+text+"</div>").css({
-    "width": AppContext.grid.grid.tileWidth + "px",
-    "height": AppContext.grid.grid.tileHeight + "px",
-    "line-height": AppContext.grid.grid.tileHeight + "px",
+  $('<div class="hex '+ styleClass+'" >'+text+'</div>').css({
+    'width': AppContext.grid.grid.tileWidth + 'px',
+    'height': AppContext.grid.grid.tileHeight + 'px',
+    'line-height': AppContext.grid.grid.tileHeight + 'px',
   }).addClass(styleClass)
 
 AppContext.grid.initialize = () ->
@@ -46,8 +58,7 @@ AppContext.grid.showHoveredElement = (xc, yc) ->
   AppContext.grid.hoveredElement
 
 AppContext.grid.placeNewElement = (xc, yc) ->
-  if(AppContext.grid.newElement == '')
-    AppContext.grid.newElement = AppContext.grid.createHex('new') 
+  AppContext.grid.newElement = AppContext.grid.createHex('new') 
   AppContext.grid.placeHex(AppContext.grid.newElement,xc,yc)
   # Show the new element on the grid
   $(AppContext.grid.grid.root).append(AppContext.grid.newElement)
@@ -72,9 +83,11 @@ AppContext.grid.showTooltip = (x,y,elemId, tooltipInfo) ->
   AppContext.grid.idwithtooltip.attr("data-original-title",tooltipHTML)
   $('.elementsView').autogrow();
   $('.tooltip-inner').html(tooltipHTML)
+  ###
   $("#delposButton").click(() -> 
     AppContext.cluster.deletePosition(parseInt(x,10),parseInt(y,10))
   )
+  ###
   AppContext.grid.idwithtooltip
 
 AppContext.grid.hideTooltip = () ->  
@@ -152,6 +165,18 @@ AppContext.grid.activateListeners = () ->
     AppContext.grid.tileClickHandler(e, x, y)
   )
 
+  $('#zoomin-controller').click( (evt) ->
+    Util.log.console 'Zooming in'
+    AppContext.grid.zoomEventHandler(evt, 1)
+    #call the zoom handler with a positive value
+  )
+
+  $('#zoomout-controller').click( (evt) ->
+    Util.log.console 'clicked on zoom out '
+    AppContext.grid.zoomEventHandler(evt, -1)
+    #call the zoom handler with a negative value
+  )
+
 AppContext.grid.deactivateListeners = (elem) ->
   elem.removeEventListener('tileover', AppContext.grid.hoverEventHandler)
   elem.removeEventListener('tiletap', AppContext.grid.clickEventHandler)
@@ -204,6 +229,31 @@ AppContext.grid.zoomOperation = (elem, zoomFactor, zoomDir) ->
       hex.grid.hexagonal.tileHeight = AppContext.grid.defaultSize.height
       hex.grid.hexagonal.     
   ###
+
+# draw the details about the element represented by the clicked element
+AppContext.grid.drawTipDesc = (elementUnderMouse, description, pos) ->
+  $('.cellTitle').text(elementUnderMouse)
+  $('.cellDesc').text(description)
+  $('#clickedLocation').text(pos.x + ',' + pos.y)
+  AppContext.grid.drawTipHeader(elementUnderMouse)
+
+# Draw the header for the edit section in case the clicked element is empty just render the overall summary
+AppContext.grid.drawTipHeader = (elementId) ->
+  cellTitleTxt = elementId
+  if(elementId != '' && elementId != undefined)
+    elemType = AppContext.vizdata.getContentElementType(cellTitleTxt)
+    currentElementType = elemType
+    cellTitleTxt = currentElementType + ': '+ cellTitleTxt
+    $('.cellHeader').text(cellTitleTxt)
+  else 
+    AppContext.grid.drawMakingSummary()
+
+AppContext.grid.drawMakingSummary = () ->
+  nStories = AppContext.vizdata.getStories().length
+  nForces = AppContext.vizdata.getForces().length
+  nSolutions = AppContext.vizdata.getSolutions().length
+  $('.cellHeader').text('Stories: ' + nStories + ' Forces: '+ nForces + ' Solutions: ' + nSolutions)
+
 jQuery ($) ->
   #root = ''
   AppContext.grid.clearGridCache()

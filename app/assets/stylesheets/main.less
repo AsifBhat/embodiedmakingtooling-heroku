@@ -16,11 +16,6 @@ html, body {
   background-position: 0px 0px;
 }
 
-#content-search {
-  position: absolute;
-  z-index: 1000;
-}
-
 .hex {
   color: white;
   text-align: center;
@@ -59,7 +54,8 @@ html, body {
 
 
 #menubar {
-  padding: 4px;
+  padding-top: .5em;
+  padding-left: .5em;
   //top: 0px;
   left: 0px;
   width: 100%;
@@ -74,6 +70,15 @@ html, body {
 
 #import_file {
   display: inline;
+  color: #050505;
+}
+
+#import_container{
+  background-color: #f8f8f8;
+}
+
+#import_file_input{
+  color: #000000;
 }
 
 .import_btn {
@@ -183,4 +188,87 @@ html, body {
 
 .title_edit{
   margin: 10px 5px;
+}
+
+.login_button{
+  margin-right: 2em;
+  /*margin-top: .5em;*/
+}
+
+#element_edit{
+  top: 100px;
+  left: 70%;
+  position: fixed;
+  max-height: 70%;
+  background-color : #FFFFFF;
+  color: #090909;
+  display: none;
+  box-shadow: 0 0 15px black;
+  z-index: 1000;
+  padding : none;
+  overflow: visible;
+  /* Rounded Border stlying*/
+  border: 1px solid #e5e5e5;
+  -webkit-border-radius: 4px;
+     -moz-border-radius: 4px;
+          border-radius: 4px;
+}
+
+#content-search {
+  /*position: fixed;*/
+  z-index: 100;
+  opacity: 1;
+  /*margin-left: 25px;*/
+  margin-top : 20px;
+}
+
+#collapseOne{
+  position: relative;
+  margin: 1em;
+}
+
+.cellDesc {
+  max-height: 200px;
+  overflow-y: scroll;
+  padding: 2px;
+}
+
+.edit_inner{
+  position: relative;
+  margin-left: 25px;
+  margin-top : 20px;
+}
+
+
+#element_edit_container{
+  overflow: visible;
+}
+
+#elementsTab{
+  border: none;
+  margin: 0px 8%;
+}
+
+#hex-controller{
+  background-image: url('/assets/images/hex-controller.png');
+  position: fixed;
+  height: 192px;
+  width: 178px;
+  background-size: 178px 192px;
+  left: 2%;
+  top: 65%;
+  z-index: 1000;
+}
+
+.zoom_controller{
+  left: 46%;
+  position: absolute;
+}
+
+#zoomin-controller{
+  top: 10%;
+}
+
+#zoomout-controller{
+  top: 80%;
 }

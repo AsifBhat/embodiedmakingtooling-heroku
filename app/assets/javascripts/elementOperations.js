@@ -1,32 +1,5 @@
 removeetype = false;
 
-handleKeyPress = function(e) {
-  //console.log("key pressed")
-  if (!e) e = window.event
-  var keyCode = e.keyCode || e.which;
-  if (keyCode == '13') {
-    var etype = getNewElementdesc().substr(0,1);
-    var secondchar = getNewElementdesc().substr(1,1);
-    if(secondchar == ' '){
-      if((etype == 's')||(etype == 'S')){
-    	removeetype = true;
-        AppContext.cluster.addStory();
-      }  
-      else if ((etype == 'f')||(etype == 'F')){
-        removeetype = true;
-        AppContext.cluster.addForce();
-      }
-      else if ((etype == 'c')||(etype == 'C')){
-        removeetype = true;
-        AppContext.cluster.addSolution();
-      }  
-      else 
-    	displayOptions();
-    } else 
-      displayOptions();
-  }        
-}  
-
 displayOptions = function (){
   $('#addFromTypeahead').css("display","");
   var leftpos = $("#content-search").position().left;
@@ -45,7 +18,7 @@ getNextElemId = function(allElem) {
       nextId = num+1;
     }
   });
-  Util.log.console("Returned elemID:"+nextId);
+  Util.log.console('Next Element Id ' + nextId);
   return nextId;
 };
 
@@ -63,46 +36,19 @@ getNextSolutionId =  function() {
 
 
 getNewElementdesc = function(){
-  var textdesc = $('.twitter-typeahead span').text().trim();
+  var textdesc = $('#input-elem-search').val();
   if(removeetype){
 	  textdesc = textdesc.substr(2,textdesc.length-2);
 	  removeetype = false;
   }
-  console.log(textdesc)
   return textdesc;  
 };
 
-AppContext.cluster.addStory = function() {
-  var desc = getNewElementdesc();
-  var idstr = "S"+getNextStoryId();
-  var elemObj = {"elementId": idstr, "description":desc};
+AppContext.cluster.addNewElement = function(elemId, desc, type) {
+  var elemObj = {"elementId": elemId, "description":desc};
   AppContext.vizdata.addElement(elemObj);
-  Util.log.console(elemObj);
-  var datum = {"value":idstr};
-  AppContext.grid.addGridPos(null,datum,'story');
-  $('#addFromTypeahead').css("display","none");
-};
-
-AppContext.cluster.addForce = function() {
-  var desc = getNewElementdesc();
-  var idstr = "F"+getNextForceId();
-  var elemObj = {"elementId": idstr, "description":desc};
-  AppContext.vizdata.addElement(elemObj);
-  Util.log.console(elemObj);
-  var datum = {"value":idstr};
-  AppContext.grid.addGridPos(null,datum,'force');
-  $('#addFromTypeahead').css("display","none");
-};
-
-
-AppContext.cluster.addSolution = function() {
-  var desc = getNewElementdesc();
-  var idstr = "C"+getNextSolutionId();
-  var elemObj = {"elementId": idstr, "description":desc};
-  AppContext.vizdata.addElement(elemObj);
-  Util.log.console(elemObj);
-  var datum = {"value":idstr};
-  AppContext.grid.addGridPos(null,datum,'solution');
+  var datum = {"value":elemId};
+  AppContext.grid.addGridPos(null,datum,type);
   $('#addFromTypeahead').css("display","none");
 };
 
@@ -116,10 +62,13 @@ getElement = function(id){
   return elem;
 }
 
-AppContext.cluster.deleteElem = function(domelem){
-  var idtodel = $(domelem).data('elementid');
-  Util.log.console("To delete elem:"+idtodel);
-  var elemtodel = getElement(idtodel);
+/* 
+  Deletes all occurrances of a given element with the given element-ID
+  And also remove the element from the realtime data
+*/
+AppContext.cluster.deleteElem = function(idToDel){
+  /*var idtodel = $(domelem).data('elementid');*/
+  var elemtodel = getElement(idToDel);
   
   // get all positions
   // remove any pos that has elemtodel in src or target
@@ -127,8 +76,7 @@ AppContext.cluster.deleteElem = function(domelem){
   // 
   var allpositions = AppContext.vizdata.getPositions();
   $.each(allpositions, function(i, pos) {
-    if(pos.elementId == idtodel) {
-      Util.log.console("Must del pos:"+pos.posId);
+    if(pos.elementId == idToDel) {
       AppContext.vizdata.removePosition(pos);
       var relations = AppContext.vizdata.getRelations();
       $.each(relations, function(i, relation) {
@@ -142,20 +90,86 @@ AppContext.cluster.deleteElem = function(domelem){
       domElemToDel.removeClass('solutionComponents');
       domElemToDel.removeClass('new');
     }
-      
   });
   AppContext.vizdata.removeElement(elemtodel);
 };
   
-AppContext.cluster.updateElem = function(domelem)  {
-  var idToEdit = domelem.data('elementid');
-  var newDesc = $('#elemtext').val().trim();
+AppContext.cluster.updateElem = function(idToEdit, newDesc)  {
+  idToEdit = idToEdit.trim();
   var newElem = {"elementId":idToEdit,"description":newDesc};
-  Util.log.console("new element:");
-  Util.log.console(newElem);
   var elemtodel = getElement(idToEdit);
   AppContext.vizdata.removeElement(elemtodel);
   AppContext.vizdata.addElement(newElem);
 };
-  
 
+// handle the key pressed events on the input text box
+handleKeyPress = function(e) {
+  if (!e) e = window.event
+  var keyCode = e.keyCode || e.which;
+  
+  // see if the key entered is a space key or not
+  if (keyCode === 32) {
+    var currentElementId = '';
+    var currentType = '';
+
+    //If the user is adding a new element then hide the input field 
+    // and insert a text area to allow a more detailed input
+    function handleAddNewElement(){
+      $('#input-elem-search').val('');
+      $('#input-elem-search').fadeOut(2000);
+      $('#edit_input_container').prepend('<textarea row="3" id="newElementText" style="display: none;"></textarea>');
+      $('#newElementText').fadeIn(1000);
+      $('#newElementText').focus();
+
+      $('#newElementText').keypress(function(e){
+        //if enter key is pressed, then remove the textarea and save the corresponding element
+        if(e.which === 13){
+          var newElementDesc = $('#newElementText').val();
+          //clean up input dom and hide the text area and show the input box again
+          $('#newElementText').fadeOut(2000);
+          $('#newElementText').remove();
+          $('#newElementText').val('');
+          $('#input-elem-search').fadeIn(1000);
+          $('#input-elem-search').focus();
+          if(AppContext.cluster.addNewElement != '' && newElementDesc!= '' ){
+            AppContext.cluster.addNewElement(currentElementId, newElementDesc, currentType);
+            return;
+          }
+        }
+      });
+    }
+    //get the text in the typeahead input, convert it to lower case and split it by space
+    var textContent = getNewElementdesc().toLowerCase().split(' '); 
+    // check if the first element of the array is of a length less then 2 characters
+    if(textContent[0].length < 2){
+
+      if(textContent[0] == 's'){
+        $('#elementsTab li:eq(0) a').tab('show').css('text-decoration', 'underline');
+        var idstr = "S"+  getNextStoryId();
+        currentType = 'stories';
+        currentElementId = idstr;
+        handleAddNewElement();
+        $('#elementsTab li:eq(0) a').tab('hide');
+        return;
+      }  
+      else if (textContent[0] == 'f'){
+        $('#elementsTab li:eq(1) a').tab('show').css('text-decoration', 'underline');
+        var idstr = "F"+ getNextForceId();
+        currentType = 'forces';
+        currentElementId = idstr;
+        handleAddNewElement();
+        return;
+      }
+      else if (textContent[0] == 'c'){
+        $('#elementsTab li:eq(2) a').tab('show').css('text-decoration', 'underline');
+        var idstr = "C"+ getNextSolutionId();
+        currentType = 'solutionComponents';
+        currentElementId = idstr;
+        handleAddNewElement();
+        return;
+      }
+      else return;
+    } else 
+      displayOptions();
+  }
+}  
