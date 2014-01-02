@@ -80,6 +80,16 @@ $(document).ready(function(){
   else
     window.onload = AppContext.grid.loadApplication();
 
+  $('.proj_title').keypress(function(e){
+    if (e.which === 13){
+      e.preventDefault();
+      Util.log.console('Title Updated to: ');
+      Util.log.console($(this).text());
+      Util.log.console('Entery pressed');
+      AppContext.project.sendChangeTitleRequest($(this).text())
+    }
+  });
+
   $('#import_popover').click(function(evt){
     try {
       $('#import_popover').popover('show');
@@ -92,16 +102,7 @@ $(document).ready(function(){
       console.log(err);
     }
   });
+
   fetchClientDetails(getUserName);
-  
-  $('.proj_title').keypress(function(e){
-    if (e.which === 13){
-      e.preventDefault();
-      Util.log.console('Title Updated to: ');
-      Util.log.console($(this).text());
-      Util.log.console('Entery pressed');
-      AppContext.project.sendChangeTitleRequest($(this).text())
-    }
-  });
 
 });
