@@ -26,7 +26,7 @@
 
   VizDataModel.prototype.getElementInCell = function(pos) {
     var toReturn = '';
-    var temp = AppContext.vizdata.getPositions();
+    var temp = this.getPositions();
     $(temp).each(function(i){
       if ((this.x == pos.x) && (this.y == pos.y)){
         toReturn = this.elementId;
@@ -36,17 +36,18 @@
   };
 
   VizDataModel.prototype.isEmpty = function(pos) {
-    var temp = AppContext.vizdata.getPositions();
+    var toReturn = true;
+    var temp = this.getPositions();
     $(temp).each(function(i){
       if ((this.x == pos.x) && (this.y == pos.y))
-        return false;
+        toReturn = false;
     });
-    return true;
+    return toReturn;
   };
 
   VizDataModel.prototype.getPositionInCell = function(pos) {
     var toReturn = '';
-    var temp = AppContext.vizdata.getPositions();
+    var temp = this.getPositions();
     $(temp).each(function(i){
       if ((this.x == pos.x) && (this.y == pos.y))
         toReturn = this;
@@ -89,6 +90,7 @@
 
   VizDataModel.prototype.addElement = function(element) {
     this.elements.push(element);
+    return this.elements.length;
   };
   
   var elemcomparator = function (a,b) {
@@ -123,8 +125,8 @@
 
   VizDataModel.prototype.getContentElementType = function(elementId){
     // if this is returned then the element concerned does not exist anymore 
-    var elementObj = this.getElementObj(elementId)
-    if(elementObj == '')
+    var elementObj = this.getElementObj(elementId);
+    if(elementObj === '')
       return '';
 
     if(this.isForce(elementObj)){
@@ -136,31 +138,32 @@
     else if(this.isSolution(elementObj)){
       return 'solutionComponents';
     }
-    else 
+    else
       return '';
-  }
+  };
 
   //generic method to remove all the elements from the given instance -- used for import
   VizDataModel.prototype.removeAllElements = function(){
     Util.log.console('removing all content elements');
     this.elements.removeRange(0, this.elements.length);
-  }
+  };
 
   //generic method to add a new set of elements [parameter is an array of elements] -- used for import
   VizDataModel.prototype.insertAllElements = function(importedElements){
     Util.log.console('Adding new content elements');
     this.elements.pushAll(importedElements);
-  }
+  };
 
   VizDataModel.prototype.removeAllPositions = function(){
     Util.log.console('Removing all positions');
-    this.positions.removeRange(0, this.positions.length);    
-  }
+    this.positions.removeRange(0, this.positions.length);
+    return this.positions.length;
+  };
 
   VizDataModel.prototype.removeAllRelations = function(){
     Util.log.console('removing all relations');
     this.relations.removeRange(0, this.relations.length);
-  }
+  };
 
 /*******************Relation methods*********************/
 
@@ -170,6 +173,7 @@
 
   VizDataModel.prototype.addRelation = function(relation) {
     this.relations.push(relation);
+    return this.relations.length;
   };
 
   var relcomparator = function (a,b) {
@@ -182,14 +186,16 @@
     this.relations.remove(toremove);
   };
   
+  /************** Meta data methods ***********************/
+
   VizDataModel.prototype.getTitle = function(){
     var title = "";
     $(this.meta.asArray()).each(function(idx){
-      if(this.title != undefined)
-        return title = this.title;
+      if(this.title !== undefined)
+        title = this.title;
     });
     return title;
-  }
+  };
 
   VizDataModel.prototype.updateTitle = function(newTitle){
     var removedElem = null;
@@ -200,4 +206,4 @@
       }
     });
     this.meta.push({"title" : newTitle});
-  }
+  };
