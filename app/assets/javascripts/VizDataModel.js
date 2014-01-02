@@ -157,6 +157,11 @@
     this.positions.removeRange(0, this.positions.length);    
   }
 
+  VizDataModel.prototype.removeAllRelations = function(){
+    Util.log.console('removing all relations');
+    this.relations.removeRange(0, this.relations.length);
+  }
+
 /*******************Relation methods*********************/
 
   VizDataModel.prototype.getRelations = function() {
