@@ -189,11 +189,11 @@ describe("Vizdata Element non-CRUD API", function() {
     vizdata = new VizDataModel();
     // dummy functions added for testing purposes
     vizdata.elements.asArray = vizdata.elements;
-    vizdata.elements.remove = function(obj){};
-    spyOn(vizdata.elements, 'asArray').andReturn();
-    spyOn(vizdata.elements, 'indexOf').andReturn();
-    spyOn(vizdata.elements, 'remove').andReturn();
-    
+    vizdata.elements.pushAll = function(obj){};
+    spyOn(vizdata.elements, 'asArray').andCallFake(function(){return vizdata.elements});
+    spyOn(vizdata.elements, 'pushAll');
+    vizdata.elements.removeRange = function(){};
+    spyOn(vizdata.elements, 'removeRange');
   });
  
   afterEach(function() {
@@ -216,11 +216,50 @@ describe("Vizdata Element non-CRUD API", function() {
     expect(bool).toEqual(false);
   });
 
-  /*it("Should get elements of a particular type", function() {
-    var stories = vizdata.getStories()
-    expect()
+  it("Should get elements of a particular type", function() {
+    vizdata.addElement({"elementId":"F01", "description":"Force"});
+    vizdata.addElement({"elementId":"F02", "description":"Force"});
+    vizdata.addElement({"elementId":"S01", "description":"Story"});
+    vizdata.addElement({"elementId":"S02", "description":"Story"});
+    vizdata.addElement({"elementId":"S03", "description":"Story"});
+    var stories = vizdata.getStories();
+    var forces = vizdata.getForces();
+    var solutions = vizdata.getSolutions();
+    expect(stories.length).toEqual(3);
+    expect(forces.length).toEqual(2);
+    expect(solutions.length).toEqual(0);
 
+  });
+
+  it("Should get the description of an element", function(){
+    vizdata.addElement(element);
+    var desc = vizdata.getElementDescription("F01");
+    expect(desc).toEqual(element.description);
+    desc = vizdata.getElementDescription("C01");
+    expect(desc).toEqual('');
+  });
+
+  it("Should get the object given the elementId", function(){
+    vizdata.addElement(element);
+    var obj = vizdata.getElementObj("F01");
+    expect(obj).toEqual(element);
+    obj = vizdata.getElementObj("C01");
+    expect(obj).toEqual('');
+  });
+
+  /*it("Should get the type of element given the elementId", function(){
   });*/
 
+  it("Should remove all elements", function() {
+    AppContext.vizdata.addElement(element);
+    var elem = AppContext.vizdata.removeAllElements();
+    expect(vizdata.elements.removeRange).toHaveBeenCalled();
+  });
+
+  it("Should insert an array of elements", function(){
+    AppContext.vizdata.insertAllElements(new Array({"elementId":"F01","description":"Force"},
+      {"elementId":"S01","description":"Story"}));
+    expect(vizdata.elements.pushAll).toHaveBeenCalled();
+  });
 
 });

@@ -55,6 +55,12 @@
     return toReturn;
   };
 
+  VizDataModel.prototype.removeAllPositions = function(){
+    Util.log.console('Removing all positions');
+    this.positions.removeRange(0, this.positions.length);
+    return this.positions.length;
+  };
+
   /*******************Element methods********************/
 
   VizDataModel.prototype.getElements = function() {
@@ -146,23 +152,14 @@
   VizDataModel.prototype.removeAllElements = function(){
     Util.log.console('removing all content elements');
     this.elements.removeRange(0, this.elements.length);
+    return this.elements.length;
   };
 
   //generic method to add a new set of elements [parameter is an array of elements] -- used for import
   VizDataModel.prototype.insertAllElements = function(importedElements){
     Util.log.console('Adding new content elements');
     this.elements.pushAll(importedElements);
-  };
-
-  VizDataModel.prototype.removeAllPositions = function(){
-    Util.log.console('Removing all positions');
-    this.positions.removeRange(0, this.positions.length);
-    return this.positions.length;
-  };
-
-  VizDataModel.prototype.removeAllRelations = function(){
-    Util.log.console('removing all relations');
-    this.relations.removeRange(0, this.relations.length);
+    return this.elements.length;
   };
 
 /*******************Relation methods*********************/
@@ -185,6 +182,12 @@
     Util.log.console("To remove index in relations "+toremove);
     this.relations.remove(toremove);
   };
+
+  VizDataModel.prototype.removeAllRelations = function(){
+    Util.log.console('removing all relations');
+    this.relations.removeRange(0, this.relations.length);
+    return this.relations.length;
+  };
   
   /************** Meta data methods ***********************/
 
@@ -200,7 +203,7 @@
   VizDataModel.prototype.updateTitle = function(newTitle){
     var removedElem = null;
     $(this.meta.asArray()).each(function(idx){
-      if(this.title != undefined){
+      if(this.title !== undefined){
         removedElem = this;
         return;
       }
