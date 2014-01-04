@@ -13,6 +13,8 @@ var realtimeOptions = {
    // Changed to match the Client ID for Heroku App
   clientId: '883917966367-h1np3jeqi9v00aku4ugphoh1f5939jnk.apps.googleusercontent.com',
 
+  // for Production Env.
+  clientId : googleAppConf().clientId,
 
   /**
    * The ID of the button to click to authorize. Must be a DOM element ID.

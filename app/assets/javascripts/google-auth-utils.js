@@ -1,3 +1,24 @@
+var googleAppConf = function(){
+    if (window.location != undefined){
+      var browserURL = window.location + '';
+      if(browserURL.indexOf("localhost") != -1 )
+        return {
+          clientId : '71045400673-s9agh1hpuunu5v2k46bkbpivdrvf8ibj.apps.googleusercontent.com',
+          browserKey : 'AIzaSyBYEmPSy44XpEXayCK9Xt8_vw_qKLFAkFs'
+        };
+      else if (browserURL.indexOf('emtool-staging.herokuapp') != -1)
+        return {
+          clientId : '883917966367-h1np3jeqi9v00aku4ugphoh1f5939jnk.apps.googleusercontent.com',
+          browserKey : 'AIzaSyD7MkLjTksTUuovzbvMfXHMrYMh7EnYAz4'
+        };        
+      else if (browserURL.indexOf('embodiedmaking') != -1 )
+        return {
+          clientId : '450545483829-28v0tj5mf6hogh8jhdi907j6ja22rc2o.apps.googleusercontent.com',
+          browserKey : 'AIzaSyBYSyp_NNwCmYcWp5TVHoy6wSH4wbEF3CA'
+        };
+    }
+  }
+
 var SCOPES = [
           'https://www.googleapis.com/auth/drive.file',
           'https://www.googleapis.com/auth/drive.install',
@@ -22,7 +43,7 @@ function fetchClientDetails(callback) {
 function checkAuth(callback) {
   console.log('Checking Authorization');
   gapi.auth.authorize(
-      {'client_id': realtimeOptions.clientId, 'scope': SCOPES.join(' '), 'immediate': true},
+      {'client_id': googleAppConf().clientId, 'scope': SCOPES.join(' '), 'immediate': true},
       callback);
 }
 
