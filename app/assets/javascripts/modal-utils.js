@@ -1,10 +1,13 @@
 // The API developer key obtained from the Google Cloud Console.
 // This API key is for the localhost: To be used for local testing 
 // REMOVE THIS BEFORE PUBLISHING 
-var developerKey = 'AIzaSyBYEmPSy44XpEXayCK9Xt8_vw_qKLFAkFs';
+//var developerKey = 'AIzaSyBYEmPSy44XpEXayCK9Xt8_vw_qKLFAkFs';
 
 //Heroku App Key
 //var developerKey = 'AIzaSyD7MkLjTksTUuovzbvMfXHMrYMh7EnYAz4';
+
+// Production key 
+var developerKey = googleAppConf().browserKey;
 
 AppContext.grid.loadApplication = function(){
   AppContext.grid.initApp();
