@@ -51,6 +51,7 @@ AppContext.cluster.updatePosition = (datum,posx,posy) ->
         Util.log.console("Edited relation: targetposid")
         Util.log.console(newRelation)
     ) 
+  AppContext.cluster.markBorder(posx, posy);
     # parse through relations array and find all occurences of this posId
     # if srcPosId replace srcElementID with this elementId - delete that relation and add a new relation
     # else if targetPosId replace targetElementId with this elementId
@@ -73,3 +74,43 @@ AppContext.cluster.deletePosition = (posx, posy) ->
   domElemToDel.removeClass('new')
   domElemToDel.addClass('current') 
   
+#---------------------------------------------------------
+AppContext.cluster.hasOneEmptyNeighbour = (pos) ->
+  emptynbs = false
+  # If at least one of the neighbours of this cell is empty, the borders need to be marked
+  allnbcells = AppContext.grid.getAllNeighbourCells(pos)
+  $.each(allnbcells, (i, nbcell) ->
+    nbposition = AppContext.vizdata.getPositionInCell(nbcell)
+    if(AppContext.vizdata.isEmpty(nbposition))
+      emptynbs = true
+  )
+  emptynbs
+
+removeSpuriousBorders = (domelem, posx, posy) ->
+  if(AppContext.vizdata.isEmpty({x:posx, y:posy-1})) # top
+    #console.log(domelem.css("-webkit-clip-path"))
+    console.log("top")
+  if(AppContext.vizdata.isEmpty({x:posx+1, y:posy-1})) # top left
+    console.log("top right")
+  if(AppContext.vizdata.isEmpty({x:posx+1, y:posy})) # bottom right
+    console.log("bottom right")
+  if(AppContext.vizdata.isEmpty({x:posx, y:posy+1})) # bottom 
+    console.log("bottom")
+  if(AppContext.vizdata.isEmpty({x:posx-1, y:posy+1})) # bottom left
+    console.log("top left")
+  if(AppContext.vizdata.isEmpty({x:posx-1, y:posy})) # top 
+    console.log("bottom left")         
+
+
+#---------------------------------------------------------
+# Updates the extents of a cluster, surrounding the given posx and posy
+AppContext.cluster.markBorder = (posx, posy) ->
+  position = AppContext.vizdata.getPositionInCell({x:posx,y:posy})
+  domElem = $('#'+position.posId)
+  # $(domElem).addClass("bordered")
+  pos = {x:posx, y:posy}
+  emptynbs = AppContext.cluster.hasOneEmptyNeighbour(pos)
+  if(emptynbs)
+    $(domElem).addClass("bordered")
+  removeSpuriousBorders(domElem, posx, posy)  
+  domElem

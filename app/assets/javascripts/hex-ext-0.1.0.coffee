@@ -60,7 +60,7 @@ AppContext.grid.showTooltip = (x,y,elemId, tooltipInfo) ->
     '</textarea><hr style="margin-top:4px;margin-bottom:4px; padding:0px;"><button id="delposButton" btn-mini" style="height: 20px;width: 20px;padding: 0px;"><span class="icon-remove"></span></button>'
   AppContext.grid.idwithtooltip.tooltip('show')
   AppContext.grid.idwithtooltip.attr("data-original-title",tooltipHTML)
-  $('.elementsView').autogrow();
+  #$('.elementsView').autogrow();
   $('.tooltip-inner').html(tooltipHTML)
   ###
   $("#delposButton").click(() -> 

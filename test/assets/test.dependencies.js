@@ -15,7 +15,6 @@ EnvJasmine.loadGlobal(EnvJasmine.libDir + "test/jasmine-jquery.js");
 EnvJasmine.loadGlobal(EnvJasmine.libDir + "api.js");
 EnvJasmine.loadGlobal(EnvJasmine.libDir + "realtime-client-utils.js");
 EnvJasmine.loadGlobal(EnvJasmine.libDir + "hex-0.1.0.js");
-EnvJasmine.loadGlobal(EnvJasmine.libDir + "autogrow.js");
 EnvJasmine.loadGlobal(EnvJasmine.libDir + "sigma.min.js");
 // Import all modules (in theory this should be done with RequireJs, but it fails for some reason)
 // FIXME: check why we can't use RequireJs instead of manually importing files
