@@ -11,10 +11,10 @@ var googleAppConf = function(){
           clientId : '883917966367-h1np3jeqi9v00aku4ugphoh1f5939jnk.apps.googleusercontent.com',
           browserKey : 'AIzaSyD7MkLjTksTUuovzbvMfXHMrYMh7EnYAz4'
         };        
-      else if (browserURL.indexOf('embodiedmaking') != -1 )
+      else if (browserURL.indexOf('embodiedmaking.com') != -1 )
         return {
-          clientId : '450545483829-28v0tj5mf6hogh8jhdi907j6ja22rc2o.apps.googleusercontent.com',
-          browserKey : 'AIzaSyBYSyp_NNwCmYcWp5TVHoy6wSH4wbEF3CA'
+          clientId : '306371176841-stb4gasq2p73bjm6f34qirpvh2liicij.apps.googleusercontent.com',
+          browserKey : 'AIzaSyDbCHB5i1vFDi73J3Zxg5aDxQ-DWttdViI'
         };
     }
   }
