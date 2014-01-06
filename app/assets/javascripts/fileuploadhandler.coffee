@@ -15,10 +15,12 @@ jQuery ($) ->
     splitToken = /\n/
     contentLineExp = /([CFS]\d+)\s+(.+)/i
     fileLines = fileText.split(splitToken)
-    if(AppContext.vizdata.getElements().length > 0)
-      AppContext.vizdata.removeAllElements()
     if(AppContext.vizdata.getPositions().length > 0)
       AppContext.vizdata.removeAllPositions()
+    if(AppContext.vizdata.getRelations().length > 0)
+      AppContext.vizdata.removeAllRelations() 
+    if(AppContext.vizdata.getElements().length > 0)
+      AppContext.vizdata.removeAllElements()   
     $.each(fileLines, (idx, line) ->
       if(contentLineExp.test(line))
         tokens = line.split(/\s+(.+)/)
