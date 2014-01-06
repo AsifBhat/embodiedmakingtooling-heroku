@@ -3,7 +3,7 @@ describe("Vizdata", function() {
   var position = {"posId":1, "x":0, "y":0, "elementId":"F01"};
   
   beforeEach(function() {
-    startRealtime();
+    //startRealtime();
     vizdata = new VizDataModel();
   });
 

@@ -16,6 +16,10 @@ var googleAppConf = function(){
           clientId : '306371176841-stb4gasq2p73bjm6f34qirpvh2liicij.apps.googleusercontent.com',
           browserKey : 'AIzaSyDbCHB5i1vFDi73J3Zxg5aDxQ-DWttdViI'
         };
+      return {
+        clientId: '',
+        browserKey: ''
+      };
     }
   }
 
