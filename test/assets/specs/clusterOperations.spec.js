@@ -151,8 +151,14 @@ describe("Cluster operations", function() {
   afterEach(function() {
   });
 
-  it("Should add background if at least one empty neighbour", function() {
+  /*it("Should add background if at least one empty neighbour", function() {
     var domelem = AppContext.cluster.markBorder(0,0);
     expect($(domelem)).toHaveClass("bordered");
+  });*/
+  
+  /*it("Should find if top neighbour is empty", function() {
+    var bool = isTopEmpty({"x":0,"y":0});
+    expect($(domelem)).toHaveClass("bordered");
   });
+*/
 });

@@ -12,8 +12,8 @@ AppContext.grid.createGrid = (domelem) ->
 
 AppContext.grid.createHex = (styleClass, text = "") ->
   $('<div class="hex '+ styleClass+'" >'+text+'</div>').css({
-    'width': AppContext.grid.grid.tileWidth + 'px',
-    'height': AppContext.grid.grid.tileHeight + 'px',
+    'width': AppContext.grid.grid.tileWidth+1 + 'px',
+    'height': AppContext.grid.grid.tileHeight+1 + 'px',
     'line-height': AppContext.grid.grid.tileHeight + 'px',
   }).addClass(styleClass)
 

@@ -85,32 +85,79 @@ AppContext.cluster.hasOneEmptyNeighbour = (pos) ->
       emptynbs = true
   )
   emptynbs
+  
 
-removeSpuriousBorders = (domelem, posx, posy) ->
-  if(AppContext.vizdata.isEmpty({x:posx, y:posy-1})) # top
-    #console.log(domelem.css("-webkit-clip-path"))
+isTopEmpty = (posx, posy) ->
+  AppContext.vizdata.isEmpty({x:posx, y:posy+1})
+###  if posy<0
+    AppContext.vizdata.isEmpty({x:posx, y:posy+1})
+  else
+    AppContext.vizdata.isEmpty({x:posx, y:posy-1})###
+
+
+
+
+getBorderString = ( posx, posy) ->
+  borders = []
+  if(AppContext.vizdata.isEmpty({x:posx, y:posy+1}))
     console.log("top")
-  if(AppContext.vizdata.isEmpty({x:posx+1, y:posy-1})) # top left
+    borders.push(["20% 0%","75% 0%"]) # show top border
+  else  
+    borders.push(["20% 5%","75% 5%"]) # hide top border
+  
+  if(AppContext.vizdata.isEmpty({x:posx+1, y:posy})) # show top right border
     console.log("top right")
-  if(AppContext.vizdata.isEmpty({x:posx+1, y:posy})) # bottom right
-    console.log("bottom right")
-  if(AppContext.vizdata.isEmpty({x:posx, y:posy+1})) # bottom 
-    console.log("bottom")
-  if(AppContext.vizdata.isEmpty({x:posx-1, y:posy+1})) # bottom left
-    console.log("top left")
-  if(AppContext.vizdata.isEmpty({x:posx-1, y:posy})) # top 
-    console.log("bottom left")         
+    borders.push("75% 0%") # start top right border
+    borders.push("100% 50%") # stop top right border
+  else # hide top right border
+    borders.push("75% 5%")
+    borders.push("95% 50%") 
 
+  if(AppContext.vizdata.isEmpty({x:posx+1, y:posy-1}))
+    console.log("bottom right") 
+    borders.push("100% 50%") # start bottom right border
+    borders.push("75% 100%")
+  else
+    borders.push("95% 50%")
+    borders.push("75% 95%")  
+
+  if(AppContext.vizdata.isEmpty({x:posx, y:posy-1}))
+    console.log("bottom")
+    borders.push("75% 100%")
+    borders.push("20% 100%")
+  else
+    borders.push("75% 95%")
+    borders.push("25% 95%")  
+
+  if(AppContext.vizdata.isEmpty({x:posx-1, y:posy}))
+    console.log("bottom left") 
+    borders.push("20% 100%")  
+    borders.push("0% 50%")
+  else
+    borders.push("25% 95%")
+    borders.push("5% 50%")
+    
+  if(AppContext.vizdata.isEmpty({x:posx-1, y:posy+1}))
+    console.log("top left")
+    borders.push("0% 50%")
+    borders.push("20% 0%")
+  else
+    borders.push("5% 50%")  
+    borders.push("25% 5%")
+
+  borders.join()
 
 #---------------------------------------------------------
-# Updates the extents of a cluster, surrounding the given posx and posy
+# Should ideally update the extents of a cluster, surrounding the given posx and posy
+# Now, all borders are being updated
 AppContext.cluster.markBorder = (posx, posy) ->
-  position = AppContext.vizdata.getPositionInCell({x:posx,y:posy})
-  domElem = $('#'+position.posId)
-  # $(domElem).addClass("bordered")
-  pos = {x:posx, y:posy}
-  emptynbs = AppContext.cluster.hasOneEmptyNeighbour(pos)
-  if(emptynbs)
-    $(domElem).addClass("bordered")
-  removeSpuriousBorders(domElem, posx, posy)  
-  domElem
+  allpositions = AppContext.vizdata.getPositions()
+  $.each(allpositions, (i, position) ->
+    domElem = $('#'+position.posId)
+    pos = {x:position.x, y:position.y}
+    emptynbs = AppContext.cluster.hasOneEmptyNeighbour(pos)
+    if(emptynbs)
+      $(domElem).addClass("bordered")
+    clip = getBorderString( pos.x, pos.y)  
+    $(domElem).css("-webkit-clip-path","polygon("+clip+")")
+  )
