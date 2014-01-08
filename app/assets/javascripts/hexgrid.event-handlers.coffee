@@ -148,8 +148,7 @@ jQuery ($) ->
     Util.log.console('Zoom initiated!')
     Util.log.console('Resetting grid:')
 
-
-    if(AppContext.grid.zoomValue >= 0 && AppContext.grid.zoomValue+1 < AppContext.grid.ZOOM_ARRAY.length )
+    if(AppContext.grid.zoomValue + zoomDir >= 0 && AppContext.grid.zoomValue + zoomDir < AppContext.grid.ZOOM_ARRAY.length )
       # Remove the hex-grid element from the DOM (deactivates the listeners automatically)
       $('#hexagonal-grid').remove()
       # Remove the css file for the grid-sizes
