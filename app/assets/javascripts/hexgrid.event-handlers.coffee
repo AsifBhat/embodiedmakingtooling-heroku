@@ -187,14 +187,14 @@ jQuery ($) ->
 
       # Append the grid element back again, CSS is active on the cells etc for this
       $('body').append('<div id="hexagonal-grid"></div>')
-      AppContext.grid.initApp()
 
       # Change the dimentions for the hex-grid tiles
-      AppContext.grid.grid.tileHeight = AppContext.grid.grid.tileHeight * AppContext.grid.ZOOM_ARRAY[AppContext.grid.DEFAULT_ZOOM]
-      AppContext.grid.grid.tileWidth = AppContext.grid.grid.tileWidth * AppContext.grid.ZOOM_ARRAY[AppContext.grid.DEFAULT_ZOOM]
+      AppContext.grid.grid.tileHeight = AppContext.grid.defaultSize.height * AppContext.grid.ZOOM_ARRAY[AppContext.grid.zoomValue]
+      AppContext.grid.grid.tileWidth = AppContext.grid.defaultSize.width * AppContext.grid.ZOOM_ARRAY[AppContext.grid.zoomValue]
       hex.grid.hexagonal.tileWidth = AppContext.grid.grid.tileWidth
       hex.grid.hexagonal.tileHeight = AppContext.grid.grid.tileHeight
-
+      
+      AppContext.grid.initApp()
 
       AppContext.grid.activateListeners()
       AppContext.grid.displayAllPositions(AppContext.vizdata.getPositions())

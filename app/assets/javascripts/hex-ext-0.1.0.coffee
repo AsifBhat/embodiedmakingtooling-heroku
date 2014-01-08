@@ -3,6 +3,10 @@ AppContext.grid.DEFAULT_ZOOM = 3
 AppContext.grid.MAX_ZOOM_LEVEL = 7
 AppContext.grid.MIN_ZOOM_LEVEL = 0
 AppContext.grid.ZOOM_ARRAY = [(1/3), (1/2), (2/3), 1 , 1.5, 2, 2.5]
+AppContext.grid.defaultSize = {
+  width : hex.grid.hexagonal.tileWidth,
+  height: hex.grid.hexagonal.tileHeight
+}
 
 # Creating a grid
 AppContext.grid.createGrid = (domelem) ->
