@@ -51,11 +51,6 @@ AppContext.project.getUserInfo = () ->
       try 
         $('#authorizeButton').html(resp.name)
         console.log('Current user name: ' + resp.name)
-        ###
-          console.log('Root folder ID: ' + resp.rootFolderId)
-          console.log('Total quota (bytes): ' + resp.quotaBytesTotal)
-          console.log('Used quota (bytes): ' + resp.quotaBytesUsed)
-        ###
       catch err
         console.log 'Error while fetching user information'
         console.log err

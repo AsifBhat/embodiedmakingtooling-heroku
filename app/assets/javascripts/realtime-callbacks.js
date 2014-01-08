@@ -132,6 +132,7 @@ function onFileLoaded(doc) {
   AppContext.grid.displayAllPositions(AppContext.vizdata.getPositions());
   
   AppContext.grid.activateListeners();
+  AppContext.grid.activateZoomListeners();
   AppContext.grid.activateTypeahead(AppContext.vizdata.getElements());
 
   AppContext.project.getFileDetails();

@@ -162,6 +162,12 @@
     return this.elements.length;
   };
 
+  // Method to clear all the positional information for a given instance of the worksheet
+  VizDataModel.prototype.removeAllPositions = function(){
+    Util.log.console('Removing all positions');
+    this.positions.removeRange(0, this.positions.length);    
+  }
+
 /*******************Relation methods*********************/
 
   VizDataModel.prototype.getRelations = function() {

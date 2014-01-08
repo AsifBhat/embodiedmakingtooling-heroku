@@ -1,6 +1,11 @@
-AppContext.grid.descWindow = {
-  left: '25px' ,
-  top: '100px'
+AppContext.grid.zoomValue = 3
+AppContext.grid.DEFAULT_ZOOM = 3
+AppContext.grid.MAX_ZOOM_LEVEL = 7
+AppContext.grid.MIN_ZOOM_LEVEL = 0
+AppContext.grid.ZOOM_ARRAY = [(1/3), (1/2), (2/3), 1 , 1.5, 2, 2.5]
+AppContext.grid.defaultSize = {
+  width : hex.grid.hexagonal.tileWidth,
+  height: hex.grid.hexagonal.tileHeight
 }
 
 # Creating a grid
@@ -17,14 +22,12 @@ AppContext.grid.createHex = (styleClass, text = "") ->
     'line-height': AppContext.grid.grid.tileHeight + 'px',
   }).addClass(styleClass)
 
+# initialize the hex grid
 AppContext.grid.initialize = () ->
   AppContext.grid.hoveredElement = AppContext.grid.createHex('current')
   $(AppContext.grid.grid.root).append(AppContext.grid.hoveredElement)
   AppContext.grid.idwithtooltip =  $('#desctooltip')
-  #AppContext.grid.idwithtooltip.css("width", AppContext.grid.grid.tileWidth + "px")
-  #AppContext.grid.idwithtooltip.css("height", AppContext.grid.grid.tileHeight + "px")   
   AppContext.grid 
-  # Should we somehow move content assisst here? 
 
 AppContext.grid.placeHex =(elem,x,y) ->
     inv = AppContext.grid.grid.screenpos(x, y)
@@ -94,6 +97,14 @@ AppContext.grid.displayAllPositions = (positions) ->
     AppContext.grid.placeOnGrid (value)
   )
 
+AppContext.grid.clearGridCache = () ->
+  AppContext.grid.size = ''
+  AppContext.grid.hoveredElement = ''
+  AppContext.grid.idwithtooltip = ''
+  AppContext.grid.newElement = ''
+  AppContext.grid.downtile = ''
+  AppContext.grid.clonedelem = '' 
+
 AppContext.grid.getAllNeighbourCells =  (pos) ->
   allNeighbourCells = [] 
   allNeighbourCells[0] = {x:pos.x-1 , y:pos.y }
@@ -104,43 +115,40 @@ AppContext.grid.getAllNeighbourCells =  (pos) ->
   allNeighbourCells[5] = {x:pos.x+1 , y:pos.y-1 }
   allNeighbourCells  
 
+AppContext.grid.initApp = () ->
+  if($('#hexagonal-grid')[0]!=undefined)     
+    AppContext.grid.createGrid($('#hexagonal-grid')[0])
+    AppContext.grid.initialize()
+
 AppContext.grid.activateListeners = () ->
+
   # Setting mouse movement related tile events
-  AppContext.grid.grid.addEvent("tileover", (e, x, y) ->
-    AppContext.grid.hoverEventHandler(e,x,y)   
-  )
+  AppContext.grid.grid.addEvent("tileover", AppContext.grid.hoverEventHandler)
 
   # Tiletap is only fired when not dragging the grid
-  AppContext.grid.grid.addEvent("tiletap", (e, x, y) ->
-    AppContext.grid.clickEventHandler(e,x,y)
+  AppContext.grid.grid.addEvent("tiletap", AppContext.grid.clickEventHandler)
+
+  AppContext.grid.grid.addEvent("tileout", AppContext.grid.hoveroutEventHandler)
+  
+  AppContext.grid.grid.addEvent("tiledown", AppContext.grid.tileDownHandler)
+  
+  AppContext.grid.grid.addEvent("tileup", AppContext.grid.tileUpHandler)
+  
+  AppContext.grid.grid.addEvent("tileclick", AppContext.grid.tileClickHandler)
+
+
+AppContext.grid.activateZoomListeners = () ->
+
+  $('#zoomin-controller').click( (evt) ->
+    Util.log.console 'Zooming in'
+    AppContext.grid.zoomEventHandler(evt, 1)
+    #call the zoom handler with a positive value
   )
 
-  AppContext.grid.grid.addEvent("tileout", (e, x, y) ->
-    AppContext.grid.hoveroutEventHandler(e, x, y)
-  )
-  
-  AppContext.grid.grid.addEvent("tiledown", (e, x, y) ->
-    pos = {x:x,y:y}
-    #e.preventDefault()
-    AppContext.grid.downtile = AppContext.vizdata.getPositionInCell(pos);
-    if(AppContext.grid.downtile != '')
-      e.preventDefault()
-      domelem = $('#'+AppContext.grid.downtile.posId)
-      $(domelem).addClass("dragged")
-  )
-  
-  AppContext.grid.grid.addEvent("tileup", (e, x, y) ->
-    if(AppContext.grid.downtile!='')
-      domelem = $('#'+AppContext.grid.downtile.posId)
-      $(domelem).removeClass("dragged")    
-      AppContext.cluster.deletePosition(AppContext.grid.downtile.x,AppContext.grid.downtile.y)
-      AppContext.cluster.updatePosition(AppContext.grid.downtile.elementId, x, y)
-      AppContext.grid.downtile = ''
-      AppContext.grid.clonedelem = ''	
-  )
-  
-  AppContext.grid.grid.addEvent("tileclick", (e, x, y) ->
-    e.preventDefault()
+  $('#zoomout-controller').click( (evt) ->
+    Util.log.console 'clicked on zoom out '
+    AppContext.grid.zoomEventHandler(evt, -1)
+    #call the zoom handler with a negative value
   )
 
 # draw the details about the element represented by the clicked element
@@ -191,14 +199,5 @@ AppContext.grid.reorient = () ->
 
 
 jQuery ($) ->
-  #root = ''
-  AppContext.grid.size = ''
-  AppContext.grid.hoveredElement = ''
-  AppContext.grid.idwithtooltip = ''
-  AppContext.grid.newElement = ''
-  AppContext.grid.downtile = ''
-  AppContext.grid.clonedelem = ''	
-  AppContext.grid.initApp = () ->
-    if($('#hexagonal-grid')[0]!=undefined)     
-      AppContext.grid.createGrid($('#hexagonal-grid')[0])
-      AppContext.grid.initialize()
+  AppContext.grid.clearGridCache()
+  #AppContext.grid.initApp()
