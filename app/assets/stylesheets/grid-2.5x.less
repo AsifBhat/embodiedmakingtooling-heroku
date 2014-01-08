@@ -1,0 +1,43 @@
+@img-base-url: "../images/";
+@hex-sprite-width: -120px;
+@hex-sprite-height: -105px;
+
+#hexagonal-grid {
+  width: 100%;
+  height: 100%;
+  background: #ffc799;
+  background-size: (-1.5 * @hex-sprite-width) (-1 * @hex-sprite-height);
+  background-image: url('/assets/images/back.png');
+  background-position: 0px 0px;
+}
+
+.hex.current {
+  background-size: (-9 * @hex-sprite-width) (-3 * @hex-sprite-height);
+  background-image: url('/assets/images/sprite.png');
+  background-position: (0 * @hex-sprite-width) (0 * @hex-sprite-height);
+  z-index: 1;
+}
+
+.hex.new {
+  background-size: (-9 * @hex-sprite-width) (-3 * @hex-sprite-height);
+  background-image: url('/assets/images/sprite.png');
+  background-position: (4 * @hex-sprite-width) (1 * @hex-sprite-height);
+}
+
+.hex.stories {
+  background-size: (-9 * @hex-sprite-width) (-3 * @hex-sprite-height);
+  background-image: url('/assets/images/sprite.png');
+  background-position: (3 * @hex-sprite-width) (2 * @hex-sprite-height);
+}
+
+.hex.forces {
+  background-size: (-9 * @hex-sprite-width) (-3 * @hex-sprite-height);
+  background-image: url('/assets/images/sprite.png');
+  background-position: (7 * @hex-sprite-width) (0 * @hex-sprite-height);
+}
+
+.hex.solutionComponents {
+  background-size: (-9 * @hex-sprite-width) (-3 * @hex-sprite-height);
+  background-image: url('/assets/images/sprite.png');
+  background-position: (0 * @hex-sprite-width) (2 * @hex-sprite-height);
+}

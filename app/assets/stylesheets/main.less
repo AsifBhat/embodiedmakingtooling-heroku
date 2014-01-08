@@ -1,19 +1,7 @@
-@img-base-url: "../images/";
-@hex-sprite-width: -48px;
-@hex-sprite-height: -42px;
-
 html, body {
   padding: 0;
   margin: 0;
   height: 100%;
-}
-
-#hexagonal-grid {
-  width: 100%;
-  height: 100%;
-  background: #ffc799;
-  background-image: url('/assets/images/back.png');
-  background-position: 0px 0px;
 }
 
 .hex {
@@ -22,41 +10,13 @@ html, body {
   position: absolute;
 }
 
-.hex.current {
-  background-image: url('/assets/images/sprite.png');
-  background-position: (0 * @hex-sprite-width) (0 * @hex-sprite-height);
-  z-index: 1;
-}
-
-.hex.new {
-  background-image: url('/assets/images/sprite.png');
-  background-position: (4 * @hex-sprite-width) (1 * @hex-sprite-height);
-}
-
-.hex.stories {
-  background-image: url('/assets/images/sprite.png');
-  background-position: (3 * @hex-sprite-width) (2 * @hex-sprite-height);
-}
-
-.hex.forces {
-  background-image: url('/assets/images/sprite.png');
-  background-position: (7 * @hex-sprite-width) (0 * @hex-sprite-height);
-}
-
-.hex.solutionComponents {
-  background-image: url('/assets/images/sprite.png');
-  background-position: (0 * @hex-sprite-width) (2 * @hex-sprite-height);
-}
-
 .hex.dragged {
   opacity: 0.4
 }
 
-
 #menubar {
   padding-top: .5em;
   padding-left: .5em;
-  //top: 0px;
   left: 0px;
   width: 100%;
   height: 30px;
@@ -148,7 +108,6 @@ html, body {
 }
 
 #element-input {
-  
   position: fixed;
   margin-top: 50px;
   margin-left: 1000px;
@@ -159,7 +118,6 @@ html, body {
   width: 200px; 
   min-width:200px; 
   max-height:200px; 
-
   height:200px; 
   min-height:200px;  
   max-height:200px;
@@ -192,7 +150,6 @@ html, body {
 
 .login_button{
   margin-right: 2em;
-  /*margin-top: .5em;*/
 }
 
 #element_edit{
@@ -207,6 +164,7 @@ html, body {
   z-index: 1000;
   padding : none;
   overflow: visible;
+
   /* Rounded Border stlying*/
   border: 1px solid #e5e5e5;
   -webkit-border-radius: 4px;
@@ -240,7 +198,6 @@ html, body {
   margin-top : 20px;
 }
 
-
 #element_edit_container{
   overflow: visible;
 }
@@ -251,13 +208,5 @@ html, body {
 }
 
 .hex-controller{
-    /*background-image: url('/assets/images/hex-controller.png');
-    position: fixed;
-    height: 192px;
-    width: 178px;
-    background-size: 178px 192px;
-    left: 2%;
-    top: 65%;
-    z-index: 1000;*/
-    margin-right : 1em;
-  }
+  margin-right : 1em;
+}
