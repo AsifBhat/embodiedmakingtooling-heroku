@@ -1,8 +1,9 @@
 jQuery ($) ->
   gx = 0
   gy = 0
+
+  # Handle the hover event
   AppContext.grid.hoverEventHandler = (e, x, y) ->
-    Util.log.console('X - ' +x+'Y - '+y)
     if(AppContext.grid.downtile != '')
       domelem = $('#'+AppContext.grid.downtile.posId)
       inv = AppContext.grid.grid.screenpos(x, y)
@@ -20,6 +21,7 @@ jQuery ($) ->
       #  AppContext.grid.showTooltip(x,y, elementUnderMouse, tooltipInfo)
     AppContext.grid.showHoveredElement(x,y) 
 
+  # Method to add position object in the positions array and add the corresponding hex on the grid
   AppContext.grid.addGridPos = (obj, datum, dataset) ->
     # Update the new element
     if( dataset.indexOf('Elements') != -1 )
@@ -28,7 +30,7 @@ jQuery ($) ->
     AppContext.grid.newElement.removeClass('new')
     
     #get the position object for the current location
-    cellClicked = AppContext.vizdata.getPositionInCell({x: gx, y: gy});
+    cellClicked = AppContext.vizdata.getPositionInCell({x: gx, y: gy})
 
     if(cellClicked != '')
       AppContext.grid.newElement = $('#'+cellClicked.posId)
@@ -117,7 +119,6 @@ jQuery ($) ->
   AppContext.project.handleNameChange = () ->
     $('.proj_title').text(AppContext.vizdata.getProjectTitle())
 
-
   AppContext.grid.zoomHandler = (e, x, y) ->
     Util.log.console ('Zoom Event Called')
     # here we have event handlers to the HTML components and other CSS changes
@@ -145,15 +146,58 @@ jQuery ($) ->
     
   AppContext.grid.zoomEventHandler = (e, zoomDir) ->
     Util.log.console('Zoom initiated!')
-    if(AppContext.grid.zoomValue < AppContext.grid.MAX_ZOOM_LEVEL && zoomDir > 0)
-      AppContext.grid.zoomValue = AppContext.grid.zoomValue + AppContext.grid.ZOOM_FACTOR
-    else if (AppContext.grid.zoomValue > AppContext.grid.MIN_ZOOM_LEVEL && zoomDir < 0)
-     AppContext.grid.zoomValue = AppContext.grid.zoomValue - AppContext.grid.ZOOM_FACTOR 
+    Util.log.console('Resetting grid:')
 
-    Util.log.console('Setting zoom level to : ')
-    Util.log.console(AppContext.grid.zoomValue+'%')
 
-    $("#hexagonal-grid").css('zoom', AppContext.grid.zoomValue+'%')
+    if(AppContext.grid.zoomValue >= 0 && AppContext.grid.zoomValue+1 < AppContext.grid.ZOOM_ARRAY.length )
+      # Remove the hex-grid element from the DOM (deactivates the listeners automatically)
+      $('#hexagonal-grid').remove()
+      # Remove the css file for the grid-sizes
+      $('.grid_css').remove()
+      # clear the hex-lib cache, to be able to reintialize it again
+      AppContext.grid.clearGridCache()
+
+      # get the new Grid CSS file name 'grid-'
+      cssFile = '/assets/stylesheets/grid-'
+
+      # Assuming that zoomDir has just 3 values: '1', '-1', '0'
+      if(zoomDir != 0)
+        AppContext.grid.zoomValue = AppContext.grid.zoomValue + zoomDir
+        Util.log.console 'Selected zoom level:'
+        Util.log.console AppContext.grid.ZOOM_ARRAY[AppContext.grid.zoomValue]
+
+        if(AppContext.grid.zoomValue >= AppContext.grid.DEFAULT_ZOOM)
+          cssFile = cssFile + AppContext.grid.ZOOM_ARRAY[AppContext.grid.zoomValue] + 'x.css'
+        else 
+          cssFile = cssFile + '1-' + (1/AppContext.grid.ZOOM_ARRAY[AppContext.grid.zoomValue]) + 'x.css'
+      else 
+        cssFile = cssFile + AppContext.grid.ZOOM_ARRAY[AppContext.grid.DEFAULT_ZOOM] + 'x.css'
+
+      Util.log.console 'Appended file name: '
+      Util.log.console cssFile
+
+      #Append the css link element into HTML Head
+      $('head').append('<link class="grid_css">')
+      $('.grid_css').attr({
+        rel:  "stylesheet",
+        type: "text/css",
+        href: cssFile, 
+        class: ''
+      })
+
+      # Append the grid element back again, CSS is active on the cells etc for this
+      $('body').append('<div id="hexagonal-grid"></div>')
+      AppContext.grid.initApp()
+
+      # Change the dimentions for the hex-grid tiles
+      AppContext.grid.grid.tileHeight = AppContext.grid.grid.tileHeight * AppContext.grid.ZOOM_ARRAY[AppContext.grid.DEFAULT_ZOOM]
+      AppContext.grid.grid.tileWidth = AppContext.grid.grid.tileWidth * AppContext.grid.ZOOM_ARRAY[AppContext.grid.DEFAULT_ZOOM]
+      hex.grid.hexagonal.tileWidth = AppContext.grid.grid.tileWidth
+      hex.grid.hexagonal.tileHeight = AppContext.grid.grid.tileHeight
+
+
+      AppContext.grid.activateListeners()
+      AppContext.grid.displayAllPositions(AppContext.vizdata.getPositions())
 
   $( "#hexagonal-grid" ).mousemove( (event) -> 
     if(AppContext.grid.downtile!='')
@@ -167,5 +211,4 @@ jQuery ($) ->
         $(AppContext.grid.clonedelem).css("opacity","0.9")
       $(AppContext.grid.clonedelem).css("left",event.pageX-20)
       $(AppContext.grid.clonedelem).css("top",event.pageY-20)      
-  );  
-
+  )

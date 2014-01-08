@@ -1,26 +1,8 @@
-#from hex-grid-zoom branch
-AppContext.grid.ZOOM_OUT = -1
-AppContext.grid.ZOOM_IN = 1
-AppContext.grid.ZOOM_RESET = 0
-
-# From master
-AppContext.grid.ZOOM_FACTOR = 10
-AppContext.grid.zoomValue = 100
-AppContext.grid.MAX_ZOOM_LEVEL = 250
-AppContext.grid.MIN_ZOOM_LEVEL = 50
-
-AppContext.grid.defaultSize = {
-  width : hex.grid.hexagonal.tileWidth,
-  height : hex.grid.hexagonal.tileHeight,
-  backgroundWidth : hex.grid.hexagonal.tileWidth*1.5,
-  backgroundHeight : hex.grid.hexagonal.tileHeight,
-  spriteWidth: hex.grid.hexagonal.tileWidth * 9,
-  spriteHeight : hex.grid.hexagonal.tileHeight*3
-}
-AppContext.grid.descWindow = {
-  left: '25px' ,
-  top: '100px'
-}
+AppContext.grid.zoomValue = 3
+AppContext.grid.DEFAULT_ZOOM = 3
+AppContext.grid.MAX_ZOOM_LEVEL = 7
+AppContext.grid.MIN_ZOOM_LEVEL = 0
+AppContext.grid.ZOOM_ARRAY = [(1/3), (1/2), (2/3), 1 , 1.5, 2, 2.5]
 
 # Creating a grid
 AppContext.grid.createGrid = (domelem) ->
@@ -139,31 +121,23 @@ AppContext.grid.initApp = () ->
     AppContext.grid.initialize()
 
 AppContext.grid.activateListeners = () ->
+
   # Setting mouse movement related tile events
-  AppContext.grid.grid.addEvent("tileover", (e, x, y) ->
-    AppContext.grid.hoverEventHandler(e,x,y)   
-  )
+  AppContext.grid.grid.addEvent("tileover", AppContext.grid.hoverEventHandler)
 
   # Tiletap is only fired when not dragging the grid
-  AppContext.grid.grid.addEvent("tiletap", (e, x, y) ->
-    AppContext.grid.clickEventHandler(e,x,y)
-  )
+  AppContext.grid.grid.addEvent("tiletap", AppContext.grid.clickEventHandler)
 
-  AppContext.grid.grid.addEvent("tileout", (e, x, y) ->
-    AppContext.grid.hoveroutEventHandler(e, x, y)
-  )
+  AppContext.grid.grid.addEvent("tileout", AppContext.grid.hoveroutEventHandler)
   
-  AppContext.grid.grid.addEvent("tiledown", (e, x, y) ->
-    AppContext.grid.tileDownHandler(e, x, y)
-  )
+  AppContext.grid.grid.addEvent("tiledown", AppContext.grid.tileDownHandler)
   
-  AppContext.grid.grid.addEvent("tileup", (e, x, y) ->
-    AppContext.grid.tileUpHandler(e, x, y)
-  )
+  AppContext.grid.grid.addEvent("tileup", AppContext.grid.tileUpHandler)
   
-  AppContext.grid.grid.addEvent("tileclick", (e, x, y) ->
-    AppContext.grid.tileClickHandler(e, x, y)
-  )
+  AppContext.grid.grid.addEvent("tileclick", AppContext.grid.tileClickHandler)
+
+
+AppContext.grid.activateZoomListeners = () ->
 
   $('#zoomin-controller').click( (evt) ->
     Util.log.console 'Zooming in'
@@ -176,59 +150,6 @@ AppContext.grid.activateListeners = () ->
     AppContext.grid.zoomEventHandler(evt, -1)
     #call the zoom handler with a negative value
   )
-
-AppContext.grid.deactivateListeners = (elem) ->
-  elem.removeEventListener('tileover', AppContext.grid.hoverEventHandler)
-  elem.removeEventListener('tiletap', AppContext.grid.clickEventHandler)
-  elem.removeEventListener('tileout', AppContext.grid.hoveroutEventHandler)
-  elem.removeEventListener('tiledown', AppContext.grid.tileDownHandler)
-  elem.removeEventListener('tileup', AppContext.grid.tileUpHandler)
-  elem.removeEventListener('tileclick', AppContext.grid.tileClickHandler)
-
-AppContext.grid.zoomOperation = (elem, zoomFactor, zoomDir) ->
-  AppContext.grid.deactivateListeners(elem[0])
-  elem.children().remove()
-  AppContext.grid.clearGridCache()
-  
-  currentSize = {
-    width : hex.grid.hexagonal.tileWidth,
-    height : hex.grid.hexagonal.tileHeight
-  }
-
-  zoomDiff = {
-    dWidth : hex.grid.hexagonal.tileWidth * zoomFactor, 
-    dHeight : hex.grid.hexagonal.tileHeight* zoomFactor
-  }
-
-  # function to reset background sizes for the background images for grid and sprites
-  resetBackGrndSizes = (element, width, height) ->
-    element.css('background-size', width + 'px '+ height + 'px')
-
-  if(zoomDir != AppContext.grid.ZOOM_RESET)
-    # Zoom Direction shall automatically decide what needs to be done
-    Util.log.console('Zooming In')
-    hex.grid.hexagonal.tileWidth = currentSize.width + (zoomDiff.dWidth * zoomDir)
-    hex.grid.hexagonal.tileHeight = currentSize.height + (zoomDiff.dHeight * zoomDir)
-
-    #resetting hexgrid div background image size
-    resetBackGrndSizes(elem,  (hex.grid.hexagonal.tileWidth*1.5), hex.grid.hexagonal.tileHeight)
-
-    # reset the sprite size
-    resetBackGrndSizes($('.hex'), (hex.grid.hexagonal.tileWidth* 9), (hex.grid.hexagonal.tileHeight * 3))
-
-  ###
-    Need to figure out some way to remove all those events on the grid before the whole re-init phase
-  ###
-  # re-initiate the grid 
-  AppContext.grid.initApp()
-  AppContext.grid.activateListeners()
-  AppContext.grid.displayAllPositions(AppContext.vizdata.getPositions());
-  #else
-  # Zoom Reset 
-  ###    hex.grid.hexagonal.tileWidth = AppContext.grid.defaultSize.width
-      hex.grid.hexagonal.tileHeight = AppContext.grid.defaultSize.height
-      hex.grid.hexagonal.     
-  ###
 
 # draw the details about the element represented by the clicked element
 AppContext.grid.drawTipDesc = (elementUnderMouse, description, pos) ->

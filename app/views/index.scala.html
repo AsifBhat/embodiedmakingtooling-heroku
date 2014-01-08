@@ -8,6 +8,10 @@
       <button id="import_popover" data-placement="bottom" data-html= true data-toggle="popover" title="" data-original-title='<span class="icon-upload"></span><b>&nbsp;Import File</b> <span id="import_close" class="pull-right"><span class="icon-remove-circle"></span></span>' data-content='<div id="import_container"><div id="import_file"><div class="import_btn"><input type="file" name="importedFile" id="import_file_input"></div></div></div>' data-trigger="manual" data-animation="false" class="btn btn-mini btn-warning import_label"><span class="icon-upload"></span>&nbsp;Import</button>
     <button id='showGraph' class="btn btn-mini btn-warning" value='show' onclick='AppContext.graph.showGraph()'><span class="icon-eye-open"></span>&nbsp;Show Graph</button>
     <button id="authorizeButton" disabled class="login_button pull-right btn btn-primary btn-mini"><span class="icon-lock"></span>&nbsp;Login</button>
+    <span class="hex-controller pull-right">
+      <button class="btn btn-mini btn-warning" id="zoomin-controller"> <span class="zoom_controller icon-zoom-in"></span> </button>
+      <button class="btn btn-mini btn-warning" id="zoomout-controller"> <span class="zoom_controller icon-zoom-out"></span> </button>
+    </span>
   </div>
 </div>
 
@@ -31,7 +35,6 @@
  </div> 
 <div id="desctooltip" style="height:10px;width:10px;" type="button" data-html="true" data-toggle="tooltip" data-placement="top" data-trigger="focus hover" data-animation="false"></div>
 <div id="hexagonal-grid"></div>
-
 
 <div class="btn-group" id="addFromTypeahead" data-toggle="buttons-radio"  style='z-index:100;position:absolute;display:none;'>
  
