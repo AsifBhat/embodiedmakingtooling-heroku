@@ -12,8 +12,8 @@ AppContext.grid.createGrid = (domelem) ->
 
 AppContext.grid.createHex = (styleClass, text = "") ->
   $('<div class="hex '+ styleClass+'" >'+text+'</div>').css({
-    'width': AppContext.grid.grid.tileWidth+1 + 'px',
-    'height': AppContext.grid.grid.tileHeight+1 + 'px',
+    'width': AppContext.grid.grid.tileWidth + 'px',
+    'height': AppContext.grid.grid.tileHeight + 'px',
     'line-height': AppContext.grid.grid.tileHeight + 'px',
   }).addClass(styleClass)
 
@@ -166,6 +166,29 @@ AppContext.grid.drawMakingSummary = () ->
   nForces = AppContext.vizdata.getForces().length
   nSolutions = AppContext.vizdata.getSolutions().length
   $('.cellHeader').text('Stories: ' + nStories + ' Forces: '+ nForces + ' Solutions: ' + nSolutions)
+
+removeOtherBackground = () ->
+  allpositions = AppContext.vizdata.getPositions()
+  $.each(allpositions, (i, position) ->
+    domElem = $('#'+position.posId)
+    $(domElem).removeClass("bordered")
+    $(domElem).css("-webkit-clip-path","")
+  )
+
+AppContext.grid.reorient = () ->
+  Util.log.console("++++++++++++")
+  Util.log.console(AppContext.grid.grid.origin.x)
+  Util.log.console(AppContext.grid.grid.origin.y)
+  #AppContext.grid.grid.reorient( 759,173.5)
+  #AppContext.grid.grid.reorient(0 - AppContext.grid.grid.origin.x, 0 - AppContext.grid.grid.origin.y)
+  removeOtherBackground();
+  AppContext.grid.grid.origin.x = 759;
+  AppContext.grid.grid.origin.y = 173;
+  AppContext.grid.grid.root.style.left = 759 + "px";
+  AppContext.grid.grid.root.style.top = 173 + "px";
+  AppContext.grid.grid.elem.style.backgroundPosition = 759 + "px " + 173 + "px";
+
+
 
 jQuery ($) ->
   #root = ''

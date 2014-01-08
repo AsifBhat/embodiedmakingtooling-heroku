@@ -51,7 +51,7 @@ AppContext.cluster.updatePosition = (datum,posx,posy) ->
         Util.log.console("Edited relation: targetposid")
         Util.log.console(newRelation)
     ) 
-  AppContext.cluster.markBorder(posx, posy);
+  #AppContext.cluster.markBorder(posx, posy);
     # parse through relations array and find all occurences of this posId
     # if srcPosId replace srcElementID with this elementId - delete that relation and add a new relation
     # else if targetPosId replace targetElementId with this elementId
@@ -100,37 +100,37 @@ isTopEmpty = (posx, posy) ->
 getBorderString = ( posx, posy) ->
   borders = []
   if(AppContext.vizdata.isEmpty({x:posx, y:posy+1}))
-    console.log("top")
-    borders.push(["20% 0%","75% 0%"]) # show top border
+    Util.log.console("top")
+    borders.push(["20% 0%","80% 0%"]) # show top border
   else  
-    borders.push(["20% 5%","75% 5%"]) # hide top border
+    borders.push(["20% 5%","80% 5%"]) # hide top border
   
   if(AppContext.vizdata.isEmpty({x:posx+1, y:posy})) # show top right border
-    console.log("top right")
-    borders.push("75% 0%") # start top right border
+    Util.log.console("top right")
+    borders.push("80% 0%") # start top right border
     borders.push("100% 50%") # stop top right border
   else # hide top right border
     borders.push("75% 5%")
     borders.push("95% 50%") 
 
   if(AppContext.vizdata.isEmpty({x:posx+1, y:posy-1}))
-    console.log("bottom right") 
+    Util.log.console("bottom right") 
     borders.push("100% 50%") # start bottom right border
-    borders.push("75% 100%")
+    borders.push("80% 100%")
   else
     borders.push("95% 50%")
     borders.push("75% 95%")  
 
   if(AppContext.vizdata.isEmpty({x:posx, y:posy-1}))
-    console.log("bottom")
-    borders.push("75% 100%")
+    Util.log.console("bottom")
+    borders.push("80% 100%")
     borders.push("20% 100%")
   else
-    borders.push("75% 95%")
+    borders.push("80% 95%")
     borders.push("25% 95%")  
 
   if(AppContext.vizdata.isEmpty({x:posx-1, y:posy}))
-    console.log("bottom left") 
+    Util.log.console("bottom left") 
     borders.push("20% 100%")  
     borders.push("0% 50%")
   else
@@ -138,7 +138,7 @@ getBorderString = ( posx, posy) ->
     borders.push("5% 50%")
     
   if(AppContext.vizdata.isEmpty({x:posx-1, y:posy+1}))
-    console.log("top left")
+    Util.log.console("top left")
     borders.push("0% 50%")
     borders.push("20% 0%")
   else
@@ -160,4 +160,5 @@ AppContext.cluster.markBorder = (posx, posy) ->
       $(domElem).addClass("bordered")
     clip = getBorderString( pos.x, pos.y)  
     $(domElem).css("-webkit-clip-path","polygon("+clip+")")
-  )
+  )  
+     
