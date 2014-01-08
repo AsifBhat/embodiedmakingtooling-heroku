@@ -7,13 +7,15 @@
     <button id='exportToGexf' onclick='AppContext.menu.exportToGexf()' class="btn btn-mini btn-warning"><span class="icon-download"></span>&nbsp;Export GEXF</button>
       <button id="import_popover" data-placement="bottom" data-html= true data-toggle="popover" title="" data-original-title='<span class="icon-upload"></span><b>&nbsp;Import File</b> <span id="import_close" class="pull-right"><span class="icon-remove-circle"></span></span>' data-content='<div id="import_container"><div id="import_file"><div class="import_btn"><input type="file" name="importedFile" id="import_file_input"></div></div></div>' data-trigger="manual" data-animation="false" class="btn btn-mini btn-warning import_label"><span class="icon-upload"></span>&nbsp;Import</button>
     <button id='showGraph' class="btn btn-mini btn-warning" value='show' onclick='AppContext.graph.showGraph()'><span class="icon-eye-open"></span>&nbsp;Show Graph</button>
+    <button id='reorient' class="btn btn-mini btn-warning" value='show' onclick='AppContext.grid.reorient()'><span class="icon-align-center"></span>&nbsp;Reorient</button>
+
     <button id="authorizeButton" disabled class="login_button pull-right btn btn-primary btn-mini"><span class="icon-lock"></span>&nbsp;Login</button>
   </div>
 </div>
 
 
 <script>
-  setTimeout(function () {$('.elementsView').autogrow();},12000);
+  //setTimeout(function () {$('.elementsView').autogrow();},12000);
 </script>
 
 <div class="progress flash_board" id="progress_container">

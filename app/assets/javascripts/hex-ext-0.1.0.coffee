@@ -60,7 +60,7 @@ AppContext.grid.showTooltip = (x,y,elemId, tooltipInfo) ->
     '</textarea><hr style="margin-top:4px;margin-bottom:4px; padding:0px;"><button id="delposButton" btn-mini" style="height: 20px;width: 20px;padding: 0px;"><span class="icon-remove"></span></button>'
   AppContext.grid.idwithtooltip.tooltip('show')
   AppContext.grid.idwithtooltip.attr("data-original-title",tooltipHTML)
-  $('.elementsView').autogrow();
+  #$('.elementsView').autogrow();
   $('.tooltip-inner').html(tooltipHTML)
   ###
   $("#delposButton").click(() -> 
@@ -166,6 +166,29 @@ AppContext.grid.drawMakingSummary = () ->
   nForces = AppContext.vizdata.getForces().length
   nSolutions = AppContext.vizdata.getSolutions().length
   $('.cellHeader').text('Stories: ' + nStories + ' Forces: '+ nForces + ' Solutions: ' + nSolutions)
+
+removeOtherBackground = () ->
+  allpositions = AppContext.vizdata.getPositions()
+  $.each(allpositions, (i, position) ->
+    domElem = $('#'+position.posId)
+    $(domElem).removeClass("bordered")
+    $(domElem).css("-webkit-clip-path","")
+  )
+
+AppContext.grid.reorient = () ->
+  Util.log.console("++++++++++++")
+  Util.log.console(AppContext.grid.grid.origin.x)
+  Util.log.console(AppContext.grid.grid.origin.y)
+  #AppContext.grid.grid.reorient( 759,173.5)
+  #AppContext.grid.grid.reorient(0 - AppContext.grid.grid.origin.x, 0 - AppContext.grid.grid.origin.y)
+  removeOtherBackground();
+  AppContext.grid.grid.origin.x = 759;
+  AppContext.grid.grid.origin.y = 173;
+  AppContext.grid.grid.root.style.left = 759 + "px";
+  AppContext.grid.grid.root.style.top = 173 + "px";
+  AppContext.grid.grid.elem.style.backgroundPosition = 759 + "px " + 173 + "px";
+
+
 
 jQuery ($) ->
   #root = ''

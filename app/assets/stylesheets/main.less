@@ -35,12 +35,12 @@ html, body {
 
 .hex.stories {
   background-image: url('/assets/images/sprite.png');
-  background-position: (3 * @hex-sprite-width) (2 * @hex-sprite-height);
+  background-position: (3 * @hex-sprite-width)+1 (2 * @hex-sprite-height);
 }
 
 .hex.forces {
   background-image: url('/assets/images/sprite.png');
-  background-position: (7 * @hex-sprite-width) (0 * @hex-sprite-height);
+  background-position: (7 * @hex-sprite-width)+1 (0 * @hex-sprite-height);
 }
 
 .hex.solutionComponents {
@@ -247,4 +247,13 @@ html, body {
 #elementsTab{
   border: none;
   margin: 0px 8.2%;
+}
+
+.bordered {
+  /*background-image: url('/assets/images/bordercolor.png');
+  background-position: 0 0; */
+  background-color: black;
+  -webkit-clip-path: polygon(20% 0%, 75% 0%, 100% 50%, 75% 100%, 20% 100%, 0% 50%);
+  position: absolute;
+>>>>>>> cluster-border
 }

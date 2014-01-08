@@ -129,3 +129,36 @@ describe('Testing Cluster Operations: ', function() {
     expect(isPositionPresent).toBe(true);
   });
 });
+
+
+describe("Cluster operations", function() {
+  var position = {"posId":"1", "x":0, "y":0, "elementId":"F01"};
+  var vizdata;
+  var fixtures;
+
+  beforeEach(function() {
+    startRealtime();
+    AppContext.vizdata = new VizDataModel();
+    fixtures = setFixtures('<div class="hex stories" id="1" style="width: 48px; height: 42px; line-height: 42px; left: 108px; top: -63px;">S2</div>');
+    spyOn(AppContext.vizdata, 'getPositionInCell').andCallFake(function(pos) {
+      return position;
+    });
+    spyOn(AppContext.cluster,'hasOneEmptyNeighbour').andCallFake(function(pos){
+      return true;
+    });
+  });
+
+  afterEach(function() {
+  });
+
+  /*it("Should add background if at least one empty neighbour", function() {
+    var domelem = AppContext.cluster.markBorder(0,0);
+    expect($(domelem)).toHaveClass("bordered");
+  });*/
+  
+  /*it("Should find if top neighbour is empty", function() {
+    var bool = isTopEmpty({"x":0,"y":0});
+    expect($(domelem)).toHaveClass("bordered");
+  });
+*/
+});
