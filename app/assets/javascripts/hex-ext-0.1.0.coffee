@@ -181,7 +181,7 @@ AppContext.grid.reorient = () ->
   Util.log.console(AppContext.grid.grid.origin.y)
   #AppContext.grid.grid.reorient( 759,173.5)
   #AppContext.grid.grid.reorient(0 - AppContext.grid.grid.origin.x, 0 - AppContext.grid.grid.origin.y)
-  removeOtherBackground();
+  #removeOtherBackground();
   AppContext.grid.grid.origin.x = 759;
   AppContext.grid.grid.origin.y = 173;
   AppContext.grid.grid.root.style.left = 759 + "px";

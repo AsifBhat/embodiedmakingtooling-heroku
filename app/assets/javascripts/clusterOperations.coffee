@@ -51,7 +51,7 @@ AppContext.cluster.updatePosition = (datum,posx,posy) ->
         Util.log.console("Edited relation: targetposid")
         Util.log.console(newRelation)
     ) 
-  #AppContext.cluster.markBorder(posx, posy);
+  AppContext.cluster.markBorder(posx, posy);
     # parse through relations array and find all occurences of this posId
     # if srcPosId replace srcElementID with this elementId - delete that relation and add a new relation
     # else if targetPosId replace targetElementId with this elementId
@@ -95,55 +95,61 @@ isTopEmpty = (posx, posy) ->
     AppContext.vizdata.isEmpty({x:posx, y:posy-1})###
 
 
-
+#polygon(27% 0%, 72% 0%, 100% 50%, 72% 100%, 27% 100%, 0% 50%)
 
 getBorderString = ( posx, posy) ->
   borders = []
   if(AppContext.vizdata.isEmpty({x:posx, y:posy+1}))
     Util.log.console("top")
-    borders.push(["20% 0%","80% 0%"]) # show top border
+    borders.push("27% 0%")
+    borders.push("72% 0%") # show top border
   else  
-    borders.push(["20% 5%","80% 5%"]) # hide top border
+    borders.push("27% 10%")
+    borders.push("72% 10%") # hide top border
   
   if(AppContext.vizdata.isEmpty({x:posx+1, y:posy})) # show top right border
     Util.log.console("top right")
-    borders.push("80% 0%") # start top right border
-    borders.push("100% 50%") # stop top right border
+    borders.push("72% 0%") # start top right border
+    borders.push("95% 45%") 
+    borders.push("95% 50%") # stop top right border
   else # hide top right border
-    borders.push("75% 5%")
-    borders.push("95% 50%") 
+    borders.push("72% 10%")
+    borders.push("90% 42%") 
+    borders.push("90% 53%") 
 
   if(AppContext.vizdata.isEmpty({x:posx+1, y:posy-1}))
     Util.log.console("bottom right") 
-    borders.push("100% 50%") # start bottom right border
-    borders.push("80% 100%")
+    borders.push("95% 50%") # start bottom right border
+    borders.push("72% 100%")
   else
-    borders.push("95% 50%")
-    borders.push("75% 95%")  
+    borders.push("90% 48%")
+    borders.push("90% 52%")
+    borders.push("68% 90%")  
 
   if(AppContext.vizdata.isEmpty({x:posx, y:posy-1}))
     Util.log.console("bottom")
-    borders.push("80% 100%")
-    borders.push("20% 100%")
+    borders.push("72% 100%")
+    borders.push("30% 100%")
   else
-    borders.push("80% 95%")
-    borders.push("25% 95%")  
+    borders.push("72% 90%")
+    borders.push("32% 90%")  
 
   if(AppContext.vizdata.isEmpty({x:posx-1, y:posy}))
     Util.log.console("bottom left") 
-    borders.push("20% 100%")  
-    borders.push("0% 50%")
+    borders.push("30% 100%")  
+    borders.push("3% 53%")
+    borders.push("3% 50%")
   else
-    borders.push("25% 95%")
-    borders.push("5% 50%")
+    borders.push("32% 90%")
+    borders.push("10% 54%")
     
   if(AppContext.vizdata.isEmpty({x:posx-1, y:posy+1}))
     Util.log.console("top left")
-    borders.push("0% 50%")
-    borders.push("20% 0%")
+    borders.push("0% 53%")
+    borders.push("27% 0%")
   else
-    borders.push("5% 50%")  
-    borders.push("25% 5%")
+    borders.push("10% 45%")  
+    borders.push("32% 10%")
 
   borders.join()
 
