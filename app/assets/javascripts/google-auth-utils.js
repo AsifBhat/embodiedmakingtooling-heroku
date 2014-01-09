@@ -13,7 +13,7 @@ var googleAppConf = function(){
         };        
       else if (browserURL.indexOf('embodiedmaking.com') != -1 )
         return {
-          clientId : '306371176841-stb4gasq2p73bjm6f34qirpvh2liicij.apps.googleusercontent.com',
+          clientId : '306371176841-qtebm95674jvlfmqg8t51cirrpelvgab.apps.googleusercontent.com',
           browserKey : 'AIzaSyDbCHB5i1vFDi73J3Zxg5aDxQ-DWttdViI'
         };
       return {
