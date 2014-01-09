@@ -12,7 +12,7 @@ AppContext.grid.defaultSize = {
 AppContext.grid.createGrid = (domelem) ->
   AppContext.grid.grid = hex.grid(domelem, {})
   AppContext.grid.size = hex.size(AppContext.grid.grid.elem)
-  AppContext.grid.grid.reorient(AppContext.grid.size.x * 0.5, AppContext.grid.size.y * 0.5)
+  #AppContext.grid.grid.reorient(AppContext.grid.size.x * 0.5, AppContext.grid.size.y * 0.5)
   AppContext.grid.grid.size
 
 AppContext.grid.createHex = (styleClass, text = "") ->
@@ -27,6 +27,7 @@ AppContext.grid.initialize = () ->
   AppContext.grid.hoveredElement = AppContext.grid.createHex('current')
   $(AppContext.grid.grid.root).append(AppContext.grid.hoveredElement)
   AppContext.grid.idwithtooltip =  $('#desctooltip')
+  AppContext.global.firstDisplay = true
   AppContext.grid 
 
 AppContext.grid.placeHex =(elem,x,y) ->
@@ -96,7 +97,8 @@ AppContext.grid.displayAllPositions = (positions) ->
   $.each(positions, (i, value) ->
     AppContext.grid.placeOnGrid (value)
   )
-
+  AppContext.grid.markBorder()
+  
 AppContext.grid.clearGridCache = () ->
   AppContext.grid.size = ''
   AppContext.grid.hoveredElement = ''
@@ -175,29 +177,116 @@ AppContext.grid.drawMakingSummary = () ->
   nSolutions = AppContext.vizdata.getSolutions().length
   $('.cellHeader').text('Stories: ' + nStories + ' Forces: '+ nForces + ' Solutions: ' + nSolutions)
 
-removeOtherBackground = () ->
-  allpositions = AppContext.vizdata.getPositions()
-  $.each(allpositions, (i, position) ->
-    domElem = $('#'+position.posId)
-    $(domElem).removeClass("bordered")
-    $(domElem).css("-webkit-clip-path","")
-  )
 
 AppContext.grid.reorient = () ->
   Util.log.console("++++++++++++")
-  Util.log.console(AppContext.grid.grid.origin.x)
-  Util.log.console(AppContext.grid.grid.origin.y)
-  #AppContext.grid.grid.reorient( 759,173.5)
-  #AppContext.grid.grid.reorient(0 - AppContext.grid.grid.origin.x, 0 - AppContext.grid.grid.origin.y)
-  #removeOtherBackground();
-  AppContext.grid.grid.origin.x = 759;
-  AppContext.grid.grid.origin.y = 173;
-  AppContext.grid.grid.root.style.left = 759 + "px";
-  AppContext.grid.grid.root.style.top = 173 + "px";
-  AppContext.grid.grid.elem.style.backgroundPosition = 759 + "px " + 173 + "px";
+  AppContext.grid.grid.reorient(AppContext.grid.size.x * 0.5, AppContext.grid.size.y * 0.5)
+  ### AppContext.grid.grid.origin.x = AppContext.grid.size.x * 0.5;
+    AppContext.grid.grid.origin.y = AppContext.grid.size.y * 0.5;
+    AppContext.grid.grid.root.style.left = AppContext.grid.size.x * 0.5 + "px";
+    AppContext.grid.grid.root.style.top = AppContext.grid.size.y * 0.5 + "px";
+    AppContext.grid.grid.elem.style.backgroundPosition = (AppContext.grid.size.x * 0.5) + "px " + (AppContext.grid.size.y * 0.5) + "px";
+  ###
 
+AppContext.grid.hasOneEmptyNeighbour = (pos) ->
+  emptynbs = false
+  # If at least one of the neighbours of this cell is empty, the borders need to be marked
+  allnbcells = AppContext.grid.getAllNeighbourCells(pos)
+  $.each(allnbcells, (i, nbcell) ->
+    nbposition = AppContext.vizdata.getPositionInCell(nbcell)
+    if(AppContext.vizdata.isEmpty(nbposition))
+      emptynbs = true
+  )
+  emptynbs
+  
+
+isTopEmpty = (posx, posy) ->
+  AppContext.vizdata.isEmpty({x:posx, y:posy+1})
+###  if posy<0
+    AppContext.vizdata.isEmpty({x:posx, y:posy+1})
+  else
+    AppContext.vizdata.isEmpty({x:posx, y:posy-1})###
+
+
+#polygon(27% 0%, 72% 0%, 100% 50%, 72% 100%, 27% 100%, 0% 50%)
+
+getBorderString = ( posx, posy) ->
+  borders = []
+  if(AppContext.vizdata.isEmpty({x:posx, y:posy+1}))
+    Util.log.console("top")
+    borders.push("27% 0%")
+    borders.push("72% 0%") # show top border
+  else  
+    borders.push("27% 10%")
+    borders.push("72% 10%") # hide top border
+  
+  if(AppContext.vizdata.isEmpty({x:posx+1, y:posy})) # show top right border
+    Util.log.console("top right")
+    borders.push("72% 0%") # start top right border
+    borders.push("95% 45%") 
+    borders.push("95% 50%") # stop top right border
+  else # hide top right border
+    borders.push("72% 10%")
+    borders.push("90% 42%") 
+    borders.push("90% 53%") 
+
+  if(AppContext.vizdata.isEmpty({x:posx+1, y:posy-1}))
+    Util.log.console("bottom right") 
+    borders.push("95% 50%") # start bottom right border
+    borders.push("72% 100%")
+  else
+    borders.push("90% 48%")
+    borders.push("90% 52%")
+    borders.push("68% 90%")  
+
+  if(AppContext.vizdata.isEmpty({x:posx, y:posy-1}))
+    Util.log.console("bottom")
+    borders.push("72% 100%")
+    borders.push("30% 100%")
+  else
+    borders.push("72% 90%")
+    borders.push("32% 90%")  
+
+  if(AppContext.vizdata.isEmpty({x:posx-1, y:posy}))
+    Util.log.console("bottom left") 
+    borders.push("30% 100%")  
+    borders.push("3% 53%")
+    borders.push("3% 50%")
+  else
+    borders.push("32% 90%")
+    borders.push("10% 54%")
+    
+  if(AppContext.vizdata.isEmpty({x:posx-1, y:posy+1}))
+    Util.log.console("top left")
+    borders.push("0% 53%")
+    borders.push("27% 0%")
+  else
+    borders.push("10% 45%")  
+    borders.push("32% 10%")
+
+  borders.join()
+
+#---------------------------------------------------------
+# Should ideally update the extents of a cluster, surrounding the given posx and posy
+# Now, all borders are being updated
+AppContext.grid.markBorder = (posx, posy) ->
+  allpositions = AppContext.vizdata.getPositions()
+  $.each(allpositions, (i, position) ->
+    domElem = $('#'+position.posId)
+    pos = {x:position.x, y:position.y}
+    emptynbs = AppContext.grid.hasOneEmptyNeighbour(pos)
+    if(emptynbs)
+      $(domElem).addClass("bordered")
+    clip = getBorderString( pos.x, pos.y)  
+    $(domElem).css("-webkit-clip-path","polygon("+clip+")")
+  )  
+  ###if(AppContext.global.firstDisplay)
+    Util.log.console("firstdisplay")
+    #$("#reorient").click()
+  AppContext.global.firstDisplay = false###
 
 
 jQuery ($) ->
   AppContext.grid.clearGridCache()
   #AppContext.grid.initApp()
+

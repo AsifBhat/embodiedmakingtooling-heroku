@@ -9,3 +9,5 @@ AppContext.menu = {};
 AppContext.project = {};
 
 AppContext.graph = {};
+
+AppContext.global = {};

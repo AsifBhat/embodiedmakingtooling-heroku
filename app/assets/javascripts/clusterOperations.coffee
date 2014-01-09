@@ -39,7 +39,7 @@ AppContext.cluster.updatePosition = (datum,posx,posy) ->
         AppContext.vizdata.removeRelation(relation)
         AppContext.vizdata.addRelation(newRelation)  
     ) 
-  AppContext.cluster.markBorder(posx, posy);
+  AppContext.grid.markBorder(posx, posy);
     # parse through relations array and find all occurences of this posId
     # if srcPosId replace srcElementID with this elementId - delete that relation and add a new relation
     # else if targetPosId replace targetElementId with this elementId
@@ -61,96 +61,5 @@ AppContext.cluster.deletePosition = (posx, posy) ->
   domElemToDel.addClass('current') 
   
 #---------------------------------------------------------
-AppContext.cluster.hasOneEmptyNeighbour = (pos) ->
-  emptynbs = false
-  # If at least one of the neighbours of this cell is empty, the borders need to be marked
-  allnbcells = AppContext.grid.getAllNeighbourCells(pos)
-  $.each(allnbcells, (i, nbcell) ->
-    nbposition = AppContext.vizdata.getPositionInCell(nbcell)
-    if(AppContext.vizdata.isEmpty(nbposition))
-      emptynbs = true
-  )
-  emptynbs
-  
 
-isTopEmpty = (posx, posy) ->
-  AppContext.vizdata.isEmpty({x:posx, y:posy+1})
-###  if posy<0
-    AppContext.vizdata.isEmpty({x:posx, y:posy+1})
-  else
-    AppContext.vizdata.isEmpty({x:posx, y:posy-1})###
-
-
-#polygon(27% 0%, 72% 0%, 100% 50%, 72% 100%, 27% 100%, 0% 50%)
-
-getBorderString = ( posx, posy) ->
-  borders = []
-  if(AppContext.vizdata.isEmpty({x:posx, y:posy+1}))
-    Util.log.console("top")
-    borders.push("27% 0%")
-    borders.push("72% 0%") # show top border
-  else  
-    borders.push("27% 10%")
-    borders.push("72% 10%") # hide top border
-  
-  if(AppContext.vizdata.isEmpty({x:posx+1, y:posy})) # show top right border
-    Util.log.console("top right")
-    borders.push("72% 0%") # start top right border
-    borders.push("95% 45%") 
-    borders.push("95% 50%") # stop top right border
-  else # hide top right border
-    borders.push("72% 10%")
-    borders.push("90% 42%") 
-    borders.push("90% 53%") 
-
-  if(AppContext.vizdata.isEmpty({x:posx+1, y:posy-1}))
-    Util.log.console("bottom right") 
-    borders.push("95% 50%") # start bottom right border
-    borders.push("72% 100%")
-  else
-    borders.push("90% 48%")
-    borders.push("90% 52%")
-    borders.push("68% 90%")  
-
-  if(AppContext.vizdata.isEmpty({x:posx, y:posy-1}))
-    Util.log.console("bottom")
-    borders.push("72% 100%")
-    borders.push("30% 100%")
-  else
-    borders.push("72% 90%")
-    borders.push("32% 90%")  
-
-  if(AppContext.vizdata.isEmpty({x:posx-1, y:posy}))
-    Util.log.console("bottom left") 
-    borders.push("30% 100%")  
-    borders.push("3% 53%")
-    borders.push("3% 50%")
-  else
-    borders.push("32% 90%")
-    borders.push("10% 54%")
-    
-  if(AppContext.vizdata.isEmpty({x:posx-1, y:posy+1}))
-    Util.log.console("top left")
-    borders.push("0% 53%")
-    borders.push("27% 0%")
-  else
-    borders.push("10% 45%")  
-    borders.push("32% 10%")
-
-  borders.join()
-
-#---------------------------------------------------------
-# Should ideally update the extents of a cluster, surrounding the given posx and posy
-# Now, all borders are being updated
-AppContext.cluster.markBorder = (posx, posy) ->
-  allpositions = AppContext.vizdata.getPositions()
-  $.each(allpositions, (i, position) ->
-    domElem = $('#'+position.posId)
-    pos = {x:position.x, y:position.y}
-    emptynbs = AppContext.cluster.hasOneEmptyNeighbour(pos)
-    if(emptynbs)
-      $(domElem).addClass("bordered")
-    clip = getBorderString( pos.x, pos.y)  
-    $(domElem).css("-webkit-clip-path","polygon("+clip+")")
-  )  
      

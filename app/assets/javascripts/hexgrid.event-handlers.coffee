@@ -143,6 +143,8 @@ jQuery ($) ->
       e.preventDefault()
       domelem = $('#'+AppContext.grid.downtile.posId)
       $(domelem).addClass("dragged")
+      $(domelem).removeClass("bordered")
+      $(domelem).css("-webkit-clip-path","")
     
   AppContext.grid.zoomEventHandler = (e, zoomDir) ->
     Util.log.console('Zoom initiated!')
@@ -203,6 +205,8 @@ jQuery ($) ->
       AppContext.grid.hideTooltip()
       if(AppContext.grid.clonedelem == '')
         domelem = $('#'+AppContext.grid.downtile.posId)
+        $(domelem).removeClass("bordered")
+        $(domelem).css("-webkit-clip-path","")
         AppContext.grid.clonedelem = $(domelem).clone()
         $(AppContext.grid.clonedelem).prependTo($(domelem))
         $(AppContext.grid.clonedelem).css("position","fixed")
