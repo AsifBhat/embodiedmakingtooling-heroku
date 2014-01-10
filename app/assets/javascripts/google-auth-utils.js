@@ -27,12 +27,7 @@ var SCOPES = [
           'https://www.googleapis.com/auth/drive.file',
           'https://www.googleapis.com/auth/drive.install',
           'openid'
-/*          'https://www.googleapis.com/auth/userinfo.email',
-          'https://www.googleapis.com/auth/userinfo.profile',*/
-
-          // Add other scopes needed by your application.
         ];
-//AppContext.making.userId = "";
 /**
  * Called when the client library is loaded.
  */
@@ -65,9 +60,7 @@ function handleAuthResult(authResult) {
     gapi.client.load('oauth2', 'v2', function() {
       gapi.client.oauth2.userinfo.get().execute(function(resp) {
         if (resp.id) {
-          //_this.userId = resp.id;
           console.log(resp.id);
-          //AppContext.making.userId = resp.id;
         }
       });
       if(window.location.hash.length == 0 && window.location.search.length == 0)
