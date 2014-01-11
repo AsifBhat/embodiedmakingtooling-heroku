@@ -102,6 +102,38 @@ AppContext.cluster.updateElem = function(idToEdit, newDesc)  {
   AppContext.vizdata.addElement(newElem);
 };
 
+
+//If the user is adding a new element then hide the input field 
+// and insert a text area to allow a more detailed input
+function handleAddNewElement(currentElementId, currentType, selectTab){
+  selectTab.tab('show').css('text-decoration', 'underline');
+  $('#input-elem-search').val('');
+  $('#input-elem-search').fadeOut(2000);
+  $('#edit_input_container').prepend('<textarea row="3" id="newElementText" style="display: none;"></textarea>');
+  $('#newElementText').fadeIn(1000);
+  $('#newElementText').focus();
+
+  $('#newElementText').keypress(function(e){
+    //if enter key is pressed, then remove the textarea and save the corresponding element
+    if(e.which === 13){
+      var newElementDesc = $('#newElementText').val();
+      //clean up input dom and hide the text area and show the input box again
+      $('#newElementText').fadeOut(2000);
+      $('#newElementText').val('');
+      $('#newElementText').remove();
+      $('#input-elem-search').fadeIn(1000);
+      $('#input-elem-search').focus();
+      if(AppContext.cluster.addNewElement != '' && newElementDesc!= '' ){
+        AppContext.cluster.addNewElement(currentElementId, newElementDesc, currentType);
+        selectTab.css('text-decoration', 'inherit');
+        selectTab.parent().removeClass('active');
+        return;
+      }
+    }
+  });
+}
+
+
 // handle the key pressed events on the input text box
 handleKeyPress = function(e) {
   if (!e) e = window.event
@@ -112,60 +144,30 @@ handleKeyPress = function(e) {
     var currentElementId = '';
     var currentType = '';
 
-    //If the user is adding a new element then hide the input field 
-    // and insert a text area to allow a more detailed input
-    function handleAddNewElement(){
-      $('#input-elem-search').val('');
-      $('#input-elem-search').fadeOut(2000);
-      $('#edit_input_container').prepend('<textarea row="3" id="newElementText" style="display: none;"></textarea>');
-      $('#newElementText').fadeIn(1000);
-      $('#newElementText').focus();
-
-      $('#newElementText').keypress(function(e){
-        //if enter key is pressed, then remove the textarea and save the corresponding element
-        if(e.which === 13){
-          var newElementDesc = $('#newElementText').val();
-          //clean up input dom and hide the text area and show the input box again
-          $('#newElementText').fadeOut(2000);
-          $('#newElementText').remove();
-          $('#newElementText').val('');
-          $('#input-elem-search').fadeIn(1000);
-          $('#input-elem-search').focus();
-          if(AppContext.cluster.addNewElement != '' && newElementDesc!= '' ){
-            AppContext.cluster.addNewElement(currentElementId, newElementDesc, currentType);
-            return;
-          }
-        }
-      });
-    }
     //get the text in the typeahead input, convert it to lower case and split it by space
     var textContent = getNewElementdesc().toLowerCase().split(' '); 
     // check if the first element of the array is of a length less then 2 characters
     if(textContent[0].length < 2){
 
       if(textContent[0] == 's'){
-        $('#elementsTab li:eq(0) a').tab('show').css('text-decoration', 'underline');
         var idstr = "S"+  getNextStoryId();
         currentType = 'stories';
         currentElementId = idstr;
-        handleAddNewElement();
-        $('#elementsTab li:eq(0) a').tab('hide');
+        handleAddNewElement(currentElementId, currentType,$('#elementsTab li:eq(0) a'));
         return;
       }  
       else if (textContent[0] == 'f'){
-        $('#elementsTab li:eq(1) a').tab('show').css('text-decoration', 'underline');
         var idstr = "F"+ getNextForceId();
         currentType = 'forces';
         currentElementId = idstr;
-        handleAddNewElement();
+        handleAddNewElement(currentElementId, currentType, $('#elementsTab li:eq(1) a'));
         return;
       }
       else if (textContent[0] == 'c'){
-        $('#elementsTab li:eq(2) a').tab('show').css('text-decoration', 'underline');
         var idstr = "C"+ getNextSolutionId();
         currentType = 'solutionComponents';
         currentElementId = idstr;
-        handleAddNewElement();
+        handleAddNewElement(currentElementId, currentType, $('#elementsTab li:eq(2) a'));
         return;
       }
       else return;
