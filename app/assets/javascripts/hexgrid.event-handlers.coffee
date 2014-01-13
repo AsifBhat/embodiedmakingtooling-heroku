@@ -101,6 +101,9 @@ jQuery ($) ->
     # Show content search at current position
     $('#addFromTypeahead').css("display","none")
 
+    if($('#newElementText').length > 0)
+      resetDescSection()
+
     contentSearch.css({"display": "", 'opacity': 1}).find("input")
         # Remove existing events
         .off('typeahead:selected')

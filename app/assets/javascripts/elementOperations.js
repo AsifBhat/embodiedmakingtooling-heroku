@@ -117,12 +117,7 @@ function handleAddNewElement(currentElementId, currentType, selectTab){
     //if enter key is pressed, then remove the textarea and save the corresponding element
     if(e.which === 13){
       var newElementDesc = $('#newElementText').val();
-      //clean up input dom and hide the text area and show the input box again
-      $('#newElementText').fadeOut(2000);
-      $('#newElementText').val('');
-      $('#newElementText').remove();
-      $('#input-elem-search').fadeIn(1000);
-      $('#input-elem-search').focus();
+      resetDescSection();
       if(AppContext.cluster.addNewElement != '' && newElementDesc!= '' ){
         AppContext.cluster.addNewElement(currentElementId, newElementDesc, currentType);
         selectTab.css('text-decoration', 'inherit');
@@ -133,6 +128,14 @@ function handleAddNewElement(currentElementId, currentType, selectTab){
   });
 }
 
+function resetDescSection() {
+  //clean up input dom and hide the text area and show the input box again
+  $('#newElementText').fadeOut(2000);
+  $('#newElementText').val('');
+  $('#newElementText').remove();
+  $('#input-elem-search').fadeIn(1000);
+  $('#input-elem-search').focus();  
+}
 
 // handle the key pressed events on the input text box
 handleKeyPress = function(e) {
