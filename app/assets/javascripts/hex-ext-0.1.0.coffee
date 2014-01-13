@@ -28,6 +28,7 @@ AppContext.grid.initialize = () ->
   $(AppContext.grid.grid.root).append(AppContext.grid.hoveredElement)
   AppContext.grid.idwithtooltip =  $('#desctooltip')
   AppContext.global.firstDisplay = true
+  AppContext.grid.reorient()
   AppContext.grid 
 
 AppContext.grid.placeHex =(elem,x,y) ->
@@ -97,8 +98,10 @@ AppContext.grid.displayAllPositions = (positions) ->
   $.each(positions, (i, value) ->
     AppContext.grid.placeOnGrid (value)
   )
-  AppContext.grid.markBorder()
-  
+  if($("#showborders").attr("value") == "hide")
+    AppContext.grid.markBorder()
+  #showborders()
+
 AppContext.grid.clearGridCache = () ->
   AppContext.grid.size = ''
   AppContext.grid.hoveredElement = ''
@@ -262,14 +265,12 @@ getBorderString = ( posx, posy) ->
     borders.push("27% 0%")
   else
     borders.push("10% 45%")  
-    borders.push("32% 10%")
+    borders.push("29% 10%")
 
   borders.join()
 
-#---------------------------------------------------------
-# Should ideally update the extents of a cluster, surrounding the given posx and posy
-# Now, all borders are being updated
-AppContext.grid.markBorder = (posx, posy) ->
+
+showborders = () ->
   allpositions = AppContext.vizdata.getPositions()
   $.each(allpositions, (i, position) ->
     domElem = $('#'+position.posId)
@@ -279,13 +280,29 @@ AppContext.grid.markBorder = (posx, posy) ->
       $(domElem).addClass("bordered")
     clip = getBorderString( pos.x, pos.y)  
     $(domElem).css("-webkit-clip-path","polygon("+clip+")")
-  )  
-  ###if(AppContext.global.firstDisplay)
-    Util.log.console("firstdisplay")
-    #$("#reorient").click()
-  AppContext.global.firstDisplay = false###
+  )   
 
-
+#---------------------------------------------------------
+# Should ideally update the extents of a cluster, surrounding the given posx and posy
+# Now, all borders are being updated
+AppContext.grid.markBorder = (posx, posy) ->
+  borderbtn = $('#showborders')[0];
+  action = $(borderbtn).attr("value");
+  Util.log.console("action: "+action)
+  allpositions = AppContext.vizdata.getPositions()
+  if(action == 'show')
+    $(borderbtn).html('Hide Borders');
+    $(borderbtn).attr("value","hide");    
+    showborders()
+  else
+    $.each(allpositions, (i, position) ->
+      domElem = $('#'+position.posId)
+      $(domElem).removeClass("bordered")
+      $(domElem).css("-webkit-clip-path","")
+    ) 
+    $(borderbtn).html('Show Borders');
+    $(borderbtn).attr("value","show");
+  
 jQuery ($) ->
   AppContext.grid.clearGridCache()
   #AppContext.grid.initApp()

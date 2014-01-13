@@ -39,7 +39,7 @@ AppContext.cluster.updatePosition = (datum,posx,posy) ->
         AppContext.vizdata.removeRelation(relation)
         AppContext.vizdata.addRelation(newRelation)  
     ) 
-  AppContext.grid.markBorder(posx, posy);
+  #AppContext.grid.markBorder(posx, posy);
     # parse through relations array and find all occurences of this posId
     # if srcPosId replace srcElementID with this elementId - delete that relation and add a new relation
     # else if targetPosId replace targetElementId with this elementId

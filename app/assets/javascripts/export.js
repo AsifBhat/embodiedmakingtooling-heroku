@@ -15,7 +15,7 @@ getColoredNode = function(elemId){
 
 getNodesXml = function(){
   var elements = AppContext.vizdata.getElements();
-  var elemXml = elements.map(function(elem){return "<node id='"+elem.elementId+"' label='"+elem.elementId+"'><viz:size value='32'></viz:size>"+getColoredNode(elem.elementId)+"</node>";});
+  var elemXml = elements.map(function(elem){return "<node id='"+elem.elementId+"' label='"+elem.elementId+"' description='"+elem.description+"'><viz:size value='32'></viz:size>"+getColoredNode(elem.elementId)+"</node>";});
   var elemXmlStr = elemXml.join('');
   return elemXmlStr;
 };
@@ -39,7 +39,7 @@ getEdgesXml = function(){
 };
 
 AppContext.menu.exportToGexf = function() {
-  var str = '<gexf version="1.2" xmlns:viz="http://www.gexf.net/1.2draft/viz" xmlns="http://www.gexf.net/1.2draft/viz"><graph mode="static" defaultedgetype="directed"><attributes class="edge"><attribute id="clusterID" title="clusterID" type="string"/></attributes>';
+  var str = '<gexf version="1.2" xmlns:viz="http://www.gexf.net/1.2draft/viz" xmlns="http://www.gexf.net/1.2draft/viz"><graph mode="static" defaultedgetype="directed"><attributes class="node"><attribute id="description" title="Description" type="string"/></attributes>';
   str+= "<nodes>";
   str+= getNodesXml();
   str+= "</nodes><edges>";
