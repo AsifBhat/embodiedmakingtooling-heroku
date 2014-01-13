@@ -32,7 +32,7 @@ var SCOPES = [
  * Called when the client library is loaded.
  */
 function fetchClientDetails(callback) {
-  console.log('Handle Client Load');
+  Util.log.console('Handle Client Load');
   checkAuth(callback);
 }
 
@@ -40,7 +40,7 @@ function fetchClientDetails(callback) {
  * Check if the current user has authorized the application.
  */
 function checkAuth(callback) {
-  console.log('Checking Authorization');
+  Util.log.console('Checking Authorization');
   gapi.auth.authorize(
       {'client_id': googleAppConf().clientId, 'scope': SCOPES.join(' '), 'immediate': true},
       callback);
@@ -54,13 +54,13 @@ function checkAuth(callback) {
 function handleAuthResult(authResult) {
   if (authResult) {
     // Access token has been successfully retrieved, requests can be sent to the API
-    console.log('Access Token recieved. Requests can now be sent to the Google Application');
-    console.log(authResult);
+    Util.log.console('Access Token recieved. Requests can now be sent to the Google Application');
+    Util.log.console(authResult);
     var _this = this;
     gapi.client.load('oauth2', 'v2', function() {
       gapi.client.oauth2.userinfo.get().execute(function(resp) {
         if (resp.id) {
-          console.log(resp.id);
+          Util.log.console(resp.id);
         }
       });
       if(window.location.hash.length == 0 && window.location.search.length == 0)
@@ -98,13 +98,32 @@ function handleAuthResult(authResult) {
   }
 }
 
+function refresh_Complete() {
+// The refreshed token is automatically stored and used by gapi.client for
+// any additional requests, so we do not need to do anything in this handler.
+}
+
+function refreshComplete(authResult) {
+  refresh_complete(authResult);
+  window.setTimeout(refreshToken, authResult.expires_in * 1000);
+}
+
+
+
+function refreshToken() {
+    checkAuth(refreshComplete);
+}
+
+
 function getUserName(authResult){
-  console.log('Fetching user name');
+  Util.log.console('Fetching user name');
   if(authResult){
-    console.log('Authorized');
+    Util.log.console('Authorized');
+    //authorization_complete(authResult);
+    window.setTimeout(refreshToken, authResult.expires_in * 1000);
     setTimeout (AppContext.project.getUserInfo, 10000);
   }
   else{
-    console.log ('Not Authorized');
+    Util.log.console ('Not Authorized');
   }
 }
