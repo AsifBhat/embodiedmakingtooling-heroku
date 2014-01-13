@@ -12,7 +12,6 @@ AppContext.grid.defaultSize = {
 AppContext.grid.createGrid = (domelem) ->
   AppContext.grid.grid = hex.grid(domelem, {})
   AppContext.grid.size = hex.size(AppContext.grid.grid.elem)
-  #AppContext.grid.grid.reorient(AppContext.grid.size.x * 0.5, AppContext.grid.size.y * 0.5)
   AppContext.grid.grid.size
 
 AppContext.grid.createHex = (styleClass, text = "") ->
@@ -181,14 +180,7 @@ AppContext.grid.drawMakingSummary = () ->
 
 
 AppContext.grid.reorient = () ->
-  Util.log.console("++++++++++++")
   AppContext.grid.grid.reorient(AppContext.grid.size.x * 0.5, AppContext.grid.size.y * 0.5)
-  ### AppContext.grid.grid.origin.x = AppContext.grid.size.x * 0.5;
-    AppContext.grid.grid.origin.y = AppContext.grid.size.y * 0.5;
-    AppContext.grid.grid.root.style.left = AppContext.grid.size.x * 0.5 + "px";
-    AppContext.grid.grid.root.style.top = AppContext.grid.size.y * 0.5 + "px";
-    AppContext.grid.grid.elem.style.backgroundPosition = (AppContext.grid.size.x * 0.5) + "px " + (AppContext.grid.size.y * 0.5) + "px";
-  ###
 
 AppContext.grid.hasOneEmptyNeighbour = (pos) ->
   emptynbs = false
@@ -204,13 +196,6 @@ AppContext.grid.hasOneEmptyNeighbour = (pos) ->
 
 isTopEmpty = (posx, posy) ->
   AppContext.vizdata.isEmpty({x:posx, y:posy+1})
-###  if posy<0
-    AppContext.vizdata.isEmpty({x:posx, y:posy+1})
-  else
-    AppContext.vizdata.isEmpty({x:posx, y:posy-1})###
-
-
-#polygon(27% 0%, 72% 0%, 100% 50%, 72% 100%, 27% 100%, 0% 50%)
 
 getBorderString = ( posx, posy) ->
   borders = []
@@ -304,5 +289,4 @@ AppContext.grid.markBorder = (posx, posy) ->
   
 jQuery ($) ->
   AppContext.grid.clearGridCache()
-  #AppContext.grid.initApp()
 

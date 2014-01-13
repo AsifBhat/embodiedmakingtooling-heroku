@@ -20,13 +20,13 @@ describe("Export as GEXF", function() {
   it("Should return color attribute tag", function() {
     var forcenodecolor = getColoredNode("F01");
 		var compnodecolor = getColoredNode("C01");
-    expect(forcenodecolor).toEqual("<viz:color r='255'></viz:color>");
-    expect(compnodecolor).toEqual("<viz:color b='255'></viz:color>");
+    expect(forcenodecolor).toEqual('<viz:color r = "40" g="62" b="224"></viz:color>');
+    expect(compnodecolor).toEqual('<viz:color r = "140" g="106" b="52">'');
   });
 
   it("Should return colored node tag", function() {
     var nodes = getNodesXml();
-    expect(nodes).toEqual("<node id='S0001' label='S0001'><viz:size value='32'></viz:size><viz:color g='255'></viz:color></node><node id='S0002' label='S0002'><viz:size value='32'></viz:size><viz:color g='255'></viz:color></node>");
+    expect(nodes).toEqual("<node id='S0001' label='S0001'><viz:size value='32'></viz:size><viz:color r = "242" g="215" b="10"></viz:color></node><node id='S0002' label='S0002'><viz:size value='32'></viz:size><viz:color g='255'></viz:color></node>");
   });
 
   it("Should return xml for an edge", function() {
