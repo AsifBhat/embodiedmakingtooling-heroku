@@ -20,13 +20,13 @@ describe("Export as GEXF", function() {
   it("Should return color attribute tag", function() {
     var forcenodecolor = getColoredNode("F01");
 		var compnodecolor = getColoredNode("C01");
-    expect(forcenodecolor).toEqual('<viz:color r = "40" g="62" b="224"></viz:color>');
-    expect(compnodecolor).toEqual('<viz:color r = "140" g="106" b="52">'');
+    expect(forcenodecolor).toEqual("<viz:color r = '40' g='62' b='224'></viz:color>");
+    expect(compnodecolor).toEqual("<viz:color r = '140' g='106' b='52'></viz:color>");
   });
 
-  it("Should return colored node tag", function() {
+  it("Should return colored node tag with description label", function() {
     var nodes = getNodesXml();
-    expect(nodes).toEqual("<node id='S0001' label='S0001'><viz:size value='32'></viz:size><viz:color r = "242" g="215" b="10"></viz:color></node><node id='S0002' label='S0002'><viz:size value='32'></viz:size><viz:color g='255'></viz:color></node>");
+    expect(nodes).toEqual("<node id='S0001' label='We share 10 meeting rooms, usually named after people to identify them, between 300 people, and the meeting rooms need to be kept locked.' description='We share 10 meeting rooms, usually named after people to identify them, between 300 people, and the meeting rooms need to be kept locked.'><viz:size value='32'></viz:size><viz:color r = '242' g='215' b='10'></viz:color></node><node id='S0002' label='The receptionist helps book the room, and room users pick up the key, and usually drop it back.' description='The receptionist helps book the room, and room users pick up the key, and usually drop it back.'><viz:size value='32'></viz:size><viz:color r = '242' g='215' b='10'></viz:color></node>");
   });
 
   it("Should return xml for an edge", function() {

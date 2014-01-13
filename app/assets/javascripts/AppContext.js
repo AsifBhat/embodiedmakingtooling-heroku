@@ -4,7 +4,7 @@ AppContext.grid = {};
 
 AppContext.cluster = {};
 
-AppContext.menu = {};
+AppContext.exports = {};
 
 AppContext.project = {};
 
