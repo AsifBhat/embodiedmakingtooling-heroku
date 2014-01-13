@@ -67,14 +67,34 @@ function handleAuthResult(authResult) {
         AppContext.grid.loadPicker();
       else
         window.onload = AppContext.grid.loadApplication();
-    
-      $('.proj_title').attr('data-content', '<div class="title_edit"><button id="edit_project_name" class="btn btn-mini"> Edit <span class="icon-edit"></span></button>&nbsp;<button id="cl_edit_project_name" class="btn btn-mini"> Cancel <span class="icon-remove-sign"></span></button></div>');
+      //Fetch and set the User Info.
+      AppContext.project.getUserInfo();
     });
   } else {
+    console.log('The application cannot call google API, please make sure that you are logged in');
     // No access token could be retrieved, force the authorization flow.
-    gapi.auth.authorize(
-        {'client_id': realtimeOptions.clientId, 'scope': SCOPES, 'immediate': false},
-        handleAuthResult);
+    $('body').append('<div id="authModal" class="modal hide fade auth_perm_modal" tabindex="-1" role="dialog" aria-labelledby="authModalLabel" aria-hidden="true"><div class="modal-header text-center"><h4 id="authModalLabel">Please Authorize The Embodied Making Tool for Saving your changes to <u>Your</u> Google Drive</h4></div><div class="modal-footer"><button class="btn btn-primary" aria-hidden="true" data-dismiss="modal" id="auth_em_btn">Authorize</button><button id="cancel_auth" class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button></div></div>');
+
+    $('#authModal').modal({
+      show: true,
+      keyboard: false
+    });
+
+    $('#auth_em_btn').click( function() {
+      gapi.auth.init( function() {
+        console.log('Initializing the authorization process');
+        gapi.auth.authorize({
+          client_id: googleAppConf().clientId, 
+          scope: [
+            rtclient.INSTALL_SCOPE,
+            rtclient.FILE_SCOPE,
+            rtclient.OPENID_SCOPE
+          ], 
+          user_id: undefined,
+          immediate: false
+        },handleAuthResult);
+      });  
+    });
   }
 }
 
