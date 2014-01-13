@@ -1,21 +1,21 @@
 getColoredNode = function(elemId){
   var etype = elemId.substr(0,1);
-  var color = 'r';
+  var color = 'r = "242" g="215" b="10"';
   switch(etype)
   {
-    case 'S':
-      color = 'g';
+    case 'F':
+      color = 'r = "40" g="62" b="224"';
       break;
     case 'C':
-      color = 'b';
+      color = 'r = "140" g="106" b="52"';
       break;
   }
-  return "<viz:color "+color+"='255'></viz:color>";
+  return "<viz:color "+color+"></viz:color>";
 };
 
 getNodesXml = function(){
   var elements = AppContext.vizdata.getElements();
-  var elemXml = elements.map(function(elem){return "<node id='"+elem.elementId+"' label='"+elem.elementId+"' description='"+elem.description+"'><viz:size value='32'></viz:size>"+getColoredNode(elem.elementId)+"</node>";});
+  var elemXml = elements.map(function(elem){return "<node id='"+elem.elementId+"' label='"+elem.description+"' description='"+elem.description+"'><viz:size value='32'></viz:size>"+getColoredNode(elem.elementId)+"</node>";});
   var elemXmlStr = elemXml.join('');
   return elemXmlStr;
 };

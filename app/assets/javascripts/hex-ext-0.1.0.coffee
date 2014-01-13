@@ -99,8 +99,7 @@ AppContext.grid.displayAllPositions = (positions) ->
     AppContext.grid.placeOnGrid (value)
   )
   if($("#showborders").attr("value") == "hide")
-    AppContext.grid.markBorder()
-  #showborders()
+    showborders()
 
 AppContext.grid.clearGridCache = () ->
   AppContext.grid.size = ''
