@@ -40,9 +40,8 @@ AppContext.project.sendChangeTitleRequest = (newTitle) ->
     Util.log.console 'Project Title Changed'
   )
 
-
-AppContext.project.showPicture = (pictureURL) ->
-  $('#profile_picture').css("display","").attr("src",pictureURL)
+AppContext.project.showPicture = (pictureurl) ->
+  $('#profile_picture').css("display","").attr("src",pictureurl)
 
 
 AppContext.project.getUserInfo = () ->
@@ -55,8 +54,10 @@ AppContext.project.getUserInfo = () ->
     request.execute( (resp) ->
       try 
         $('#authorizeButton').html(resp.name)
-        Util.log.console('Current user name: ' +resp.name)
-        AppContext.project.showPicture(resp.user.picture.url);
+        Util.log.console('Current user name: ' + resp.name)
+        Util.log.console(resp.user)
+        AppContext.project.showPicture(resp.user.picture.url)
+        #Util.log.console(resp.user)
       catch err
         Util.log.console 'Error while fetching user information'
         Util.log.console err
@@ -64,4 +65,3 @@ AppContext.project.getUserInfo = () ->
   catch err
     Util.log.console 'Error Occured while fetching user info'
     Util.log.console err
-
