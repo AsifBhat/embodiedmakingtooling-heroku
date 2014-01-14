@@ -40,6 +40,11 @@ AppContext.project.sendChangeTitleRequest = (newTitle) ->
     Util.log.console 'Project Title Changed'
   )
 
+
+AppContext.project.showPicture = (pictureURL) ->
+  $('#profile_picture').css("display","").attr("src",pictureURL)
+
+
 AppContext.project.getUserInfo = () ->
   ###
   * Get information about the current user 
@@ -50,11 +55,13 @@ AppContext.project.getUserInfo = () ->
     request.execute( (resp) ->
       try 
         $('#authorizeButton').html(resp.name)
-        console.log('Current user name: ' + resp.name)
+        Util.log.console('Current user name: ' +resp.name)
+        AppContext.project.showPicture(resp.user.picture.url);
       catch err
-        console.log 'Error while fetching user information'
-        console.log err
+        Util.log.console 'Error while fetching user information'
+        Util.log.console err
     )
   catch err
-    console.log 'Error Occured while fetching user info'
-    console.log err
+    Util.log.console 'Error Occured while fetching user info'
+    Util.log.console err
+
