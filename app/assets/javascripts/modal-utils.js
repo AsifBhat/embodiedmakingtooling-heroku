@@ -1,12 +1,4 @@
 // The API developer key obtained from the Google Cloud Console.
-// This API key is for the localhost: To be used for local testing 
-// REMOVE THIS BEFORE PUBLISHING 
-//var developerKey = 'AIzaSyBYEmPSy44XpEXayCK9Xt8_vw_qKLFAkFs';
-
-//Heroku App Key
-//var developerKey = 'AIzaSyD7MkLjTksTUuovzbvMfXHMrYMh7EnYAz4';
-
-// Production key 
 var developerKey = googleAppConf().browserKey;
 
 AppContext.grid.loadApplication = function(){
@@ -20,6 +12,7 @@ AppContext.grid.loadPicker = function() {
 
     $('#create_named_making_btn').click(function(){
       try {
+        handleAuthResult();
         realtimeOptions.defaultTitle = $('#proj_name').val()+'.ema';
         Util.log.console('Going in with file name: ' + realtimeOptions.defaultTitle);
         AppContext.grid.loadApplication();
@@ -32,6 +25,7 @@ AppContext.grid.loadPicker = function() {
 
     $('.load_new_making_btn').click(function(){
       Util.log.console('File Name not specified. Using default Project name');
+      handleAuthResult();
       AppContext.grid.loadApplication();
     });
 
@@ -39,7 +33,7 @@ AppContext.grid.loadPicker = function() {
       //do something to check for authorization
       // this is to make the usr authorize the application before anything can be done
       // else the user will be stuck with a burried pop-up button
-      gapi.load('picker', {'callback': createPicker});
+      handleAuthResult('old');
     });
 
     $('#startupModal').modal({
@@ -52,30 +46,6 @@ AppContext.grid.loadPicker = function() {
   }
 }
 
-var picker = null;
-  // Create and render a Picker object for searching images.
-function createPicker() {
-    picker = new google.picker.PickerBuilder().
-        addView(new google.picker.View(google.picker.ViewId.DOCS).
-          setQuery('.ema')).
-        enableFeature(google.picker.Feature.NAV_HIDDEN).
-        setDeveloperKey(developerKey).
-        setCallback(pickerCallback).
-        build();
-    picker.setVisible(true);
-  }
-
-  // A simple callback implementation.
-  function pickerCallback(data) {
-    console.log('Calling picker callback');
-    var url = 'nothing';
-    if (data[google.picker.Response.ACTION] == google.picker.Action.PICKED) {
-      var doc = data[google.picker.Response.DOCUMENTS][0];
-      url = doc[google.picker.Document.URL];
-    }
-    if(url != 'nothing')
-      window.location.replace(url);
-  }
 
 $(document).ready(function(){
   if(window.location.hash.length == 0 && window.location.search.length == 0)
