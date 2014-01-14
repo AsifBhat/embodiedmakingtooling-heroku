@@ -1,7 +1,14 @@
 @main("The Embodied Making Tool") {
 <div class="row page-header">
   <div class="row title_holder">
-    <div class="proj_title" contenteditable="true"></div>
+    <div class="col span1">
+       <!-- <embed src="/assets/images/em-logo.svg" width="50" height="50" type="image/svg+xml" codebase="http://www.adobe.com/svg/viewer/install" viewBox="0 0 50 50"> </embed> -->
+        <!-- <object data="http://localhost:9000/assets/images/em-logo.svg" width="110" height="60" type="image/svg+xml" codebase="http://www.savarese.com/software/svgplugin/"></object> -->
+        <img src="/assets/images/em-logo.svg" class="emtool_logo">        
+     </div>
+     <div class="col span9 proj_title_row" >
+      <div class="proj_title" contenteditable="true"></div>
+     </div> 
   </div>
   <div id="menubar">
     <button id='exportToGexf' onclick='AppContext.exports.exportToGexf()' class="btn btn-mini btn-warning"><span class="icon-download"></span>&nbsp;Export GEXF</button>
