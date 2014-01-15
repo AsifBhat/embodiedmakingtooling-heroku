@@ -1,32 +1,43 @@
 @main("The Embodied Making Tool") {
 <div class="row page-header">
-  <div class="row title_holder">
-    <div class="col span1">
+  <!-- Holds only the Title bar for a given Making-->
+  <div class="title_holder row">
+    <div class="span1">
        <!-- <embed src="/assets/images/em-logo.svg" width="50" height="50" type="image/svg+xml" codebase="http://www.adobe.com/svg/viewer/install" viewBox="0 0 50 50"> </embed> -->
         <!-- <object data="http://localhost:9000/assets/images/em-logo.svg" width="110" height="60" type="image/svg+xml" codebase="http://www.savarese.com/software/svgplugin/"></object> -->
       <img src="/assets/images/em-logo.svg" class="emtool_logo">        
     </div>
-    <div class="col span9 proj_title_row" >
+    <div class="span9 proj_title_row" >
       <div class="proj_title" contenteditable="true"></div>
-     </div> 
-     
-    <div class="col span1 offset5" id="col_settings_gear" >
-      <div class="dropdown">
-        <a class="dropdown-toggle sr-only" data-toggle="dropdown" data-target="#" href="."><i class="fa fa-gear fa-lg" id="settings_gear"></i>
-        </a>
-        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-          <li role="presentation"><a role="menuitem" tabindex="-1" data-target="#" onclick='AppContext.exports.exportToGexf()'>Export GEXF</a></li>
-          <li role="presentation"><a role="menuitem" tabindex="-1" data-target="#" onclick='AppContext.exports.exportElements()'>Export Elements</a></li>
-          <li role="presentation" class="divider"></li>
-          <li role="presentation"><a role="menuitem" tabindex="-1" data-target="#" >Import Elements</a></li>
-        </ul>
-      </div>
     </div>
-    
-    <div class="col span1 " >
-      <img class="emtool_logo" contenteditable="true" id="profile_picture" style="display:none"></img>
+    <!-- Controls for Various features go here-->
+    <div id="element_controls" class="row">
+      <ul class="nav nav-pills">
+        <li>
+          <div id="nugget_btn" class="control_btn"></div>
+        </li>
+        <li>
+          <div class="control_btn">
+            <div id="col_settings_gear" class="dropdown">
+              <a class="dropdown-toggle sr-only" data-toggle="dropdown" data-target="#" href="."><i class="fa fa-gear fa-lg" id="settings_gear"></i>
+              </a>
+              <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                <li role="presentation"><a role="menuitem" tabindex="-1" data-target="#" onclick='AppContext.exports.exportToGexf()'>Export GEXF</a></li>
+                <li role="presentation"><a role="menuitem" tabindex="-1" data-target="#" onclick='AppContext.exports.exportElements()'>Export Elements</a></li>
+                <li role="presentation" class="divider"></li>
+                <li role="presentation"><a role="menuitem" tabindex="-1" data-target="#" >Import Elements</a></li>
+              </ul>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div> 
   </div>
+
+  <div class="col span1 " >
+    <img class="emtool_logo" contenteditable="true" id="profile_picture" style="display:none"></img>
+  </div>
+
   <div id="menubar">
       <button id="import_popover" data-placement="bottom" data-html= true data-toggle="popover" title="" data-original-title='<span class="icon-upload"></span><b>&nbsp;Import File</b> <span id="import_close" class="pull-right"><span class="icon-remove-circle"></span></span>' data-content='<div id="import_container"><div id="import_file"><div class="import_btn"><input type="file" name="importedFile" id="import_file_input"></div></div></div>' data-trigger="manual" data-animation="false" class="btn btn-mini btn-warning import_label"><span class="icon-upload"></span>&nbsp;Import</button>
     <button id='showGraph' class="btn btn-mini btn-warning" value='show' onclick='AppContext.graph.showGraph()'><span class="icon-eye-open"></span>&nbsp;Show Graph</button>

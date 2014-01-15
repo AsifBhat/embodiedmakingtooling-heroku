@@ -27,6 +27,7 @@ jQuery ($) ->
     $('#element_edit').collapse('show')
 
     $('.tab_head').click( () ->
+      $(this).siblings().css('text-decoration', '')
       tabText = $(this).find('a').text()
       idstr = ''
       currentType = ''
