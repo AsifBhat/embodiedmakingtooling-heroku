@@ -41,7 +41,7 @@ AppContext.project.sendChangeTitleRequest = (newTitle) ->
   )
 
 AppContext.project.showPicture = (pictureurl) ->
-  $('#profile_picture').css("display","").attr("src",pictureurl)
+  $('#profile_picture').css("display","").attr("xlink:href",pictureurl)
 
 
 AppContext.project.getUserInfo = () ->
