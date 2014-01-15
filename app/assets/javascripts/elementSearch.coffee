@@ -27,10 +27,7 @@ jQuery ($) ->
     $('#element_edit').collapse('show')
 
     $('.tab_head').click( () ->
-      Util.log.console('Selected: ')
-      Util.log.console('Adding something')
       tabText = $(this).find('a').text()
-      Util.log.console('Tab Text: ' + tabText)
       idstr = ''
       currentType = ''
       if(tabText == 'Stories')

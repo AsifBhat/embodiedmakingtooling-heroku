@@ -120,7 +120,7 @@ function handleAddNewElement(currentElementId, currentType, selectTab){
       resetDescSection();
       if(AppContext.cluster.addNewElement != '' && newElementDesc!= '' ){
         AppContext.cluster.addNewElement(currentElementId, newElementDesc, currentType);
-        selectTab.css('text-decoration', 'inherit');
+        selectTab.css('text-decoration', '');
         selectTab.parent().removeClass('active');
         return;
       }
