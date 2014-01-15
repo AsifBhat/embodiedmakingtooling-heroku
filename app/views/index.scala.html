@@ -8,23 +8,32 @@
     </div>
     <div class="col span9 proj_title_row" >
       <div class="proj_title" contenteditable="true"></div>
-    </div> 
-    <div class="span1 offset1" id="col_settings_gear" >
-      <a href="#"><i class="fa fa-gear fa-lg" id="settings_gear"></i></a>
+     </div> 
+     
+    <div class="col span1 offset5" id="col_settings_gear" >
+      <div class="dropdown">
+        <a class="dropdown-toggle sr-only" data-toggle="dropdown" data-target="#" href="."><i class="fa fa-gear fa-lg" id="settings_gear"></i>
+        </a>
+        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+          <li role="presentation"><a role="menuitem" tabindex="-1" data-target="#" onclick='AppContext.exports.exportToGexf()'>Export GEXF</a></li>
+          <li role="presentation"><a role="menuitem" tabindex="-1" data-target="#" onclick='AppContext.exports.exportElements()'>Export Elements</a></li>
+          <li role="presentation" class="divider"></li>
+          <li role="presentation"><a role="menuitem" tabindex="-1" data-target="#" >Import Elements</a></li>
+        </ul>
+      </div>
     </div>
+    
     <div class="col span1 " >
       <img class="emtool_logo" contenteditable="true" id="profile_picture" style="display:none"></img>
     </div> 
   </div>
   <div id="menubar">
-    <button id='exportToGexf' onclick='AppContext.exports.exportToGexf()' class="btn btn-mini btn-warning"><span class="icon-download"></span>&nbsp;Export GEXF</button>
-    <button id='exportToGexf' onclick='AppContext.exports.exportElements()' class="btn btn-mini btn-warning"><span class="icon-download"></span>&nbsp;Export Elements</button>
       <button id="import_popover" data-placement="bottom" data-html= true data-toggle="popover" title="" data-original-title='<span class="icon-upload"></span><b>&nbsp;Import File</b> <span id="import_close" class="pull-right"><span class="icon-remove-circle"></span></span>' data-content='<div id="import_container"><div id="import_file"><div class="import_btn"><input type="file" name="importedFile" id="import_file_input"></div></div></div>' data-trigger="manual" data-animation="false" class="btn btn-mini btn-warning import_label"><span class="icon-upload"></span>&nbsp;Import</button>
     <button id='showGraph' class="btn btn-mini btn-warning" value='show' onclick='AppContext.graph.showGraph()'><span class="icon-eye-open"></span>&nbsp;Show Graph</button>
-    <button id='reorient' class="btn btn-mini btn-warning" value='show' onclick='AppContext.grid.reorient()'><span class="icon-align-center"></span>&nbsp;Reorient</button>
-    <button id='showborders' class="btn btn-mini btn-warning" value='show' onclick='AppContext.grid.markBorder()'>&nbsp;Show borders</button>
+    
     <button id="authorizeButton" disabled class="login_button pull-right btn btn-primary btn-mini"><span class="icon-lock"></span>&nbsp;Login</button>
     <span class="hex-controller pull-right">
+      <button id='reorient' class="btn btn-mini btn-warning" onclick='AppContext.grid.reorient()'><span class="icon-align-center"></span></button>
       <button class="btn btn-mini btn-warning" id="zoomin-controller"> <span class="zoom_controller icon-zoom-in"></span> </button>
       <button class="btn btn-mini btn-warning" id="zoomout-controller"> <span class="zoom_controller icon-zoom-out"></span> </button>
     </span>
