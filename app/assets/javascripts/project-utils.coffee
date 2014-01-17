@@ -44,24 +44,23 @@ AppContext.project.showPicture = (pictureurl) ->
   $('#profile_picture').css("display","").attr("xlink:href",pictureurl)
 
 
+###
+  Get User-Name and User-Profile image information about the current user 
+###
 AppContext.project.getUserInfo = () ->
-  ###
-  * Get information about the current user 
-  ###
   Util.log.console('Fetching User Info..')
   try 
-    request = gapi.client.drive.about.get()
-    request.execute( (resp) ->
-      try 
-        $('#authorizeButton').html(resp.name)
-        Util.log.console('Current user name: ' + resp.name)
-        Util.log.console(resp.user)
-        AppContext.project.showPicture(resp.user.picture.url)
-        #Util.log.console(resp.user)
-      catch err
-        Util.log.console 'Error while fetching user information'
-        Util.log.console err
-    )
+    if(gapi.client != undefined && gapi.client.drive != undefined)
+      request = gapi.client.drive.about.get()
+      request.execute( (resp) ->
+        try 
+          $('#authorizeButton').html(resp.name)
+          AppContext.project.showPicture(resp.user.picture.url)
+          #Util.log.console(resp.user)
+        catch err
+          Util.log.console 'Error while fetching user information'
+          Util.log.console err
+      )
   catch err
     Util.log.console 'Error Occured while fetching user info'
     Util.log.console err
