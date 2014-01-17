@@ -2,10 +2,12 @@ jQuery ($) ->
   gx = 0
   gy = 0
 
+  
+
   # Handle the hover event
   AppContext.grid.hoverEventHandler = (e, x, y) ->
-    if(AppContext.grid.downtile != '')
-      domelem = $('#'+AppContext.grid.downtile.posId)
+    if(AppContext.grid.toDrag != '')
+      domelem = $('#'+AppContext.grid.toDrag.posId)
       inv = AppContext.grid.grid.screenpos(x, y)
       domelem.css("left",inv.x)
       domelem.css("top",inv.y)
@@ -63,6 +65,7 @@ jQuery ($) ->
     AppContext.grid.drawTipDesc(datum.value , tooltipInfo, {x: gx, y:gy})
 
   AppContext.grid.clickEventHandler = (e, x, y) ->
+    Util.log.console(e)
     $('#element_edit').css({
         display: 'block',
         height: ''
@@ -115,6 +118,9 @@ jQuery ($) ->
 
         # Place focus
         .focus()
+  
+  #AppContext.grid.rightClickEventHandler = ()
+
 
   AppContext.grid.hoveroutEventHandler = (e,x,y) ->
     AppContext.grid.hideTooltip()
@@ -127,27 +133,39 @@ jQuery ($) ->
     # here we have event handlers to the HTML components and other CSS changes
   
   AppContext.grid.tileUpHandler = (e, x, y) ->
-    if(AppContext.grid.downtile!='')
-      domelem = $('#'+AppContext.grid.downtile.posId)
+    if(AppContext.grid.toDrag!='')
+      domelem = $('#'+AppContext.grid.toDragRef.posId)
       $(domelem).removeClass("dragged")    
-      AppContext.cluster.deletePosition(AppContext.grid.downtile.x,AppContext.grid.downtile.y)
-      AppContext.cluster.updatePosition(AppContext.grid.downtile.elementId, x, y)
-      AppContext.grid.downtile = ''
+      AppContext.cluster.deletePosition(AppContext.grid.toDragRef.x,AppContext.grid.toDragRef.y)
+      AppContext.cluster.updatePosition(AppContext.grid.toDragRef.elementId, x, y)
+      AppContext.grid.toDrag = ''
+      AppContext.grid.toDragRef = ''
       AppContext.grid.clonedelem = '' 
+      AppContext.grid.toDragRefClone = ''
 
   AppContext.grid.tileClickHandler = (e, x, y) ->
     e.preventDefault()
 
+  markTobeDragged = (e) ->
+    e.preventDefault()
+    domelem = $('#'+AppContext.grid.toDrag.posId)
+    $(domelem).addClass("dragged")
+    $(domelem).removeClass("bordered")
+    $(domelem).css("-webkit-clip-path","") 
+
   AppContext.grid.tileDownHandler = (e, x, y) ->
+    console.log("tile clicked")
     pos = {x:x,y:y}
     #e.preventDefault()
-    AppContext.grid.downtile = AppContext.vizdata.getPositionInCell(pos);
-    if(AppContext.grid.downtile != '')
-      e.preventDefault()
-      domelem = $('#'+AppContext.grid.downtile.posId)
-      $(domelem).addClass("dragged")
-      $(domelem).removeClass("bordered")
-      $(domelem).css("-webkit-clip-path","")
+    # if (notselectedfrommenu)
+    AppContext.grid.toDrag = AppContext.vizdata.getPositionInCell(pos);
+    # If a single cell is dragged, toDrag is set as above.  Else(selectedfrommenu) toDrag(s) is /are
+    # set by the callbacks of the menu item handler 'Select cluster' etc. 'todragreference' is the 
+    # cell from which the dragging is done)
+    AppContext.grid.toDragRef = AppContext.vizdata.getPositionInCell(pos)
+    if(AppContext.grid.toDrag != '')
+      markTobeDragged(e)
+      
     
   AppContext.grid.zoomEventHandler = (e, zoomDir) ->
     Util.log.console('Zoom initiated!')
@@ -203,18 +221,51 @@ jQuery ($) ->
       AppContext.grid.activateListeners()
       AppContext.grid.displayAllPositions(AppContext.vizdata.getPositions())
 
+  dragOnMouseMove = (event) ->
+    AppContext.grid.hideTooltip()
+    if((AppContext.grid.toDragRefClone == undefined) || (AppContext.grid.toDragRefClone == ''))
+      refdomelem =   $('#'+AppContext.grid.toDragRef.posId)
+      AppContext.grid.toDragRefClone = $(refdomelem).clone(); 
+      $(AppContext.grid.toDragRefClone).prependTo($(refdomelem))
+      # make style class
+      $(AppContext.grid.toDragRefClone).css("position","fixed")
+      $(AppContext.grid.toDragRefClone).css("z-index","1010")
+      $(AppContext.grid.toDragRefClone).css("opacity","0.9")
+    dx = (event.pageX-20) - $(AppContext.grid.toDragRefClone).position().left
+    dy = (event.pageY-20) - $(AppContext.grid.toDragRefClone).position().top    
+    newx = $(AppContext.grid.toDragRefClone).position().left + dx
+    newy = $(AppContext.grid.toDragRefClone).position().top + dy
+    $(AppContext.grid.toDragRefClone).css("left",newx+"px")
+    $(AppContext.grid.toDragRefClone).css("top",newy+"px")
+    ###
+      # clone all toDrag elements
+      domelem = $('#'+AppContext.grid.toDrag.posId)
+      AppContext.grid.clonedelem = $(domelem).clone()
+      $(AppContext.grid.clonedelem).prependTo($(domelem))
+      # make style class
+      $(AppContext.grid.clonedelem).css("position","fixed")
+      $(AppContext.grid.clonedelem).css("z-index","1010")
+      $(AppContext.grid.clonedelem).css("opacity","0.9")
+      # do for all clonedelems
+      newx = $(AppContext.grid.clonedelem).position().left + dx
+      newy = $(AppContext.grid.clonedelem).position().top + dy
+      $(AppContext.grid.clonedelem).css("left",newx+"px")
+      $(AppContext.grid.clonedelem).css("top",newy+"px")
+    ###
+
+    
+
   $( "#hexagonal-grid" ).mousemove( (event) -> 
-    if(AppContext.grid.downtile!='')
-      AppContext.grid.hideTooltip()
-      if(AppContext.grid.clonedelem == '')
-        domelem = $('#'+AppContext.grid.downtile.posId)
-        $(domelem).removeClass("bordered")
-        $(domelem).css("-webkit-clip-path","")
-        AppContext.grid.clonedelem = $(domelem).clone()
-        $(AppContext.grid.clonedelem).prependTo($(domelem))
-        $(AppContext.grid.clonedelem).css("position","fixed")
-        $(AppContext.grid.clonedelem).css("z-index","1010")
-        $(AppContext.grid.clonedelem).css("opacity","0.9")
-      $(AppContext.grid.clonedelem).css("left",event.pageX-20)
-      $(AppContext.grid.clonedelem).css("top",event.pageY-20)      
+    if(AppContext.grid.toDrag!='')
+      dragOnMouseMove(event)            
   )
+
+  setRightClickedPos = (event) ->
+    AppContext.grid.rightClickedPos =  AppContext.grid.getGridPos(event);
+
+  $( "#hexagonal-grid" ).mousedown( (event) -> 
+    if(event.which == 3)
+      console.log("clicked on div")   
+      setRightClickedPos(event)        
+  )
+

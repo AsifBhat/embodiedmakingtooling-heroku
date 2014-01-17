@@ -729,155 +729,159 @@ hex.extend(hex, {
     
     // Handler for any mouse button events
     function mousebutton(e) {
-      
-      var event = e.event;
-      
-      // Short-circuit if the event happened outside the bounds of the grid element.
-      if (!e.inside(elem)) {
-        return;
-      }
-      
-      // Determine the event type and coordinates
-      var
-        type = event.type,
-        mousepos = e.mousepos(elem);
-      
-      // Prevents browser-native dragging of child elements (ex: dragging an image)
-      if (type === "mouseup" || type === "mousedown") {
-        e.preventDefault();
-      }
-      
-      // prevent touch-hold-copy behavior
-      // also allows multi-touch gestures (like pinch-zoom) to occur unabaited
-      if (type === "touchstart") {
-        if (!event.touches || event.touches.length < 2) {
-          e.preventDefault();
-        }
-      }
-      
-      // Begin panning
-      if (!pan.panning && (
-        type === "mousedown" ||
-        type === "touchstart" ||
-        type === "MozTouchDown"
-      )) {
-        pan.panning = true;
-        pan.x = mousepos.x - 2 * g.origin.x;
-        pan.y = mousepos.y - 2 * g.origin.y;
-        elem.style.cursor = "move";
-        g.queue("panstart");
-      }
-      
-      // Cease panning
-      if (pan.panning && (
-        type === "mouseup" ||
-        type === "touchend" ||
-        type === "MozTouchUp" ||
-        type === "MozTouchRelease"
-      )) {
-        
-        // cancel tiletap if mouse has moved too far
-        var
-          diffx = mousepos.x - 2 * g.origin.x - pan.x,
-          diffy = mousepos.y - 2 * g.origin.y - pan.y;
-        diffx = diffx < 0 ? -diffx : diffx;
-        diffy = diffy < 0 ? -diffy : diffy;
-        if (diffx > g.tileWidth || diffy > g.tileHeight) {
-          downTime = null;
-        }
-        
-        // reorient if panning is still enabled
-        if (pan.enabled) {
-          g.queue("panend", mousepos.x - pan.x - 2 * g.origin.x, mousepos.y - pan.y - 2 * g.origin.y);
-          g.reorient(
-            mousepos.x - g.origin.x - pan.x,
-            mousepos.y - g.origin.y - pan.y
-          );
-        }
-        
-        pan.enabled = true;
-        pan.panning = false;
-        pan.x = null;
-        pan.y = null;
-        elem.style.cursor = "";
-      }
-      
-      var
-        tiledown = g.events.tiledown,
-        tileup = g.events.tileup,
-        tileclick = g.events.tileclick,
-        tiletap = g.events.tiletap;
-      
-      // Short-circuit if there are no tiledown, tileup, tileclick or tiletap event handlers
-      if (!tiledown && !tileup && !tileclick && !tiletap) {
-        g.fire();
-        return;
-      }
-      
-      var
-        // Adjusted mouse position
-        pos = {
-          x: mousepos.x - g.origin.x,
-          y: mousepos.y - g.origin.y
-        },
-        
-        // Grid-centric coordinates of the latest actioned tile
-        trans = g.translate(pos.x, pos.y);
-      
-      if (
-        type === "mousedown" ||
-        type === "touchstart" ||
-        type === "MozTouchDown"
-      ) {
-        
-        downTime = +new Date();
-        
-        // Trigger tiledown callbacks
-        if (tiledown) {
-          g.fire(); // fire any previously queued events
-          var res = g.trigger("tiledown", trans.x, trans.y);
-          if (res && res.prevented) {
-            pan.enabled = false;
+      if(e.which==1)
+      {
+        var event = e.event;
+            
+            // Short-circuit if the event happened outside the bounds of the grid element.
+            if (!e.inside(elem)) {
+              return;
+            }
+            
+            // Determine the event type and coordinates
+            var
+              type = event.type,
+              mousepos = e.mousepos(elem);
+            
+            // Prevents browser-native dragging of child elements (ex: dragging an image)
+            if (type === "mouseup" || type === "mousedown") {
+              e.preventDefault();
+            }
+            
+            // prevent touch-hold-copy behavior
+            // also allows multi-touch gestures (like pinch-zoom) to occur unabaited
+            if (type === "touchstart") {
+              if (!event.touches || event.touches.length < 2) {
+                e.preventDefault();
+              }
+            }
+            
+            // Begin panning
+            if (!pan.panning && (
+              type === "mousedown" ||
+              type === "touchstart" ||
+              type === "MozTouchDown"
+            )) {
+              pan.panning = true;
+              pan.x = mousepos.x - 2 * g.origin.x;
+              pan.y = mousepos.y - 2 * g.origin.y;
+              elem.style.cursor = "move";
+              g.queue("panstart");
+            }
+            
+            // Cease panning
+            if (pan.panning && (
+              type === "mouseup" ||
+              type === "touchend" ||
+              type === "MozTouchUp" ||
+              type === "MozTouchRelease"
+            )) {
+              
+              // cancel tiletap if mouse has moved too far
+              var
+                diffx = mousepos.x - 2 * g.origin.x - pan.x,
+                diffy = mousepos.y - 2 * g.origin.y - pan.y;
+              diffx = diffx < 0 ? -diffx : diffx;
+              diffy = diffy < 0 ? -diffy : diffy;
+              if (diffx > g.tileWidth || diffy > g.tileHeight) {
+                downTime = null;
+              }
+              
+              // reorient if panning is still enabled
+              if (pan.enabled) {
+                g.queue("panend", mousepos.x - pan.x - 2 * g.origin.x, mousepos.y - pan.y - 2 * g.origin.y);
+                g.reorient(
+                  mousepos.x - g.origin.x - pan.x,
+                  mousepos.y - g.origin.y - pan.y
+                );
+              }
+              
+              pan.enabled = true;
+              pan.panning = false;
+              pan.x = null;
+              pan.y = null;
+              elem.style.cursor = "";
+            }
+            
+            var
+              tiledown = g.events.tiledown,
+              tileup = g.events.tileup,
+              tileclick = g.events.tileclick,
+              tiletap = g.events.tiletap;
+            
+            // Short-circuit if there are no tiledown, tileup, tileclick or tiletap event handlers
+            if (!tiledown && !tileup && !tileclick && !tiletap) {
+              g.fire();
+              return;
+            }
+            
+            var
+              // Adjusted mouse position
+              pos = {
+                x: mousepos.x - g.origin.x,
+                y: mousepos.y - g.origin.y
+              },
+              
+              // Grid-centric coordinates of the latest actioned tile
+              trans = g.translate(pos.x, pos.y);
+            
+            if (
+              type === "mousedown" ||
+              type === "touchstart" ||
+              type === "MozTouchDown"
+            ) {
+              
+              downTime = +new Date();
+              
+              // Trigger tiledown callbacks
+              if (tiledown) {
+                g.fire(); // fire any previously queued events
+
+                ////////
+                var res = g.trigger("tiledown", trans.x, trans.y);
+                if (res && res.prevented) {
+                  pan.enabled = false;
+                }
+              }
+              
+              // Remember mousedown target (to test for "click" later)
+              downTile.x = trans.x;
+              downTile.y = trans.y;
+              
+            } else if (
+              type === "mouseup" ||
+              type === "touchend" ||
+              type === "MozTouchUp" ||
+              type === "MozTouchRelease"
+            ) {
+              
+              // Queue up tileup callbacks
+              if (tileup) {
+                g.queue("tileup", trans.x, trans.y);
+              }
+              
+              // Queue up tileclick and tiletap callbacks
+              if (downTile.x === trans.x && downTile.y === trans.y) {
+                if (tileclick) {
+                  g.queue("tileclick", trans.x, trans.y);
+                }
+                if (tiletap && downTime && (+new Date()) - downTime < g.tapthreshold) {
+                  g.queue("tiletap", trans.x, trans.y);
+                }
+              }
+              
+              // Clear mousedown target
+              downTile.x = null;
+              downTile.y = null;
+              
+              // Clear tiledown time
+              downTime = null;
+              
+            }
+            
+            // Fire off any queued events
+            g.fire();
           }
-        }
-        
-        // Remember mousedown target (to test for "click" later)
-        downTile.x = trans.x;
-        downTile.y = trans.y;
-        
-      } else if (
-        type === "mouseup" ||
-        type === "touchend" ||
-        type === "MozTouchUp" ||
-        type === "MozTouchRelease"
-      ) {
-        
-        // Queue up tileup callbacks
-        if (tileup) {
-          g.queue("tileup", trans.x, trans.y);
-        }
-        
-        // Queue up tileclick and tiletap callbacks
-        if (downTile.x === trans.x && downTile.y === trans.y) {
-          if (tileclick) {
-            g.queue("tileclick", trans.x, trans.y);
-          }
-          if (tiletap && downTime && (+new Date()) - downTime < g.tapthreshold) {
-            g.queue("tiletap", trans.x, trans.y);
-          }
-        }
-        
-        // Clear mousedown target
-        downTile.x = null;
-        downTile.y = null;
-        
-        // Clear tiledown time
-        downTime = null;
-        
-      }
-      
-      // Fire off any queued events
-      g.fire();
       
     }
     

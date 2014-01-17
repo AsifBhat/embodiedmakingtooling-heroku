@@ -1,12 +1,21 @@
-AppContext.grid.zoomValue = 3
-AppContext.grid.DEFAULT_ZOOM = 3
-AppContext.grid.MAX_ZOOM_LEVEL = 7
-AppContext.grid.MIN_ZOOM_LEVEL = 0
-AppContext.grid.ZOOM_ARRAY = [(1/3), (1/2), (2/3), 1 , 1.5, 2, 2.5]
-AppContext.grid.defaultSize = {
-  width : hex.grid.hexagonal.tileWidth,
-  height: hex.grid.hexagonal.tileHeight
-}
+jQuery ($) ->
+  context.init({
+    fadeSpeed: 100,
+    #filter: function ($obj){},
+    above: 'auto',
+    preventDoubleContext: true,
+    compress: false
+  });
+
+  AppContext.grid.zoomValue = 3
+  AppContext.grid.DEFAULT_ZOOM = 3
+  AppContext.grid.MAX_ZOOM_LEVEL = 7
+  AppContext.grid.MIN_ZOOM_LEVEL = 0
+  AppContext.grid.ZOOM_ARRAY = [(1/3), (1/2), (2/3), 1 , 1.5, 2, 2.5]
+  AppContext.grid.defaultSize = {
+    width : hex.grid.hexagonal.tileWidth,
+    height: hex.grid.hexagonal.tileHeight
+  }
 
 # Creating a grid
 AppContext.grid.createGrid = (domelem) ->
@@ -90,6 +99,37 @@ AppContext.grid.placeOnGrid = (elemwithpos) ->
   $(AppContext.grid.grid.root).append(cellToPlace)
   AppContext.grid.placeHex(cellToPlace,elemwithpos.x,elemwithpos.y)
 
+
+AppContext.grid.getGridPos = (e ) ->
+  
+  x = 0
+  y = 0
+  elem = $('#hexagonal-grid')[0]
+  g = {x: AppContext.grid.grid.origin.x, y: AppContext.grid.grid.origin.y}  
+  if (e.pageX != undefined && e.pageY != undefined)
+    x = e.pageX;
+    y = e.pageY;
+  else if (e.clientX != undefined && e.clientY != undefined)
+    x = e.clientX + document.body.scrollLeft + document.documentElement.scrollLeft
+    y = e.clientY + document.body.scrollTop + document.documentElement.scrollTop
+  if (elem) 
+    zeropos = hex.position(elem)
+    x = x - zeropos.x
+    y = y - zeropos.y
+  mousepos = {
+    x: x,
+    y: y
+  }
+  pos = {
+    x: mousepos.x - g.x,
+    y: mousepos.y - g.y
+  }
+  trans = AppContext.grid.grid.translate(pos.x, pos.y);
+  trans
+
+selectCluster = (e) ->
+  console.log(e)
+  console.log(AppContext.grid.rightClickedPos)
   
 AppContext.grid.displayAllPositions = (positions) ->
   $('.forces, .solutionComponents, .stories').remove()
@@ -97,6 +137,8 @@ AppContext.grid.displayAllPositions = (positions) ->
   $.each(positions, (i, value) ->
     AppContext.grid.placeOnGrid (value)
   )
+  console.log(context)
+  context.attach('.hex', [{"text":"Select cluster","action":selectCluster}]);
   if($("#showborders").attr("value") == "hide")
     showborders()
 
@@ -105,7 +147,7 @@ AppContext.grid.clearGridCache = () ->
   AppContext.grid.hoveredElement = ''
   AppContext.grid.idwithtooltip = ''
   AppContext.grid.newElement = ''
-  AppContext.grid.downtile = ''
+  AppContext.grid.toDrag = ''
   AppContext.grid.clonedelem = '' 
 
 AppContext.grid.getAllNeighbourCells =  (pos) ->
@@ -138,6 +180,8 @@ AppContext.grid.activateListeners = () ->
   AppContext.grid.grid.addEvent("tileup", AppContext.grid.tileUpHandler)
   
   AppContext.grid.grid.addEvent("tileclick", AppContext.grid.tileClickHandler)
+
+  AppContext.grid.grid.addEvent("tilerightclick", AppContext.grid.tileClickHandler)
 
 
 AppContext.grid.activateZoomListeners = () ->
@@ -289,4 +333,11 @@ AppContext.grid.markBorder = (posx, posy) ->
   
 jQuery ($) ->
   AppContext.grid.clearGridCache()
+  AppContext.grid.contextmenu = context.init({
+    fadeSpeed: 100,
+    #filter: function ($obj){},
+    above: 'auto',
+    preventDoubleContext: true,
+    compress: false
+  });
 
