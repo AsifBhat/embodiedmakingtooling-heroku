@@ -130,16 +130,32 @@ function onFileLoaded(doc) {
   Util.log.console("On file loaded...");
   AppContext.vizdata = doc.getModel().getRoot().get('vizdata');
 
+  /**
+    Registering Listeners for Positional Information for various cells placed on the Grid.
+   */
   AppContext.vizdata.positions.addEventListener(gapi.drive.realtime.EventType.VALUES_ADDED, doPosValueChanged);
   AppContext.vizdata.positions.addEventListener(gapi.drive.realtime.EventType.VALUES_REMOVED, doPosValueChanged);
+
+  /**
+    Registering Listeners for Content Elements
+   */
   AppContext.vizdata.elements.addEventListener(gapi.drive.realtime.EventType.VALUES_ADDED, doContentValueChanged);
   AppContext.vizdata.elements.addEventListener(gapi.drive.realtime.EventType.VALUES_REMOVED, doContentValueChanged);
-  
+  /**
+    Registering Listeners for relations between various Content Elements
+   */
   AppContext.vizdata.relations.addEventListener(gapi.drive.realtime.EventType.VALUES_ADDED, doRelValueChanged);
   AppContext.vizdata.relations.addEventListener(gapi.drive.realtime.EventType.VALUES_REMOVED, doRelValueChanged);
   
+  /**
+    Registering Listeners for nuggets data constructs
+   */
   AppContext.vizdata.nuggets.addEventListener(gapi.drive.realtime.EventType.VALUES_ADDED, doNuggetValueChanged);
   AppContext.vizdata.nuggets.addEventListener(gapi.drive.realtime.EventType.VALUES_REMOVED, doNuggetValueChanged);
+
+  /**
+    Registerng Listeners for meta information for the given making
+   */
   AppContext.vizdata.meta.addEventListener(gapi.drive.realtime.EventType.VALUES_ADDED, doMetaValueChanged);
   AppContext.vizdata.meta.addEventListener(gapi.drive.realtime.EventType.VALUES_REMOVED, doMetaValueChanged);
 
