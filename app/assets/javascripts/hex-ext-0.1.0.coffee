@@ -127,9 +127,7 @@ AppContext.grid.getGridPos = (e ) ->
   trans = AppContext.grid.grid.translate(pos.x, pos.y);
   trans
 
-selectCluster = (e) ->
-  console.log(e)
-  console.log(AppContext.grid.rightClickedPos)
+
   
 AppContext.grid.displayAllPositions = (positions) ->
   $('.forces, .solutionComponents, .stories').remove()
@@ -138,7 +136,7 @@ AppContext.grid.displayAllPositions = (positions) ->
     AppContext.grid.placeOnGrid (value)
   )
   console.log(context)
-  context.attach('.hex', [{"text":"Select cluster","action":selectCluster}]);
+  context.attach('.hex', [{"text":"Select cluster","action":AppContext.grid.selectCluster}]);
   if($("#showborders").attr("value") == "hide")
     showborders()
 
