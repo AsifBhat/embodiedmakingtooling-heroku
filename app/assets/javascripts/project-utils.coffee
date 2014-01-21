@@ -41,8 +41,14 @@ AppContext.project.sendChangeTitleRequest = (newTitle) ->
   )
 
 AppContext.project.showPicture = (pictureurl) ->
-  pictureurl = pictureurl.substr(pictureurl.lastIndexOf('//'), pictureurl.length)
-  $('#profile_picture').css("display","").attr("xlink:href",pictureurl)
+  if pictureurl != null
+    # Check if the User has set any Image associated with their profile, then show that
+    pictureurl = pictureurl.substr(pictureurl.lastIndexOf('//'), pictureurl.length)
+    $('#profile_picture').css("display","").attr("xlink:href",pictureurl)
+  else 
+    # If no image is associated with the Curren tUser Profile, then show a default Image
+    $('#profile_picture').css("display","").attr("xlink:href",'/assets/images/no_image_user.png')
+  
 
 
 AppContext.project.getUserInfo = () ->
@@ -59,6 +65,8 @@ AppContext.project.getUserInfo = () ->
             $('#authorizeButton').html(resp.name)
             if(resp.user.picture != undefined)
               AppContext.project.showPicture(resp.user.picture.url)
+            else 
+              AppContext.project.showPicture(null)
         catch err
           Util.log.console 'Error while fetching user information'
           Util.log.console err

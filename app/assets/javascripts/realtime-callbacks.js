@@ -10,8 +10,8 @@ function registerTypes() {
   VizDataModel.prototype.positions = gapi.drive.realtime.custom.collaborativeField('positions');
   VizDataModel.prototype.relations = gapi.drive.realtime.custom.collaborativeField('relations');
   VizDataModel.prototype.elements = gapi.drive.realtime.custom.collaborativeField('elements');
-  VizDataModel.prototype.nuggets = gapi.drive.realtime.custom.collaborativeField('nuggets');
   VizDataModel.prototype.meta = gapi.drive.realtime.custom.collaborativeField('meta');
+  VizDataModel.prototype.nuggets = gapi.drive.realtime.custom.collaborativeField('nuggets');
   gapi.drive.realtime.custom.registerType(VizDataModel, 'VizDataModel');
   gapi.drive.realtime.custom.setInitializer(VizDataModel, doInitialize);
   //gapi.drive.realtime.custom.setOnLoaded(VizDataModel, onLoaded);
