@@ -216,3 +216,34 @@
     });
     this.meta.push({"title" : newTitle});
   };
+
+  /************** Nugget methods ***********************/
+
+  /**
+    Method to add and persist the nugget corresponding to this document
+   */
+  VizDataModel.prototype.addNugget = function(nugget){
+    this.nuggets.push(nugget);
+    return this.nuggets.length;
+  };
+
+  /**
+    Method to get a list of all the nuggets
+   */
+  VizDataModel.prototype.getNuggets = function() {
+    return this.nuggets.asArray();
+  };
+
+  /**
+    Remove a nugget: the ID shall be supplied by the UI.
+   */
+  VizDataModel.prototype.removeNugget = function(nuggetId){
+    nuggetsList = this.nuggets.asArray();
+    $.each(nuggetsList, function(idx, nugget){
+      if(nugget.nuggetId == nuggetId){
+        this.nuggets.remove(idx);
+        Util.log.console('Deleted nugget with ID' + nuggetId + ' and description nugget.description');
+        return;
+      }
+    });
+  }
