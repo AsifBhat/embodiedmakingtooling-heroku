@@ -41,26 +41,30 @@ AppContext.project.sendChangeTitleRequest = (newTitle) ->
   )
 
 AppContext.project.showPicture = (pictureurl) ->
+  pictureurl = pictureurl.substr(pictureurl.lastIndexOf('//'), pictureurl.length)
   $('#profile_picture').css("display","").attr("xlink:href",pictureurl)
 
 
-###
-  Get User-Name and User-Profile image information about the current user 
-###
 AppContext.project.getUserInfo = () ->
+  ###
+  * Get information about the current user 
+  ###
   Util.log.console('Fetching User Info..')
   try 
     if(gapi.client != undefined && gapi.client.drive != undefined)
       request = gapi.client.drive.about.get()
       request.execute( (resp) ->
         try 
-          $('#authorizeButton').html(resp.name)
-          AppContext.project.showPicture(resp.user.picture.url)
-          #Util.log.console(resp.user)
+          if(resp != undefined)
+            $('#authorizeButton').html(resp.name)
+            if(resp.user.picture != undefined)
+              AppContext.project.showPicture(resp.user.picture.url)
         catch err
           Util.log.console 'Error while fetching user information'
           Util.log.console err
       )
+    else
+      Util.log.console 'Error since the GAPI is not loaded completely'
   catch err
     Util.log.console 'Error Occured while fetching user info'
     Util.log.console err
