@@ -40,8 +40,9 @@ AppContext.project.sendChangeTitleRequest = (newTitle) ->
     Util.log.console 'Project Title Changed'
   )
 
-AppContext.project.showPicture = (pictureurl) ->
-  $('#profile_picture').css("display","").attr("xlink:href",pictureurl)
+AppContext.project.showPicture = (user) ->
+  if(user.picture)
+    $('#profile_picture').css("display","").attr("xlink:href",user.picture.url)
 
 
 AppContext.project.getUserInfo = () ->
@@ -56,7 +57,7 @@ AppContext.project.getUserInfo = () ->
         $('#authorizeButton').html(resp.name)
         Util.log.console('Current user name: ' + resp.name)
         Util.log.console(resp.user)
-        AppContext.project.showPicture(resp.user.picture.url)
+        AppContext.project.showPicture(resp.user)
         #Util.log.console(resp.user)
       catch err
         Util.log.console 'Error while fetching user information'

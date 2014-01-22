@@ -8,7 +8,7 @@ displayOptions = function (){
   $('#addFromTypeahead').css("top", toppos + "px");
 }
 
-getNextElemId = function(allElem) {
+/*getNextElemId = function(allElem) {
   var nextId = 1;
   $(allElem).each(function(i){
     var id = this.elementId;
@@ -20,18 +20,21 @@ getNextElemId = function(allElem) {
   });
   Util.log.console('Next Element Id ' + nextId);
   return nextId;
-};
+};*/
 
 getNextStoryId =  function() {
-  return getNextElemId(AppContext.vizdata.getStories());
+  //return getNextElemId(AppContext.vizdata.getStories());
+  return $.newUUID();
 };
 
 getNextForceId =  function() {
-  return getNextElemId(AppContext.vizdata.getForces());
+  //return getNextElemId(AppContext.vizdata.getForces());
+  return $.newUUID();
 };
 
 getNextSolutionId =  function() {
-  return getNextElemId(AppContext.vizdata.getSolutions());
+  //return getNextElemId(AppContext.vizdata.getSolutions());
+  return $.newUUID();
 };
 
 

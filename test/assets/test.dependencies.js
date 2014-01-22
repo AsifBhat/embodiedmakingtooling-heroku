@@ -13,11 +13,12 @@ EnvJasmine.loadGlobal(EnvJasmine.libDir + "jquery-1.9.1.js");
 EnvJasmine.loadGlobal(EnvJasmine.libDir + "bootstrap-tooltip-v2.2.2.js");
 EnvJasmine.loadGlobal(EnvJasmine.libDir + "test/jasmine-jquery.js");
 EnvJasmine.loadGlobal(EnvJasmine.libDir + "api.js");
-EnvJasmine.loadGlobal(EnvJasmine.rootDir + "google-auth-utils.js")
+EnvJasmine.loadGlobal(EnvJasmine.rootDir + "google-auth-utils.js");
 EnvJasmine.loadGlobal(EnvJasmine.libDir + "realtime-client-utils.js");
 EnvJasmine.loadGlobal(EnvJasmine.libDir + "hex-0.1.0.js");
 EnvJasmine.loadGlobal(EnvJasmine.libDir + "sigma.min.js");
 EnvJasmine.loadGlobal(EnvJasmine.libDir + "context.js");
+EnvJasmine.loadGlobal(EnvJasmine.libDir + "jquery.uuid-1.0.0.min.js");
 // Import all modules (in theory this should be done with RequireJs, but it fails for some reason)
 // FIXME: check why we can't use RequireJs instead of manually importing files
 EnvJasmine.loadGlobal(EnvJasmine.rootDir + "AppContext.js");

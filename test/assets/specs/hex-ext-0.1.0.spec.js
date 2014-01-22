@@ -36,7 +36,7 @@ describe("Grid library", function() {
   });
 
   it("Should place an element on the grid", function() {
-    expect(AppContext.grid.placeOnGrid(position)).toHaveClass("forces");
+    expect(AppContext.grid.placeOnGrid(position,"description")).toHaveClass("forces");
   });
   
 });

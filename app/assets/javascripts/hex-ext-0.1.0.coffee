@@ -85,8 +85,10 @@ AppContext.grid.showTooltip = (x,y,elemId, tooltipInfo) ->
 AppContext.grid.hideTooltip = () ->  
   AppContext.grid.idwithtooltip.tooltip('hide')
 
-AppContext.grid.placeOnGrid = (elemwithpos) ->
+AppContext.grid.placeOnGrid = (elemwithpos, displaytext = "") ->
   elemid = elemwithpos.elementId
+  if(displaytext == "") 
+    displaytext = (AppContext.vizdata.getElementDescription(elemid)).substr(1,5)
   
   etype = elemid.substr(0,1)
   switch etype
@@ -94,7 +96,7 @@ AppContext.grid.placeOnGrid = (elemwithpos) ->
     when 'F' then cls = "forces"
     when 'C' then cls = "solutionComponents"
   
-  cellToPlace = AppContext.grid.createHex(cls, elemid)
+  cellToPlace = AppContext.grid.createHex(cls, displaytext)
   $(cellToPlace).attr("id",elemwithpos.posId)
   $(AppContext.grid.grid.root).append(cellToPlace)
   AppContext.grid.placeHex(cellToPlace,elemwithpos.x,elemwithpos.y)
