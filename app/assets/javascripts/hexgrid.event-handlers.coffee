@@ -25,43 +25,17 @@ jQuery ($) ->
       #  AppContext.grid.showTooltip(x,y, elementUnderMouse, tooltipInfo)
     AppContext.grid.showHoveredElement(x,y) 
 
+  # Callback that handles VALUES_ADDED event on the Vizdatamodel positions object for each value added
+  AppContext.grid.posValueAddedCallback = (addedPos) ->
+    AppContext.grid.placeOnGrid(addedPos)  
+
+  # Callback that handles VALUES_REMOVED event on the Vizdatamodel positions object for each value removed
+  AppContext.grid.posValueRemovedCallback = (addedPos) ->
+    AppContext.grid.removeFromGrid(addedPos)    
+
   # Method to add position object in the positions array and add the corresponding hex on the grid
   AppContext.grid.addGridPos = (obj, datum, dataset) ->
-    # Update the new element
-    if( dataset.indexOf('Elements') != -1 )
-      dataset = AppContext.vizdata.getContentElementType(datum.value)
-
-    AppContext.grid.newElement.removeClass('new')
-    
-    #get the position object for the current location
-    cellClicked = AppContext.vizdata.getPositionInCell({x: gx, y: gy})
-
-    if(cellClicked != '')
-      AppContext.grid.newElement = $('#'+cellClicked.posId)
-      AppContext.grid.newElement.removeClass('stories')
-      AppContext.grid.newElement.removeClass('forces')
-      AppContext.grid.newElement.removeClass('solutionComponents')
-  
-      # Clear any previous text associated with the current hex-cell
-      AppContext.grid.newElement.text('')
-
-    AppContext.grid.newElement.addClass(dataset)
-
-    # Keep content search reference
-    contentSearch = $("#content-search")
-    
-    # Hide the content search
-    contentSearch.css('display', 'none')
-    $('#addFromTypeahead').css("display","none");
-    
-    # Add the corresponding text to the given element
-    AppContext.grid.newElement.text(datum.value) # datum.id later
-    AppContext.grid.newElement.css('z-index','100')
-    # When a content element is selected from the typeahead, it could be
-    # a new entry to the positions list or an update to an already 
-    # existing entry.
     AppContext.cluster.updatePosition(datum.value, gx, gy)
-
     # when new cell is added, update the edit section
     tooltipInfo = AppContext.vizdata.getElementDescription(datum.value)
     AppContext.grid.drawTipDesc(datum.value , tooltipInfo, {x: gx, y:gy})

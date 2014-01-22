@@ -37,6 +37,14 @@ listeners, but listener code should check the isLocal property of change
 events so that local changes can be ignored. See Handle Events for more 
 detailed information on event handling.
 */
+function doPosValuesAdded (event){
+  $.map(event.values, AppContext.grid.posValueAddedCallback);
+}
+
+function doPosValueRemoved (event) {
+  $.map(event.values, AppContext.grid.posValueRemovedCallback);
+}
+
 function doPosValueChanged (){
   var model = gapi.drive.realtime.custom.getModel(this);
   Util.log.console("Model value changed...");
@@ -118,8 +126,9 @@ function onFileLoaded(doc) {
   Util.log.console("On file loaded...");
   AppContext.vizdata = doc.getModel().getRoot().get('vizdata');
 
-  AppContext.vizdata.positions.addEventListener(gapi.drive.realtime.EventType.VALUES_ADDED, doPosValueChanged);
-  AppContext.vizdata.positions.addEventListener(gapi.drive.realtime.EventType.VALUES_REMOVED, doPosValueChanged);
+  AppContext.vizdata.positions.addEventListener(gapi.drive.realtime.EventType.VALUES_ADDED, doPosValuesAdded);
+  AppContext.vizdata.positions.addEventListener(gapi.drive.realtime.EventType.VALUES_REMOVED, doPosValueRemoved);
+
   AppContext.vizdata.elements.addEventListener(gapi.drive.realtime.EventType.VALUES_ADDED, doContentValueChanged);
   AppContext.vizdata.elements.addEventListener(gapi.drive.realtime.EventType.VALUES_REMOVED, doContentValueChanged);
   

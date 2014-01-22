@@ -45,16 +45,10 @@ AppContext.cluster.deletePosition = (posx, posy) ->
   todel = AppContext.vizdata.getPositionInCell({x:posx,y:posy})
   AppContext.vizdata.removePosition(todel)
   relations = AppContext.vizdata.getRelations()
-  domElemToDel = $(todel.posId)
   $.each(relations, (i, relation) ->
     if((relation.srcPosId == todel.posId) || (relation.targetPosId == todel.posId))
       AppContext.vizdata.removeRelation(relation)
   )  
-  domElemToDel.removeClass('stories')
-  domElemToDel.removeClass('forces')
-  domElemToDel.removeClass('solutionComponents')
-  domElemToDel.removeClass('new')
-  domElemToDel.addClass('current') 
   
 #---------------------------------------------------------
 

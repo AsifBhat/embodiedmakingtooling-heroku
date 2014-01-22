@@ -100,6 +100,11 @@ AppContext.grid.placeOnGrid = (elemwithpos) ->
   AppContext.grid.placeHex(cellToPlace,elemwithpos.x,elemwithpos.y)
 
 
+AppContext.grid.removeFromGrid = (elemwithpos) ->
+  console.log("remove "+elemwithpos.posId)
+  domelem = $('#'+elemwithpos.posId)
+  domelem.remove()
+
 AppContext.grid.getGridPos = (e ) ->
   
   x = 0
