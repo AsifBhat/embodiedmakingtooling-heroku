@@ -139,6 +139,10 @@ AppContext.grid.activateListeners = () ->
   
   AppContext.grid.grid.addEvent("tileclick", AppContext.grid.tileClickHandler)
 
+  $('#nugget_btn').click((evt) ->
+    AppContext.controls.handleNuggetDisplay(evt)
+  )
+
 
 AppContext.grid.activateZoomListeners = () ->
 

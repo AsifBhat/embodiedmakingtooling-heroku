@@ -122,10 +122,6 @@ jQuery ($) ->
   AppContext.project.handleNameChange = () ->
     $('.proj_title').text(AppContext.vizdata.getProjectTitle())
 
-  AppContext.grid.zoomHandler = (e, x, y) ->
-    Util.log.console ('Zoom Event Called')
-    # here we have event handlers to the HTML components and other CSS changes
-  
   AppContext.grid.tileUpHandler = (e, x, y) ->
     if(AppContext.grid.downtile!='')
       domelem = $('#'+AppContext.grid.downtile.posId)
@@ -202,6 +198,30 @@ jQuery ($) ->
 
       AppContext.grid.activateListeners()
       AppContext.grid.displayAllPositions(AppContext.vizdata.getPositions())
+
+  AppContext.controls.handleNuggetDisplay= (evt) ->
+    Util.log.console('Handling nugget display click')
+
+    addNuggetSection = () ->
+      # add the typeahead and a listing mechanism for the nuggets
+      $('.edit_nuggets').css({
+        'display': 'block'
+        'opacity': 1
+      })
+    
+    # Toggle display for the edit pane: The click should effect the visiblity of the pane
+    # The following is a temporary setup, once the whole edit section is moved to the pane 
+    # the following toggle has to be removed.
+    if( $('#edit_pane').css('display') == 'none')
+      $('#edit_pane').css('display', 'block')
+      addNuggetSection()
+    else 
+      if $('.edit_nuggets').css('display') == 'none'
+        $('.desc_section').css('display', 'none')
+        addNuggetSection()
+      else 
+        $('.cont_edit_pane').css('display', 'none')
+
 
   $( "#hexagonal-grid" ).mousemove( (event) -> 
     if(AppContext.grid.downtile!='')

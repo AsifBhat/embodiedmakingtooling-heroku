@@ -11,3 +11,5 @@ AppContext.project = {};
 AppContext.graph = {};
 
 AppContext.global = {};
+
+AppContext.controls = {};
