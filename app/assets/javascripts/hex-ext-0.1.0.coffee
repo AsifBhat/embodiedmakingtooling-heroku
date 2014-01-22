@@ -103,7 +103,6 @@ AppContext.grid.placeOnGrid = (elemwithpos, displaytext = "") ->
 
 
 AppContext.grid.removeFromGrid = (elemwithpos) ->
-  console.log("remove "+elemwithpos.posId)
   domelem = $('#'+elemwithpos.posId)
   domelem.remove()
 
@@ -142,7 +141,6 @@ AppContext.grid.displayAllPositions = (positions) ->
   $.each(positions, (i, value) ->
     AppContext.grid.placeOnGrid (value)
   )
-  console.log(context)
   context.attach('.hex', [{"text":"Select cluster","action":AppContext.grid.selectCluster}]);
   if($("#showborders").attr("value") == "hide")
     showborders()
@@ -192,13 +190,11 @@ AppContext.grid.activateListeners = () ->
 AppContext.grid.activateZoomListeners = () ->
 
   $('#zoomin-controller').click( (evt) ->
-    Util.log.console 'Zooming in'
     AppContext.grid.zoomEventHandler(evt, 1)
     #call the zoom handler with a positive value
   )
 
   $('#zoomout-controller').click( (evt) ->
-    Util.log.console 'clicked on zoom out '
     AppContext.grid.zoomEventHandler(evt, -1)
     #call the zoom handler with a negative value
   )
@@ -321,7 +317,6 @@ showborders = () ->
 AppContext.grid.markBorder = (posx, posy) ->
   borderbtn = $('#showborders')[0];
   action = $(borderbtn).attr("value");
-  Util.log.console("action: "+action)
   allpositions = AppContext.vizdata.getPositions()
   if(action == 'show')
     $(borderbtn).html('Hide Borders');

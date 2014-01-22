@@ -137,14 +137,12 @@ jQuery ($) ->
     if (AppContext.grid.selectedElemPos == undefined) || (AppContext.grid.selectedElemPos.length == 0)
       pos = {x:x,y:y}
       elempos = AppContext.vizdata.getPositionInCell(pos)
-    # if (notselectedfrommenu)
       if(elempos!='')
         AppContext.grid.toDrag.push(elempos)
-    # If a single cell is dragged, toDrag is set as above.  Else(selectedfrommenu) toDrag(s) is /are
-    # set by the callbacks of the menu item handler 'Select cluster' etc. 'todragreference' is the 
-    # cell from which the dragging is done)
+      # If a single cell is dragged, toDrag is set as above.  Else(selectedfrommenu) toDrag(s) is /are
+      # set by the callbacks of the menu item handler 'Select cluster' etc. 'todragreference' is the 
+      # cell from which the dragging is done)
         AppContext.grid.toDragRef = AppContext.vizdata.getPositionInCell(pos)
-        console.log("single cell selected")
     else
       AppContext.grid.toDrag = AppContext.grid.selectedElemPos
       AppContext.grid.toDragRef = AppContext.grid.rightClickedelempos
@@ -209,7 +207,6 @@ jQuery ($) ->
   dragOnMouseMove = (event) ->
     AppContext.grid.hideTooltip()
     if(AppContext.grid.toDragRef!='')&&(AppContext.grid.toDragRef != undefined) #&& (AppContext.grid.todrag!=undefined)&&(AppContext.grid.todrag.length > 0)
-      console.log(AppContext.grid.toDragRef)
       if((AppContext.grid.toDragRefClone == undefined) || (AppContext.grid.toDragRefClone == ''))
         refdomelem =   $('#'+AppContext.grid.toDragRef.posId)
         AppContext.grid.toDragRefClone = $(refdomelem).clone(); 
@@ -227,24 +224,18 @@ jQuery ($) ->
 
 
     if(AppContext.grid.toDrag.length>1)
-      console.log("to drag: for cloning")
-      console.log(AppContext.grid.toDrag)
       clonedelem = ''
       if((AppContext.grid.clonesToDrag.length == 0))
-        console.log("Need to clone")
         $.each(AppContext.grid.toDrag, (i, todrag) ->
           if(todrag.posId != AppContext.grid.toDragRef.posId)
             domelem = $('#'+todrag.posId)
             clonedelem = $(domelem).clone()
             $(clonedelem).prependTo($(domelem))
-            console.log("prepended")
             $(clonedelem).css("position","fixed")
             $(clonedelem).css("z-index","1010")
             $(clonedelem).css("opacity","0.9")
             AppContext.grid.clonesToDrag.push(clonedelem)
-            #console.log(clonedelem)
         )
-        #console.log(clonedelem)
       $.each(AppContext.grid.clonesToDrag, (i, todragclone) ->
         newx = $(todragclone).position().left + dx
         newy = $(todragclone).position().top + dy
@@ -272,30 +263,39 @@ jQuery ($) ->
       $(domelem).css("opacity", "0.5")
     )
 
+  getCluster = (nbelemcells, startIndex)  ->
+    currentIndex = startIndex
+    $.each(nbelemcells, (i,nbelemcell) ->
+      if(i>=startIndex)
+        nbcells = AppContext.grid.getAllNeighbourCells({x:nbelemcell.x, y:nbelemcell.y})
+        $.each(nbcells, (j, nbcell) ->
+          newnbelemcell = AppContext.vizdata.getPositionInCell(nbcell)
+          if((newnbelemcell != '')&&(!isInArray(newnbelemcell,nbelemcells)))
+            nbelemcells.push(newnbelemcell)
+        )
+      currentIndex = i  
+    )
+    if(currentIndex < nbelemcells.length-1) 
+      getCluster(nbelemcells, currentIndex+1)
+    else
+      nbelemcells  
+
   AppContext.grid.selectCluster = (e) ->
     nbelemcells = []
     rightClickedelempos = AppContext.vizdata.getPositionInCell(AppContext.grid.rightClickedPos)
     if(rightClickedelempos != '')
-      nbelemcells.push(rightClickedelempos)
-    $.each(nbelemcells, (i,nbelemcell) ->
-      nbcells = AppContext.grid.getAllNeighbourCells({x:nbelemcell.x, y:nbelemcell.y})
-      $.each(nbcells, (j, nbcell) ->
-        newnbelemcell = AppContext.vizdata.getPositionInCell(nbcell)
-        if((newnbelemcell != '')&&(!isInArray(newnbelemcell,nbelemcells)))
-          nbelemcells.push(newnbelemcell)
-      )
-    )  
-    AppContext.grid.selectedElemPos = nbelemcells
+      nbelemcells.push(rightClickedelempos)  
+    AppContext.grid.selectedElemPos = getCluster(nbelemcells,0)
     AppContext.grid.rightClickedelempos = rightClickedelempos
+    AppContext.grid.toDrag = []
     AppContext.grid.markSelected()
-    AppContext.grid.toDrag = 0
+    
 
   setRightClickedPos = (event) ->
     AppContext.grid.rightClickedPos =  AppContext.grid.getGridPos(event);
 
   $( "#hexagonal-grid" ).mousedown( (event) -> 
     if(event.which == 3)
-      console.log("clicked on div")   
       setRightClickedPos(event)        
   )
 
