@@ -25,8 +25,8 @@ AppContext.grid.createGrid = (domelem) ->
 
 AppContext.grid.createHex = (styleClass, text = "") ->
   $('<div class="hex '+ styleClass+'" >'+text+'</div>').css({
-    'width': AppContext.grid.grid.tileWidth + 'px',
-    'height': AppContext.grid.grid.tileHeight + 'px',
+    'width': AppContext.grid.grid.tileWidth - 2 + 'px',
+    'height': (AppContext.grid.grid.tileHeight - 5) + 'px',
     'line-height': AppContext.grid.grid.tileHeight + 'px',
   }).addClass(styleClass)
 
@@ -35,14 +35,13 @@ AppContext.grid.initialize = () ->
   AppContext.grid.hoveredElement = AppContext.grid.createHex('current')
   $(AppContext.grid.grid.root).append(AppContext.grid.hoveredElement)
   AppContext.grid.idwithtooltip =  $('#desctooltip')
-  AppContext.global.firstDisplay = true
   AppContext.grid.reorient()
   AppContext.grid 
 
 AppContext.grid.placeHex =(elem,x,y) ->
     inv = AppContext.grid.grid.screenpos(x, y)
     elem.css("left", inv.x + "px")
-    elem.css("top", inv.y + "px")
+    elem.css("top", inv.y + 3 + "px")
     elem
 
 AppContext.grid.showHoveredElement = (xc, yc) ->

@@ -1018,8 +1018,10 @@ hex.grid.hexagonal = {
     var 
       w = this.tileWidth,
       h = this.tileHeight,
-      qx = floor( ( posx - w * 0.25 ) / ( w * 0.75 ) ),
-      qy = floor( ( posy ) / h );
+      //qx = floor( ( posx - w * 0.25 ) / ( w * 0.75 ) ),
+      qy = floor( ( posy - h * 0.25 ) / ( h * 0.75 ) ),
+      //qy = floor( ( posy ) / h );
+      qx = floor( ( posx ) / w );
     
     return {
       x: qx,
@@ -1037,10 +1039,14 @@ hex.grid.hexagonal = {
   screenpos: function screenpos( hexx, hexy ) {
     
     var
-      w = this.tileWidth * 0.75,
-      h = this.tileHeight,
-      sx = hexx * w,
-      sy = -hexy * h - hexx * h * 0.5;
+      /*w = this.tileWidth * 0.75,
+      h = this.tileHeight,*/
+      w = this.tileWidth ,
+      h = this.tileHeight * .75,
+      /*sx = hexx * w,
+      sy = -hexy * h - hexx * h * 0.5;*/
+      sy = hexy * h,
+      sx = -hexx * w - hexy * w * 0.5;
       
     return {
       x: sx,
@@ -1052,8 +1058,8 @@ hex.grid.hexagonal = {
   /**
    * Hexagon tile characteristics.
    */
-  tileHeight: 42,
-  tileWidth: 48,
+  tileHeight: 48,
+  tileWidth: 42,
   
   /**
    * Translate a pair of x/y screen coordinates into the geometry appropriate coordinates of this grid.
@@ -1065,12 +1071,18 @@ hex.grid.hexagonal = {
     
     // Useful shorthand values
     var
-      w2 = this.tileWidth * 0.5,
-      w4 = w2 * 0.5,
-      w34 = w4 * 3,
-      h = this.tileHeight,
-      h2 = h * 0.5,
-      m = h2 / w4,
+      //w2 = this.tileWidth * 0.5,
+      h2 = this.tileHeight * 0.5,
+      //w4 = w2 * 0.5,
+      h4 = h2 * 0.5,
+      //w34 = w4 * 3,
+      h34 = h4 * 3,
+      //h = this.tileHeight,
+      w = this.tileWidth,
+      //h2 = h * 0.5,
+      w2 = w * 0.5,
+      //m = h2 / w4,
+      m = w2 / h4,
       x,
       y;
     
@@ -1082,26 +1094,39 @@ hex.grid.hexagonal = {
     
     // Based on the quadrant, calculate the pixel offsets of the click within the quadrant
     var
-      px = ( posx - w4 ) % w34,
-      py = ( posy ) % h;
-    if (px < 0) {
+      //px = ( posx - w4 ) % w34,
+      py = (posy - h4) % h34,
+      //py = ( posy ) % h;
+      px = ( posx ) % w;
+    /*if (px < 0) {
       px += w34;
-    }
-    if (py < 0) {
+    }*/
+      if (py < 0) {
+        py += h34;
+      }
+    /*if (py < 0) {
       py += h;
+    }*/
+    if(px < 0) {
+      px += w;
     }
-    px -= w2;
+    //px -= w2;
+    py -= h2;
     
     // Mode determined by x quadrant
-    if (qx % 2) {
+    //if (qx % 2) {
+    if(qy % 2 )  {
       
       // |_/|  A-type quadrant
       // | \|
       
       // Start with simple cases
-      x = qx;
-      y = (1 - qx) * 0.5 - qy - (py > h2 ? 1 : 0);
-      if ( px <= 0 || py == h2 ) {
+      //x = qx;
+      y = qy;
+      //y = (1 - qx) * 0.5 - qy - (py > h2 ? 1 : 0);
+      x = (1 - qy) * 0.5 - qx - (px > w2 ? 1 : 0);
+      //if ( px <= 0 || py == h2 ) {
+      if( py <= 0 || px == w2)  {
         return {
           x: x,
           y: y
@@ -1109,16 +1134,26 @@ hex.grid.hexagonal = {
       }
       
       // Make adjustments if click happend in right-hand third of the quadrant
-      if ( py < h2 && py > ( h2 - px * m ) ) {
-        return {
+      //if ( py < h2 && py > ( h2 - px * m ) ) {
+      if( px < w2 && px > ( w2 - py * m))  {
+        /*return {
           x: x+1,
           y: y-1
+        };*/
+        return {
+          y: y+1,
+          x: x-1
         };
       }
-      if ( py > h2 && py < ( h2 + px * m ) ) {
-        return {
+      //if ( py > h2 && py < ( h2 + px * m ) ) {
+      if ( px > w2 && px < (w2 + py * m))  {
+       /* return {
           x: x+1,
           y: y
+        };*/
+        return {
+          y: y+1,
+          x: x
         };
       }
       
@@ -1128,9 +1163,12 @@ hex.grid.hexagonal = {
       // | /|
       
       // Start with simple case
-      x = qx;
-      y = -qx * 0.5 - qy;
-      if ( px <= 0 || py == h2 ) {
+      //x = qx;
+      y = qy;
+      //y = -qx * 0.5 - qy;
+      x = -qy * 0.5 - qx;
+      //if ( px <= 0 || py == h2 ) {
+      if ( py <= 0 || px == w2)  {
         return {
           x: x,
           y: y
@@ -1138,16 +1176,26 @@ hex.grid.hexagonal = {
       }
       
       // Make adjusments if the click happend in the latter third
-      if ( py < h2 && py < px * m ) {
-        return {
+      //if ( py < h2 && py < px * m ) {
+      if ( px < w2 && px < py *m )  {
+        /*return {
           x: x+1,
           y: y
+        };*/
+        return {
+          y: y+1,
+          x: x
         };
       }
-      if ( py > h2 && py > ( h - px * m ) ) {
-        return {
+      //if ( py > h2 && py > ( h - px * m ) ) {
+      if ( px > w2 && px > (w - py * m))  {
+        /*return {
           x: x+1,
           y: y-1
+        };*/
+        return {
+          y : y+1,
+          x: x-1
         };
       }
     }
@@ -1158,7 +1206,7 @@ hex.grid.hexagonal = {
       y: y
     };
     
-  }
+  } // end of translate function
   
 };
 
