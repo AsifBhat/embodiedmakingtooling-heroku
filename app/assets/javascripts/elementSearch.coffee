@@ -65,7 +65,7 @@ jQuery ($) ->
       AppContext.grid.drawTipHeader($('.cellTitle').text())
     )
 
-    $('#edit_input_container').append('<div id="content-search"><input type="text" id="input-elem-search" name="query" placeholder="Search Elements..."></div>')
+    $('#edit_input_container').append('<div id="content-search"><input type="text" id="input-elem-search" name="query" placeholder="Search Elements..."></div> <hr>')
     
     $('.cellDesc').keypress((e) ->
       if (e.which == 13)

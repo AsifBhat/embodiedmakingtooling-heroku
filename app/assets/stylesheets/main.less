@@ -298,6 +298,9 @@ html, body {
   float: right;
 }
 
+/*
+ * Size style for the edit panel
+ */
 #edit_pane{
   height: 100%;
   width : 350px;
@@ -305,6 +308,9 @@ html, body {
   opacity: .4;
 }
 
+/*
+ * Positioning for editing panel and all the other panes that come on top of it 
+ */
 .cont_edit_pane{
   background-color: #ffffff;
   top : 6em;
@@ -313,8 +319,8 @@ html, body {
   z-index: 1002;
 }
 
+/* Rounded Border stlying*/
 .rounded_border{
-  /* Rounded Border stlying*/
   border: 1px solid #E5E5E5;
   -webkit-border-radius: 4px;
      -moz-border-radius: 4px;
@@ -337,7 +343,7 @@ html, body {
 }
 
 /*Nuggets section header: can be generalized to all section headers*/
-#ed_nuggets_header{
+.ed_header{
   height: 2.5em;
   margin: 0px;
   line-height: 2em;
@@ -350,10 +356,12 @@ html, body {
  * all the elements and nuggets goes while 
  * displaying 
 */
-.edit_content_section{
+.ed_body{
   background-color: #E3E3E9;
   margin: 0px;
-  height: inherit;
+  height: 100%;
+  width: inherit;
+  overflow-y: scroll;
 }
 
 /*
@@ -365,6 +373,5 @@ html, body {
   background-color: #E3E3E9;
   margin: .5em 1em 2em 1.5em;
   opacity: 1;
-  overflow-y: scroll;
 }
 
