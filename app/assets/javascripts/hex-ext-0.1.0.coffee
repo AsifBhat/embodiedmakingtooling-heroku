@@ -88,7 +88,7 @@ AppContext.grid.hideTooltip = () ->
 AppContext.grid.placeOnGrid = (elemwithpos, displaytext = "") ->
   elemid = elemwithpos.elementId
   if(displaytext == "") 
-    displaytext = (AppContext.vizdata.getElementDescription(elemid)).substr(1,5)
+    displaytext = (AppContext.vizdata.getElementDescription(elemid)).substr(0,5)
   
   etype = elemid.substr(0,1)
   switch etype
