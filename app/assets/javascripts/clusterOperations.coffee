@@ -1,11 +1,5 @@
 getNextPosId = () ->
-  allPos = AppContext.vizdata.getPositions()
-  nextId = 0
-  $.each(allPos, (i, pos) ->
-    if(pos.posId >= nextId)
-      nextId = pos.posId + 1
-  )
-  nextId
+  return $.newUUID()
 
 AppContext.cluster.updatePosition = (datum,posx,posy) ->
   posid = getNextPosId();
