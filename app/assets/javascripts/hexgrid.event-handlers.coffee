@@ -202,23 +202,16 @@ jQuery ($) ->
   AppContext.controls.handleNuggetDisplay= (evt) ->
     Util.log.console('Handling nugget display click')
 
-    addNuggetSection = () ->
-      # add the typeahead and a listing mechanism for the nuggets
-      $('.edit_nuggets').css({
-        'display': 'block'
-        'opacity': 1
-      })
-    
     # Toggle display for the edit pane: The click should effect the visiblity of the pane
     # The following is a temporary setup, once the whole edit section is moved to the pane 
     # the following toggle has to be removed.
     if( $('#edit_pane').css('display') == 'none')
       $('#edit_pane').css('display', 'block')
-      addNuggetSection()
+      AppContext.grid.addNuggetSection()
     else 
       if $('.edit_nuggets').css('display') == 'none'
         $('.desc_section').css('display', 'none')
-        addNuggetSection()
+        AppContext.grid.addNuggetSection()
       else 
         $('.cont_edit_pane').css('display', 'none')
 

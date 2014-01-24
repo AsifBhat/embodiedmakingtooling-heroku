@@ -47,7 +47,7 @@ AppContext.project.showPicture = (pictureurl) ->
     $('#profile_picture').css("display","").attr("xlink:href",pictureurl)
   else 
     # If no image is associated with the Curren tUser Profile, then show a default Image
-    $('#profile_picture').css("display","").attr("xlink:href",'/assets/images/no_image_user.png')
+    $('#profile_picture').css("display","").attr("xlink:href",'/assets/images/avatar.svg')
   
 
 

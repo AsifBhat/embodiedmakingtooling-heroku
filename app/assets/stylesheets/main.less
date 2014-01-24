@@ -357,11 +357,12 @@ html, body {
  * displaying 
 */
 .ed_body{
-  background-color: #E3E3E9;
+  background-color: #FFFFFF;
   margin: 0px;
   height: 100%;
   width: inherit;
   overflow-y: scroll;
+  overflow-x: hidden;
 }
 
 /*
@@ -375,3 +376,77 @@ html, body {
   opacity: 1;
 }
 
+/*
+ * View for nugget controls
+ */
+.nugget_view{
+  width: inherit;
+}
+
+/*
+ * Section for adding new nuggets to the Making
+ */
+.add_nugget_section{
+  background-color: #DADADA;
+  margin: 0px;
+}
+
+/*
+ * ADD Nugget icon style
+ */
+.add_nugget_icon{
+  position: relative;
+  width: 51px;
+  height: 55px;
+  background-image: url('/assets/images/hex-grey.svg');
+  background-repeat: no-repeat;
+  margin: 10px;
+}
+
+.add_nugget_icon h3{
+  margin: 4px 8px;
+  font-size: 4em;
+}
+
+/*
+ * Text style for the section to add a new element/nugget
+ */
+.add_section_text{
+  font-size: .85em;
+  margin: 10% 0px;
+  line-height: 1em;
+}
+
+#add_nugget_textarea{
+  margin-left: 30px;
+}
+
+/*
+ * Search and select the existing Nuggets
+ */
+.nugget_search{
+  background-color: #FFFFFF;
+  margin: 20px 0px 0px 40px;
+}
+
+/*
+ * Controls for adding a new Nugget.
+ */
+.add_nugget_control{
+  background-color: none;
+  background-image: url('/assets/images/transparent_bg.png');
+  width: inherit;
+  height: inherit;
+}
+
+/*
+ * Button to stop adding a nugget
+ */
+.close_add_nugget{
+  position: relative;
+  left: 90%;
+  top: 1%;
+  height: 20px;
+  width: 20px;
+  display: block;
+}

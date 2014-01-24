@@ -58,11 +58,6 @@
   </div>
 </div>
 
-
-<script>
-  //setTimeout(function () {$('.elementsView').autogrow();},12000);
-</script>
-
 <div class="progress flash_board" id="progress_container">
   <div class="bar" id="progress_bar"></div>
   <br>
@@ -94,6 +89,20 @@
   </div>
   <div id="ed_nuggets_body" class="ed_body row">
     <!-- Here comes the basic styling of all the nuggets. The idea is to append the nuggets using JS as they are pulled from the Google RT-API.-->
+    <div class="add_nugget_section nugget_view row">
+      <span class="add_nugget_icon span"><h3>+</h3></span>
+      <div class="add_section_text span">Click here to add a new Nugget</div>
+    </div>
+    <div class="nugget_search nugget_view">
+      <input type="text" id="input-nugget-search" name="query" placeholder="Search Nuggets...">
+    </div> 
+    <hr>
+    <div class="nugget_desc nugget_view" contenteditable="true"></div>
+
+    <div class="add_nugget_control" style="display: none"> 
+      <span class="close_add_nugget"><i class="icon-remove"></i></span>
+      <textarea id="add_nugget_textarea" placeholder="Type Here and Hit 'enter' key to save and exit.." rows="3"></textarea>
+    </div>
   </div>
 </div>
 
