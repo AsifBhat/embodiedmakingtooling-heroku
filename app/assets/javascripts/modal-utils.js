@@ -15,18 +15,15 @@ AppContext.grid.loadPicker = function() {
         handleAuthResult();
         realtimeOptions.defaultTitle = $('#proj_name').val()+'.ema';
         Util.log.console('Going in with file name: ' + realtimeOptions.defaultTitle);
-        AppContext.grid.loadApplication();
-        //$('#project_name').text(realtimeOptions.defaultTitle);
       }
       catch(err){
         console.log(err);
       }
     });
-
+    
     $('.load_new_making_btn').click(function(){
       Util.log.console('File Name not specified. Using default Project name');
       handleAuthResult();
-      AppContext.grid.loadApplication();
     });
 
     $('#openfile_button').click(function(){

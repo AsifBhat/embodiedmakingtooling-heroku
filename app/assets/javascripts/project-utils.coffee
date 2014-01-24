@@ -40,10 +40,14 @@ AppContext.project.sendChangeTitleRequest = (newTitle) ->
     Util.log.console 'Project Title Changed'
   )
 
-AppContext.project.showPicture = (user) ->
-  if(user.picture)
-    $('#profile_picture').css("display","").attr("xlink:href",user.picture.url)
-
+AppContext.project.showPicture = (pictureurl) ->
+  if pictureurl != null
+    # Check if the User has set any Image associated with their profile, then show that
+    pictureurl = pictureurl.substr(pictureurl.lastIndexOf('//'), pictureurl.length)
+    $('#profile_picture').css("display","").attr("xlink:href",pictureurl)
+  else 
+    # If no image is associated with the Curren tUser Profile, then show a default Image
+    $('#profile_picture').css("display","").attr("xlink:href",'/assets/images/avatar.svg')
 
 AppContext.project.getUserInfo = () ->
   ###
@@ -51,18 +55,22 @@ AppContext.project.getUserInfo = () ->
   ###
   Util.log.console('Fetching User Info..')
   try 
-    request = gapi.client.drive.about.get()
-    request.execute( (resp) ->
-      try 
-        $('#authorizeButton').html(resp.name)
-        Util.log.console('Current user name: ' + resp.name)
-        Util.log.console(resp.user)
-        AppContext.project.showPicture(resp.user)
-        #Util.log.console(resp.user)
-      catch err
-        Util.log.console 'Error while fetching user information'
-        Util.log.console err
-    )
+    if(gapi.client != undefined && gapi.client.drive != undefined)
+      request = gapi.client.drive.about.get()
+      request.execute( (resp) ->
+        try 
+          if(resp != undefined)
+            $('#authorizeButton').html(resp.name)
+            if(resp.user.picture != undefined)
+              AppContext.project.showPicture(resp.user.picture.url)
+            else 
+              AppContext.project.showPicture(null)
+        catch err
+          Util.log.console 'Error while fetching user information'
+          Util.log.console err
+      )
+    else
+      Util.log.console 'Error since the GAPI is not loaded completely'
   catch err
     Util.log.console 'Error Occured while fetching user info'
     Util.log.console err

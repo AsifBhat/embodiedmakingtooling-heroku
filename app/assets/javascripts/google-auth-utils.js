@@ -26,6 +26,7 @@ var googleAppConf = function(){
 var SCOPES = [
           'https://www.googleapis.com/auth/drive.file',
           'https://www.googleapis.com/auth/drive.install',
+          'https://www.googleapis.com/auth/userinfo.profile',
           'openid'
         ];
 /**
@@ -41,9 +42,11 @@ function fetchClientDetails(callback) {
  */
 function checkAuth(callback) {
   Util.log.console('Checking Authorization');
-  gapi.auth.authorize(
-      {'client_id': googleAppConf().clientId, 'scope': SCOPES.join(' '), 'immediate': true},
-      callback);
+  if(gapi.auth != undefined){
+    gapi.auth.authorize(
+        {'client_id': googleAppConf().clientId, 'scope': SCOPES.join(' '), 'immediate': true},
+        callback);
+  }
 }
 
 function handleAuthResult(file_state) {
@@ -56,7 +59,7 @@ function handleAuthResult(file_state) {
     if (authResult  && !authResult.error) {
         // Access token has been successfully retrieved, requests can be sent to the API
         var _this = this;
-        gapi.client.load('oauth2', 'v2', function() {
+        gapi.client.load('oauth2', 'v2', function(resp) {
           if(file_state == 'old'){
             console.log('Util something');
             // start the load picker

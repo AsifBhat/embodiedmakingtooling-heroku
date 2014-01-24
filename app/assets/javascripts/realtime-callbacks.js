@@ -11,6 +11,7 @@ function registerTypes() {
   VizDataModel.prototype.relations = gapi.drive.realtime.custom.collaborativeField('relations');
   VizDataModel.prototype.elements = gapi.drive.realtime.custom.collaborativeField('elements');
   VizDataModel.prototype.meta = gapi.drive.realtime.custom.collaborativeField('meta');
+  VizDataModel.prototype.nuggets = gapi.drive.realtime.custom.collaborativeField('nuggets');
   gapi.drive.realtime.custom.registerType(VizDataModel, 'VizDataModel');
   gapi.drive.realtime.custom.setInitializer(VizDataModel, doInitialize);
   //gapi.drive.realtime.custom.setOnLoaded(VizDataModel, onLoaded);
@@ -76,6 +77,16 @@ function doMetaValueChanged (evt){
   Util.log.console(AppContext.project.projectTitle);
   AppContext.project.updateTitleText();
 }
+
+/*
+ Triggered when the value of Nuggets is changed
+*/
+function doNuggetValueChanged(evt){
+  // this is where the nuggets will be added to the UI
+  // Most likely the nuggets should have their own space and must be searchable (A separate typeahead should be good here)
+  Util.log.console('Changing Nuggets');
+}
+
 /**
  * The initializer is called exactly once in the lifetime of an object, 
  * immediately after the object is first created. When that object is reloaded
@@ -88,6 +99,7 @@ function doMetaValueChanged (evt){
   this.positions = model.createList();
   this.elements = model.createList();
   this.relations = model.createList();
+  this.nuggets = model.createList(); //init the nuggets from the realtime model
   this.meta = model.createList();
   Util.log.console("Initialize object the first time it is created");
   AppContext.project.getFileDetails();
@@ -126,15 +138,32 @@ function onFileLoaded(doc) {
   Util.log.console("On file loaded...");
   AppContext.vizdata = doc.getModel().getRoot().get('vizdata');
 
-  AppContext.vizdata.positions.addEventListener(gapi.drive.realtime.EventType.VALUES_ADDED, doPosValuesAdded);
-  AppContext.vizdata.positions.addEventListener(gapi.drive.realtime.EventType.VALUES_REMOVED, doPosValueRemoved);
+  /**
+    Registering Listeners for Positional Information for various cells placed on the Grid.
+   */
+  AppContext.vizdata.positions.addEventListener(gapi.drive.realtime.EventType.VALUES_ADDED, doPosValueChanged);
+  AppContext.vizdata.positions.addEventListener(gapi.drive.realtime.EventType.VALUES_REMOVED, doPosValueChanged);
 
+  /**
+    Registering Listeners for Content Elements
+   */
   AppContext.vizdata.elements.addEventListener(gapi.drive.realtime.EventType.VALUES_ADDED, doContentValueChanged);
   AppContext.vizdata.elements.addEventListener(gapi.drive.realtime.EventType.VALUES_REMOVED, doContentValueChanged);
-  
+  /**
+    Registering Listeners for relations between various Content Elements
+   */
   AppContext.vizdata.relations.addEventListener(gapi.drive.realtime.EventType.VALUES_ADDED, doRelValueChanged);
   AppContext.vizdata.relations.addEventListener(gapi.drive.realtime.EventType.VALUES_REMOVED, doRelValueChanged);
   
+  /**
+    Registering Listeners for nuggets data constructs
+   */
+  AppContext.vizdata.nuggets.addEventListener(gapi.drive.realtime.EventType.VALUES_ADDED, doNuggetValueChanged);
+  AppContext.vizdata.nuggets.addEventListener(gapi.drive.realtime.EventType.VALUES_REMOVED, doNuggetValueChanged);
+
+  /**
+    Registerng Listeners for meta information for the given making
+   */
   AppContext.vizdata.meta.addEventListener(gapi.drive.realtime.EventType.VALUES_ADDED, doMetaValueChanged);
   AppContext.vizdata.meta.addEventListener(gapi.drive.realtime.EventType.VALUES_REMOVED, doMetaValueChanged);
 
@@ -145,5 +174,5 @@ function onFileLoaded(doc) {
   AppContext.grid.activateTypeahead(AppContext.vizdata.getElements());
 
   AppContext.project.getFileDetails();
-  fetchClientDetails(getUserName);
+  fetchClientDetails(AppContext.project.getUserInfo);
 }

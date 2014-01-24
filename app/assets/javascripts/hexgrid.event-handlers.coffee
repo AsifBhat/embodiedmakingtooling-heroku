@@ -101,10 +101,6 @@ jQuery ($) ->
   AppContext.project.handleNameChange = () ->
     $('.proj_title').text(AppContext.vizdata.getProjectTitle())
 
-  AppContext.grid.zoomHandler = (e, x, y) ->
-    Util.log.console ('Zoom Event Called')
-    # here we have event handlers to the HTML components and other CSS changes
-  
   AppContext.grid.tileUpHandler = (e, x, y) ->
     if(AppContext.grid.toDrag.length != 0)
       domelem = $('#'+AppContext.grid.toDragRef.posId)
@@ -300,4 +296,35 @@ jQuery ($) ->
     if(event.which == 3)
       setRightClickedPos(event)        
     
+  AppContext.controls.handleNuggetDisplay= (evt) ->
+    Util.log.console('Handling nugget display click')
 
+    # Toggle display for the edit pane: The click should effect the visiblity of the pane
+    # The following is a temporary setup, once the whole edit section is moved to the pane 
+    # the following toggle has to be removed.
+    if( $('#edit_pane').css('display') == 'none')
+      $('#edit_pane').css('display', 'block')
+      AppContext.grid.addNuggetSection()
+    else 
+      if $('.edit_nuggets').css('display') == 'none'
+        #$('.desc_section').css('display', 'none')
+        AppContext.grid.addNuggetSection()
+      else 
+        $('.cont_edit_pane').css('display', 'none')
+
+
+  $( "#hexagonal-grid" ).mousemove( (event) -> 
+    if(AppContext.grid.downtile!='')
+      AppContext.grid.hideTooltip()
+      if(AppContext.grid.clonedelem == '')
+        domelem = $('#'+AppContext.grid.downtile.posId)
+        $(domelem).removeClass("bordered")
+        $(domelem).css("-webkit-clip-path","")
+        AppContext.grid.clonedelem = $(domelem).clone()
+        $(AppContext.grid.clonedelem).prependTo($(domelem))
+        $(AppContext.grid.clonedelem).css("position","fixed")
+        $(AppContext.grid.clonedelem).css("z-index","1010")
+        $(AppContext.grid.clonedelem).css("opacity","0.9")
+      $(AppContext.grid.clonedelem).css("left",event.pageX-20)
+      $(AppContext.grid.clonedelem).css("top",event.pageY-20)      
+  )

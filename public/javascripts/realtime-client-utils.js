@@ -18,6 +18,12 @@ rtclient.INSTALL_SCOPE = 'https://www.googleapis.com/auth/drive.install'
  */
 rtclient.FILE_SCOPE = 'https://www.googleapis.com/auth/drive.file'
 
+/**
+ * OAuth 2.0 scope for fetching user profile information such as name/email/image
+ * @const
+ *
+ */
+rtclient.PROFILE_SCOPE = 'https://www.googleapis.com/auth/userinfo.profile'
 
 /**
  * OAuth 2.0 scope for accessing the user's ID.
@@ -132,6 +138,7 @@ rtclient.Authorizer.prototype.authorize = function(onAuthComplete) {
       scope: [
         rtclient.INSTALL_SCOPE,
         rtclient.FILE_SCOPE,
+        rtclient.PROFILE_SCOPE,
         rtclient.OPENID_SCOPE
       ],
       user_id: userId,
@@ -146,6 +153,7 @@ rtclient.Authorizer.prototype.authorize = function(onAuthComplete) {
     scope: [
       rtclient.INSTALL_SCOPE,
       rtclient.FILE_SCOPE,
+      rtclient.PROFILE_SCOPE,
       rtclient.OPENID_SCOPE
     ],
     user_id: userId,
