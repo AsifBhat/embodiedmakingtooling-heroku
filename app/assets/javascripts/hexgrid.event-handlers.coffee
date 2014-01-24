@@ -245,10 +245,10 @@ jQuery ($) ->
       )
       
 
-  $( "#hexagonal-grid" ).mousemove( (event) -> 
+  AppContext.grid.mousemovehandler = (event) ->
     if(AppContext.grid.toDrag!='')
       dragOnMouseMove(event)            
-  )
+
 
   isInArray = (elem, array)  ->
     toreturn = false
@@ -294,9 +294,10 @@ jQuery ($) ->
 
   setRightClickedPos = (event) ->
     AppContext.grid.rightClickedPos =  AppContext.grid.getGridPos(event);
+    console.log(AppContext.grid.rightClickedPos)
 
-  $( "#hexagonal-grid" ).mousedown( (event) -> 
+  AppContext.grid.mousedownhandler = (event) ->
     if(event.which == 3)
       setRightClickedPos(event)        
-  )
+    
 

@@ -30,12 +30,18 @@ AppContext.grid.createHex = (styleClass, text = "") ->
     'line-height': AppContext.grid.grid.tileHeight + 'px',
   }).addClass(styleClass)
 
+AppContext.grid.addGridDomEventListeners = () ->
+  $('#hexagonal-grid').bind('mousemove', AppContext.grid.mousemovehandler)
+  $('#hexagonal-grid').bind('mousedown', AppContext.grid.mousedownhandler)
+
+
 # initialize the hex grid
 AppContext.grid.initialize = () ->
   AppContext.grid.hoveredElement = AppContext.grid.createHex('current')
   $(AppContext.grid.grid.root).append(AppContext.grid.hoveredElement)
   AppContext.grid.idwithtooltip =  $('#desctooltip')
   AppContext.grid.reorient()
+  AppContext.grid.addGridDomEventListeners()
   AppContext.grid 
 
 AppContext.grid.placeHex =(elem,x,y) ->
@@ -149,8 +155,12 @@ AppContext.grid.clearGridCache = () ->
   AppContext.grid.hoveredElement = ''
   AppContext.grid.idwithtooltip = ''
   AppContext.grid.newElement = ''
-  AppContext.grid.toDrag = ''
-  AppContext.grid.clonedelem = '' 
+  AppContext.grid.toDrag = []
+  AppContext.grid.toDragRef = ''
+  AppContext.grid.clonesToDrag = [] 
+  AppContext.grid.toDragRefClone = ''
+  AppContext.grid.selectedElemPos  = [] 
+  AppContext.grid.rightClickedelempos = ''
 
 AppContext.grid.getAllNeighbourCells =  (pos) ->
   allNeighbourCells = [] 
@@ -182,8 +192,6 @@ AppContext.grid.activateListeners = () ->
   AppContext.grid.grid.addEvent("tileup", AppContext.grid.tileUpHandler)
   
   AppContext.grid.grid.addEvent("tileclick", AppContext.grid.tileClickHandler)
-
-  AppContext.grid.grid.addEvent("tilerightclick", AppContext.grid.tileClickHandler)
 
 
 AppContext.grid.activateZoomListeners = () ->
