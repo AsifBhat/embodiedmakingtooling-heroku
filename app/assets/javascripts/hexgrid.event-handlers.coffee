@@ -210,7 +210,7 @@ jQuery ($) ->
       AppContext.grid.addNuggetSection()
     else 
       if $('.edit_nuggets').css('display') == 'none'
-        $('.desc_section').css('display', 'none')
+        #$('.desc_section').css('display', 'none')
         AppContext.grid.addNuggetSection()
       else 
         $('.cont_edit_pane').css('display', 'none')

@@ -26,12 +26,14 @@ jQuery ($) ->
       )
     )
 
+  # add the typeahead and a listing mechanism for the nuggets
   AppContext.grid.addNuggetSection = () ->
-    # add the typeahead and a listing mechanism for the nuggets
     $('.edit_nuggets').css({
       'display': 'block'
       'opacity': 1
     })
+    AppContext.grid.prependNuggetToDisplay(AppContext.vizdata.getNuggets())
+
 
   $('.add_nugget_section').click( () ->
     Util.log.console 'This is event being called'
@@ -42,20 +44,36 @@ jQuery ($) ->
 
   #looking for the escape key 
   $('#add_nugget_textarea').keydown( (evt) ->
-    keyCode = if (evt.keyCode) evt.keyCode else evt.which
+    keyCode = if evt.keyCode  then evt.keyCode else evt.which
+    # close the edit section if the 'esc' key is hit
     if(keyCode == 27)
       removeAddSection()
+    # If user hits 'enter' key, then save the nugget text and remove the add
+    # section
     if(keyCode == 13)
+      nuggetText = $(this).val()
       console.log($(this).val())
+      nugget = {}
+      nugget.nuggetId = getNextNuggetId()
+      nugget.description = nuggetText
+      AppContext.vizdata.addNugget(nugget)
+      # Append the nugget to the UI
+      AppContext.grid.prependNuggetToDisplay([nugget])
       removeAddSection()
-    #do something about saving the same:
-    #Event bound to the 'enter' key: more consistent
   )
 
-  #also bind the event to the x on the right hand top
+  # Also bind the event to the x on the right hand top
   $('.close_add_nugget').click( () ->
     removeAddSection()
   )
+
+  # prepend the nugget to the UI
+  # Parameter: Needs array of nuggets to be added (should be one element array if one element is added.)
+  AppContext.grid.prependNuggetToDisplay = (nuggetList) ->
+    Util.log.console('Adding the nugget')
+    $.each(nuggetList, (idx, nugget) ->
+      $('.nugget_desc').prepend("<div class='nugget_listing row'>" + nugget.description + "</div>")
+    )
 
   #remove the add section once the user is finished
   removeAddSection = () ->
@@ -63,4 +81,16 @@ jQuery ($) ->
     $('.add_nugget_control').fadeOut(1000)
     $('.nugget_view').fadeIn(2000)
   
-
+  # Get the next nugget ID
+  getNextNuggetId = () ->
+    nextId = 1
+    allNuggets = AppContext.vizdata.getNuggets()
+    $(allNuggets).each( (i) ->
+      id = this.nuggetId
+      numstr = id.substr(1,id.length)
+      num = parseInt(numstr,10)
+      if(num>=nextId)
+        nextId = num+1      
+    )
+    Util.log.console('Next Nugget Id ' + nextId)
+    return 'N'+nextId
