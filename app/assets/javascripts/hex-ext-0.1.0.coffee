@@ -13,8 +13,8 @@ jQuery ($) ->
   AppContext.grid.MIN_ZOOM_LEVEL = 0
   AppContext.grid.ZOOM_ARRAY = [(1/3), (1/2), (2/3), 1 , 1.5, 2, 2.5]
   AppContext.grid.defaultSize = {
-    width : hex.grid.hexagonal.tileWidth,
-    height: hex.grid.hexagonal.tileHeight
+    width : 42,
+    height: 48
   }
 
 # Creating a grid
@@ -25,8 +25,8 @@ AppContext.grid.createGrid = (domelem) ->
 
 AppContext.grid.createHex = (styleClass, text = "") ->
   $('<div class="hex '+ styleClass+'" >'+text+'</div>').css({
-    'width': AppContext.grid.grid.tileWidth + 'px',
-    'height': AppContext.grid.grid.tileHeight + 'px',
+    'width': AppContext.grid.grid.tileWidth  + 'px',
+    'height': (AppContext.grid.grid.tileHeight ) + 'px',
     'line-height': AppContext.grid.grid.tileHeight + 'px',
   }).addClass(styleClass)
 
@@ -35,14 +35,13 @@ AppContext.grid.initialize = () ->
   AppContext.grid.hoveredElement = AppContext.grid.createHex('current')
   $(AppContext.grid.grid.root).append(AppContext.grid.hoveredElement)
   AppContext.grid.idwithtooltip =  $('#desctooltip')
-  AppContext.global.firstDisplay = true
   AppContext.grid.reorient()
   AppContext.grid 
 
 AppContext.grid.placeHex =(elem,x,y) ->
     inv = AppContext.grid.grid.screenpos(x, y)
     elem.css("left", inv.x + "px")
-    elem.css("top", inv.y + "px")
+    elem.css("top", inv.y  + "px")
     elem
 
 AppContext.grid.showHoveredElement = (xc, yc) ->
@@ -62,7 +61,7 @@ AppContext.grid.showTooltip = (x,y,elemId, tooltipInfo) ->
   inv = AppContext.grid.grid.screenpos(x, y)
   AppContext.grid.idwithtooltip.css({
     "left": ((inv.x + AppContext.grid.grid.origin.x) + 10) + "px",
-    "top": (inv.y + AppContext.grid.grid.origin.y) + "px",
+    "top": (inv.y + AppContext.grid.grid.origin.y - 2) + "px",
     "z-index" : 10
   })
   tooltipHTML = '<textarea id="elemtext" class="elementsView" style="background-color:#555;width:90%;overflow:hidden;color:#FFF;font-size:10px;" onclick="$(this).autogrow()">' +

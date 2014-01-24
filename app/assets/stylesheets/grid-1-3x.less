@@ -1,46 +1,34 @@
 @img-base-url: "../images/";
-@hex-sprite-width: -16px;
-@hex-sprite-height: -14px;
+@hex-sprite-width: 16px;
 
 #hexagonal-grid {
   width: 100%;
   height: 100%;
-  background: #ffc799;
-  background-size: (-1.5 * @hex-sprite-width) (-1 * @hex-sprite-height);
-  background-image: url('/assets/images/back.png');
-  background-position: 0px 0px;
+  background: #e3e3e9;
+  background-image: url('/assets/images/back.svg');
+  background-size: 14px 21.6px;
 }
 
 .hex.current {
-  background-size: (-9 * @hex-sprite-width) (-3 * @hex-sprite-height);
-  background-image: url('/assets/images/sprite.png');
-  background-position: (0 * @hex-sprite-width) (0 * @hex-sprite-height);
+  background-image: url('/assets/images/hex-grey.svg');
   z-index: 1;
 }
 
 .hex.new {
-  background-size: (-9 * @hex-sprite-width) (-3 * @hex-sprite-height);
-  background-image: url('/assets/images/sprite.png');
-  background-position: (4 * @hex-sprite-width) (1 * @hex-sprite-height);
+  background-image: url('/assets/images/hex-grey.svg');
 }
 
 .hex.stories {
-  background-size: (-9 * @hex-sprite-width) (-3 * @hex-sprite-height);
-  background-image: url('/assets/images/sprite.png');
-  background-position: (3 * @hex-sprite-width) (2 * @hex-sprite-height);
-  font-size: (-14* @hex-sprite-width/48);
+  background-image: url('/assets/images/hex-pink.svg');
+  font-size: (12* @hex-sprite-width/48);
 }
 
 .hex.forces {
-  background-size: (-9 * @hex-sprite-width) (-3 * @hex-sprite-height);
-  background-image: url('/assets/images/sprite.png');
-  background-position: (7 * @hex-sprite-width) (0 * @hex-sprite-height);
-  font-size: (-14* @hex-sprite-width/48);
+  background-image: url('/assets/images/hex-purple.svg');
+  font-size: (12* @hex-sprite-width/48);
 }
 
 .hex.solutionComponents {
-  background-size: (-9 * @hex-sprite-width) (-3 * @hex-sprite-height);
-  background-image: url('/assets/images/sprite.png');
-  background-position: (0 * @hex-sprite-width) (2 * @hex-sprite-height);
-  font-size: (-14* @hex-sprite-width/48);
+  background-image: url('/assets/images/hex-orange.svg');
+  font-size: (12* @hex-sprite-width/48);
 }
