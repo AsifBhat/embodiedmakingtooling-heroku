@@ -138,6 +138,7 @@ jQuery ($) ->
       pos = {x:x,y:y}
       elempos = AppContext.vizdata.getPositionInCell(pos)
       if(elempos!='')
+        AppContext.grid.toDrag = []
         AppContext.grid.toDrag.push(elempos)
       # If a single cell is dragged, toDrag is set as above.  Else(selectedfrommenu) toDrag(s) is /are
       # set by the callbacks of the menu item handler 'Select cluster' etc. 'todragreference' is the 
