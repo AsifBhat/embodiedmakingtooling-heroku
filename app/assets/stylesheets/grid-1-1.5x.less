@@ -1,13 +1,12 @@
 @img-base-url: "../images/";
-@hex-sprite-width: -32px;
-@hex-sprite-height: -28px;
+@hex-sprite-width: 32px;
 
 #hexagonal-grid {
   width: 100%;
   height: 100%;
-  /*background: #ffc799;*/
+  background: #e3e3e9;
   background-image: url('/assets/images/back.svg');
-  background-position: 0px 0px;
+  background-size: 28px 48px;
 }
 
 .hex.current {
@@ -21,15 +20,15 @@
 
 .hex.stories {
   background-image: url('/assets/images/hex-pink.svg');
-  font-size: (-14* @hex-sprite-width/48);
+  font-size: (12* @hex-sprite-width/48);
 }
 
 .hex.forces {
   background-image: url('/assets/images/hex-purple.svg');
-  font-size: (-14* @hex-sprite-width/48);
+  font-size: (12* @hex-sprite-width/48);
 }
 
 .hex.solutionComponents {
   background-image: url('/assets/images/hex-orange.svg');
-  font-size: (-14* @hex-sprite-width/48);
+  font-size: (12* @hex-sprite-width/48);
 }
