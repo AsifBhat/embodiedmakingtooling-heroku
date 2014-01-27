@@ -729,7 +729,8 @@ hex.extend(hex, {
     
     // Handler for any mouse button events
     function mousebutton(e) {
-      if(e.which==1)
+      var mb = e.event.which ? e.event.which : e.event.button
+      if(mb==1)
       {
         var event = e.event;
             

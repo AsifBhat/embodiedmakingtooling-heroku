@@ -293,8 +293,12 @@ jQuery ($) ->
     console.log(AppContext.grid.rightClickedPos)
 
   AppContext.grid.mousedownhandler = (event) ->
-    if(event.which == 3)
-      setRightClickedPos(event)        
+    if(event.which)
+      if(event.which == 3)
+        setRightClickedPos(event)        
+    else if (even.button)    
+      if(event.button == 3)
+        setRightClickedPos(event)
     
   AppContext.controls.handleNuggetDisplay= (evt) ->
     Util.log.console('Handling nugget display click')
