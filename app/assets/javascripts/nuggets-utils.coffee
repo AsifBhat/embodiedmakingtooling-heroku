@@ -85,12 +85,6 @@ jQuery ($) ->
   getNextNuggetId = () ->
     nextId = 1
     allNuggets = AppContext.vizdata.getNuggets()
-    $(allNuggets).each( (i) ->
-      id = this.nuggetId
-      numstr = id.substr(1,id.length)
-      num = parseInt(numstr,10)
-      if(num>=nextId)
-        nextId = num+1      
-    )
+    nextId = (AppContext.vizdata.getNuggets().length == 0) ? 1 : AppContext.vizdata.getNuggets().length +1
     Util.log.console('Next Nugget Id ' + nextId)
     return 'N'+nextId

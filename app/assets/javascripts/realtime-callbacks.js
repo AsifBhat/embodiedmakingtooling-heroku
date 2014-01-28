@@ -89,7 +89,16 @@ function doMetaValueChanged (evt){
 function doNuggetValueChanged(evt){
   // this is where the nuggets will be added to the UI
   // Most likely the nuggets should have their own space and must be searchable (A separate typeahead should be good here)
-  Util.log.console('Changing Nuggets');
+  Util.log.console(evt);
+  if(!evt.isLocal){
+    if(evt.type == gapi.drive.realtime.EventType.VALUES_ADDED){
+      Util.log.console(evt.values);
+      AppContext.grid.prependNuggetToDisplay(evt.values);
+    }
+    else if(evt.type == gapi.drive.realtime.EventType.VALUES_REMOVED){
+      AppContext.vizdata.removeNugget(evt.values);
+    }
+  }
 }
 
 /**
@@ -111,7 +120,7 @@ function doNuggetValueChanged(evt){
   model.beginCompoundOperation();
   this.updateTitle(AppContext.project.projectTitle);
   model.endCompoundOperation();
- }
+}
 
 /**
  * This function is called the first time that the Realtime model is created
@@ -181,7 +190,7 @@ function onFileLoaded(doc) {
       AppContext.vizdata.relations.addEventListener(gapi.drive.realtime.EventType.VALUES_REMOVED, doRelValueChanged);
     }
     else{
-      Util.log.console('Listeners for relational information could not be attached.\n File loading failed')
+      Util.log.console('Listeners for relational information could not be attached.\n File loading failed');
       // Throw exception if the relational information is critical. Skip loading.
     }
     /**
@@ -205,7 +214,6 @@ function onFileLoaded(doc) {
     else{
       Util.log.console('Meta Information could not be loaded. Skipping meta info event registration');
     }
-  
   }
   catch(ex){
     console.log('Error occured while registering one of the listeners: ');

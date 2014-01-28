@@ -223,6 +223,8 @@
     Method to add and persist the nugget corresponding to this document
    */
   VizDataModel.prototype.addNugget = function(nugget){
+    Util.log.console('adding nugget: ');
+    Util.log.console(nugget);
     this.nuggets.push(nugget);
     return this.nuggets.length;
   };
