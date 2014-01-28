@@ -7,14 +7,19 @@ var posid=0, elemid=0, x=0;
 /** Call back configured to register types */
 function registerTypes() {
   Util.log.console("Registering types...");
-  VizDataModel.prototype.positions = gapi.drive.realtime.custom.collaborativeField('positions');
-  VizDataModel.prototype.relations = gapi.drive.realtime.custom.collaborativeField('relations');
-  VizDataModel.prototype.elements = gapi.drive.realtime.custom.collaborativeField('elements');
-  VizDataModel.prototype.meta = gapi.drive.realtime.custom.collaborativeField('meta');
-  VizDataModel.prototype.nuggets = gapi.drive.realtime.custom.collaborativeField('nuggets');
-  gapi.drive.realtime.custom.registerType(VizDataModel, 'VizDataModel');
-  gapi.drive.realtime.custom.setInitializer(VizDataModel, doInitialize);
-  //gapi.drive.realtime.custom.setOnLoaded(VizDataModel, onLoaded);
+  try{
+    VizDataModel.prototype.positions = gapi.drive.realtime.custom.collaborativeField('positions');
+    VizDataModel.prototype.relations = gapi.drive.realtime.custom.collaborativeField('relations');
+    VizDataModel.prototype.elements = gapi.drive.realtime.custom.collaborativeField('elements');
+    VizDataModel.prototype.meta = gapi.drive.realtime.custom.collaborativeField('meta');
+    VizDataModel.prototype.nuggets = gapi.drive.realtime.custom.collaborativeField('nuggets');
+    gapi.drive.realtime.custom.registerType(VizDataModel, 'VizDataModel');
+    gapi.drive.realtime.custom.setInitializer(VizDataModel, doInitialize);
+  }
+  catch(ex){
+    Util.log.console('Error occured during registering the real time Data types');
+    Util.log.console(ex);
+  }
 }
 
 /*function onLoaded (){
@@ -137,36 +142,76 @@ function onFileLoaded(doc) {
   Util.log.console(doc);
   Util.log.console("On file loaded...");
   AppContext.vizdata = doc.getModel().getRoot().get('vizdata');
+  Util.log.console('Logging AppContext vizdata ');
+  Util.log.console(AppContext.vizdata);
 
-  /**
-    Registering Listeners for Positional Information for various cells placed on the Grid.
-   */
-  AppContext.vizdata.positions.addEventListener(gapi.drive.realtime.EventType.VALUES_ADDED, doPosValueChanged);
-  AppContext.vizdata.positions.addEventListener(gapi.drive.realtime.EventType.VALUES_REMOVED, doPosValueChanged);
+  try{
 
-  /**
-    Registering Listeners for Content Elements
-   */
-  AppContext.vizdata.elements.addEventListener(gapi.drive.realtime.EventType.VALUES_ADDED, doContentValueChanged);
-  AppContext.vizdata.elements.addEventListener(gapi.drive.realtime.EventType.VALUES_REMOVED, doContentValueChanged);
-  /**
-    Registering Listeners for relations between various Content Elements
-   */
-  AppContext.vizdata.relations.addEventListener(gapi.drive.realtime.EventType.VALUES_ADDED, doRelValueChanged);
-  AppContext.vizdata.relations.addEventListener(gapi.drive.realtime.EventType.VALUES_REMOVED, doRelValueChanged);
+    if(AppContext.vizdata.positions){
+      /**
+        Registering Listeners for Positional Information for various cells placed on the Grid.
+       */
+      AppContext.vizdata.positions.addEventListener(gapi.drive.realtime.EventType.VALUES_ADDED, doPosValueChanged);
+      AppContext.vizdata.positions.addEventListener(gapi.drive.realtime.EventType.VALUES_REMOVED, doPosValueChanged);
+    }
+    else{
+      Util.log.console('Listeners to positional information cannot be registered successfully.\n File load failed.');
+      alert('File loading failed');
+      // throw exception for positons
+    }
   
-  /**
-    Registering Listeners for nuggets data constructs
-   */
-  AppContext.vizdata.nuggets.addEventListener(gapi.drive.realtime.EventType.VALUES_ADDED, doNuggetValueChanged);
-  AppContext.vizdata.nuggets.addEventListener(gapi.drive.realtime.EventType.VALUES_REMOVED, doNuggetValueChanged);
+    if(AppContext.vizdata.elements){
+      /**
+        Registering Listeners for Content Elements
+       */
+      AppContext.vizdata.elements.addEventListener(gapi.drive.realtime.EventType.VALUES_ADDED, doContentValueChanged);
+      AppContext.vizdata.elements.addEventListener(gapi.drive.realtime.EventType.VALUES_REMOVED, doContentValueChanged);
+    }
+    else{
+      Util.log.console('Listeners to the Content-Elements cannot be registered successfully. \n File loading failed');
+      alert('file loading failed');
+      // throw exception for elements
+    }
 
-  /**
-    Registerng Listeners for meta information for the given making
-   */
-  AppContext.vizdata.meta.addEventListener(gapi.drive.realtime.EventType.VALUES_ADDED, doMetaValueChanged);
-  AppContext.vizdata.meta.addEventListener(gapi.drive.realtime.EventType.VALUES_REMOVED, doMetaValueChanged);
+    if(AppContext.vizdata.relations){
+      /**
+        Registering Listeners for relations between various Content Elements
+       */
+      AppContext.vizdata.relations.addEventListener(gapi.drive.realtime.EventType.VALUES_ADDED, doRelValueChanged);
+      AppContext.vizdata.relations.addEventListener(gapi.drive.realtime.EventType.VALUES_REMOVED, doRelValueChanged);
+    }
+    else{
+      Util.log.console('Listeners for relational information could not be attached.\n File loading failed')
+      // Throw exception if the relational information is critical. Skip loading.
+    }
+    /**
+      Registering Listeners for nuggets data constructs
+     */
+    if(AppContext.vizdata.nuggets){
+      AppContext.vizdata.nuggets.addEventListener(gapi.drive.realtime.EventType.VALUES_ADDED, doNuggetValueChanged);
+      AppContext.vizdata.nuggets.addEventListener(gapi.drive.realtime.EventType.VALUES_REMOVED, doNuggetValueChanged);
+    }
+    else{
+      Util.log.console('AppContext.vizdata.nuggets is not defined, hence skipping event registration');
+    }
 
+    if(AppContext.vizdata.meta){
+      /**
+        Registerng Listeners for meta information for the given making
+       */
+      AppContext.vizdata.meta.addEventListener(gapi.drive.realtime.EventType.VALUES_ADDED, doMetaValueChanged);
+      AppContext.vizdata.meta.addEventListener(gapi.drive.realtime.EventType.VALUES_REMOVED, doMetaValueChanged);
+    }
+    else{
+      Util.log.console('Meta Information could not be loaded. Skipping meta info event registration');
+    }
+  
+  }
+  catch(ex){
+    console.log('Error occured while registering one of the listeners: ');
+    console.log(ex);
+  }
+  
   AppContext.grid.displayAllPositions(AppContext.vizdata.getPositions());
   
   AppContext.grid.activateListeners();
