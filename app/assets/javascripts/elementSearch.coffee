@@ -2,7 +2,6 @@ jQuery ($) ->
   # Defails for all datasets
   datasetDefaults = {
     template: [
-      '<p class="content-id">{{elementId}}</p>',
       '<p class="content-description">{{description}}</p>',
     ].join(''),
     engine: Hogan
@@ -13,7 +12,7 @@ jQuery ($) ->
   generateLocalElements = (elementsList) ->
     importedElements = [];
     $.each(elementsList, (idx, element) ->
-      importedElements.push ({value : element.elementId, elementId: element.elementId, description: element.description, tokens : (element.elementId + element.description).split(' ')})
+      importedElements.push ({value : element.elementId, elementId: element.elementId, description: (element.description).substr(0,35)+'...', tokens : (element.elementId.substr(0,1) + element.description).split(' ')})
     )
     importedElements
 
