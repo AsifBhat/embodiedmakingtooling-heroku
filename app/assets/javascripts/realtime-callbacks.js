@@ -51,20 +51,12 @@ function doPosValueRemoved (event) {
   $.map(event.values, AppContext.grid.posValueRemovedCallback);
 }
 
-function doPosValueChanged (){
-  var model = gapi.drive.realtime.custom.getModel(this);
-  Util.log.console("Model value changed...");
-  AppContext.grid.displayAllPositions(AppContext.vizdata.getPositions());
-  
-}
-
 function doContentValueChanged(event){
   AppContext.grid.reloadTypeahead(AppContext.vizdata.getElements());
   if(event.type == gapi.drive.realtime.EventType.VALUES_ADDED)
     AppContext.graph.addElement(event.values);
   else if (event.type == gapi.drive.realtime.EventType.VALUES_REMOVED)
     AppContext.graph.removeElement(event.values);
-
 }
 
 function doRelValueChanged (event){
@@ -159,9 +151,9 @@ function onFileLoaded(doc) {
     if(AppContext.vizdata.positions){
       /**
         Registering Listeners for Positional Information for various cells placed on the Grid.
-       */
-      AppContext.vizdata.positions.addEventListener(gapi.drive.realtime.EventType.VALUES_ADDED, doPosValueChanged);
-      AppContext.vizdata.positions.addEventListener(gapi.drive.realtime.EventType.VALUES_REMOVED, doPosValueChanged);
+      */
+      AppContext.vizdata.positions.addEventListener(gapi.drive.realtime.EventType.VALUES_ADDED, doPosValuesAdded);
+      AppContext.vizdata.positions.addEventListener(gapi.drive.realtime.EventType.VALUES_REMOVED, doPosValueRemoved);
     }
     else{
       Util.log.console('Listeners to positional information cannot be registered successfully.\n File load failed.');
