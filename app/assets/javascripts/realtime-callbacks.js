@@ -22,6 +22,41 @@ function registerTypes() {
   }
 }
 
+function saveToDriveFile () {
+  var boundary = '-------314159265358979323846';
+  var delimiter = "\r\n--" + boundary + "\r\n";
+  var close_delim = "\r\n--" + boundary + "--";
+  Util.log.console("Write to file:"+AppContext.project.fileId);
+  var contentType = 'application/json';
+  var vizdataContent = {"vizdata": {"positions": AppContext.vizdata.getPositions(), "relations": AppContext.vizdata.getRelations(), "elements": AppContext.vizdata.getElements(), "nuggets": AppContext.vizdata.getNuggets(), "meta": AppContext.vizdata.getTitle()} };
+  var fileMetadata = {
+          'title': AppContext.project.projectTitle,
+          'mimeType': contentType
+        };
+  var multipartRequestBody =
+      delimiter +
+      'Content-Type: application/json\r\n\r\n' +
+      JSON.stringify(fileMetadata) +
+      delimiter +
+      'Content-Type: ' + contentType + '\r\n' +
+      '\r\n' +
+      JSON.stringify(vizdataContent) +
+      close_delim;
+
+  var request = gapi.client.request({
+      'path': '/upload/drive/v2/files/' + AppContext.project.fileId,
+      'method': 'PUT',
+      'params': {'uploadType': 'multipart', 'alt': 'json'},
+      'headers': {
+        'Content-Type': 'multipart/mixed; boundary="' + boundary + '\"'
+      },
+      'body': multipartRequestBody});
+  callback = function(file) {
+  };
+  request.execute(callback);
+}
+
+
 /*function onLoaded (){
 }*/
 
@@ -45,18 +80,14 @@ detailed information on event handling.
 */
 function doPosValuesAdded (event){
   $.map(event.values, AppContext.grid.posValueAddedCallback);
+  saveToDriveFile();
 }
 
 function doPosValueRemoved (event) {
   $.map(event.values, AppContext.grid.posValueRemovedCallback);
+  saveToDriveFile();
 }
 
-function doPosValueChanged (){
-  var model = gapi.drive.realtime.custom.getModel(this);
-  Util.log.console("Model value changed...");
-  AppContext.grid.displayAllPositions(AppContext.vizdata.getPositions());
-  
-}
 
 function doContentValueChanged(event){
   AppContext.grid.reloadTypeahead(AppContext.vizdata.getElements());
@@ -64,16 +95,16 @@ function doContentValueChanged(event){
     AppContext.graph.addElement(event.values);
   else if (event.type == gapi.drive.realtime.EventType.VALUES_REMOVED)
     AppContext.graph.removeElement(event.values);
-
+  saveToDriveFile();
 }
 
 function doRelValueChanged (event){
-  var model = gapi.drive.realtime.custom.getModel(this);
   Util.log.console("Relations value changed...");
   if(event.type == gapi.drive.realtime.EventType.VALUES_ADDED)
     AppContext.graph.addRelation(event.values);
   else if (event.type == gapi.drive.realtime.EventType.VALUES_REMOVED)
     AppContext.graph.removeRelation(event.values);
+  saveToDriveFile();
 }
 
 function doMetaValueChanged (evt){
@@ -81,6 +112,7 @@ function doMetaValueChanged (evt){
   Util.log.console('Project Title');
   Util.log.console(AppContext.project.projectTitle);
   AppContext.project.updateTitleText();
+  saveToDriveFile();
 }
 
 /*
@@ -99,6 +131,7 @@ function doNuggetValueChanged(evt){
       AppContext.vizdata.removeNugget(evt.values);
     }
   }
+  saveToDriveFile();
 }
 
 /**
@@ -109,13 +142,14 @@ function doNuggetValueChanged(evt){
  * take parameters, so the initial object state can be set up at creation time.   
  */
  function doInitialize() {
+  Util.log.console("doInitialize");
   var model = gapi.drive.realtime.custom.getModel(this);
   this.positions = model.createList();
   this.elements = model.createList();
   this.relations = model.createList();
   this.nuggets = model.createList(); //init the nuggets from the realtime model
   this.meta = model.createList();
-  Util.log.console("Initialize object the first time it is created");
+  
   AppContext.project.getFileDetails();
   model.beginCompoundOperation();
   this.updateTitle(AppContext.project.projectTitle);
@@ -139,6 +173,25 @@ function initializeModel(model) {
   model.getRoot().set('vizdata', AppContext.vizdata);
 }
 
+
+downloadFile = function (file,callback) {
+  if (file.downloadUrl) {
+  var accessToken = gapi.auth.getToken().access_token;
+  var xhr = new XMLHttpRequest();
+  xhr.open('GET', file.downloadUrl);
+  xhr.setRequestHeader('Authorization', 'Bearer ' + accessToken);
+  xhr.onload = function() {
+    callback(xhr.responseText);
+  };
+  xhr.onerror = function() {
+    callback(null);
+  };
+  xhr.send();
+  } else {
+    callback(null);
+  }
+};
+
 /**
  * This function is called when the Realtime file has been loaded. It should
  * be used to initialize any user interface components and event handlers
@@ -147,85 +200,79 @@ function initializeModel(model) {
  * 'at'param doc {gapi.drive.realtime.Document} the Realtime document.
  */
 function onFileLoaded(doc) {
-  Util.log.console("Doc:");
-  Util.log.console(doc);
   Util.log.console("On file loaded...");
-  AppContext.vizdata = doc.getModel().getRoot().get('vizdata');
-  Util.log.console('Logging AppContext vizdata ');
-  Util.log.console(AppContext.vizdata);
-
-  try{
-
-    if(AppContext.vizdata.positions){
-      /**
-        Registering Listeners for Positional Information for various cells placed on the Grid.
-       */
-      AppContext.vizdata.positions.addEventListener(gapi.drive.realtime.EventType.VALUES_ADDED, doPosValueChanged);
-      AppContext.vizdata.positions.addEventListener(gapi.drive.realtime.EventType.VALUES_REMOVED, doPosValueChanged);
-    }
-    else{
-      Util.log.console('Listeners to positional information cannot be registered successfully.\n File load failed.');
-      alert('File loading failed');
-      // throw exception for positons
-    }
-  
-    if(AppContext.vizdata.elements){
-      /**
-        Registering Listeners for Content Elements
-       */
-      AppContext.vizdata.elements.addEventListener(gapi.drive.realtime.EventType.VALUES_ADDED, doContentValueChanged);
-      AppContext.vizdata.elements.addEventListener(gapi.drive.realtime.EventType.VALUES_REMOVED, doContentValueChanged);
-    }
-    else{
-      Util.log.console('Listeners to the Content-Elements cannot be registered successfully. \n File loading failed');
-      alert('file loading failed');
-      // throw exception for elements
-    }
-
-    if(AppContext.vizdata.relations){
-      /**
-        Registering Listeners for relations between various Content Elements
-       */
-      AppContext.vizdata.relations.addEventListener(gapi.drive.realtime.EventType.VALUES_ADDED, doRelValueChanged);
-      AppContext.vizdata.relations.addEventListener(gapi.drive.realtime.EventType.VALUES_REMOVED, doRelValueChanged);
-    }
-    else{
-      Util.log.console('Listeners for relational information could not be attached.\n File loading failed');
-      // Throw exception if the relational information is critical. Skip loading.
-    }
-    /**
-      Registering Listeners for nuggets data constructs
-     */
-    if(AppContext.vizdata.nuggets){
-      AppContext.vizdata.nuggets.addEventListener(gapi.drive.realtime.EventType.VALUES_ADDED, doNuggetValueChanged);
-      AppContext.vizdata.nuggets.addEventListener(gapi.drive.realtime.EventType.VALUES_REMOVED, doNuggetValueChanged);
-    }
-    else{
-      Util.log.console('AppContext.vizdata.nuggets is not defined, hence skipping event registration');
-    }
-
-    if(AppContext.vizdata.meta){
-      /**
-        Registerng Listeners for meta information for the given making
-       */
-      AppContext.vizdata.meta.addEventListener(gapi.drive.realtime.EventType.VALUES_ADDED, doMetaValueChanged);
-      AppContext.vizdata.meta.addEventListener(gapi.drive.realtime.EventType.VALUES_REMOVED, doMetaValueChanged);
-    }
-    else{
-      Util.log.console('Meta Information could not be loaded. Skipping meta info event registration');
-    }
-  }
-  catch(ex){
-    console.log('Error occured while registering one of the listeners: ');
-    console.log(ex);
-  }
-  
-  AppContext.grid.displayAllPositions(AppContext.vizdata.getPositions());
-  
-  AppContext.grid.activateListeners();
-  AppContext.grid.activateZoomListeners();
-  AppContext.grid.activateTypeahead(AppContext.vizdata.getElements());
-
+  fileId = rtclient.params['fileIds'];
   AppContext.project.getFileDetails();
   fetchClientDetails(AppContext.project.getUserInfo);
+
+  loadDataFromFile = function(fileContent) {
+    AppContext .vizdata = doc.getModel().getRoot().get('vizdata');
+    if(fileContent !== ''){
+      try{
+        toLoad = JSON.parse(fileContent).vizdata;
+        AppContext.vizdata.positions.pushAll(toLoad.positions);
+        AppContext.vizdata.elements.pushAll(toLoad.elements);
+        AppContext.vizdata.relations.pushAll(toLoad.relations);
+        AppContext.vizdata.nuggets.pushAll(toLoad.nuggets);
+        AppContext.vizdata.meta.push(toLoad.meta);
+      } catch (ex) {
+        Util.log.console("The file contents could not be loaded.");
+        Util.log.console(ex);
+      }
+    }
+    try{
+      if(AppContext.vizdata.positions){
+        AppContext.vizdata.positions.addEventListener(gapi.drive.realtime.EventType.VALUES_ADDED, doPosValuesAdded);
+        AppContext.vizdata.positions.addEventListener(gapi.drive.realtime.EventType.VALUES_REMOVED, doPosValueRemoved);
+      }
+      else{
+        Util.log.console('Listeners to positional information cannot be registered successfully.\n File load failed.');
+        alert('File loading failed');
+      }
+      if(AppContext.vizdata.elements){
+        AppContext.vizdata.elements.addEventListener(gapi.drive.realtime.EventType.VALUES_ADDED, doContentValueChanged);
+        AppContext.vizdata.elements.addEventListener(gapi.drive.realtime.EventType.VALUES_REMOVED, doContentValueChanged);
+      }
+      else{
+        Util.log.console('Listeners to the Content-Elements cannot be registered successfully. \n File loading failed');
+        alert('file loading failed');
+      }
+      if(AppContext.vizdata.relations){
+        AppContext.vizdata.relations.addEventListener(gapi.drive.realtime.EventType.VALUES_ADDED, doRelValueChanged);
+        AppContext.vizdata.relations.addEventListener(gapi.drive.realtime.EventType.VALUES_REMOVED, doRelValueChanged);
+      }
+      else{
+        Util.log.console('Listeners for relational information could not be attached.\n File loading failed');
+      }
+      if(AppContext.vizdata.nuggets){
+        AppContext.vizdata.nuggets.addEventListener(gapi.drive.realtime.EventType.VALUES_ADDED, doNuggetValueChanged);
+        AppContext.vizdata.nuggets.addEventListener(gapi.drive.realtime.EventType.VALUES_REMOVED, doNuggetValueChanged);
+      }
+      else{
+        Util.log.console('AppContext.vizdata.nuggets is not defined, hence skipping event registration');
+      }
+      if(AppContext.vizdata.meta){
+        AppContext.vizdata.meta.addEventListener(gapi.drive.realtime.EventType.VALUES_ADDED, doMetaValueChanged);
+        AppContext.vizdata.meta.addEventListener(gapi.drive.realtime.EventType.VALUES_REMOVED, doMetaValueChanged);
+      }
+      else{
+        Util.log.console('Meta Information could not be loaded. Skipping meta info event registration');
+      }
+    }
+    catch(ex){
+      Util.log.console('Error occured while registering one of the listeners: ');
+      Util.log.console(ex);
+    }
+
+    AppContext.grid.displayAllPositions(AppContext.vizdata.getPositions());
+    AppContext.grid.activateListeners();
+    AppContext.grid.activateZoomListeners();
+    AppContext.grid.activateTypeahead(AppContext.vizdata.getElements());
+    
+  };
+
+  fileObtainedCallback = function(resp) {
+    downloadFile(resp,loadDataFromFile);
+  };
+  rtclient.getFileMetadata(rtclient.params.fileIds, fileObtainedCallback);
 }

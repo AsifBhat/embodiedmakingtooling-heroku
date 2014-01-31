@@ -1,3 +1,4 @@
+
 var googleAppConf = function(){
     if (window.location != undefined){
       var browserURL = window.location + '';
@@ -61,7 +62,7 @@ function handleAuthResult(file_state) {
         var _this = this;
         gapi.client.load('oauth2', 'v2', function(resp) {
           if(file_state == 'old'){
-            console.log('Util something');
+            Util.log.console('Util something');
             // start the load picker
             gapi.load('picker', {'callback': createPicker});
 
@@ -80,7 +81,7 @@ function handleAuthResult(file_state) {
 
             // A simple callback implementation.
             function pickerCallback(data) {
-              console.log('Calling picker callback');
+              Util.log.console('Calling picker callback');
               var url = 'nothing';
               if (data[google.picker.Response.ACTION] == google.picker.Action.PICKED) {
                 var doc = data[google.picker.Response.DOCUMENTS][0];
@@ -95,7 +96,7 @@ function handleAuthResult(file_state) {
             window.onload = AppContext.grid.loadApplication();
             //gapi.client.oauth2.userinfo.get().execute(function(resp) {});
             //Fetch and set the User Info.
-            AppContext.project.getUserInfo();
+            //AppContext.project.getUserInfo();
           }
         });
       } else {
