@@ -88,20 +88,13 @@ function doPosValueRemoved (event) {
   saveToDriveFile();
 }
 
-<<<<<<< HEAD
-=======
-
->>>>>>> Save data to drive as unformatted JSON
 function doContentValueChanged(event){
   AppContext.grid.reloadTypeahead(AppContext.vizdata.getElements());
   if(event.type == gapi.drive.realtime.EventType.VALUES_ADDED)
     AppContext.graph.addElement(event.values);
   else if (event.type == gapi.drive.realtime.EventType.VALUES_REMOVED)
     AppContext.graph.removeElement(event.values);
-<<<<<<< HEAD
-=======
   saveToDriveFile();
->>>>>>> Save data to drive as unformatted JSON
 }
 
 function doRelValueChanged (event){
