@@ -117,7 +117,7 @@ function handleAuthResult(file_state) {
                 rtclient.OPENID_SCOPE
               ], 
               user_id: undefined,
-              immediate: false
+              immediate: true
             },startAuthorization);
           });  
         });
@@ -133,7 +133,7 @@ function refresh_Complete() {
 
 function refreshComplete(authResult) {
   refresh_complete(authResult);
-  window.setTimeout(refreshToken, authResult.expires_in * 1000);
+  window.setTimeout(refreshToken, (authResult.expires_in - 60) * 1000);
 }
 
 
