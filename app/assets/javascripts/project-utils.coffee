@@ -9,7 +9,7 @@ AppContext.project.getFileDetails = () ->
         rtclient.getFileMetadata(fileId, (resp) ->
           # Need to remove the AppContext.project.projectTitle as the information is already stored 
           AppContext.project.projectTitle = resp.title 
-          AppContext.vizdata.projectDescription = resp.description
+          AppContext.project.projectDescription = resp.description
           AppContext.project.updateTitleText()
           Util.log.console 'Fetched file details'
         )
@@ -53,9 +53,12 @@ AppContext.project.getUserInfo = () ->
   ###
   * Get information about the current user 
   ###
+  callback = () ->
   Util.log.console('Fetching User Info..')
+  if(gapi.client.drive == undefined)
+    gapi.client.load('drive', 'v2', callback );
   try 
-    if(gapi.client != undefined && gapi.client.drive != undefined)
+    if(gapi.client.drive != undefined)
       request = gapi.client.drive.about.get()
       request.execute( (resp) ->
         try 
