@@ -1,7 +1,6 @@
 describe("Export as GEXF", function() {
 
   beforeEach(function() {
-    startRealtime();
     AppContext.vizdata = new VizDataModel();
     spyOn(AppContext.vizdata, 'getElements').andCallFake(function() {
       return [{"elementId" : "S0001" , "description" : "We share 10 meeting rooms, usually named after people to identify them, between 300 people, and the meeting rooms need to be kept locked." },
