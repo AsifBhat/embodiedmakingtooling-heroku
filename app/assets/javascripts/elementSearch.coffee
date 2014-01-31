@@ -32,17 +32,14 @@ jQuery ($) ->
       currentType = ''
       if(tabText == 'Stories')
         # Story!
-        Util.log.console 'Its a Story'
-        idstr = "S"+  getNextStoryId();
+        idstr = "S"+  AppContext.global.generateUniqueId();
         currentType = 'stories';
       else if(tabText == 'Forces')
-        Util.log.console 'Its a force'
-        idstr = "F"+ getNextForceId()
+        idstr = "F"+ AppContext.global.generateUniqueId()
         currentType = 'forces'
         # Force! 
       else if(tabText == 'Solutions')
-        Util.log.console 'Its a solution componenet'
-        idstr = "C"+ getNextSolutionId()
+        idstr = "C"+ AppContext.global.generateUniqueId()
         currentType = 'solutionComponents'
       # Remove the add element text area if it already exists 
       $('#newElementText').remove()

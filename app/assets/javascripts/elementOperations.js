@@ -22,22 +22,6 @@ displayOptions = function (){
   return nextId;
 };*/
 
-getNextStoryId =  function() {
-  //return getNextElemId(AppContext.vizdata.getStories());
-  return $.newUUID();
-};
-
-getNextForceId =  function() {
-  //return getNextElemId(AppContext.vizdata.getForces());
-  return $.newUUID();
-};
-
-getNextSolutionId =  function() {
-  //return getNextElemId(AppContext.vizdata.getSolutions());
-  return $.newUUID();
-};
-
-
 getNewElementdesc = function(){
   var textdesc = $('#input-elem-search').val();
   if(removeetype){
@@ -113,8 +97,7 @@ function handleAddNewElement(currentElementId, currentType, selectTab){
   $('#input-elem-search').val('');
   $('#input-elem-search').fadeOut(2000);
   $('#edit_input_container').prepend('<textarea row="3" id="newElementText" style="display: none;"></textarea>');
-  $('#newElementText').fadeIn(1000);
-  $('#newElementText').focus();
+  $('#newElementText').fadeIn(1000).focus();
 
   $('#newElementText').keypress(function(e){
     //if enter key is pressed, then remove the textarea and save the corresponding element
@@ -136,8 +119,7 @@ function resetDescSection() {
   $('#newElementText').fadeOut(2000);
   $('#newElementText').val('');
   $('#newElementText').remove();
-  $('#input-elem-search').fadeIn(1000);
-  $('#input-elem-search').focus();  
+  $('#input-elem-search').fadeIn(1000).focus().val('');  
 }
 
 // handle the key pressed events on the input text box
@@ -156,21 +138,21 @@ handleKeyPress = function(e) {
     if(textContent[0].length < 2){
 
       if(textContent[0] == 's'){
-        var idstr = "S"+  getNextStoryId();
+        var idstr = "S"+  AppContext.global.generateUniqueId();
         currentType = 'stories';
         currentElementId = idstr;
         handleAddNewElement(currentElementId, currentType,$('#elementsTab li:eq(0) a'));
         return;
       }  
       else if (textContent[0] == 'f'){
-        var idstr = "F"+ getNextForceId();
+        var idstr = "F"+ AppContext.global.generateUniqueId();
         currentType = 'forces';
         currentElementId = idstr;
         handleAddNewElement(currentElementId, currentType, $('#elementsTab li:eq(1) a'));
         return;
       }
       else if (textContent[0] == 'c'){
-        var idstr = "C"+ getNextSolutionId();
+        var idstr = "C"+ AppContext.global.generateUniqueId();
         currentType = 'solutionComponents';
         currentElementId = idstr;
         handleAddNewElement(currentElementId, currentType, $('#elementsTab li:eq(2) a'));

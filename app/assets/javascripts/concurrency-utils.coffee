@@ -23,9 +23,14 @@ jQuery ($) ->
 
 	# Method to generateUnique Ids for everyCall
 	AppContext.global.generateUniqueId = (userId, timestamp) ->
+		if(!userId)
+			userId = AppContext.global.getUserId()
+		if(!timestamp)
+			timestamp = AppContext.global.generateTimeStamp()
 		idString = userId + timestamp + Math.ceil(Math.random() * 100000)
 		generateSHA1(idString)
 
+	# Generate SHA1 using the 'sha1-v1.5.0.js' : https://github.com/Caligatio/jsSHA
 	generateSHA1 = (inputString) ->
 		Util.log.console('Generating SHA1 for ')
 		Util.log.console inputString
