@@ -1,5 +1,4 @@
 jQuery ($) ->
-
 	### 
 		*** SHOULD EXECUTE POST FILE LOAD ***
 
@@ -25,3 +24,10 @@ jQuery ($) ->
 	# Method to generateUnique Ids for everyCall
 	AppContext.global.generateUniqueId = (userId, timestamp) ->
 		idString = userId + timestamp + Math.ceil(Math.random() * 100000)
+		generateSHA1(idString)
+
+	generateSHA1 = (inputString) ->
+		Util.log.console('Generating SHA1 for ')
+		Util.log.console inputString
+		shaObject = new jsSHA(inputString, 'TEXT')
+		shaObject.getHash('SHA-1', 'HEX')
